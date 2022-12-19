@@ -1,0 +1,177 @@
+<!-- <div class="container">
+    <form #loginForm="ngForm" (ngSubmit)="login(loginForm)">
+      <h2 class="form-signin-heading">Login</h2>
+        <div *ngIf="invalidLogin" class="alert alert-danger">Invalid username or password.</div>
+        <br/>
+        <label for="username" class="sr-only">Email address</label>
+        <input type="email" id="username" name="username" [(ngModel)]="credentials.username"
+          class="form-control" placeholder="User Name" required>
+        <br/>
+        <label for="password" class="sr-only">Password</label>
+        <input type="password" id="password" name="password" [(ngModel)]="credentials.password"
+          class="form-control" placeholder="Password" required>
+        <br/>
+        <button class="btn btn-lg btn-primary" type="submit" [disabled]="!loginForm.valid">Log in</button>
+    </form>
+  </div> -->
+
+<!-- <p-header> <form #loginForm="ngForm" (ngSubmit)="login(loginForm)" class="login-form">
+    <input type="text" class="form-control" required id="username" name="username" [(ngModel)]="credentials.username"
+        placeholder="username"  pInputText class="w-small mb-1" >
+    <input type="password" class="form-control" required id="password" name="password"
+        [(ngModel)]="credentials.password" placeholder="password" />
+                        <button pButton  label="Sign In" class="p-2 text-small"></button>
+
+    <!-- <p class="message">Not registered? <a href="#">Create an account</a></p>
+</form>
+ </p-header> -->
+
+<section class="showcase">
+    <div class="video-container">
+        <!-- <video
+            src="../../../assets/layout/video/login_page.mp4"
+            autoplay
+            muted
+            loop
+        ></video> -->
+
+        <video
+            loop
+            muted
+            autoplay
+            oncanplay="this.play()"
+            onloadedmetadata="this.muted = true"
+        >
+            <source
+                src="../../../assets/layout/video/login_page.mp4"
+                type="video/mp4"
+            />
+            Your browser does not support the video tag.
+        </video>
+    </div>
+
+    <div class="content">
+        <div class="mycontainer">
+            <div id="header_container">
+                <div id="header">
+                    <form
+                        [formGroup]="registerForm"
+                        #loginForm="ngForm"
+                        (ngSubmit)="login(loginForm)"
+                        class="form-inline"
+                    >
+                        <div class="form-floating mb-3">
+                            <input
+                                type="username"
+                                class="form-control"
+                                required
+                                pInputText
+                                id="username"
+                                name="username"
+                                [(ngModel)]="credentials.username"
+                                placeholder="username"
+                                formControlName="username"
+                                class="form-control"
+                                [ngClass]="{
+                                    'is-invalid': submitted && f.username.errors
+                                }"
+                                style="height: 65px; width: 300px"
+                            />
+                            <div
+                                *ngIf="submitted && f.username.errors"
+                                class="invalid-feedback"
+                            >
+                                <div
+                                    style="
+                                        position: absolute;
+                                        top: 1;
+                                        left: 12;
+                                        color: red;
+                                        font-size: small;
+                                    "
+                                    *ngIf="f.username.errors.required"
+                                >
+                                    username is required
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <!-- <input
+                                type="password"
+                                class="form-control"
+                                required
+                                id="password"
+                                name="password"
+                                [(ngModel)]="credentials.password"
+                                placeholder="password"
+                                formControlName="password"
+                                [ngClass]="{
+                                    'is-invalid': submitted && f.password.errors
+                                }"
+                            /> -->
+
+                            <input
+                                type="password"
+                                class="form-control"
+                                required
+                                id="password"
+                                name="password"
+                                [(ngModel)]="credentials.password"
+                                placeholder="password"
+                                formControlName="password"
+                                styleClass="p-password p-component p-inputwrapper p-input-icon-right"
+                                [ngClass]="{
+                                    'is-invalid': submitted && f.password.errors
+                                }"
+                                style="
+                                    height: 65px;
+                                    width: 300px;
+                                    border-radius: 6px;
+                                "
+                            />
+                            <div
+                                *ngIf="submitted && f.password.errors"
+                                class="invalid-feedback"
+                            >
+                                <div
+                                    style="
+                                        position: absolute;
+                                        top: 1;
+                                        left: 12;
+                                        color: red;
+                                        font-size: small;
+                                    "
+                                    *ngIf="f.password.errors.required"
+                                >
+                                    Password is required
+                                </div>
+                            </div>
+                        </div>
+                        <div
+                            class="form-floating mb-3"
+                            style="padding-left: 10px"
+                        >
+                            <!-- <button type="submit">Submit</button> -->
+
+                            <button
+                                class="btn btn-primary"
+                                #submitButton
+                                [disabled]="isLoading"
+                                style="height: 55px"
+                            >
+                                <i
+                                    class="pi"
+                                    [ngClass]="{
+                                        'pi-spin pi-spinner': isLoading,
+                                        'pi-check': !isLoading
+                                    }"
+                                ></i>
+                                {{ button }}
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

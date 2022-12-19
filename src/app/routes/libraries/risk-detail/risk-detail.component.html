@@ -1,0 +1,866 @@
+<div class="grid">
+    <div class="col-12">
+        <div class="card">
+            <p-toast></p-toast>
+            <!-- <p-toolbar styleClass="mb-4">
+                <ng-template pTemplate="left">
+
+                </ng-template>
+
+                <!--s <ng-template pTemplate="right">
+                    <p-fileUpload mode="basic" accept="image/*" [maxFileSize]="1000000" label="Import" chooseLabel="Import" class="mr-2 inline-block"></p-fileUpload>
+                    <button pButton pRipple label="Export" icon="pi pi-upload" class="p-button-help" (click)="dt.exportCSV()"></button>
+                </ng-template>
+            </p-toolbar> -->
+
+            <p-table
+                #dt
+                [value]="risks"
+                dataKey="risk_uid"
+                [rows]="10"
+                [loading]="loading"
+                [rowHover]="true"
+                styleClass="p-datatable-gridlines"
+                [paginator]="true"
+                [globalFilterFields]="[
+                    'risk_uid',
+                    'au_level_3_uid',
+                    'process',
+                    'business_objective',
+                    'risk',
+                    'comment',
+                    'impact',
+                    'likelihood',
+                    'risk_score',
+                    'risk_exposure'
+                ]"
+                [rowsPerPageOptions]="[10, 20, 30]"
+                [showCurrentPageReport]="true"
+                currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+                [(selection)]="selectedrisks"
+                responsiveLayout="scroll"
+                [scrollable]="true"
+                scrollHeight="calc(100vh - 220px)"
+            >
+                <ng-template pTemplate="caption">
+                    <div
+                        class="grid grid-nogutter flex-column md:flex-row justify-content-between"
+                    >
+                        <h6 class="m-0">RISK</h6>
+                        <!-- <div class="my-2">
+                    </div>
+                        <div class="my-2">
+                            <button pButton pRipple label="Clear" class="p-button-danger mr-2" icon="pi pi-filter-slash" (click)="clear(dt)"></button>
+
+                            <button pButton pRipple label="New" icon="pi pi-plus" class="p-button-success mr-2" (click)="openNew()"></button>
+                        </div> -->
+
+                        <span class="p-input-icon-left mb-2 md:mb-0">
+                            <button
+                                title="New"
+                                pButton
+                                pRipple
+                                icon="pi pi-plus"
+                                class="p-button-rounded p-button-success"
+                                *ngIf="accountSvr.checkPermission(2, 4, 'A')"
+                                (click)="openNew()"
+                            ></button>
+
+                            &nbsp;
+
+                            <button
+                                title="Edit"
+                                pButton
+                                pRipple
+                                icon="pi pi-pencil"
+                                class="p-button-rounded p-button-warning"
+                                *ngIf="accountSvr.checkPermission(2, 4, 'C')"
+                                (click)="editrisk()"
+                                [disabled]="selectedrisks?.length != 1"
+                            ></button>
+                            &nbsp;
+                            <button
+                                title="Delete"
+                                pButton
+                                pRipple
+                                icon="pi pi-trash"
+                                class="p-button-rounded p-button-danger"
+                                (click)="deleteSelectedrisks()"
+                                *ngIf="accountSvr.checkPermission(2, 4, 'D')"
+                                [disabled]="selectedrisks?.length != 1"
+                            ></button>
+                            &nbsp;
+                            <button
+                                title="Clear"
+                                pButton
+                                pRipple
+                                class="p-button-rounded p-button-info"
+                                icon=" pi pi-filter-slash"
+                                (click)="clear(dt)"
+                            ></button>
+                        </span>
+                    </div>
+                </ng-template>
+                <ng-template
+                    pTemplate="header"
+                    *ngIf="accountSvr.checkPermission(2, 4, 'V')"
+                >
+                    <tr>
+                        <!-- <th style="width:0.5rem;"></th> -->
+                        <th pFrozenColumn style="max-width: 3rem">
+                            <!-- <p-tableHeaderCheckbox></p-tableHeaderCheckbox> -->
+                        </th>
+                        <th pSortableColumn="risk_uid">
+                            <div
+                                class="flex justify-content-between align-items-center"
+                            >
+                                <p-sortIcon field="risk_uid"></p-sortIcon>
+                                RISK UID
+                                <p-columnFilter
+                                    type="text"
+                                    field="risk_uid"
+                                    display="menu"
+                                ></p-columnFilter>
+                            </div>
+                        </th>
+                        <th pSortableColumn="auldesc">
+                            <div
+                                class="flex justify-content-between align-items-center"
+                            >
+                                <p-sortIcon field="auldesc"></p-sortIcon>
+                                AU LEVEL 3 DESCRIPTION
+                                <p-columnFilter
+                                    type="text"
+                                    field="auldesc"
+                                    display="menu"
+                                ></p-columnFilter>
+                            </div>
+                        </th>
+                        <th pSortableColumn="process">
+                            <div
+                                class="flex justify-content-between align-items-center"
+                            >
+                                <p-sortIcon field="process"></p-sortIcon>
+                                PROCESS
+                                <p-columnFilter
+                                    type="text"
+                                    field="process"
+                                    display="menu"
+                                ></p-columnFilter>
+                            </div>
+                        </th>
+                        <th pSortableColumn="business_objective">
+                            <div
+                                class="flex justify-content-between align-items-center"
+                            >
+                                <p-sortIcon
+                                    field="business_objective"
+                                ></p-sortIcon>
+                                BUSINESS OBJECTIVE
+                                <p-columnFilter
+                                    type="text"
+                                    field="business_objective"
+                                    display="menu"
+                                ></p-columnFilter>
+                            </div>
+                        </th>
+                        <th pSortableColumn="risk">
+                            <div
+                                class="flex justify-content-between align-items-center"
+                            >
+                                <p-sortIcon field="risk"></p-sortIcon>
+                                AUDIT RISK
+                                <p-columnFilter
+                                    type="text"
+                                    field="risk"
+                                    display="menu"
+                                ></p-columnFilter>
+                            </div>
+                        </th>
+
+                        <th pSortableColumn="rtonedesc">
+                            <div
+                                class="flex justify-content-between align-items-center"
+                            >
+                                <p-sortIcon field="rtonedesc"></p-sortIcon>
+                                RISK CATEGORY
+                                <p-columnFilter
+                                    type="text"
+                                    field="rtonedesc"
+                                    display="menu"
+                                ></p-columnFilter>
+                            </div>
+                        </th>
+
+                        <th pSortableColumn="rttwodesc">
+                            <div
+                                class="flex justify-content-between align-items-center"
+                            >
+                                <p-sortIcon field="rttwodesc"></p-sortIcon>
+                                RISK TYPE
+                                <p-columnFilter
+                                    type="text"
+                                    field="rttwodesc"
+                                    display="menu"
+                                ></p-columnFilter>
+                            </div>
+                        </th>
+                        <th pSortableColumn="comment">
+                            <div
+                                class="flex justify-content-between align-items-center"
+                            >
+                                <p-sortIcon field="comment"></p-sortIcon>
+                                COMMENTS
+                                <p-columnFilter
+                                    type="text"
+                                    field="comment"
+                                    display="menu"
+                                ></p-columnFilter>
+                            </div>
+                        </th>
+                        <th pSortableColumn="impact">
+                            <div
+                                class="flex justify-content-between align-items-center"
+                            >
+                                <p-sortIcon field="impact"></p-sortIcon>
+                                IMPACT
+                                <p-columnFilter
+                                    type="text"
+                                    field="impact"
+                                    display="menu"
+                                ></p-columnFilter>
+                            </div>
+                        </th>
+                        <th pSortableColumn="likelihood">
+                            <div
+                                class="flex justify-content-between align-items-center"
+                            >
+                                <p-sortIcon field="likelihood"></p-sortIcon>
+                                LIKELIHOOD
+                                <p-columnFilter
+                                    type="text"
+                                    field="likelihood"
+                                    display="menu"
+                                ></p-columnFilter>
+                            </div>
+                        </th>
+                        <th pSortableColumn="risk_score">
+                            <div
+                                class="flex justify-content-between align-items-center"
+                            >
+                                <p-sortIcon field="risk_score"></p-sortIcon>
+                                RISK SCORE
+                                <p-columnFilter
+                                    type="text"
+                                    field="risk_score"
+                                    display="menu"
+                                ></p-columnFilter>
+                            </div>
+                        </th>
+                        <th pSortableColumn="risk_exposure">
+                            <div
+                                class="flex justify-content-between align-items-center"
+                            >
+                                <p-sortIcon field="risk_exposure"></p-sortIcon>
+                                RISK EXPOSURE
+                                <p-columnFilter
+                                    type="text"
+                                    field="risk_exposure"
+                                    display="menu"
+                                ></p-columnFilter>
+                            </div>
+                        </th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-risk>
+                    <tr>
+                        <!-- <td>
+                            <div class="flex">
+                                <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2" (click)="editrisk(risk)"></button>
+                                <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning" (click)="deleterisk(risk)"></button>
+                            </div>
+                        </td> -->
+
+                        <td pFrozenColumn style="max-width: 3rem">
+                            <p-tableCheckbox
+                                [value]="risk"
+                                (click)="selectRisk(risk)"
+                            ></p-tableCheckbox>
+                        </td>
+                        <td style="min-width: 12rem">
+                            {{ risk.risk_uid }}
+                        </td>
+                        <td style="min-width: 12rem">
+                            {{ risk.auldesc }}
+                        </td>
+                        <td
+                            style="min-width: 12rem"
+                            class="cursor-pointer"
+                            (click)="showInDetail(risk.process, 'Process')"
+                            title="Click to view full detail"
+                        >
+                            {{ risk.process.slice(0, 20) }}
+                        </td>
+                        <td style="min-width: 12rem">
+                            {{ risk.business_objective }}
+                        </td>
+                        <td style="min-width: 12rem">
+                            {{ risk.risk }}
+                        </td>
+                        <td style="min-width: 12rem">
+                            {{ risk.rtax1 }}
+                        </td>
+                        <td style="min-width: 12rem">
+                            {{ risk.rtax2 }}
+                        </td>
+                        <td style="min-width: 12rem">
+                            {{ risk.comment }}
+                        </td>
+                        <td style="min-width: 12rem">
+                            {{ risk.impact }}
+                        </td>
+                        <td style="min-width: 12rem">
+                            {{ risk.likelihood }}
+                        </td>
+                        <td style="min-width: 12rem">
+                            {{ risk.risk_score }}
+                        </td>
+                        <td style="min-width: 12rem">
+                            {{ risk.codetext }}
+                        </td>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="emptymessage">
+                    <tr>
+                        <td colspan="7">No risks found.</td>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="loadingbody">
+                    <tr>
+                        <td colspan="7">Loading risks data. Please wait.</td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </div>
+
+        <p-dialog
+            [(visible)]="riskDialog"
+            [style]="{ width: '80%' }"
+            header="Risk Detail"
+            [modal]="true"
+            class="p-fluid"
+        >
+            <ng-template pTemplate="content">
+                <form [formGroup]="form">
+                    <!-- <div class="field">
+                    <label for="risk_uid">risk_uid</label>
+                    <input type="text" pInputText id="risk_uid" [(ngModel)]="risks.risk_uid" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !product.risk_uid}"/>
+                    <small class="ng-dirty ng-invalid" *ngIf="submitted && !risks.risk_uid">risk_uid is required.</small>
+                </div> -->
+                    <div class="p-fluid p-formgrid grid">
+                        <div class="field col-12 md:col-4">
+                            <label for="au_level_3_uid"
+                                >AU Level-3 UID <sup>*</sup></label
+                            >
+                            <!-- <input id="au_level_3_uid" pInputText [(ngModel)]="risk.au_level_3_uid" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !risk.au_level_3_uid}" />
+                    <small class="ng-dirty ng-invalid" *ngIf="submitted && !risk.au_level_3_uid">au_level_3_uid is required.</small> -->
+
+                            <!-- <p-autoComplete [(ngModel)]="selectedCountry" [suggestions]="filteredCountries" (completeMethod)="filterCountry($event)"
+					field="name"></p-autoComplete> -->
+                            <p-autoComplete
+                                formControlName="auldesc"
+                                [ngModelOptions]="{ standalone: true }"
+                                (onSelect)="doOnSelectaudit3($event)"
+                                [autoHighlight]="true"
+                                [forceSelection]="true"
+                                [completeOnFocus]="true"
+                                [minLength]="1"
+                                placeholder="Search"
+                                id="au_level_3_uid"
+                                [dropdown]="true"
+                                [suggestions]="filteredAuThird"
+                                (completeMethod)="filterAuThird($event)"
+                                required
+                                autofocus
+                                [(ngModel)]="risk.auldesc"
+                                [ngClass]="{
+                                    'ng-invalid ng-dirty':
+                                        submitted && !form.controls.auldesc
+                                }"
+                            >
+                                <!-- <ng-template let-filteredall pTemplate="item">
+							<div class="au_level_3_uid-item">
+							  <div> {{filteredall.au_level_3_uid}} -  {{filteredall.au_level_3_desc}}</div>
+							</div>
+						  </ng-template> -->
+                            </p-autoComplete>
+                            <small
+                                class="ng-dirty ng-invalid"
+                                *ngIf="
+                                    form.controls.auldesc.invalid &&
+                                    form.controls.auldesc.dirty
+                                "
+                                >AU Level-3 UID is required.</small
+                            >
+                        </div>
+
+                        <div class="field col-12 md:col-4">
+                            <label for="process">Process <sup>*</sup></label>
+                            <input
+                                formControlName="process"
+                                [(ngModel)]="risk.process"
+                                [ngModelOptions]="{ standalone: true }"
+                                id="process"
+                                pInputText
+                                required
+                                autofocus
+                                [ngClass]="{
+                                    'ng-invalid ng-dirty':
+                                        submitted && !form.controls.process
+                                }"
+                                (click)="
+                                    getText(
+                                        form.get('process').value,
+                                        form,
+                                        'process',
+                                        'Process'
+                                    )
+                                "
+                            />
+                            <small
+                                class="ng-dirty ng-invalid"
+                                *ngIf="
+                                    form.controls.process.invalid &&
+                                    form.controls.process.dirty
+                                "
+                                >Process is required.</small
+                            >
+                        </div>
+                        <div class="field col-12 md:col-4">
+                            <label for="business_objective"
+                                >Business Objective <sup>*</sup></label
+                            >
+                            <input
+                                formControlName="business_objective"
+                                [ngModelOptions]="{ standalone: true }"
+                                id="business_objective"
+                                pInputText
+                                required
+                                autofocus
+                                [(ngModel)]="risk.business_objective"
+                                [ngClass]="{
+                                    'ng-invalid ng-dirty':
+                                        submitted &&
+                                        !form.controls.business_objective
+                                }"
+                                (click)="
+                                    getText(
+                                        form.get('business_objective').value,
+                                        form,
+                                        'business_objective',
+                                        'Business Objective'
+                                    )
+                                "
+                            />
+                            <small
+                                class="ng-dirty ng-invalid"
+                                *ngIf="
+                                    form.controls.business_objective.invalid &&
+                                    form.controls.business_objective.dirty
+                                "
+                                >Business Objective is required.</small
+                            >
+                        </div>
+
+                        <div class="field col-12 md:col-4">
+                            <label for="comment">Comments <sup>*</sup></label>
+                            <input
+                                formControlName="comment"
+                                [ngModelOptions]="{ standalone: true }"
+                                id="comment"
+                                pInputText
+                                required
+                                [(ngModel)]="risk.comment"
+                                [ngClass]="{
+                                    'ng-invalid ng-dirty':
+                                        submitted && !form.controls.comment
+                                }"
+                                autofocus
+                                (click)="
+                                    getText(
+                                        form.get('comment').value,
+                                        form,
+                                        'comment',
+                                        'Comments'
+                                    )
+                                "
+                            />
+                            <small
+                                class="ng-dirty ng-invalid"
+                                *ngIf="
+                                    form.controls.comment.invalid &&
+                                    form.controls.comment.dirty
+                                "
+                                >Comment is required.</small
+                            >
+                        </div>
+
+                        <div class="field col-12 md:col-4">
+                            <label for="risk">Audit Risk <sup>*</sup></label>
+                            <input
+                                formControlName="risk"
+                                [ngModelOptions]="{ standalone: true }"
+                                id="risk"
+                                [(ngModel)]="risk.risk"
+                                pInputText
+                                required
+                                autofocus
+                                [ngClass]="{
+                                    'ng-invalid ng-dirty':
+                                        submitted && !form.controls.risk
+                                }"
+                                (click)="
+                                    getText(
+                                        form.get('risk').value,
+                                        form,
+                                        'risk',
+                                        'Audit Risk'
+                                    )
+                                "
+                            />
+                            <small
+                                class="ng-dirty ng-invalid"
+                                *ngIf="
+                                    form.controls.risk.invalid &&
+                                    form.controls.risk.dirty
+                                "
+                                >Risk is required.</small
+                            >
+                        </div>
+                        <div class="field col-12 md:col-4"></div>
+
+                        <div class="field col-12 md:col-4">
+                            <label for="risk">Risk Category <sup>*</sup></label>
+                            <!-- <input id="risk" pInputText [(ngModel)]="risk.risk" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !risk.risk}"/>
+                    <small class="ng-dirty ng-invalid" *ngIf="submitted && !risk.risk">risk is required.</small> -->
+                            <p-autoComplete
+                                formControlName="rtonedesc"
+                                [ngModelOptions]="{ standalone: true }"
+                                appendTo="body"
+                                [(ngModel)]="risk.rtonedesc"
+                                (onSelect)="doOnSelectrtax1($event)"
+                                [autoHighlight]="true"
+                                [forceSelection]="true"
+                                [completeOnFocus]="true"
+                                [minLength]="1"
+                                placeholder="Search"
+                                id="rt_level_1_uid"
+                                [dropdown]="true"
+                                [suggestions]="filteredRisktaxone"
+                                (completeMethod)="filterRisktaxone($event)"
+                                required
+                                autofocus
+                                [ngClass]="{
+                                    'ng-invalid ng-dirty':
+                                        submitted && !form.controls.rtonedesc
+                                }"
+                            >
+                                <!-- <ng-template let-Risktaxone pTemplate="item">
+							<div class="rt_level_1_uid-item">
+							  <div> {{Risktaxone.rt_level_1_uid}} -  {{Risktaxone.rt_descrption}}</div>
+							</div>
+						  </ng-template> -->
+                            </p-autoComplete>
+                            <small
+                                class="ng-dirty ng-invalid"
+                                *ngIf="
+                                    form.controls.rtonedesc.invalid &&
+                                    form.controls.rtonedesc.dirty
+                                "
+                                >Risk Category is required.</small
+                            >
+                        </div>
+
+                        <div class="field col-12 md:col-4">
+                            <label for="risk">Risk Type <sup>*</sup></label>
+                            <!-- <input id="risk" pInputText [(ngModel)]="risk.risk" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !risk.risk}"/>
+                    <small class="ng-dirty ng-invalid" *ngIf="submitted && !risk.risk">risk is required.</small> -->
+                            <p-autoComplete
+                                formControlName="rttwodesc"
+                                [(ngModel)]="risk.rttwodesc"
+                                [ngModelOptions]="{ standalone: true }"
+                                (onSelect)="doOnSelectrtax2($event)"
+                                [minLength]="1"
+                                placeholder="Search"
+                                id="rt_level_2_id"
+                                [dropdown]="true"
+                                [suggestions]="filteredRisktaxtwo"
+                                (completeMethod)="filterRisktaxtwo($event)"
+                                [autoHighlight]="true"
+                                [forceSelection]="true"
+                                [completeOnFocus]="true"
+                                required
+                                autofocus
+                                [ngClass]="{
+                                    'ng-invalid ng-dirty':
+                                        submitted && !form.controls.rttwodesc
+                                }"
+                                [disabled]="!selectedrtax1?.length > 0"
+                            >
+                                <!-- <ng-template let-Risktaxtwo pTemplate="item">
+							<div class="rt_level_2_id-item">
+							  <div> {{Risktaxtwo.rt_level_2_id}} -  {{Risktaxtwo.rt_descrption}}</div>
+							</div>
+						  </ng-template> -->
+                            </p-autoComplete>
+                            <small
+                                class="ng-dirty ng-invalid"
+                                *ngIf="
+                                    form.controls.rttwodesc.invalid &&
+                                    form.controls.rttwodesc.dirty
+                                "
+                                >Risk Type is required.</small
+                            >
+                        </div>
+
+                        <div class="field col-12 md:col-4">
+                            <label for="risk_exposure"
+                                >Risk Exposure <sup>*</sup></label
+                            >
+                            <!-- <input id="risk_exposure" pInputText [(ngModel)]="risk.risk_exposure" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !risk.risk_exposure}"/>
+                    <small class="ng-dirty ng-invalid" *ngIf="submitted && !risk.risk_exposure">risk_exposure is required.</small> -->
+
+                            <p-autoComplete
+                                formControlName="coddesc"
+                                [(ngModel)]="risk.coddesc"
+                                [ngModelOptions]="{ standalone: true }"
+                                (onSelect)="doOnSelectexposure($event)"
+                                [autoHighlight]="true"
+                                [forceSelection]="true"
+                                [completeOnFocus]="true"
+                                [minLength]="1"
+                                placeholder="Search"
+                                id="text_code_value"
+                                [dropdown]="true"
+                                [suggestions]="filteredRiskExposure"
+                                (completeMethod)="filterRiskExposure($event)"
+                                required
+                                autofocus
+                                [ngClass]="{
+                                    'ng-invalid ng-dirty':
+                                        submitted && !form.controls.coddesc
+                                }"
+                            >
+                                <!-- <ng-template let-RiskExposure pTemplate="item">
+							<div class="text_code_value-item">
+							  <div> {{RiskExposure.code_value_key}} -  {{RiskExposure.text_code_value}}</div>
+							</div>
+						  </ng-template> -->
+                            </p-autoComplete>
+                            <small
+                                class="ng-dirty ng-invalid"
+                                *ngIf="
+                                    form.controls.coddesc.invalid &&
+                                    form.controls.coddesc.dirty
+                                "
+                                >Risk Exposure is required.</small
+                            >
+                        </div>
+
+                        <div class="field col-12 md:col-4">
+                            <label for="impact">Impact <sup>*</sup></label>
+                            <!-- <input id="impact" pInputText [(ngModel)]="risk.impact" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !risk.impact}"/>
+                    <small class="ng-dirty ng-invalid" *ngIf="submitted && !risk.impact">impact is required.</small> -->
+                            <p-autoComplete
+                                formControlName="impact"
+                                [(ngModel)]="risk.impact"
+                                [ngModelOptions]="{ standalone: true }"
+                                appendTo="body"
+                                (onSelect)="doOnSelectimpact($event)"
+                                [suggestions]="filteredlikelihood"
+                                appendToBody="true"
+                                [autoHighlight]="true"
+                                [forceSelection]="true"
+                                [completeOnFocus]="true"
+                                [minLength]="1"
+                                placeholder="Search"
+                                id="rt_impact"
+                                [dropdown]="true"
+                                [suggestions]="filteredimpact"
+                                (completeMethod)="filterimpact($event)"
+                                required
+                                autofocus
+                                [ngClass]="{
+                                    'ng-invalid ng-dirty':
+                                        submitted && !form.controls.impact
+                                }"
+                            >
+                                <!-- <ng-template let-impact pTemplate="item">
+							<div class="rt_level_2_id-item">
+							  <div> {{impact.rt_level_2_id}} -  {{impact.rt_descrption}}</div>
+							</div>
+						  </ng-template> -->
+                            </p-autoComplete>
+                            <small
+                                class="ng-dirty ng-invalid"
+                                *ngIf="
+                                    form.controls.impact.invalid &&
+                                    form.controls.impact.dirty
+                                "
+                                >Impact is required.</small
+                            >
+                        </div>
+                        <div class="field col-12 md:col-4">
+                            <label for="likelihood"
+                                >Likelihood <sup>*</sup></label
+                            >
+                            <!-- <input id="likelihood" pInputText [(ngModel)]="risk.likelihood" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !risk.likelihood}"/>
+                    <small class="ng-dirty ng-invalid" *ngIf="submitted && !risk.likelihood">likelihood is required.</small> -->
+                            <p-autoComplete
+                                formControlName="likelihood"
+                                [(ngModel)]="risk.likelihood"
+                                [ngModelOptions]="{ standalone: true }"
+                                appendTo="body"
+                                (onSelect)="doOnSelectlikelihood($event)"
+                                placeholder="Search"
+                                id="rt_level_2_id"
+                                [dropdown]="true"
+                                [suggestions]="filteredlikelihood"
+                                appendToBody="true"
+                                [autoHighlight]="true"
+                                [forceSelection]="true"
+                                [completeOnFocus]="true"
+                                [minLength]="1"
+                                (completeMethod)="filterlikelihood($event)"
+                                required
+                                autofocus
+                                [ngClass]="{
+                                    'ng-invalid ng-dirty':
+                                        submitted && !form.controls.likelihood
+                                }"
+                            >
+                                <!-- <ng-template let-likelihood pTemplate="item">
+							<div class="rt_level_2_id-item">
+							  <div> {{likelihood.rt_level_2_id}} -  {{likelihood.rt_descrption}}</div>
+							</div>
+						  </ng-template> -->
+                            </p-autoComplete>
+                            <small
+                                class="ng-dirty ng-invalid"
+                                *ngIf="
+                                    form.controls.likelihood.invalid &&
+                                    form.controls.likelihood.dirty
+                                "
+                                >Likelihood is required.</small
+                            >
+                        </div>
+                        <div class="field col-12 md:col-4">
+                            <label for="risk_score"
+                                >Risk Score <sup>*</sup></label
+                            >
+                            <input
+                                [ngModelOptions]="{ standalone: true }"
+                                id="risk_score"
+                                [readonly]="true"
+                                pInputText
+                                [value]="selectedtotal"
+                                required
+                                autofocus
+                            />
+                            <!--                                formControlName="risk_score"
+ <small
+                                class="ng-dirty ng-invalid"
+                                *ngIf="
+                                    form.controls.risk_score.invalid &&
+                                    form.controls.risk_score.dirty
+                                "
+                                >Risk Score is required.</small
+                            > -->
+                        </div>
+                    </div>
+                </form>
+            </ng-template>
+
+            <ng-template pTemplate="footer">
+                <button
+                    pButton
+                    pRipple
+                    label="Cancel"
+                    icon="pi pi-times"
+                    class="p-button-text"
+                    (click)="hideDialog()"
+                ></button>
+                <button
+                    pButton
+                    pRipple
+                    label="Save"
+                    #submitButton
+                    icon="pi pi-check"
+                    class="p-button-text"
+                    (click)="saverisk()"
+                    [disabled]="!form.valid"
+                ></button>
+            </ng-template>
+        </p-dialog>
+
+        <!-- <p-dialog [(visible)]="deleteriskDialog" header="Confirm" [modal]="true" [style]="{width:'450px'}">
+            <div class="flex align-items-center justify-content-center">
+                <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem"></i>
+                <span *ngIf="risks">Are you sure you want to delete?</span>
+            </div>
+            <ng-template pTemplate="footer">
+                <button pButton pRipple icon="pi pi-times" class="p-button-text" label="No" (click)="deleteriskDialog = false"></button>
+                <button pButton pRipple icon="pi pi-check" class="p-button-text" label="Yes" (click)="confirmDelete()"></button>
+            </ng-template>
+        </p-dialog>
+
+        <p-dialog [(visible)]="deleterisksDialog" header="Confirm" [modal]="true" [style]="{width:'450px'}">
+            <div class="flex align-items-center justify-content-center">
+                <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem"></i>
+                <span>Are you sure you want to delete selected risk?</span>
+            </div>
+            <ng-template pTemplate="footer">
+                <button pButton pRipple icon="pi pi-times" class="p-button-text" label="No" (click)="deleterisksDialog = false"></button>
+                <button pButton pRipple icon="pi pi-check" class="p-button-text" label="Yes" (click)="confirmDeleteSelected()"></button>
+            </ng-template>
+        </p-dialog> -->
+        <p-confirmDialog> </p-confirmDialog>
+    </div>
+</div>
+
+<p-dialog
+    #textDialog
+    [header]="popupHeader"
+    [(visible)]="showPopupText"
+    [modal]="true"
+>
+    <ng-template pTemplate="content">
+        <form [formGroup]="textDialogForm">
+            <textarea
+                autofocus
+                name=""
+                id=""
+                cols="100"
+                rows="40"
+                formControlName="input"
+            ></textarea>
+        </form>
+    </ng-template>
+
+    <ng-template pTemplate="footer">
+        <button
+            pButton
+            pRipple
+            label="Ok"
+            icon="pi pi-check"
+            class="p-button-text"
+            (click)="showPopupText = false"
+        ></button>
+    </ng-template>
+</p-dialog>
+
+<p-dialog [(visible)]="showPop" [header]="showPopTitle" [modal]="true">
+    <ng-template pTemplate="content">
+        <textarea [value]="showContent" cols="90" rows="40" disabled></textarea>
+    </ng-template>
+</p-dialog>

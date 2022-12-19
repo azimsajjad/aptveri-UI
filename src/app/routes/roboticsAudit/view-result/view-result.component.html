@@ -1,0 +1,165 @@
+<!-- <button (click)="exportResultToExcel()">Export The Report</button> -->
+<div class="grid">
+    <div class="col-12">
+        <div class="card">
+            <p-toast></p-toast>
+            <!-- <p-toolbar styleClass="mb-1">
+                <ng-template pTemplate="left">
+                    <div class="my-1"> -->
+            <!-- <button
+                pButton
+                pRipple
+                icon="pi pi-book"
+                class="p-button-warning mr-1"
+                (click)="exportResultToExcel()"
+
+            ></button>
+            <br />
+            <br /> -->
+            <!-- </div> -->
+            <div *ngIf="this.showdata">
+                <p>No data Available in target Table</p>
+            </div>
+
+            <div *ngIf="this.topdata">
+                <p style="color: red;">
+                    &nbsp;Alert: Below Target Table Consist Of Large Number Of
+                    Data,To Avoid Load In Server Top 100 Record Has Been Shown
+                </p>
+            </div>
+            <!-- </ng-template>
+            </p-toolbar> -->
+            <div class="p-datatable-wrapper">
+                <!-- <table
+                    border
+                    class="p-datatable-table ng-star-inserted"
+                    styleClass="p-datatable-gridlines"
+                >
+                    <thead class="p-datatable-thead">
+                        <tr>
+                            <th *ngFor="let header of getHeaders()">
+                                {{ header }}
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let item of dataMessageResults">
+                            <td *ngFor="let key of getHeaders()">
+                                {{ item[key] }}
+                            </td>
+                        </tr>
+                    </tbody>
+                </table> -->
+
+                <div class="p-datatable-wrapper">
+                    <p-table
+                        styleClass="p-datatable-gridlines"
+                        [value]="targettables"
+                        [columns]="cols"
+                        [loading]="loading"
+                        [rowHover]="true"
+                        selectionMode="single"
+                        responsiveLayout="true"
+                        [scrollable]="true"
+                        [autoLayout]="true"
+                        scrollHeight="calc(100vh - 220px)"
+                    >
+                        <ng-template pTemplate="caption">
+                            <div
+                                class="flex flex-column md:flex-row md:align-items-center md:justify-content-between"
+                            >
+                                <!-- <button
+                                    type="button"
+                                    pButton
+                                    pRipple
+                                    icon="pi pi-file"
+                                    (click)="dt.exportCSV()"
+                                    class="mr-2"
+                                    pTooltip="CSV"
+                                    tooltipPosition="bottom"
+                                ></button>
+                                <button
+                                    type="button"
+                                    pButton
+                                    pRipple
+                                    icon="pi pi-file-excel"
+                                    (click)="exportExcel()"
+                                    class="p-button-success mr-2"
+                                    pTooltip="XLS"
+                                    tooltipPosition="bottom"
+                                ></button>-->
+                                <h6 class="m-0">{{ res_target_table }}</h6>
+                                <span class="p-input-icon-left mb-2 md:mb-0">
+                                    <button
+                                        type="button"
+                                        pButton
+                                        pRipple
+                                        icon="pi pi-file-excel"
+                                        (click)="downloadExcel()"
+                                        *ngIf="this.validatedata"
+                                        class="p-button-rounded p-button-purple-500 ml-auto"
+                                        title="XLS"
+                                        tooltipPosition="left"
+                                    ></button>
+                                    &nbsp;
+                                    <button
+                                        type="button"
+                                        pButton
+                                        pRipple
+                                        icon="pi pi-arrow-left"
+                                        (click)="backClicked()"
+                                        class="p-button-rounded p-button-secondary ml-2"
+                                        title="Back"
+                                        tooltipPosition="left"
+                                    ></button>
+                                </span>
+                            </div>
+                        </ng-template>
+                        <ng-template pTemplate="header" let-columns>
+                            <tr>
+                                <th
+                                    style="flex: 0 0 230px;"
+                                    *ngFor="let header of getHeaders()"
+                                    pResizableColumn
+                                >
+                                    {{ header | uppercase }}
+                                </th>
+                            </tr>
+                        </ng-template>
+                        <ng-template
+                            pTemplate="body"
+                            let-rowData
+                            let-columns="columns"
+                        >
+                            <tr>
+                                <td
+                                    style="
+                                        flex: 0 0 230px;
+                                        word-break: break-all;
+                                    "
+                                    *ngFor="let col of columns"
+                                >
+                                    {{ rowData[col] }}
+                                </td>
+                            </tr>
+                        </ng-template>
+
+                        <ng-template pTemplate="emptymessage" let-columns>
+                            <tr>
+                                <td [attr.colspan]="columns.length">
+                                    No records found
+                                </td>
+                            </tr>
+                        </ng-template>
+                    </p-table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div *ngIf="loadingE" class="loader">
+        <p-progressSpinner strokeWidth="10"></p-progressSpinner>
+    </div>
+</div>
+
+<p-confirmDialog></p-confirmDialog>

@@ -1,0 +1,14 @@
+:host ::ng-deep .p-autocomplete-item {
+    cursor: pointer;
+    white-space: normal !important;
+    position: relative;
+    overflow: hidden;
+}
+
+
+
+// :host ::ng-deep .p-autocomplete .p-autocomplete-panel {
+// width: 130% !important;
+//     top: 0;
+//     left: 0;
+// }

@@ -1,0 +1,930 @@
+<div class="grid">
+    <div class="col-12">
+        <div class="card">
+            <p-toast></p-toast>
+            <!-- <p-toolbar styleClass="mb-4">
+                <ng-template pTemplate="left">
+
+                </ng-template>
+
+                <!--s <ng-template pTemplate="right">
+                    <p-fileUpload mode="basic" accept="image/*" [maxFileSize]="1000000" label="Import" chooseLabel="Import" class="mr-2 inline-block"></p-fileUpload>
+                    <button pButton pRipple label="Export" icon="pi pi-upload" class="p-button-help" (click)="dt.exportCSV()"></button>
+                </ng-template>
+            </p-toolbar> -->
+
+            <p-table
+                #dt
+                [value]="controls"
+                dataKey="control_uid"
+                [rows]="10"
+                [loading]="loading"
+                [rowHover]="true"
+                styleClass="p-datatable-gridlines"
+                [paginator]="true"
+                [globalFilterFields]="[
+                    'control_id',
+                    'control_uid',
+                    'au_level_4_uid',
+                    'banner_uid',
+                    'risk_uid',
+                    'control',
+                    'comments',
+                    'control_type',
+                    'frequency',
+                    'automation',
+                    'category',
+                    'assertion',
+                    'key_control',
+                    'created_by',
+                    'created_date',
+                    'updated_by',
+                    'updated_date'
+                ]"
+                [rowsPerPageOptions]="[10, 20, 30]"
+                [showCurrentPageReport]="true"
+                currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+                [(selection)]="selectedcontrols"
+                responsiveLayout="scroll"
+                [scrollable]="true"
+                scrollHeight="calc(100vh - 220px)"
+            >
+                <ng-template pTemplate="caption">
+                    <div
+                        class="grid grid-nogutter flex-column md:flex-row justify-content-between"
+                    >
+                        <h6 class="m-0">CONTROL</h6>
+                        <!-- <div class="my-2">
+                    </div>
+                        <div class="my-2">
+                            <button pButton pRipple label="Clear" class="p-button-danger mr-2" icon="pi pi-filter-slash" (click)="clear(dt)"></button>
+
+                            <button pButton pRipple label="New" icon="pi pi-plus" class="p-button-success mr-2" (click)="openNew()"></button>
+                        </div>-->
+
+                        <span class="p-input-icon-left mb-2 md:mb-0">
+                            <button
+                                title="New"
+                                pButton
+                                pRipple
+                                icon="pi pi-plus"
+                                class="p-button-rounded p-button-success"
+                                *ngIf="accountSvr.checkPermission(2, 8, 'A')"
+                                (click)="openNew()"
+                            ></button>
+
+                            &nbsp;
+
+                            <button
+                                title="Edit"
+                                pButton
+                                pRipple
+                                icon="pi pi-pencil"
+                                class="p-button-rounded p-button-warning"
+                                *ngIf="accountSvr.checkPermission(2, 8, 'C')"
+                                (click)="editcontrol()"
+                                [disabled]="selectedcontrols?.length != 1"
+                            ></button>
+                            &nbsp;
+                            <button
+                                title="Delete"
+                                pButton
+                                pRipple
+                                icon="pi pi-trash"
+                                class="p-button-rounded p-button-danger"
+                                *ngIf="accountSvr.checkPermission(2, 8, 'D')"
+                                (click)="deleteSelectedcontrols()"
+                                [disabled]="selectedcontrols?.length != 1"
+                            ></button>
+                            &nbsp;
+                            <button
+                                title="Clear"
+                                pButton
+                                pRipple
+                                class="p-button-rounded p-button-info"
+                                icon=" pi pi-filter-slash"
+                                (click)="clear(dt)"
+                            ></button>
+                        </span>
+                    </div>
+                </ng-template>
+                <ng-template
+                    pTemplate="header"
+                    *ngIf="accountSvr.checkPermission(2, 8, 'V')"
+                >
+                    <tr>
+                        <th pFrozenColumn style="max-width: 3rem">
+                            <!-- <p-tableHeaderCheckbox></p-tableHeaderCheckbox> -->
+                        </th>
+                        <!-- <th style="width:0.5rem;"></th> -->
+                        <th pSortableColumn="control_uid">
+                            <div
+                                class="flex justify-content-between align-items-center"
+                            >
+                                <p-sortIcon field="Control UID"></p-sortIcon>
+                                CONTROL UID
+                                <p-columnFilter
+                                    type="text"
+                                    field="control_uid"
+                                    display="menu"
+                                ></p-columnFilter>
+                            </div>
+                        </th>
+                        <th pSortableColumn="aulfdesc">
+                            <div
+                                class="flex justify-content-between align-items-center"
+                            >
+                                <p-sortIcon field="aulfdesc"></p-sortIcon>
+                                AU LEVEL4 DESCRIPTION
+                                <p-columnFilter
+                                    type="text"
+                                    field="aulfdesc"
+                                    display="menu"
+                                ></p-columnFilter>
+                            </div>
+                        </th>
+                        <th pSortableColumn="bannerdesc">
+                            <div
+                                class="flex justify-content-between align-items-center"
+                            >
+                                <p-sortIcon field="bannerdesc"></p-sortIcon>
+                                BANNER DESCRIPTION
+                                <p-columnFilter
+                                    type="text"
+                                    field="bannerdesc"
+                                    display="menu"
+                                ></p-columnFilter>
+                            </div>
+                        </th>
+                        <th pSortableColumn="riskdesc">
+                            <div
+                                class="flex justify-content-between align-items-center"
+                            >
+                                <p-sortIcon field="riskdesc"></p-sortIcon>
+                                RISK DESCRIPTION
+                                <p-columnFilter
+                                    type="text"
+                                    field="riskdesc"
+                                    display="menu"
+                                ></p-columnFilter>
+                            </div>
+                        </th>
+                        <th pSortableColumn="control">
+                            <div
+                                class="flex justify-content-between align-items-center"
+                            >
+                                <p-sortIcon field="control"></p-sortIcon>
+                                CONTROL
+                                <p-columnFilter
+                                    type="text"
+                                    field="control"
+                                    display="menu"
+                                ></p-columnFilter>
+                            </div>
+                        </th>
+                        <th pSortableColumn="comments">
+                            <div
+                                class="flex justify-content-between align-items-center"
+                            >
+                                <p-sortIcon field="comments"></p-sortIcon>
+                                COMMENTS
+                                <p-columnFilter
+                                    type="text"
+                                    field="comments"
+                                    display="menu"
+                                ></p-columnFilter>
+                            </div>
+                        </th>
+                        <th pSortableColumn="controltxt">
+                            <div
+                                class="flex justify-content-between align-items-center"
+                            >
+                                <p-sortIcon field="controltxt"></p-sortIcon>
+                                CONTROL TYPE
+                                <p-columnFilter
+                                    type="text"
+                                    field="controltxt"
+                                    display="menu"
+                                ></p-columnFilter>
+                            </div>
+                        </th>
+                        <th pSortableColumn="frequencytxt">
+                            <div
+                                class="flex justify-content-between align-items-center"
+                            >
+                                <p-sortIcon field="frequencytxt"></p-sortIcon>
+                                FREQUENCY
+                                <p-columnFilter
+                                    type="text"
+                                    field="frequencytxt"
+                                    display="menu"
+                                ></p-columnFilter>
+                            </div>
+                        </th>
+                        <th pSortableColumn="autotxt">
+                            <div
+                                class="flex justify-content-between align-items-center"
+                            >
+                                <p-sortIcon field="autotxt"></p-sortIcon>
+                                AUTOMATION
+                                <p-columnFilter
+                                    type="text"
+                                    field="autotxt"
+                                    display="menu"
+                                ></p-columnFilter>
+                            </div>
+                        </th>
+                        <th pSortableColumn="categorytxt">
+                            <div
+                                class="flex justify-content-between align-items-center"
+                            >
+                                <p-sortIcon field="categorytxt"></p-sortIcon>
+                                CATEGORY
+                                <p-columnFilter
+                                    type="text"
+                                    field="categorytxt"
+                                    display="menu"
+                                ></p-columnFilter>
+                            </div>
+                        </th>
+                        <th pSortableColumn="asstxt">
+                            <div
+                                class="flex justify-content-between align-items-center"
+                            >
+                                <p-sortIcon field="asstxt"></p-sortIcon>
+                                ASSERTION
+                                <p-columnFilter
+                                    type="text"
+                                    field="asstxt"
+                                    display="menu"
+                                ></p-columnFilter>
+                            </div>
+                        </th>
+                        <th pSortableColumn="keytxt">
+                            <div
+                                class="flex justify-content-between align-items-center"
+                            >
+                                <p-sortIcon field="keytxt"></p-sortIcon>
+                                KEY CONTROL
+                                <p-columnFilter
+                                    type="text"
+                                    field="keytxt"
+                                    display="menu"
+                                ></p-columnFilter>
+                            </div>
+                        </th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-control>
+                    <tr>
+                        <!-- <td>
+                            <div class="flex">
+                                <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2" (click)="editcontrol(control)"></button>
+                                <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning" (click)="deletecontrol(control)"></button>
+                            </div>
+                        </td> -->
+                        <td pFrozenColumn style="max-width: 3rem">
+                            <p-tableCheckbox
+                                [value]="control"
+                                (click)="selectControl(control)"
+                            ></p-tableCheckbox>
+                        </td>
+                        <td style="min-width: 12rem">
+                            {{ control.control_uid }}
+                        </td>
+                        <td style="min-width: 12rem">
+                            {{ control.aulfdesc }}
+                        </td>
+                        <td style="min-width: 12rem">
+                            {{ control.bannerdesc }}
+                        </td>
+                        <td
+                            style="min-width: 12rem"
+                            class="cursor-pointer"
+                            (click)="
+                                showInDetail(
+                                    control.riskdesc,
+                                    'RISK DESCRIPTION'
+                                )
+                            "
+                            title="Click to view full detail"
+                        >
+                            {{ control.riskdesc }}
+                        </td>
+                        <td
+                            style="min-width: 12rem"
+                            class="cursor-pointer"
+                            (click)="showInDetail(control.control, 'CONTROL')"
+                            title="Click to view full detail"
+                        >
+                            {{ control.control }}
+                        </td>
+                        <td style="min-width: 12rem">
+                            {{ control.comments }}
+                        </td>
+                        <td style="min-width: 12rem">
+                            {{ control.controltxt }}
+                        </td>
+                        <td style="min-width: 12rem">
+                            {{ control.frequencytxt }}
+                        </td>
+                        <td style="min-width: 12rem">
+                            {{ control.autotxt }}
+                        </td>
+                        <td style="min-width: 12rem">
+                            {{ control.categorytxt }}
+                        </td>
+                        <td style="min-width: 12rem">
+                            {{ control.asstxt }}
+                        </td>
+                        <td style="min-width: 12rem">
+                            {{ control.keytxt }}
+                        </td>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="emptymessage">
+                    <tr>
+                        <td colspan="7">No controls found.</td>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="loadingbody">
+                    <tr>
+                        <td colspan="7">Loading controls data. Please wait.</td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </div>
+
+        <p-dialog
+            [(visible)]="controlDialog"
+            [style]="{ width: '80%' }"
+            header="Control Details"
+            [modal]="true"
+            class="p-fluid"
+        >
+            <ng-template pTemplate="content">
+                <form [formGroup]="form">
+                    <div class="p-fluid p-formgrid grid">
+                        <!-- <div class="field">
+                    <label for="control_uid">control_uid</label>
+                    <input type="text" pInputText id="control_uid" [(ngModel)]="controls.control_uid" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !product.control_uid}"/>
+                    <small class="ng-dirty ng-invalid" *ngIf="submitted && !controls.control_uid">control_uid is required.</small>
+                </div> -->
+                        <div class="field col-12 md:col-8">
+                            <label for="risk_uid">Risk UID <sup>*</sup></label>
+                            <!-- <input id="risk_uid" pInputText [(ngModel)]="control.risk_uid" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !control.risk_uid}"/>
+                    <small class="ng-dirty ng-invalid" *ngIf="submitted && !control.risk_uid">risk_uid is required.</small> -->
+
+                            <p-autoComplete
+                                formControlName="riskdesc"
+                                [ngModelOptions]="{ standalone: true }"
+                                (onSelect)="doOnSelectrisk($event)"
+                                [autoHighlight]="true"
+                                [(ngModel)]="control.riskdesc"
+                                [forceSelection]="true"
+                                [completeOnFocus]="true"
+                                [minLength]="1"
+                                placeholder="Search"
+                                id="risk_uid"
+                                [dropdown]="true"
+                                [suggestions]="filteredRisk"
+                                (completeMethod)="filterRisk($event)"
+                                required
+                                autofocus
+                                [ngClass]="{
+                                    'ng-invalid ng-dirty':
+                                        submitted && !form.controls.riskdesc
+                                }"
+                                (onSelect)="selectRisk($event)"
+                            >
+                                <!-- <ng-template let-Risk pTemplate="item">
+							<div class="risk_uid-item">
+							  <div> {{Risk.risk_uid}} -  {{Risk.risk}}</div>
+							</div>
+						  </ng-template> -->
+                            </p-autoComplete>
+                            <small
+                                class="ng-dirty ng-invalid"
+                                *ngIf="
+                                    form.controls.riskdesc.invalid &&
+                                    form.controls.riskdesc.dirty
+                                "
+                                >Risk UID is required.</small
+                            >
+                        </div>
+                        <div class="field col-12 md:col-4">
+                            <label for="au_level_4_uid"
+                                >AU Level-4 UID <sup>*</sup></label
+                            >
+                            <!-- <input id="au_level_4_uid" pInputText [(ngModel)]="control.au_level_4_uid" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !control.au_level_4_uid}" />
+                    <small class="ng-dirty ng-invalid" *ngIf="submitted && !control.au_level_4_uid">au_level_4_uid is required.</small> -->
+                            <p-autoComplete
+                                formControlName="aulfdesc"
+                                [ngModelOptions]="{ standalone: true }"
+                                (onSelect)="doOnSelectaudit($event)"
+                                [autoHighlight]="true"
+                                [(ngModel)]="control.aulfdesc"
+                                [forceSelection]="true"
+                                [completeOnFocus]="true"
+                                [minLength]="1"
+                                placeholder="Search"
+                                id="au_level_4_uid"
+                                [dropdown]="true"
+                                [suggestions]="filteredAuditunivfour"
+                                (completeMethod)="filterAuditunivfour($event)"
+                                required
+                                autofocus
+                                [ngClass]="{
+                                    'ng-invalid ng-dirty':
+                                        submitted &&
+                                        !form.controls.aulfdesc.aulfdesc
+                                }"
+                            >
+                                <!-- <ng-template let-Auditunivfour pTemplate="item">
+							<div class="au_level_4_uid-item">
+							  <div> {{Auditunivfour.au_level_4_uid}} -  {{Auditunivfour.au_level_4_desc}}</div>
+							</div>
+						  </ng-template> -->
+                            </p-autoComplete>
+                            <small
+                                class="ng-dirty ng-invalid"
+                                *ngIf="
+                                    form.controls.aulfdesc.invalid &&
+                                    form.controls.aulfdesc.dirty
+                                "
+                                >AU Level-4 UID is required.</small
+                            >
+                        </div>
+
+                        <div class="field col-12 md:col-4">
+                            <label for="banner_uid"
+                                >Banner UID <sup>*</sup></label
+                            >
+                            <!-- <input id="banner_uid" pInputText [(ngModel)]="control.banner_uid" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !control.banner_uid}"/>
+                    <small class="ng-dirty ng-invalid" *ngIf="submitted && !control.banner_uid">banner_uid is required.</small> -->
+
+                            <p-autoComplete
+                                formControlName="bannerdesc"
+                                [ngModelOptions]="{ standalone: true }"
+                                (onSelect)="doOnSelectbanner($event)"
+                                [autoHighlight]="true"
+                                [(ngModel)]="control.bannerdesc"
+                                [forceSelection]="true"
+                                [completeOnFocus]="true"
+                                [minLength]="1"
+                                placeholder="Search"
+                                id="banner_uid"
+                                [dropdown]="true"
+                                [suggestions]="filteredBanner"
+                                (completeMethod)="filterBanner($event)"
+                                required
+                                autofocus
+                                [ngClass]="{
+                                    'ng-invalid ng-dirty':
+                                        submitted && !form.controls.bannerdesc
+                                }"
+                            >
+                                <!-- <ng-template let-Banner pTemplate="item">
+							<div class="banner_uid-item">
+							  <div> {{Banner.banner_uid}} -  {{Banner.banner}}</div>
+							</div>
+						  </ng-template> -->
+                            </p-autoComplete>
+                            <small
+                                class="ng-dirty ng-invalid"
+                                *ngIf="
+                                    form.controls.bannerdesc.invalid &&
+                                    form.controls.bannerdesc.dirty
+                                "
+                                >Banner UID is required.</small
+                            >
+                        </div>
+                        <div class="field col-12 md:col-4">
+                            <label for="control">Control <sup>*</sup></label>
+                            <input
+                                formControlName="control"
+                                [ngModelOptions]="{ standalone: true }"
+                                id="control"
+                                pInputText
+                                [(ngModel)]="control.control"
+                                required
+                                autofocus
+                                [ngClass]="{
+                                    'ng-invalid ng-dirty':
+                                        submitted && !form.controls.control
+                                }"
+                                (click)="
+                                    getText(
+                                        form.get('control').value,
+                                        form,
+                                        'control',
+                                        'Control'
+                                    )
+                                "
+                            />
+                            <small
+                                class="ng-dirty ng-invalid"
+                                *ngIf="
+                                    form.controls.control.invalid &&
+                                    form.controls.control.dirty
+                                "
+                                >Control is required.</small
+                            >
+                        </div>
+                        <div class="field col-12 md:col-4">
+                            <label for="comments">Comments <sup>*</sup></label>
+                            <input
+                                formControlName="comments"
+                                [ngModelOptions]="{ standalone: true }"
+                                id="comments"
+                                pInputText
+                                [(ngModel)]="control.comments"
+                                required
+                                autofocus
+                                [ngClass]="{
+                                    'ng-invalid ng-dirty':
+                                        submitted && !form.controls.comments
+                                }"
+                                (click)="
+                                    getText(
+                                        form.get('comments').value,
+                                        form,
+                                        'comments',
+                                        'Comments'
+                                    )
+                                "
+                            />
+                            <small
+                                class="ng-dirty ng-invalid"
+                                *ngIf="
+                                    form.controls.comments.invalid &&
+                                    form.controls.comments.dirty
+                                "
+                                >Comments is required.</small
+                            >
+                        </div>
+                        <div class="field col-12 md:col-4">
+                            <label for="control_type"
+                                >Control Type <sup>*</sup></label
+                            >
+                            <!-- <input id="control_type" pInputText [(ngModel)]="control.control_type" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !control.control_type}"/>
+                    <small class="ng-dirty ng-invalid" *ngIf="submitted && !control.control_type">control_type is required.</small> -->
+
+                            <p-autoComplete
+                                formControlName="controldesc"
+                                [ngModelOptions]="{ standalone: true }"
+                                (onSelect)="doOnSelectcontrol($event)"
+                                [autoHighlight]="true"
+                                [(ngModel)]="control.controldesc"
+                                [forceSelection]="true"
+                                [completeOnFocus]="true"
+                                [minLength]="1"
+                                placeholder="Search"
+                                id="code_value_key"
+                                [dropdown]="true"
+                                [suggestions]="filteredkeyControltype"
+                                (completeMethod)="filterkeyControltype($event)"
+                                required
+                                autofocus
+                                [ngClass]="{
+                                    'ng-invalid ng-dirty':
+                                        submitted && !form.controls.controldesc
+                                }"
+                            >
+                                <!-- <ng-template let-keyControltype pTemplate="item">
+							<div class="code_value_key-item">
+							  <div> {{keyControltype.code_value_key}} -  {{keyControltype.text_code_value}}</div>
+							</div>
+						  </ng-template> -->
+                            </p-autoComplete>
+                            <small
+                                class="ng-dirty ng-invalid"
+                                *ngIf="
+                                    form.controls.controldesc.invalid &&
+                                    form.controls.controldesc.dirty
+                                "
+                                >Control Type is required.</small
+                            >
+                        </div>
+                        <div class="field col-12 md:col-4">
+                            <label for="frequency"
+                                >Frequency <sup>*</sup></label
+                            >
+                            <!-- <input id="frequency" pInputText [(ngModel)]="control.frequency" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !control.frequency}"/>
+                    <small class="ng-dirty ng-invalid" *ngIf="submitted && !control.frequency">frequency is required.</small> -->
+                            <p-autoComplete
+                                formControlName="frequencydesc"
+                                [ngModelOptions]="{ standalone: true }"
+                                appendTo="body"
+                                (onSelect)="doOnSelectfrequency($event)"
+                                [autoHighlight]="true"
+                                [(ngModel)]="control.frequencydesc"
+                                [forceSelection]="true"
+                                [completeOnFocus]="true"
+                                [minLength]="1"
+                                placeholder="Search"
+                                id="code_value_key"
+                                [dropdown]="true"
+                                [suggestions]="filteredkeyFrequency"
+                                (completeMethod)="filterkeyFrequency($event)"
+                                required
+                                autofocus
+                                [ngClass]="{
+                                    'ng-invalid ng-dirty':
+                                        submitted &&
+                                        !form.controls.frequencydesc
+                                }"
+                            >
+                                <!-- <ng-template let-keyFrequency pTemplate="item">
+							<div class="code_value_key-item">
+							  <div> {{keyFrequency.code_value_key}} -  {{keyFrequency.text_code_value}}</div>
+							</div>
+						  </ng-template> -->
+                            </p-autoComplete>
+                            <small
+                                class="ng-dirty ng-invalid"
+                                *ngIf="
+                                    form.controls.frequencydesc.invalid &&
+                                    form.controls.frequencydesc.dirty
+                                "
+                                >Frequency is required.</small
+                            >
+                        </div>
+                        <div class="field col-12 md:col-4">
+                            <label for="automation"
+                                >Automation <sup>*</sup></label
+                            >
+                            <!-- <input id="automation" pInputText [(ngModel)]="control.automation" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !control.automation}"/>
+                    <small class="ng-dirty ng-invalid" *ngIf="submitted && !control.automation">automation is required.</small> -->
+                            <p-autoComplete
+                                formControlName="autodesc"
+                                [ngModelOptions]="{ standalone: true }"
+                                (onSelect)="doOnSelectauto($event)"
+                                [autoHighlight]="true"
+                                [(ngModel)]="control.autodesc"
+                                [forceSelection]="true"
+                                [completeOnFocus]="true"
+                                [minLength]="1"
+                                placeholder="Search"
+                                id="code_value_key"
+                                [dropdown]="true"
+                                [suggestions]="filteredkeyType"
+                                (completeMethod)="filterkeyType($event)"
+                                required
+                                autofocus
+                                [ngClass]="{
+                                    'ng-invalid ng-dirty':
+                                        submitted && !form.controls.autodesc
+                                }"
+                            >
+                                <!-- <ng-template let-keyType pTemplate="item">
+							<div class="code_value_key-item">
+							  <div> {{keyType.code_value_key}} -  {{keyType.text_code_value}}</div>
+							</div>
+						  </ng-template> -->
+                            </p-autoComplete>
+                            <small
+                                class="ng-dirty ng-invalid"
+                                *ngIf="
+                                    form.controls.autodesc.invalid &&
+                                    form.controls.autodesc.dirty
+                                "
+                                >Automation is required.</small
+                            >
+                        </div>
+                        <div class="field col-12 md:col-4">
+                            <label for="category">Category <sup>*</sup></label>
+                            <!-- <input id="category" pInputText [(ngModel)]="control.category" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !control.category}"/>
+                    <small class="ng-dirty ng-invalid" *ngIf="submitted && !control.category">category is required.</small> -->
+                            <!-- <p-autoComplete
+                                formControlName="categorydesc"
+                                [ngModelOptions]="{ standalone: true }"
+                                (onSelect)="doOnSelectcategory($event)"
+                                [autoHighlight]="true"
+                                [(ngModel)]="control.categorydesc"
+                                [forceSelection]="true"
+                                [completeOnFocus]="true"
+                                [minLength]="1"
+                                placeholder="Search"
+                                id="code_value_key"
+                                [dropdown]="true"
+                                [suggestions]="filteredkeyCategory"
+                                (completeMethod)="filterkeyCategory($event)"
+                                required
+                                autofocus
+                                [ngClass]="{
+                                    'ng-invalid ng-dirty':
+                                        submitted && !form.controls.categorydesc
+                                }"
+                            > </p-autoComplete>-->
+
+                            <p-multiSelect
+                                appendTo="body"
+                                id="categorydesc"
+                                [options]="keyCategory"
+                                formControlName="categorydesc"
+                                optionLabel="text_code_value"
+                                optionValue="code_value_key"
+                                formControlName="categorydesc"
+                                [ngModelOptions]="{ standalone: true }"
+                                [(ngModel)]="selectedcatItem"
+                            ></p-multiSelect>
+                            <!-- <ng-template let-keyCategory pTemplate="item">
+							<div class="code_value_key-item">
+							  <div> {{keyCategory.code_value_key}} -  {{keyCategory.text_code_value}}</div>
+							</div>
+						  </ng-template> -->
+
+                            <small
+                                class="ng-dirty ng-invalid"
+                                *ngIf="
+                                    form.controls.categorydesc.invalid &&
+                                    form.controls.categorydesc.dirty
+                                "
+                                >Category is required.</small
+                            >
+                        </div>
+                        <div class="field col-12 md:col-4 mt-1">
+                            <label for="assertion"
+                                >Assertion <sup>*</sup></label
+                            >
+                            <!-- <input id="assertion" pInputText [(ngModel)]="control.assertion" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !control.assertion}"/>
+                    <small class="ng-dirty ng-invalid" *ngIf="submitted && !control.assertion">assertion is required.</small> -->
+                            <!-- <p-autoComplete
+                                formControlName="assdesc"
+                                [ngModelOptions]="{ standalone: true }"
+                                appendTo="body"
+                                (onSelect)="doOnSelectasss($event)"
+                                [autoHighlight]="true"
+                                [(ngModel)]="control.assdesc"
+                                [forceSelection]="true"
+                                [completeOnFocus]="true"
+                                [minLength]="1"
+                                placeholder="Search"
+                                id="code_value_key"
+                                [dropdown]="true"
+                                [suggestions]="filteredkeyassertion"
+                                (completeMethod)="filterkeyassertion($event)"
+                                required
+                                autofocus
+                                [ngClass]="{
+                                    'ng-invalid ng-dirty':
+                                        submitted && !form.controls.assdesc
+                                }" </p-autoComplete>
+                            > -->
+
+                            <p-multiSelect
+                                appendTo="body"
+                                id="assdesc"
+                                [options]="keyassertion"
+                                formControlName="assdesc"
+                                optionLabel="text_code_value"
+                                optionValue="code_value_key"
+                                [(ngModel)]="selectedItem"
+                            ></p-multiSelect>
+                            <!-- <ng-template let-keyassertion pTemplate="item">
+							<div class="code_value_key-item">
+							  <div> {{keyassertion.code_value_key}} -  {{keyassertion.text_code_value}}</div>
+							</div>
+						  </ng-template> -->
+
+                            <small
+                                class="ng-dirty ng-invalid"
+                                *ngIf="
+                                    form.controls.assdesc.invalid &&
+                                    form.controls.assdesc.dirty
+                                "
+                                >Assertion is required.</small
+                            >
+                        </div>
+                        <div class="field col-12 md:col-4">
+                            <label for="Key Control"
+                                >Key Control <sup>*</sup></label
+                            >
+                            <!-- <input id="key_control" pInputText [(ngModel)]="control.key_control" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !control.key_control}"/>
+                    <small class="ng-dirty ng-invalid" *ngIf="submitted && !control.key_control">key_control is required.</small> -->
+
+                            <p-autoComplete
+                                formControlName="keydesc"
+                                [ngModelOptions]="{ standalone: true }"
+                                appendTo="body"
+                                (onSelect)="doOnSelectkey($event)"
+                                [autoHighlight]="true"
+                                [(ngModel)]="control.keydesc"
+                                [forceSelection]="true"
+                                [completeOnFocus]="true"
+                                [minLength]="1"
+                                placeholder="Search"
+                                id="code_value_key"
+                                [dropdown]="true"
+                                [suggestions]="filteredkeycontrol"
+                                (completeMethod)="filterkeycontrol($event)"
+                                required
+                                autofocus
+                                [ngClass]="{
+                                    'ng-invalid ng-dirty':
+                                        submitted && !form.controls.keydesc
+                                }"
+                            >
+                                <!-- <ng-template let-keycontrol pTemplate="item">
+							<div class="code_value_key-item">
+							  <div> {{keycontrol.code_value_key}} -  {{keycontrol.text_code_value}}</div>
+							</div>
+						  </ng-template> -->
+                            </p-autoComplete>
+                            <small
+                                class="ng-dirty ng-invalid"
+                                *ngIf="
+                                    form.controls.keydesc.invalid &&
+                                    form.controls.keydesc.dirty
+                                "
+                                >Key Control is required.</small
+                            >
+                        </div>
+                    </div>
+                </form>
+            </ng-template>
+
+            <ng-template pTemplate="footer">
+                <button
+                    pButton
+                    pRipple
+                    label="Cancel"
+                    icon="pi pi-times"
+                    class="p-button-text"
+                    (click)="hideDialog()"
+                ></button>
+                <button
+                    pButton
+                    pRipple
+                    #submitButton
+                    label="Save"
+                    icon="pi pi-check"
+                    class="p-button-text"
+                    (click)="savecontrol()"
+                    [disabled]="!form.valid"
+                ></button>
+            </ng-template>
+        </p-dialog>
+
+        <!-- <p-dialog [(visible)]="deletecontrolDialog" header="Confirm" [modal]="true" [style]="{width:'450px'}">
+            <div class="flex align-items-center justify-content-center">
+                <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem"></i>
+                <span *ngIf="controls">Are you sure you want to delete?</span>
+            </div>
+            <ng-template pTemplate="footer">
+                <button pButton pRipple icon="pi pi-times" class="p-button-text" label="No" (click)="deletecontrolDialog = false"></button>
+                <button pButton pRipple icon="pi pi-check" class="p-button-text" label="Yes" (click)="confirmDelete()"></button>
+            </ng-template>
+        </p-dialog>
+
+        <p-dialog [(visible)]="deletecontrolsDialog" header="Confirm" [modal]="true" [style]="{width:'450px'}">
+            <div class="flex align-items-center justify-content-center">
+                <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem"></i>
+                <span>Are you sure you want to delete selected control?</span>
+            </div>
+            <ng-template pTemplate="footer">
+                <button pButton pRipple icon="pi pi-times" class="p-button-text" label="No" (click)="deletecontrolsDialog = false"></button>
+                <button pButton pRipple icon="pi pi-check" class="p-button-text" label="Yes" (click)="confirmDeleteSelected()"></button>
+            </ng-template>
+        </p-dialog> -->
+        <p-confirmDialog> </p-confirmDialog>
+    </div>
+</div>
+
+<p-dialog
+    #textDialog
+    [header]="popupHeader"
+    [(visible)]="showPopupText"
+    [modal]="true"
+>
+    <ng-template pTemplate="content">
+        <form [formGroup]="textDialogForm">
+            <textarea
+                autofocus
+                name=""
+                id=""
+                cols="100"
+                rows="40"
+                formControlName="input"
+            ></textarea>
+        </form>
+    </ng-template>
+
+    <ng-template pTemplate="footer">
+        <button
+            pButton
+            pRipple
+            label="Ok"
+            icon="pi pi-check"
+            class="p-button-text"
+            (click)="showPopupText = false"
+        ></button>
+    </ng-template>
+</p-dialog>
+
+<p-dialog [(visible)]="showPop" [header]="showPopTitle" [modal]="true">
+    <ng-template pTemplate="content">
+        <textarea [value]="showContent" cols="90" rows="40" disabled></textarea>
+    </ng-template>
+</p-dialog>

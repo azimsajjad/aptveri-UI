@@ -1,0 +1,371 @@
+<div class="grid">
+    <div class="col-12">
+        <div class="card">
+            <p-toast></p-toast>
+            <!-- <p-toolbar styleClass="mb-4">
+                <ng-template pTemplate="left">
+
+                </ng-template>
+
+                <!--s <ng-template pTemplate="right">
+                    <p-fileUpload mode="basic" accept="image/*" [maxFileSize]="1000000" label="Import" chooseLabel="Import" class="mr-2 inline-block"></p-fileUpload>
+                    <button pButton pRipple label="Export" icon="pi pi-upload" class="p-button-help" (click)="dt.exportCSV()"></button>
+                </ng-template>
+            </p-toolbar> -->
+            <!--
+            <p-table #dt [value]="banners" [columns]="cols" responsiveLayout="scroll" [rows]="10" [globalFilterFields]="['banner_uid','division','banner']" [rows]="10" [paginator]="true" [rowsPerPageOptions]="[10,20,30]" [showCurrentPageReport]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [(selection)]="selectedBanners" selectionMode="multiple" [rowHover]="true" dataKey="banner_uid">
+                <ng-template pTemplate="caption">
+                    <div class="flex flex-column md:flex-row md:justify-content-between md:align-items-center">
+                        <h6 class="m-0">BANNERS</h6>
+                        <div class="my-2">
+                            <button pButton pRipple label="New" icon="pi pi-plus" class="p-button-success mr-2" (click)="openNew()"></button>
+                        </div>
+                    </div>
+                </ng-template>
+                <ng-template pTemplate="header">
+                    <tr>
+
+                        <th pSortableColumn="banner_uid">BANNER UID <p-sortIcon field="banner_uid"></p-sortIcon></th>
+                        <th pSortableColumn="division">DIVISION<p-sortIcon field="division"></p-sortIcon></th>
+                        <th pSortableColumn="banner">BANNER<p-sortIcon field="banner"></p-sortIcon></th>
+                        <th></th>
+                    </tr>
+                    <tr>
+<th > <span class="p-column-filter-matchmode-dropdown p-dropdown p-component" >
+
+    <input pInputText type="text" (input)="dt.filter($event.target.value,'banner_uid' ,'contains')" placeholder="Search..." />
+</span></th>
+<th> <span class="p-column-filter-matchmode-dropdown p-dropdown p-component">
+
+    <input pInputText type="text" (input)="dt.filter($event.target.value, 'division','contains')" placeholder="Search..." />
+</span></th>
+<th> <span class="p-column-filter-matchmode-dropdown p-dropdown p-component">
+
+    <input pInputText type="text" (input)="dt.filter($event.target.value,'banner', 'contains')" placeholder="Search..." />
+</span></th>
+<th></th>
+
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-banner>
+                    <tr>
+
+
+
+                        <td style="width:14%; min-width:3rem;"><span class="p-column-title">Banner ID</span>
+                            {{banner.banner_uid}}
+                        </td>
+                        <td style="width:14%; min-width:10rem;">
+                            <span class="p-column-title">Division</span>
+                            {{banner.division}}
+                        </td>
+
+                        <td style="width:14%; min-width:10rem;">
+                            <span class="p-column-title">Banner</span>
+                            {{banner.banner}}
+                        </td>
+
+                        <td>
+                            <div class="flex">
+                                <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2" (click)="editBanner(banner)"></button>
+                                <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning" (click)="deleteBanner(banner)"></button>
+                            </div>
+                        </td>
+                    </tr>
+                </ng-template>
+            </p-table> -->
+
+            <p-table
+                #dt
+                [value]="banners"
+                selectionMode="single"
+                dataKey="banner_uid"
+                [rows]="10"
+                [loading]="loading"
+                [rowHover]="true"
+                styleClass="p-datatable-gridlines"
+                [paginator]="true"
+                [globalFilterFields]="['banner_uid', 'division', 'banner']"
+                [rowsPerPageOptions]="[10, 20, 30]"
+                [showCurrentPageReport]="true"
+                currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+                [(selection)]="selectedBanners"
+                responsiveLayout="scroll"
+                [scrollable]="true"
+                scrollHeight="calc(100vh - 220px)"
+            >
+                <ng-template pTemplate="caption">
+                    <div
+                        class="grid grid-nogutter flex-column md:flex-row justify-content-between"
+                    >
+                        <h6 class="m-0">BANNER</h6>
+                        <!-- <div style="margin-left: 61.5rem;" >
+    <button title="New" pButton pRipple  icon="pi pi-plus" *ngIf="accountSvr.checkPermission(2,2,'A')" class="p-button-rounded p-button-success"  (click)="openNew()"></button>
+
+</div>
+<div style="margin-left: 0.5rem;">
+
+                            <button title="Edit"  pButton pRipple  icon="pi pi-pencil" *ngIf="accountSvr.checkPermission(2,2,'C')" class="p-button-rounded p-button-warning" (click)="editBanner()" [disabled]="!selectedBanners || !selectedBanners.length"></button>
+                        </div>
+                        <div style="margin-left: 0.5rem;">
+                            <button title="Delete"  pButton pRipple  icon="pi pi-trash" *ngIf="accountSvr.checkPermission(2,2,'D')" class="p-button-rounded p-button-danger" (click)="deleteSelectedBanners()" [disabled]="!selectedBanners || !selectedBanners.length"></button>
+                        </div>
+                        <div style="margin-left: 0.5rem;">
+                            <button title="Clear"  pButton pRipple  class="p-button-rounded p-button-info" icon=" pi pi-filter-slash" (click)="clear(dt)"></button>
+                        </div> -->
+
+                        <span class="p-input-icon-left mb-2 md:mb-0">
+                            <button
+                                title="New"
+                                pButton
+                                pRipple
+                                icon="pi pi-plus"
+                                *ngIf="accountSvr.checkPermission(2, 2, 'A')"
+                                class="p-button-rounded p-button-success"
+                                (click)="openNew()"
+                            ></button>
+
+                            &nbsp;
+
+                            <button
+                                title="Edit"
+                                pButton
+                                pRipple
+                                icon="pi pi-pencil"
+                                *ngIf="accountSvr.checkPermission(2, 2, 'C')"
+                                class="p-button-rounded p-button-warning"
+                                (click)="editBanner()"
+                                [disabled]="selectedBanners?.length != 1"
+                            ></button>
+                            &nbsp;
+                            <button
+                                title="Delete"
+                                pButton
+                                pRipple
+                                icon="pi pi-trash"
+                                *ngIf="accountSvr.checkPermission(2, 2, 'D')"
+                                class="p-button-rounded p-button-danger"
+                                (click)="deleteSelectedBanners()"
+                                [disabled]="selectedBanners?.length != 1"
+                            ></button>
+                            &nbsp;
+                            <button
+                                title="Clear"
+                                pButton
+                                pRipple
+                                class="p-button-rounded p-button-info"
+                                icon=" pi pi-filter-slash"
+                                (click)="clear(dt)"
+                            ></button>
+                        </span>
+                    </div>
+                </ng-template>
+                <ng-template
+                    pTemplate="header"
+                    *ngIf="accountSvr.checkPermission(2, 2, 'V')"
+                >
+                    <tr>
+                        <!-- <th style="width:0.5rem;"></th> -->
+                        <th pFrozenColumn style="max-width: 3rem">
+                            <!-- <p-tableHeaderCheckbox></p-tableHeaderCheckbox> -->
+                        </th>
+                        <th pSortableColumn="banner_uid">
+                            <div
+                                class="flex justify-content-between align-items-center"
+                            >
+                                <p-sortIcon field="banner_uid"></p-sortIcon>
+                                BANNER UID
+                                <p-columnFilter
+                                    type="text"
+                                    field="banner_uid"
+                                    display="menu"
+                                ></p-columnFilter>
+                            </div>
+                        </th>
+                        <th pSortableColumn="division">
+                            <div
+                                class="flex justify-content-between align-items-center"
+                            >
+                                <p-sortIcon field="division"></p-sortIcon>
+                                DIVISION
+                                <p-columnFilter
+                                    type="text"
+                                    field="division"
+                                    display="menu"
+                                ></p-columnFilter>
+                            </div>
+                        </th>
+                        <th pSortableColumn="banner">
+                            <div
+                                class="flex justify-content-between align-items-center"
+                            >
+                                <p-sortIcon field="banner"></p-sortIcon>
+                                BANNER
+                                <p-columnFilter
+                                    type="text"
+                                    field="banner"
+                                    display="menu"
+                                ></p-columnFilter>
+                            </div>
+                        </th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-banner>
+                    <tr>
+                        <!-- <td>
+                            <div class="flex">
+                                <button pButton pRipple icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2" (click)="editBanner(banner)"></button>
+                                <button pButton pRipple icon="pi pi-trash" class="p-button-rounded p-button-warning" (click)="deleteBanner(banner)"></button>
+                            </div>
+                        </td> -->
+                        <td pFrozenColumn style="max-width: 3rem">
+                            <p-tableCheckbox
+                                [value]="banner"
+                                (click)="selectBanner(banner)"
+                            ></p-tableCheckbox>
+                        </td>
+                        <td style="min-width: 12rem">
+                            {{ banner.banner_uid }}
+                        </td>
+                        <td style="min-width: 12rem">
+                            {{ banner.division }}
+                        </td>
+                        <td style="min-width: 12rem">
+                            {{ banner.banner }}
+                        </td>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="emptymessage">
+                    <tr>
+                        <td colspan="7">No Banners found.</td>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="loadingbody">
+                    <tr>
+                        <td colspan="7">Loading Banners data. Please wait.</td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </div>
+
+        <p-dialog
+            [(visible)]="bannerDialog"
+            [style]="{ width: '450px' }"
+            header="Banner Details"
+            [modal]="true"
+            class="p-fluid"
+        >
+            <ng-template pTemplate="content">
+                <form [formGroup]="form">
+                    <!-- <div class="field">
+                    <label for="banner_uid">banner_uid</label>
+                    <input type="text" pInputText id="banner_uid" [(ngModel)]="banners.banner_uid" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !product.banner_uid}"/>
+                    <small class="ng-dirty ng-invalid" *ngIf="submitted && !banners.banner_uid">banner_uid is required.</small>
+                </div> -->
+                    <div class="field">
+                        <label for="division">Division <sup>*</sup></label>
+                        <!-- <input id="division" pInputText [(ngModel)]="banner.division" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && banner.division.Invalid}" />
+                    <small class="ng-dirty ng-invalid" *ngIf="submitted && form.division.Invalid">Division is required.</small> -->
+                        <input
+                            id="division"
+                            formControlName="division"
+                            pInputText
+                            [ngModelOptions]="{ standalone: true }"
+                            [(ngModel)]="banner.division"
+                            required
+                            autofocus
+                            [ngClass]="{
+                                'ng-invalid ng-dirty':
+                                    submitted && !form.controls.division
+                            }"
+                        />
+                        <small
+                            *ngIf="
+                                form.controls.division.invalid &&
+                                form.controls.division.dirty
+                            "
+                            class="ng-dirty ng-invalid"
+                        >
+                            Division is required.
+                        </small>
+                    </div>
+
+                    <div class="field">
+                        <label for="banner">Banner <sup>*</sup></label>
+                        <input
+                            id="banner"
+                            formControlName="banner"
+                            [ngModelOptions]="{ standalone: true }"
+                            pInputText
+                            [(ngModel)]="banner.banner"
+                            required
+                            autofocus
+                            [ngClass]="{
+                                'ng-invalid ng-dirty':
+                                    submitted && !form.controls.banner
+                            }"
+                        />
+
+                        <!-- <input id="banner" pInputText [(ngModel)]="banner.banner" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && banner.banner.Invalid}"/> -->
+                        <!-- <small class="ng-dirty ng-invalid" *ngIf="submitted && form.banner.Invalid">
+                    Banner is required.</small> form.controls.comment.invalid && form.controls.comment.dirty-->
+                        <small
+                            *ngIf="
+                                form.controls.banner.invalid &&
+                                form.controls.banner.dirty
+                            "
+                            class="ng-dirty ng-invalid"
+                        >
+                            Banner is required
+                        </small>
+                    </div>
+                </form>
+            </ng-template>
+
+            <ng-template pTemplate="footer">
+                <button
+                    pButton
+                    pRipple
+                    label="Cancel"
+                    icon="pi pi-times"
+                    class="p-button-text"
+                    (click)="hideDialog()"
+                ></button>
+                <!-- <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text" (click)="saveBanner()" [disabled]="form.invalid"></button> -->
+                <button
+                    pButton
+                    #submitButton
+                    pRipple
+                    label="Save"
+                    icon="pi pi-check"
+                    (click)="saveBanner()"
+                    class="p-button-text"
+                    [disabled]="!form.valid"
+                ></button>
+            </ng-template>
+        </p-dialog>
+
+        <!-- <p-dialog [(visible)]="deleteBannerDialog" header="Confirm" [modal]="true" [style]="{width:'450px'}">
+            <div class="flex align-items-center justify-content-center">
+                <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem"></i>
+                <span *ngIf="banners">Are you sure you want to delete?</span>
+            </div>
+            <ng-template pTemplate="footer">
+                <button pButton pRipple icon="pi pi-times" class="p-button-text" label="No" (click)="deleteBannerDialog = false"></button>
+                <button pButton pRipple icon="pi pi-check" class="p-button-text" label="Yes" (click)="confirmDelete()"></button>
+            </ng-template>
+        </p-dialog>
+
+        <p-dialog [(visible)]="deleteBannersDialog" header="Confirm" [modal]="true" [style]="{width:'450px'}">
+            <div class="flex align-items-center justify-content-center">
+                <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem"></i>
+                <span>Are you sure you want to delete selected Banner?</span>
+            </div>
+            <ng-template pTemplate="footer">
+                <button pButton pRipple icon="pi pi-times" class="p-button-text" label="No" (click)="deleteBannersDialog = false"></button>
+                <button pButton pRipple icon="pi pi-check" class="p-button-text" label="Yes" (click)="confirmDeleteSelected()"></button>
+            </ng-template>
+        </p-dialog> -->
+        <p-confirmDialog> </p-confirmDialog>
+    </div>
+</div>

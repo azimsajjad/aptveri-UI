@@ -1,0 +1,1333 @@
+<div class="grid">
+    <div class="col-12">
+        <div class="card">
+            <p-toast></p-toast>
+
+            <p-table
+                #dt
+                [value]="audits"
+                selectionMode="single"
+                [rows]="10"
+                [loading]="loading"
+                [rowHover]="true"
+                styleClass="p-datatable-gridlines"
+                [paginator]="true"
+                [globalFilterFields]="[
+                    'audit_uid',
+                    'audit_board_id',
+                    'audit_name',
+                    'banner_id',
+                    'au_level2_id',
+                    'review_year',
+                    'quarter',
+                    'start_date',
+                    'end_date',
+                    'acp_audit',
+                    'user_acces_id',
+                    'audit_schedule',
+                    'results_url',
+                    'last_run_date'
+                ]"
+                [rowsPerPageOptions]="[10, 20, 30]"
+                [showCurrentPageReport]="true"
+                currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+                [(selection)]="selectedaudits"
+                responsiveLayout="scroll"
+            >
+                <ng-template pTemplate="caption">
+                    <div
+                        class="grid grid-nogutter flex-column md:flex-row justify-content-between"
+                    >
+                        <h6 class="m-0">AUDIT</h6>
+                        <span class="p-input-icon-left mb-2 md:mb-0">
+                            <button
+                                title="Clear"
+                                pButton
+                                pRipple
+                                icon="pi pi-filter-slash"
+                                class="p-button-rounded p-button-info ml-2"
+                                (click)="dt.clear()"
+                            ></button>
+                            <!-- &nbsp;
+                            <button
+                                title="Download Excel"
+                                pButton
+                                pRipple
+                                icon="pi pi-file-excel"
+                                class="p-button-rounded p-button-purple-500"
+                                (click)="downloadExcel()"
+                                [disabled]="!auditTSelection?.length > 0"
+                            ></button> -->
+                        </span>
+                    </div>
+                </ng-template>
+                <ng-template
+                    pTemplate="header"
+                    *ngIf="accountSvr.checkPermission(2, 4, 'V')"
+                >
+                    <tr>
+                        <th *ngIf="isShown" style="width: 3rem"></th>
+                        <th pSortableColumn="audit_uid">
+                            <div
+                                class="flex justify-content-between align-items-center"
+                            >
+                                <p-sortIcon field="audit_uid"></p-sortIcon>
+                                AUDIT UID
+                                <p-columnFilter
+                                    type="text"
+                                    field="audit_uid"
+                                    display="menu"
+                                >
+                                </p-columnFilter>
+                            </div>
+                        </th>
+                        <th pSortableColumn="audit_board_id">
+                            <div
+                                class="flex justify-content-between align-items-center"
+                            >
+                                <p-sortIcon field="audit_board_id"></p-sortIcon>
+                                AUDIT BOARD ID
+                                <p-columnFilter
+                                    type="text"
+                                    field="audit_board_id"
+                                    display="menu"
+                                ></p-columnFilter>
+                            </div>
+                        </th>
+                        <th pSortableColumn="audit_name">
+                            <div
+                                class="flex justify-content-between align-items-center"
+                            >
+                                <p-sortIcon field="audit_name"></p-sortIcon>
+                                AUDIT NAME
+                                <p-columnFilter
+                                    type="text"
+                                    field="audit_name"
+                                    display="menu"
+                                >
+                                </p-columnFilter>
+                            </div>
+                        </th>
+                        <th pSortableColumn="banner">
+                            <div
+                                class="flex justify-content-between align-items-center"
+                            >
+                                <p-sortIcon field="banner"></p-sortIcon>
+                                BANNER DESCRIPTION
+                                <p-columnFilter
+                                    type="text"
+                                    field="banner"
+                                    display="menu"
+                                >
+                                </p-columnFilter>
+                            </div>
+                        </th>
+                        <th pSortableColumn="au_level_2_desc">
+                            <div
+                                class="flex justify-content-between align-items-center"
+                            >
+                                <p-sortIcon
+                                    field="au_level_2_desc"
+                                ></p-sortIcon>
+                                AUDIT LEVEL 2 DESCRIPTION
+                                <p-columnFilter
+                                    type="text"
+                                    field="au_level_2_desc"
+                                    display="menu"
+                                ></p-columnFilter>
+                            </div>
+                        </th>
+
+                        <th pSortableColumn="review_year">
+                            <div
+                                class="flex justify-content-between align-items-center"
+                            >
+                                <p-sortIcon field="review_year"></p-sortIcon>
+                                REVIEW YEAR
+                                <p-columnFilter
+                                    type="text"
+                                    field="review_year"
+                                    display="menu"
+                                >
+                                </p-columnFilter>
+                            </div>
+                        </th>
+
+                        <th pSortableColumn="quarter">
+                            <div
+                                class="flex justify-content-between align-items-center"
+                            >
+                                <p-sortIcon field="quarter"></p-sortIcon>
+                                QUARTER
+                                <p-columnFilter
+                                    type="text"
+                                    field="quarter"
+                                    display="menu"
+                                >
+                                </p-columnFilter>
+                            </div>
+                        </th>
+                        <th pSortableColumn="start_date">
+                            <div
+                                class="flex justify-content-between align-items-center"
+                            >
+                                <p-sortIcon field="start_date"></p-sortIcon>
+                                START DATE
+                                <p-columnFilter
+                                    type="date"
+                                    field="start_date"
+                                    display="menu"
+                                >
+                                </p-columnFilter>
+                            </div>
+                        </th>
+                        <th pSortableColumn="end_date">
+                            <div
+                                class="flex justify-content-between align-items-center"
+                            >
+                                <p-sortIcon field="end_date"></p-sortIcon>
+                                END DATE
+                                <p-columnFilter
+                                    type="date"
+                                    field="end_date"
+                                    display="menu"
+                                >
+                                </p-columnFilter>
+                            </div>
+                        </th>
+                        <th pSortableColumn="acp_audit">
+                            <div
+                                class="flex justify-content-between align-items-center"
+                            >
+                                <p-sortIcon field="acp_audit"></p-sortIcon>
+                                ACP AUDIT
+                                <p-columnFilter
+                                    type="text"
+                                    field="acp_audit"
+                                    display="menu"
+                                >
+                                </p-columnFilter>
+                            </div>
+                        </th>
+                        <!-- <th pSortableColumn="user_access_id">
+            							<div class="flex justify-content-between align-items-center">
+
+            								 <p-sortIcon field="user_access_id"></p-sortIcon>
+            								 USER ACCESS ID
+            							</div>
+            						</th> -->
+                        <th pSortableColumn="audit_schedule">
+                            <div
+                                class="flex justify-content-between align-items-center"
+                            >
+                                <p-sortIcon field="audit_schedule"></p-sortIcon>
+                                AUDIT SCHEDULE
+                                <p-columnFilter
+                                    type="text"
+                                    field="audit_schedule"
+                                    display="menu"
+                                ></p-columnFilter>
+                            </div>
+                        </th>
+                        <!-- <th pSortableColumn="results_url">
+                            <div
+                                class="flex justify-content-between align-items-center"
+                            >
+                                <p-sortIcon field="results_url"></p-sortIcon>
+                                RESULT URL
+                                <p-columnFilter
+                                    type="text"
+                                    field="results_url"
+                                    display="menu"
+                                >
+                                </p-columnFilter>
+                            </div>
+                        </th> -->
+                        <th pSortableColumn="last_run_date">
+                            <div
+                                class="flex justify-content-between align-items-center"
+                            >
+                                <p-sortIcon field="last_run_date"></p-sortIcon>
+                                LAST RUN DATE
+                                <p-columnFilter
+                                    type="date"
+                                    field="last_run_date"
+                                    display="menu"
+                                ></p-columnFilter>
+                            </div>
+                        </th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-audit>
+                    <tr>
+                        <td *ngIf="isShown">
+                            <p-tableCheckbox
+                                [value]="audit"
+                                (click)="selectaudit(audit)"
+                            ></p-tableCheckbox>
+                        </td>
+                        <td style="min-width: 12rem">
+                            {{ audit.audit_uid }}
+                        </td>
+                        <td style="min-width: 12rem">
+                            {{ audit.audit_board_id }}
+                        </td>
+                        <td style="min-width: 12rem">
+                            {{ audit.audit_name }}
+                        </td>
+                        <td style="min-width: 12rem">
+                            {{ audit.banner }}
+                            <!-- <span *ngFor="let AB of AuditBanner">
+                                <span *ngIf="AB.banner_id === audit.banner_id">
+                                    {{ AB.banner_uid }} -{{ AB.banner }} -{{
+                                        AB.banner_id
+                                    }}
+                                </span>
+                            </span> -->
+                        </td>
+                        <td style="min-width: 12rem">
+                            <!-- {{audit.au_level_2_id}} -->
+                            {{ audit.au_level_2_desc }}
+
+                            <!-- <span *ngFor="let AU of AuditUniverse">
+                                <span
+                                    *ngIf="
+                                        AU.au_level_2_id === audit.au_level_2_id
+                                    "
+                                >
+                                    {{ AU.au_level_2_uid }} -{{
+                                        AU.au_level_2_desc
+                                    }}
+                                    -{{ AU.au_level_2_id }}
+                                </span>
+                            </span> -->
+                        </td>
+                        <td style="min-width: 12rem">
+                            {{ audit.review_year }}
+                        </td>
+                        <td style="min-width: 12rem">
+                            {{ audit.quarter }}
+                        </td>
+                        <td style="min-width: 12rem">
+                            {{ audit.start_date }}
+                        </td>
+                        <td style="min-width: 12rem">
+                            {{ audit.end_date }}
+                        </td>
+                        <td style="min-width: 12rem">
+                            {{ audit.acp_audit }}
+                        </td>
+
+                        <!--<td style="min-width: 12rem;">
+            							{{audit.user_access_id}}
+            							 <span  name="userValue" onload="displaytheUsername(audit.user_access_id)"  ngDefaultControl >
+            							</span> -->
+                        <!-- <span  *ngFor=" let nameArr of  audit.user_access_id.split(',')">
+            										<span  *ngFor="let allusers of listOfusers">
+
+            												<span >
+            														{{allusers.user_access_id == nameArr}}
+            													</span>
+
+            													<span >
+            														{{nameArr.Count}}
+            													</span>
+            										</span>
+
+
+            										<span  *ngFor="let allusers of listOfusers">
+
+            											<span *ngIf="allusers.user_access_id === nameArr.user_access_id">
+            													{{allusers.fullName }} ,
+            											</span>
+
+            										</span>
+            								</span>
+
+            						</td>-->
+                        <td style="min-width: 12rem">
+                            {{ audit.audit_schedule }}
+                        </td>
+                        <!-- <td style="min-width: 12rem;">
+                            {{ audit.results_url }}
+                        </td> -->
+                        <td style="min-width: 12rem">
+                            {{ audit.last_run_date }}
+                        </td>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="emptymessage">
+                    <tr>
+                        <td colspan="7">No audits found.</td>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="loadingbody">
+                    <tr>
+                        <td colspan="7">Loading audits data. Please wait.</td>
+                    </tr>
+                </ng-template>
+            </p-table>
+
+            <p-table
+                *ngIf="auditP?.length && selectedaudits?.length == 1"
+                #dt1
+                [value]="auditP"
+                [rows]="5"
+                [loading]="loadingP"
+                [rowHover]="true"
+                styleClass="p-datatable-gridlines"
+                [paginator]="true"
+                [rowsPerPageOptions]="[5, 10, 20]"
+                [showCurrentPageReport]="true"
+                [(selection)]="auditPSelection"
+                currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+                responsiveLayout="scroll"
+            >
+                <ng-template pTemplate="caption">
+                    <div
+                        class="grid grid-nogutter flex-column md:flex-row justify-content-between"
+                    >
+                        <h6 class="m-0">AUDIT PROGRAM</h6>
+                        <span class="p-input-icon-left mb-2 md:mb-0">
+                            <button
+                                title="Clear"
+                                pButton
+                                pRipple
+                                icon="pi pi-filter-slash"
+                                class="p-button-rounded p-button-info ml-2"
+                                (click)="dt1.clear()"
+                            ></button>
+                            <!-- AUDIT PROGRAM {{ auditPSelection?.length }} -->
+                        </span>
+                    </div>
+                </ng-template>
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th
+                            *ngIf="isShown"
+                            style="width: 3rem"
+                            style="width: 3rem"
+                        >
+                            <!-- <p-tableHeaderCheckbox
+                                (click)="getTests()"
+                            ></p-tableHeaderCheckbox> -->
+                        </th>
+                        <th pSortableColumn="audit_program_uid">
+                            <div
+                                class="flex justify-content-between align-items-center"
+                            >
+                                <p-sortIcon
+                                    field="audit_program_uid"
+                                ></p-sortIcon>
+                                AP UID
+                                <p-columnFilter
+                                    type="text"
+                                    field="audit_program_uid"
+                                    display="menu"
+                                ></p-columnFilter>
+                            </div>
+                        </th>
+                        <th pSortableColumn="ap_name">
+                            <div
+                                class="flex justify-content-between align-items-center"
+                            >
+                                <p-sortIcon field="ap_name"></p-sortIcon>
+                                AP NAME
+                                <p-columnFilter
+                                    type="text"
+                                    field="ap_name"
+                                    display="menu"
+                                ></p-columnFilter>
+                            </div>
+                        </th>
+                        <th pSortableColumn="ap_desc">
+                            <div
+                                class="flex justify-content-between align-items-center"
+                            >
+                                <p-sortIcon field="ap_desc"></p-sortIcon>
+                                AUDIT DESCRIPTION
+                                <p-columnFilter
+                                    type="text"
+                                    field="ap_desc"
+                                    display="menu"
+                                ></p-columnFilter>
+                            </div>
+                        </th>
+                        <th pSortableColumn="au_level_3_desc">
+                            <div
+                                class="flex justify-content-between align-items-center"
+                            >
+                                <p-sortIcon
+                                    field="au_level_3_desc"
+                                ></p-sortIcon>
+                                AU DESCRIPTION (LEVEL 3)
+                                <p-columnFilter
+                                    type="text"
+                                    field="au_level_3_desc"
+                                    display="menu"
+                                ></p-columnFilter>
+                            </div>
+                        </th>
+                        <th pSortableColumn="ap_schedule_date">
+                            <div
+                                class="flex justify-content-between align-items-center"
+                            >
+                                <p-sortIcon
+                                    field="ap_schedule_date"
+                                ></p-sortIcon>
+                                AP SCHEDULE
+                                <p-columnFilter
+                                    type="text"
+                                    field="ap_schedule_date"
+                                    display="menu"
+                                ></p-columnFilter>
+                            </div>
+                        </th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-auditP>
+                    <tr>
+                        <td *ngIf="isShown" style="width: 3rem">
+                            <p-tableCheckbox
+                                [value]="auditP"
+                                (click)="selectRow(auditP)"
+                            ></p-tableCheckbox>
+                        </td>
+                        <td style="min-width: 12rem">
+                            {{ auditP.audit_program_uid }}
+                        </td>
+                        <td style="min-width: 12rem">
+                            {{ auditP.ap_name }}
+                        </td>
+                        <td style="min-width: 12rem">
+                            {{ auditP.ap_desc }}
+                        </td>
+                        <td style="min-width: 12rem">
+                            {{ auditP.au_level_3_desc }}
+                        </td>
+                        <td style="min-width: 12rem">
+                            {{ auditP.ap_schedule_date | date }}
+                        </td>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="emptymessage">
+                    <tr>
+                        <td colspan="6">No Audit Program found.</td>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="loadingbody">
+                    <tr>
+                        <td colspan="6">
+                            Loading Audit Program data. Please wait.
+                        </td>
+                    </tr>
+                </ng-template>
+            </p-table>
+
+            <p-table
+                *ngIf="auditPSelection?.length"
+                #dt2
+                [value]="auditT"
+                [rows]="5"
+                [loading]="loadingT"
+                [rowHover]="true"
+                styleClass="p-datatable-gridlines"
+                [paginator]="true"
+                [rowsPerPageOptions]="[5, 10, 20]"
+                [showCurrentPageReport]="true"
+                [(selection)]="auditTSelection"
+                currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+                responsiveLayout="scroll"
+            >
+                <ng-template pTemplate="caption">
+                    <div
+                        class="grid grid-nogutter flex-column md:flex-row justify-content-between"
+                    >
+                        <h6 class="m-0">AUDIT TESTS</h6>
+                        <button
+                            title="Clear"
+                            pButton
+                            pRipple
+                            icon="pi pi-filter-slash"
+                            class="p-button-rounded p-button-info ml-2"
+                            (click)="dt2.clear()"
+                        ></button>
+                    </div>
+                </ng-template>
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th style="width: 3rem">
+                            <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+                        </th>
+                        <th pSortableColumn="audit_test_uid">
+                            <div
+                                class="flex justify-content-between align-items-center"
+                            >
+                                <p-sortIcon field="audit_test_uid"></p-sortIcon>
+                                AUDIT TEST UID
+                                <p-columnFilter
+                                    type="text"
+                                    field="audit_test_uid"
+                                    display="menu"
+                                ></p-columnFilter>
+                            </div>
+                        </th>
+                        <th pSortableColumn="ap_name">
+                            <div
+                                class="flex justify-content-between align-items-center"
+                            >
+                                <p-sortIcon field="ap_name"></p-sortIcon>
+                                AP NAME
+                                <p-columnFilter
+                                    type="text"
+                                    field="ap_name"
+                                    display="menu"
+                                ></p-columnFilter>
+                            </div>
+                        </th>
+                        <th pSortableColumn="audit_risk">
+                            <div
+                                class="flex justify-content-between align-items-center"
+                            >
+                                <p-sortIcon field="audit_risk"></p-sortIcon>
+                                RISK DESCRIPTION
+                                <p-columnFilter
+                                    type="text"
+                                    field="audit_risk"
+                                    display="menu"
+                                ></p-columnFilter>
+                            </div>
+                        </th>
+                        <th pSortableColumn="control">
+                            <div
+                                class="flex justify-content-between align-items-center"
+                            >
+                                <p-sortIcon field="control"></p-sortIcon>
+                                CONTROL DESCRIPTION
+                                <p-columnFilter
+                                    type="text"
+                                    field="control"
+                                    display="menu"
+                                ></p-columnFilter>
+                            </div>
+                        </th>
+                        <th pSortableColumn="banner">
+                            <div
+                                class="flex justify-content-between align-items-center"
+                            >
+                                <p-sortIcon field="banner_uid"></p-sortIcon>
+                                BANNER DESCRIPTION
+                                <p-columnFilter
+                                    type="text"
+                                    field="banner"
+                                    display="menu"
+                                ></p-columnFilter>
+                            </div>
+                        </th>
+                        <!-- <th pSortableColumn="script_uid">
+                            <div
+                                class="flex justify-content-between align-items-center"
+                            >
+                                <p-sortIcon field="script_uid"></p-sortIcon>
+                                SCRIPT UID
+                                <p-columnFilter
+                                    type="text"
+                                    field="script_uid"
+                                    display="menu"
+                                ></p-columnFilter>
+                            </div>
+                        </th> -->
+                        <th pSortableColumn="target_table">
+                            <div
+                                class="flex justify-content-between align-items-center"
+                            >
+                                <p-sortIcon field="target_table"></p-sortIcon>
+                                TARGET TABLE
+                                <p-columnFilter
+                                    type="text"
+                                    field="target_table"
+                                    display="menu"
+                                ></p-columnFilter>
+                            </div>
+                        </th>
+                        <th pSortableColumn="script_defination">
+                            <div
+                                class="flex justify-content-between align-items-center"
+                            >
+                                <p-sortIcon
+                                    field="script_defination"
+                                ></p-sortIcon>
+                                SCRIPT DESCRIPTION
+                                <p-columnFilter
+                                    type="text"
+                                    field="script_defination"
+                                    display="menu"
+                                ></p-columnFilter>
+                            </div>
+                        </th>
+                        <th pSortableColumn="script_sql">
+                            <div
+                                class="flex justify-content-between align-items-center"
+                            >
+                                <p-sortIcon field="script_sql"></p-sortIcon>
+                                SQL SCRIPT
+                                <p-columnFilter
+                                    type="text"
+                                    field="script_sql"
+                                    display="menu"
+                                ></p-columnFilter>
+                            </div>
+                        </th>
+                        <th pSortableColumn="script_presto">
+                            <div
+                                class="flex justify-content-between align-items-center"
+                            >
+                                <p-sortIcon field="script_presto"></p-sortIcon>
+                                Presto SCRIPT
+                                <p-columnFilter
+                                    type="text"
+                                    field="script_presto"
+                                    display="menu"
+                                ></p-columnFilter>
+                            </div>
+                        </th>
+                        <th pSortableColumn="result">
+                            <div
+                                class="flex justify-content-between align-items-center"
+                            >
+                                <p-sortIcon field="result"></p-sortIcon>
+                                RESULTS
+                                <p-columnFilter
+                                    type="text"
+                                    field="result"
+                                    display="menu"
+                                ></p-columnFilter>
+                            </div>
+                        </th>
+                        <!-- <th pSortableColumn="result_url">
+                            <div
+                                class="flex justify-content-between align-items-center"
+                            >
+                                <p-sortIcon field="result_url"></p-sortIcon>
+                                RESULTS URL
+                                <p-columnFilter
+                                    type="text"
+                                    field="result_url"
+                                    display="menu"
+                                ></p-columnFilter>
+                            </div>
+                        </th> -->
+                        <th pSortableColumn="schedule_start_datetime">
+                            <div
+                                class="flex justify-content-between align-items-center"
+                            >
+                                <p-sortIcon
+                                    field="schedule_start_datetime"
+                                ></p-sortIcon>
+                                RUN DATETIME
+                                <p-columnFilter
+                                    type="text"
+                                    field="schedule_start_datetime"
+                                    display="menu"
+                                ></p-columnFilter>
+                            </div>
+                        </th>
+                        <th pSortableColumn="notes">
+                            <div
+                                class="flex justify-content-between align-items-center"
+                            >
+                                <p-sortIcon field="notes"></p-sortIcon>
+                                NOTES
+                                <p-columnFilter
+                                    type="text"
+                                    field="notes"
+                                    display="menu"
+                                ></p-columnFilter>
+                            </div>
+                        </th>
+                        <th pSortableColumn="schedule_status">
+                            <div
+                                class="flex justify-content-between align-items-center"
+                            >
+                                <p-sortIcon
+                                    field="schedule_status"
+                                ></p-sortIcon>
+                                SCHEDULE STATUS
+                                <p-columnFilter
+                                    type="text"
+                                    field="schedule_status"
+                                    display="menu"
+                                ></p-columnFilter>
+                            </div>
+                        </th>
+                        <th pSortableColumn="schedule_start_datetime">
+                            <div
+                                class="flex justify-content-between align-items-center"
+                            >
+                                <p-sortIcon
+                                    field="schedule_start_datetime"
+                                ></p-sortIcon>
+                                AUDIT TEST SCHEDULE
+                                <p-columnFilter
+                                    type="text"
+                                    field="schedule_start_datetime"
+                                    display="menu"
+                                ></p-columnFilter>
+                            </div>
+                        </th>
+                    </tr>
+                </ng-template>
+                <ng-template
+                    pTemplate="body"
+                    let-auditT
+                    *ngIf="accountSvr.checkPermission(4, 13, 'V')"
+                >
+                    <tr>
+                        <td *ngIf="isShown">
+                            <p-tableCheckbox
+                                [value]="auditT"
+                                (click)="selectTest(auditT)"
+                            ></p-tableCheckbox>
+                        </td>
+                        <td style="min-width: 12rem">
+                            {{ auditT.audit_test_uid }}
+                        </td>
+                        <td style="min-width: 12rem">
+                            {{ auditT.ap_name }}
+                        </td>
+                        <td style="min-width: 12rem">
+                            {{ auditT.audit_risk }}
+                        </td>
+                        <td style="min-width: 12rem">
+                            {{ auditT.control }}
+                        </td>
+                        <td style="min-width: 12rem">
+                            {{ auditT.banner }}
+                        </td>
+                        <!-- <td style="min-width: 12rem">
+                            {{ auditT.script_uid }}
+                        </td> -->
+                        <td style="min-width: 12rem">
+                            {{ auditT.target_table }}
+                        </td>
+                        <td style="min-width: 12rem">
+                            {{ auditT.script_defination }}
+                        </td>
+                        <td
+                            style="max-width: 12rem"
+                            class="truncate cursor-pointer"
+                            (click)="
+                                showScript(auditT.script_sql, 'SQL SCRIPT')
+                            "
+                            title="Click to view full detail"
+                        >
+                            {{ auditT.script_sql }}
+                        </td>
+                        <td
+                            style="max-width: 12rem"
+                            class="truncate cursor-pointer"
+                            (click)="
+                                showScript(
+                                    auditT.script_presto,
+                                    'Presto SCRIPT'
+                                )
+                            "
+                            title="Click to view full detail"
+                        >
+                            {{ auditT.script_presto }}
+                        </td>
+                        <td style="min-width: 12rem">
+                            {{ auditT.results ? auditT.results : 'N/A' }}
+                        </td>
+                        <!-- <td style="min-width: 12rem;">
+                            {{ auditT.result_url }}
+                        </td> -->
+                        <td style="min-width: 12rem">
+                            {{ auditT.schedule_start_datetime }}
+                        </td>
+                        <td style="min-width: 12rem">
+                            {{ auditT.notes }}
+                        </td>
+                        <td style="min-width: 12rem">
+                            {{ auditT.schedule_status }}
+                        </td>
+                        <td style="min-width: 12rem">
+                            {{ auditT.schedule_start_datetime }}
+                        </td>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="emptymessage">
+                    <tr>
+                        <td colspan="6">No Audit Tests found.</td>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="loadingbody">
+                    <tr>
+                        <td colspan="6">
+                            Loading Audit Tests data. Please wait.
+                        </td>
+                    </tr>
+                </ng-template>
+            </p-table>
+
+            <p-table
+                *ngIf="
+                    auditTSelection?.length > 0 && auditPSelection?.length > 0
+                "
+                #dt3
+                [value]="auditTH"
+                [rows]="5"
+                [loading]="loadingTH"
+                [rowHover]="true"
+                styleClass="p-datatable-gridlines"
+                [paginator]="true"
+                [rowsPerPageOptions]="[5, 10, 20]"
+                [showCurrentPageReport]="true"
+                [(selection)]="auditTHSelection"
+                currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+                responsiveLayout="scroll"
+            >
+                <ng-template pTemplate="caption">
+                    <div
+                        class="grid grid-nogutter flex-column md:flex-row justify-content-between"
+                    >
+                        <h6 class="m-0">AUDIT TESTS HISTORY</h6>
+                        <span class="p-input-icon-left mb-2 md:mb-0">
+                            <button
+                                title="Download Excel"
+                                pButton
+                                pRipple
+                                icon="pi pi-file-excel"
+                                class="p-button-rounded p-button-purple-500"
+                                (click)="downloadExcel()"
+                                [disabled]="!auditTSelection?.length > 0"
+                            ></button>
+                            &nbsp;
+                            <button
+                                title="Clear"
+                                pButton
+                                pRipple
+                                icon="pi pi-filter-slash"
+                                class="p-button-rounded p-button-info ml-2"
+                                (click)="dt3.clear()"
+                            ></button>
+                        </span>
+                    </div>
+                </ng-template>
+                <ng-template pTemplate="header">
+                    <tr>
+                        <!-- <th style="width: 3rem">
+                            <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+                        </th> -->
+                        <th pSortableColumn="audit_test_desc">
+                            <div
+                                class="flex justify-content-between align-items-center"
+                            >
+                                <p-sortIcon
+                                    field="audit_test_desc"
+                                ></p-sortIcon>
+                                AUDIT TEST DESCRIPTION
+                                <p-columnFilter
+                                    type="text"
+                                    field="audit_test_desc"
+                                    display="menu"
+                                ></p-columnFilter>
+                            </div>
+                        </th>
+                        <th pSortableColumn="audit_history_uid">
+                            <div
+                                class="flex justify-content-between align-items-center"
+                            >
+                                <p-sortIcon
+                                    field="audit_history_uid"
+                                ></p-sortIcon>
+                                AUDIT TEST HISTORY UID
+                                <p-columnFilter
+                                    type="text"
+                                    field="audit_history_uid"
+                                    display="menu"
+                                ></p-columnFilter>
+                            </div>
+                        </th>
+                        <th pSortableColumn="ap_name">
+                            <div
+                                class="flex justify-content-between align-items-center"
+                            >
+                                <p-sortIcon field="ap_name"></p-sortIcon>
+                                AP NAME
+                                <p-columnFilter
+                                    type="text"
+                                    field="ap_name"
+                                    display="menu"
+                                ></p-columnFilter>
+                            </div>
+                        </th>
+                        <th pSortableColumn="audit_risk">
+                            <div
+                                class="flex justify-content-between align-items-center"
+                            >
+                                <p-sortIcon field="audit_risk"></p-sortIcon>
+                                RISK DESCRIPTION
+                                <p-columnFilter
+                                    type="text"
+                                    field="audit_risk"
+                                    display="menu"
+                                ></p-columnFilter>
+                            </div>
+                        </th>
+                        <th pSortableColumn="control">
+                            <div
+                                class="flex justify-content-between align-items-center"
+                            >
+                                <p-sortIcon field="control"></p-sortIcon>
+                                CONTROL DESCRIPTION
+                                <p-columnFilter
+                                    type="text"
+                                    field="control"
+                                    display="menu"
+                                ></p-columnFilter>
+                            </div>
+                        </th>
+                        <!-- <th pSortableColumn="script_uid">
+                            <div
+                                class="flex justify-content-between align-items-center"
+                            >
+                                <p-sortIcon field="script_uid"></p-sortIcon>
+                                SCRIPT UID
+                                <p-columnFilter
+                                    type="text"
+                                    field="script_uid"
+                                    display="menu"
+                                ></p-columnFilter>
+                            </div>
+                        </th> -->
+                        <th pSortableColumn="script_defination">
+                            <div
+                                class="flex justify-content-between align-items-center"
+                            >
+                                <p-sortIcon
+                                    field="script_defination"
+                                ></p-sortIcon>
+                                SCRIPT DESCRIPTION
+                                <p-columnFilter
+                                    type="text"
+                                    field="script_defination"
+                                    display="menu"
+                                ></p-columnFilter>
+                            </div>
+                        </th>
+                        <th pSortableColumn="script_sql">
+                            <div
+                                class="flex justify-content-between align-items-center"
+                            >
+                                <p-sortIcon field="script_sql"></p-sortIcon>
+                                SQL SCRIPT
+                                <p-columnFilter
+                                    type="text"
+                                    field="script_sql"
+                                    display="menu"
+                                ></p-columnFilter>
+                            </div>
+                        </th>
+                        <th pSortableColumn="script_presto">
+                            <div
+                                class="flex justify-content-between align-items-center"
+                            >
+                                <p-sortIcon field="script_presto"></p-sortIcon>
+                                Presto SCRIPT
+                                <p-columnFilter
+                                    type="text"
+                                    field="script_presto"
+                                    display="menu"
+                                ></p-columnFilter>
+                            </div>
+                        </th>
+                        <th pSortableColumn="target_table">
+                            <div
+                                class="flex justify-content-between align-items-center"
+                            >
+                                <p-sortIcon field="target_table"></p-sortIcon>
+                                Target Table
+                                <p-columnFilter
+                                    type="text"
+                                    field="target_table"
+                                    display="menu"
+                                ></p-columnFilter>
+                            </div>
+                        </th>
+                        <th pSortableColumn="results">
+                            <div
+                                class="flex justify-content-between align-items-center"
+                            >
+                                <p-sortIcon field="results"></p-sortIcon>
+                                RESULTS
+                                <p-columnFilter
+                                    type="text"
+                                    field="results"
+                                    display="menu"
+                                ></p-columnFilter>
+                            </div>
+                        </th>
+                        <!-- <th pSortableColumn="result_url">
+                            <div
+                                class="flex justify-content-between align-items-center"
+                            >
+                                <p-sortIcon field="result_url"></p-sortIcon>
+                                RESULT URL
+                                <p-columnFilter
+                                    type="text"
+                                    field="result_url"
+                                    display="menu"
+                                ></p-columnFilter>
+                            </div>
+                        </th> -->
+                        <th pSortableColumn="schedule_start_datetime">
+                            <div
+                                class="flex justify-content-between align-items-center"
+                            >
+                                <p-sortIcon
+                                    field="schedule_start_datetime"
+                                ></p-sortIcon>
+                                RUN DATETIME
+                                <p-columnFilter
+                                    type="text"
+                                    field="schedule_start_datetime"
+                                    display="menu"
+                                ></p-columnFilter>
+                            </div>
+                        </th>
+                        <th pSortableColumn="notes">
+                            <div
+                                class="flex justify-content-between align-items-center"
+                            >
+                                <p-sortIcon field="notes"></p-sortIcon>
+                                NOTES
+                                <p-columnFilter
+                                    type="text"
+                                    field="notes"
+                                    display="menu"
+                                ></p-columnFilter>
+                            </div>
+                        </th>
+                        <th pSortableColumn="schedule_status">
+                            <div
+                                class="flex justify-content-between align-items-center"
+                            >
+                                <p-sortIcon
+                                    field="schedule_status"
+                                ></p-sortIcon>
+                                SCHEDULE STATUS
+                                <p-columnFilter
+                                    type="text"
+                                    field="schedule_status"
+                                    display="menu"
+                                ></p-columnFilter>
+                            </div>
+                        </th>
+                        <th pSortableColumn="schedule_start_datetime">
+                            <div
+                                class="flex justify-content-between align-items-center"
+                            >
+                                <p-sortIcon
+                                    field="schedule_start_datetime"
+                                ></p-sortIcon>
+                                AUDIT TEST SCHEDULE
+                                <p-columnFilter
+                                    type="text"
+                                    field="schedule_start_datetime"
+                                    display="menu"
+                                ></p-columnFilter>
+                            </div>
+                        </th>
+                        <th pSortableColumn="job_run_status_text">
+                            <div
+                                class="flex justify-content-between align-items-center"
+                            >
+                                <p-sortIcon
+                                    field="job_run_status_text"
+                                ></p-sortIcon>
+                                JOB RUN STATUS
+                                <p-columnFilter
+                                    type="text"
+                                    field="job_run_status_text"
+                                    display="menu"
+                                ></p-columnFilter>
+                            </div>
+                        </th>
+                        <th pSortableColumn="error_message">
+                            <div
+                                class="flex justify-content-between align-items-center"
+                            >
+                                <p-sortIcon field="error_message"></p-sortIcon>
+                                ERROR MESSAGE
+                                <p-columnFilter
+                                    type="text"
+                                    field="error_message"
+                                    display="menu"
+                                ></p-columnFilter>
+                            </div>
+                        </th>
+                        <th pSortableColumn="audit_run_status_text">
+                            <div
+                                class="flex justify-content-between align-items-center"
+                            >
+                                <p-sortIcon
+                                    field="audit_run_status_text"
+                                ></p-sortIcon>
+                                AUDIT RUN STATUS
+                                <p-columnFilter
+                                    type="text"
+                                    field="audit_run_status_text"
+                                    display="menu"
+                                ></p-columnFilter>
+                            </div>
+                        </th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-auditT>
+                    <tr>
+                        <!-- <td>
+                            <p-tableCheckbox
+                                [value]="auditT"
+                                (click)="editHistroy(auditT)"
+                            ></p-tableCheckbox>
+                        </td> -->
+                        <td style="min-width: 12rem">
+                            {{ auditT.audit_test_desc }}
+                        </td>
+                        <td style="min-width: 12rem">
+                            {{ auditT.audit_history_uid }}
+                        </td>
+                        <td style="min-width: 12rem">
+                            {{ auditT.ap_name }}
+                        </td>
+                        <td style="min-width: 12rem">
+                            {{ auditT.audit_risk }}
+                        </td>
+                        <td style="min-width: 12rem">
+                            {{ auditT.control }}
+                        </td>
+                        <!-- <td style="min-width: 12rem">
+                            {{ auditT.script_uid }}
+                        </td> -->
+                        <td style="min-width: 12rem">
+                            {{ auditT.script_defination }}
+                        </td>
+                        <td
+                            style="max-width: 12rem"
+                            class="truncate cursor-pointer"
+                            (click)="
+                                showScript(auditT.script_sql, 'SQL Script')
+                            "
+                            title="Click to view full detail"
+                        >
+                            {{ auditT.script_sql }}
+                        </td>
+                        <td
+                            style="max-width: 12rem"
+                            class="truncate cursor-pointer"
+                            (click)="
+                                showScript(
+                                    auditT.script_presto,
+                                    'Presto Script'
+                                )
+                            "
+                            title="Click to view full detail"
+                        >
+                            {{ auditT.script_presto }}
+                        </td>
+                        <td style="min-width: 12rem">
+                            {{ auditT.target_table }}
+                        </td>
+                        <td style="min-width: 12rem">
+                            {{ auditT.results ? auditT.results : 'N/A' }}
+                        </td>
+                        <!-- <td style="min-width: 12rem;">
+                            {{ auditT.result_url }}
+                        </td> -->
+                        <td style="min-width: 12rem">
+                            {{ auditT.schedule_start_datetime }}
+                        </td>
+                        <td style="min-width: 12rem">
+                            {{ auditT.notes }}
+                        </td>
+                        <td style="min-width: 12rem">
+                            {{ auditT.schedule_status }}
+                        </td>
+                        <td style="min-width: 12rem">
+                            {{ auditT.schedule_start_datetime }}
+                        </td>
+                        <td style="min-width: 12rem">
+                            {{ auditT.job_run_status_text | titlecase }}
+                        </td>
+                        <td style="min-width: 12rem">
+                            {{ auditT.error_message | titlecase }}
+                        </td>
+                        <td style="min-width: 12rem">
+                            {{ auditT.audit_run_status_text | titlecase }}
+                        </td>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="emptymessage">
+                    <tr>
+                        <td colspan="6">No Audit Tests found.</td>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="loadingbody">
+                    <tr>
+                        <td colspan="6">
+                            Loading Audit Tests data. Please wait.
+                        </td>
+                    </tr>
+                </ng-template>
+            </p-table>
+
+            <p-dialog [(visible)]="showScriptPop" [header]="showScriptPopTitle">
+                <ng-template pTemplate="content">
+                    <textarea
+                        [value]="showScriptContent"
+                        cols="90"
+                        rows="40"
+                        disabled
+                    ></textarea>
+                </ng-template>
+            </p-dialog>
+
+            <p-dialog
+                #textDialog
+                [header]="popupHeader"
+                [(visible)]="showPopupText"
+            >
+                <ng-template pTemplate="content">
+                    <form [formGroup]="textDialogForm">
+                        <textarea
+                            autofocus
+                            name=""
+                            id=""
+                            cols="100"
+                            rows="40"
+                            formControlName="input"
+                        ></textarea>
+                    </form>
+                </ng-template>
+
+                <ng-template pTemplate="footer">
+                    <button
+                        pButton
+                        pRipple
+                        label="Ok"
+                        icon="pi pi-check"
+                        class="p-button-text"
+                        (click)="showPopupText = false"
+                    ></button>
+                </ng-template>
+            </p-dialog>
+        </div>
+    </div>
+
+    <div *ngIf="loadingE" class="loader">
+        <p-progressSpinner strokeWidth="10"></p-progressSpinner>
+    </div>
+</div>
+
+<p-confirmDialog></p-confirmDialog>

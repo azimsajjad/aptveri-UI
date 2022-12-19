@@ -1,0 +1,44 @@
+/* You can add global styles to this file, and also import other style files */
+
+@import '../node_modules/primeng/resources/primeng.min.css';
+@import '../node_modules/primeflex/primeflex.scss';
+@import '../node_modules/primeicons/primeicons.css';
+@import '../node_modules/prismjs/themes/prism-coy.css';
+@import 'assets/demo/flags/flags.css';
+@import 'assets/demo/documentation.scss';
+@import 'assets/sass/layout/_variables';
+@import 'assets/sass/layout/_layout';
+@import 'assets/sass/overrides/_overrides';
+
+sup {
+    color: red;
+    font-size: 20px;
+}
+
+body {
+    overflow: overlay;
+}
+
+*::-webkit-scrollbar {
+    display: block;
+    width: 6px;
+    height: 6px;
+}
+
+*::-webkit-scrollbar-button {
+    display: none;
+}
+
+*::-webkit-scrollbar-track {
+    background-color: #00000000;
+}
+
+*::-webkit-scrollbar-track-piece {
+    background-color: #00000000;
+}
+
+*::-webkit-scrollbar-thumb {
+    background-color: #00000040;
+    border: 1px solid #ffffff40;
+    border-radius: 8px;
+}

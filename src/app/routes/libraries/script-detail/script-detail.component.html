@@ -1,0 +1,842 @@
+<div class="grid">
+    <div class="col-12">
+        <div class="card">
+            <p-toast></p-toast>
+
+            <p-table
+                #dt
+                [value]="script"
+                [rows]="10"
+                [loading]="loading"
+                [rowHover]="true"
+                styleClass="p-datatable-gridlines"
+                [paginator]="true"
+                [rowsPerPageOptions]="[10, 20, 30]"
+                [showCurrentPageReport]="true"
+                [(selection)]="selectedScript"
+                currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+                responsiveLayout="scroll"
+                [scrollable]="true"
+                scrollHeight="calc(100vh - 220px)"
+            >
+                <ng-template pTemplate="caption">
+                    <div
+                        class="flex flex-column md:flex-row md:align-items-center md:justify-content-between"
+                    >
+                        <h6 class="m-0">SCRIPT</h6>
+                        <div>
+                            <button
+                                title="New"
+                                pButton
+                                pRipple
+                                icon="pi pi-plus"
+                                class="p-button-rounded p-button-success"
+                                (click)="openNew(null, 'new')"
+                                *ngIf="accountSvr.checkPermission(2, 10, 'A')"
+                            ></button>
+                            <button
+                                title="Edit"
+                                pButton
+                                pRipple
+                                type="button"
+                                icon="pi pi-pencil"
+                                class="p-button-rounded p-button-warning ml-2"
+                                [disabled]="selectedScript?.length != 1"
+                                (click)="openNew(selectedScript[0], 'edit')"
+                                *ngIf="accountSvr.checkPermission(2, 10, 'C')"
+                            ></button>
+                            <button
+                                title="Delete"
+                                pButton
+                                pRipple
+                                type="button"
+                                icon="pi pi-trash"
+                                class="p-button-rounded p-button-danger ml-2"
+                                [disabled]="selectedScript?.length != 1"
+                                *ngIf="accountSvr.checkPermission(2, 10, 'D')"
+                                (click)="deleteScript(selectedScript[0])"
+                            ></button>
+                            <button
+                                title="Clear"
+                                pButton
+                                pRipple
+                                class="p-button-rounded p-button-info ml-2"
+                                icon=" pi pi-filter-slash"
+                                (click)="clear(dt)"
+                            ></button>
+                            <button
+                                *ngIf="accountSvr.checkPermission(2, 10, 'A')"
+                                title="Version"
+                                pButton
+                                pRipple
+                                class="p-button-rounded p-button-info ml-2"
+                                icon=" pi pi-sort-numeric-down"
+                                (click)="openNew(selectedScript[0], 'version')"
+                                [disabled]="selectedScript?.length != 1"
+                            ></button>
+                        </div>
+                    </div>
+                </ng-template>
+                <ng-template
+                    *ngIf="accountSvr.checkPermission(2, 10, 'V')"
+                    pTemplate="header"
+                >
+                    <tr>
+                        <th pFrozenColumn style="max-width: 3rem"></th>
+                        <th pSortableColumn="record_status">
+                            <div
+                                class="flex justify-content-between align-items-center"
+                            >
+                                <p-sortIcon field="record_status"></p-sortIcon>
+                                STATUS
+                                <p-columnFilter
+                                    type="text"
+                                    field="record_status"
+                                    display="menu"
+                                ></p-columnFilter>
+                            </div>
+                        </th>
+                        <th pSortableColumn="script_uid">
+                            <div
+                                class="flex justify-content-between align-items-center"
+                            >
+                                <p-sortIcon field="script_uid"></p-sortIcon>
+                                SCRIPT UID
+                                <p-columnFilter
+                                    type="text"
+                                    field="script_uid"
+                                    display="menu"
+                                ></p-columnFilter>
+                            </div>
+                        </th>
+                        <th pSortableColumn="version">
+                            <div
+                                class="flex justify-content-between align-items-center"
+                            >
+                                <p-sortIcon field="version"></p-sortIcon>
+                                VERSION
+                                <p-columnFilter
+                                    type="text"
+                                    field="version"
+                                    display="menu"
+                                ></p-columnFilter>
+                            </div>
+                        </th>
+                        <th pSortableColumn="original_version_id">
+                            <div
+                                class="flex justify-content-between align-items-center"
+                            >
+                                <p-sortIcon
+                                    field="original_version_id"
+                                ></p-sortIcon>
+                                ORIGINAL VERSION
+                                <p-columnFilter
+                                    type="text"
+                                    field="original_version_id"
+                                    display="menu"
+                                ></p-columnFilter>
+                            </div>
+                        </th>
+                        <th pSortableColumn="au_level_4_desc">
+                            <div
+                                class="flex justify-content-between align-items-center"
+                            >
+                                <p-sortIcon
+                                    field="au_level_4_desc"
+                                ></p-sortIcon>
+                                AU LEVEL4 DESCRIPTION
+                                <p-columnFilter
+                                    type="text"
+                                    field="au_level_4_desc"
+                                    display="menu"
+                                ></p-columnFilter>
+                            </div>
+                        </th>
+                        <th pSortableColumn="risk_desc">
+                            <div
+                                class="flex justify-content-between align-items-center"
+                            >
+                                <p-sortIcon field="risk_desc"></p-sortIcon>
+                                RISK DESCRIPTION
+                                <p-columnFilter
+                                    type="text"
+                                    field="risk_desc"
+                                    display="menu"
+                                ></p-columnFilter>
+                            </div>
+                        </th>
+                        <th pSortableColumn="banner_desc">
+                            <div
+                                class="flex justify-content-between align-items-center"
+                            >
+                                <p-sortIcon field="banner_desc"></p-sortIcon>
+                                BANNER DESCRIPTION
+                                <p-columnFilter
+                                    type="text"
+                                    field="banner_desc"
+                                    display="menu"
+                                ></p-columnFilter>
+                            </div>
+                        </th>
+                        <th pSortableColumn="control_desc">
+                            <div
+                                class="flex justify-content-between align-items-center"
+                            >
+                                <p-sortIcon field="control_desc"></p-sortIcon>
+                                CONTROL DESCRIPTION
+                                <p-columnFilter
+                                    type="text"
+                                    field="control_desc"
+                                    display="menu"
+                                ></p-columnFilter>
+                            </div>
+                        </th>
+                        <th pSortableColumn="script_presto">
+                            <div
+                                class="flex justify-content-between align-items-center"
+                            >
+                                <p-sortIcon field="script_presto"></p-sortIcon>
+                                PRESTO SCRIPT
+                                <p-columnFilter
+                                    type="text"
+                                    field="script_presto"
+                                    display="menu"
+                                ></p-columnFilter>
+                            </div>
+                        </th>
+                        <th pSortableColumn="script_sql">
+                            <div
+                                class="flex justify-content-between align-items-center"
+                            >
+                                <p-sortIcon field="script_sql"></p-sortIcon>
+                                SQL SCRIPT
+                                <p-columnFilter
+                                    type="text"
+                                    field="script_sql"
+                                    display="menu"
+                                ></p-columnFilter>
+                            </div>
+                        </th>
+                        <th pSortableColumn="script_defination">
+                            <div
+                                class="flex justify-content-between align-items-center"
+                            >
+                                <p-sortIcon
+                                    field="script_defination"
+                                ></p-sortIcon>
+                                SCRIPT DEFINITION
+                                <p-columnFilter
+                                    type="text"
+                                    field="script_defination"
+                                    display="menu"
+                                ></p-columnFilter>
+                            </div>
+                        </th>
+                        <th pSortableColumn="target_table">
+                            <div
+                                class="flex justify-content-between align-items-center"
+                            >
+                                <p-sortIcon field="target_table"></p-sortIcon>
+                                TARGET TABLE
+                                <p-columnFilter
+                                    type="text"
+                                    field="target_table"
+                                    display="menu"
+                                ></p-columnFilter>
+                            </div>
+                        </th>
+                        <th pSortableColumn="schedule_day">
+                            <div
+                                class="flex justify-content-between align-items-center"
+                            >
+                                <p-sortIcon field="schedule_day"></p-sortIcon>
+                                SCHEDULE DAY
+                                <p-columnFilter
+                                    type="text"
+                                    field="schedule_day"
+                                    display="menu"
+                                ></p-columnFilter>
+                            </div>
+                        </th>
+                        <th pSortableColumn="start_time_interval">
+                            <div
+                                class="flex justify-content-between align-items-center"
+                            >
+                                <p-sortIcon
+                                    field="start_time_interval"
+                                ></p-sortIcon>
+                                START TIME INTERVAL
+                                <p-columnFilter
+                                    type="text"
+                                    field="start_time_interval"
+                                    display="menu"
+                                ></p-columnFilter>
+                            </div>
+                        </th>
+                        <th pSortableColumn="start_time_interval_end">
+                            <div
+                                class="flex justify-content-between align-items-center"
+                            >
+                                <p-sortIcon
+                                    field="start_time_interval_end"
+                                ></p-sortIcon>
+                                START TIME INTERVAL END
+                                <p-columnFilter
+                                    type="text"
+                                    field="start_time_interval_end"
+                                    display="menu"
+                                ></p-columnFilter>
+                            </div>
+                        </th>
+                        <th pSortableColumn="schedule_status">
+                            <div
+                                class="flex justify-content-between align-items-center"
+                            >
+                                <p-sortIcon
+                                    field="schedule_status"
+                                ></p-sortIcon>
+                                SCHEDULE STATUS
+                                <p-columnFilter
+                                    type="text"
+                                    field="schedule_status"
+                                    display="menu"
+                                ></p-columnFilter>
+                            </div>
+                        </th>
+                        <th pSortableColumn="output_only">
+                            <div
+                                class="flex justify-content-between align-items-center"
+                            >
+                                <p-sortIcon field="output_only"></p-sortIcon>
+                                OUTPUT
+                                <p-columnFilter
+                                    type="text"
+                                    field="output_only"
+                                    display="menu"
+                                ></p-columnFilter>
+                            </div>
+                        </th>
+                        <th pSortableColumn="role_access">
+                            <div
+                                class="flex justify-content-between align-items-center"
+                            >
+                                <p-sortIcon field="role_access"></p-sortIcon>
+                                ROLE ACCESS
+                                <p-columnFilter
+                                    type="text"
+                                    field="role_access"
+                                    display="menu"
+                                ></p-columnFilter>
+                            </div>
+                        </th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-script>
+                    <tr>
+                        <td pFrozenColumn style="max-width: 3rem">
+                            <p-tableCheckbox
+                                [value]="script"
+                                (click)="selectScript(script)"
+                            ></p-tableCheckbox>
+                        </td>
+                        <td style="min-width: 12rem">
+                            <p-inputSwitch
+                                [disabled]="
+                                    !accountSvr.checkPermission(2, 10, 'C')
+                                "
+                                (onChange)="changeStatus(script, $event)"
+                                [(ngModel)]="script.record_status"
+                            ></p-inputSwitch>
+                        </td>
+                        <td style="min-width: 12rem">
+                            {{ script.script_uid }}
+                        </td>
+                        <td style="min-width: 12rem">
+                            {{ script.version }}
+                        </td>
+                        <td style="min-width: 12rem">
+                            {{ script.original_version_id }}
+                        </td>
+                        <td style="min-width: 12rem">
+                            {{ script.au_level_4_desc }}
+                        </td>
+                        <td
+                            style="min-width: 12rem"
+                            class="cursor-pointer"
+                            (click)="
+                                showScript(script.risk_desc, 'RISK DESCRIPTION')
+                            "
+                            title="Click to view full detail"
+                        >
+                            {{ script.risk_desc.substring(0, 30) }}
+                        </td>
+                        <td style="min-width: 12rem">
+                            {{ script.banner_desc }}
+                        </td>
+                        <td
+                            style="min-width: 12rem"
+                            class="truncate cursor-pointer"
+                            (click)="
+                                showScript(
+                                    script.control_desc,
+                                    'CONTROL DESCRIPTION'
+                                )
+                            "
+                            title="Click to view full detail"
+                        >
+                            {{ script.control_desc }}
+                        </td>
+                        <td
+                            style="min-width: 12rem"
+                            class="truncate cursor-pointer"
+                            (click)="
+                                showScript(
+                                    script.script_presto,
+                                    'Presto Script'
+                                )
+                            "
+                            title="Click to view full detail"
+                        >
+                            {{ script.script_presto }}
+                        </td>
+                        <td
+                            style="min-width: 12rem"
+                            class="truncate cursor-pointer"
+                            (click)="
+                                showScript(script.script_sql, 'SQL Script')
+                            "
+                            title="Click to view full detail"
+                        >
+                            {{ script.script_sql }}
+                        </td>
+                        <td style="min-width: 12rem">
+                            {{ script.script_defination }}
+                        </td>
+                        <td style="min-width: 12rem">
+                            {{ script.target_table }}
+                        </td>
+                        <td style="min-width: 12rem">
+                            {{ script.schedule_day }}
+                        </td>
+                        <td style="min-width: 12rem">
+                            {{ script.start_time_interval }}
+                        </td>
+                        <td style="min-width: 12rem">
+                            {{ script.start_time_interval_end }}
+                        </td>
+                        <td style="min-width: 12rem">
+                            {{
+                                script.schedule_status ? 'Active' : 'In-Active'
+                            }}
+                        </td>
+                        <td style="min-width: 12rem">
+                            {{ script.output_only }}
+                        </td>
+                        <td style="min-width: 12rem">
+                            {{ getRoleAccess(script.role_access) }}
+                        </td>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="emptymessage">
+                    <tr>
+                        <td colspan="18">No Scripts found.</td>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="loadingbody">
+                    <tr>
+                        <td colspan="18">Loading Scripts data. Please wait.</td>
+                    </tr>
+                </ng-template>
+            </p-table>
+
+            <p-dialog
+                [(visible)]="scriptDialog"
+                [style]="{ width: '100%', height: '80%' }"
+                header="Script Details"
+                [modal]="true"
+                class="p-fluid"
+                (onHide)="clearChange()"
+            >
+                <ng-template pTemplate="content">
+                    <form [formGroup]="scriptForm">
+                        <div class="grid formgrid">
+                            <div
+                                class="col-12 mb-2 lg:col-4 lg:mb-0 p-dialog-content div-1"
+                            >
+                                <div class="field">
+                                    <div class="field">
+                                        <label for="au_id"
+                                            >Control UID <sup>*</sup></label
+                                        >
+                                        <p-autoComplete
+                                            placeholder="Search"
+                                            [dropdown]="true"
+                                            [multiple]="false"
+                                            [suggestions]="filteredControl"
+                                            (completeMethod)="
+                                                filterControl($event)
+                                            "
+                                            formControlName="control_id"
+                                            (onSelect)="selectControl($event)"
+                                            [autoHighlight]="true"
+                                            [forceSelection]="true"
+                                            [completeOnFocus]="true"
+                                        ></p-autoComplete>
+                                    </div>
+                                    <label for="au_id"
+                                        >AU LEVEL4 UID <sup>*</sup></label
+                                    >
+                                    <input
+                                        type="text"
+                                        pInputText
+                                        formControlName="au_id"
+                                        [readonly]="true"
+                                    />
+                                    <!-- <p-autoComplete
+                                        placeholder="Search"
+                                        [dropdown]="true"
+                                        [multiple]="false"
+                                        [suggestions]="filteredAudit"
+                                        (completeMethod)="filterAudit($event)"
+                                        formControlName="au_id"
+                                        [disabled]="true"
+                                    ></p-autoComplete> -->
+                                </div>
+                                <div class="field">
+                                    <label for="au_id"
+                                        >Banner UID <sup>*</sup></label
+                                    >
+                                    <input
+                                        type="text"
+                                        pInputText
+                                        formControlName="banner_id"
+                                        [readonly]="true"
+                                    />
+                                    <!-- <p-autoComplete
+                                        placeholder="Search"
+                                        [dropdown]="true"
+                                        [multiple]="false"
+                                        [suggestions]="filteredBanner"
+                                        (completeMethod)="filterBanner($event)"
+                                        formControlName="banner_id"
+                                        [disabled]="true"
+                                    ></p-autoComplete> -->
+                                </div>
+                                <div class="field">
+                                    <label for="au_id"
+                                        >Risk UID <sup>*</sup></label
+                                    >
+                                    <input
+                                        type="text"
+                                        pInputText
+                                        formControlName="risk_id"
+                                        [readonly]="true"
+                                        class="cursor-pointer"
+                                        (click)="
+                                            showScript(
+                                                scriptForm.get('risk_id').value,
+                                                'Risk UID'
+                                            )
+                                        "
+                                        title="Click to view full detail"
+                                    />
+                                    <!-- <p-autoComplete
+                                        placeholder="Search"
+                                        [dropdown]="true"
+                                        [multiple]="false"
+                                        [suggestions]="filteredRisk"
+                                        (completeMethod)="filterRisk($event)"
+                                        formControlName="risk_id"
+                                        [disabled]="true"
+                                    ></p-autoComplete> -->
+                                </div>
+                                <!-- <div class="field">
+                                    <label for="target_table"
+                                        >Target Table <sup>*</sup></label
+                                    >
+                                    <input
+                                        id="target_table"
+                                        pInputText
+                                        formControlName="target_table"
+                                    />
+                                </div> -->
+                                <div class="field">
+                                    <label>Schedule Day</label>
+                                    <p-autoComplete
+                                        placeholder="Search"
+                                        [dropdown]="true"
+                                        [multiple]="false"
+                                        [suggestions]="filteredDay"
+                                        (completeMethod)="filterDay($event)"
+                                        formControlName="schedule_day"
+                                    ></p-autoComplete>
+                                </div>
+                                <div class="field">
+                                    <label
+                                        for="
+                                    role_access"
+                                        >Role Access</label
+                                    >
+                                    <p-multiSelect
+                                        appendTo="body"
+                                        [options]="profiles"
+                                        optionLabel="role"
+                                        optionValue="id"
+                                        display="chip"
+                                        formControlName="role_access"
+                                    ></p-multiSelect>
+                                    <!-- <input
+                                        id="role_access"
+                                        pInputText
+                                        type="number"
+                                        min="0"
+                                        formControlName="role_access"
+                                    /> -->
+                                </div>
+                                <!-- <div class="field">
+                                    <label for="start_time_interval"
+                                        >Start Time Interval</label
+                                    >
+                                    <p-calendar
+                                        id="start_time_interval"
+                                        [showIcon]="true"
+                                        formControlName="start_time_interval"
+                                        [hourFormat]="24"
+                                        [stepMinute]="0"
+                                        timeOnly="true"
+                                    ></p-calendar>
+                                </div> -->
+                                <!-- <div class="field">
+                                    <label for="start_time_interval_end"
+                                        >Start Time Interval End</label
+                                    >
+                                    <p-calendar
+                                        appendTo="body"
+                                        id="start_time_interval_end"
+                                        [showIcon]="true"
+                                        formControlName="start_time_interval_end"
+                                        [hourFormat]="24"
+                                        [stepMinute]="0"
+                                        timeOnly="true"
+                                    ></p-calendar>
+                                </div> -->
+                            </div>
+                            <div class="col-12 mb-2 lg:col-8 lg:mb-0">
+                                <div class="grid formgrid">
+                                    <div class="field col-6">
+                                        <label for="script_presto"
+                                            >Presto Script</label
+                                        >
+                                        <textarea
+                                            rows="8"
+                                            cols="30"
+                                            class="p-inputtextarea p-inputtext p-component p-element"
+                                            formControlName="script_presto"
+                                            (click)="
+                                                getText(
+                                                    scriptForm.get(
+                                                        'script_presto'
+                                                    ).value,
+                                                    scriptForm,
+                                                    'script_presto',
+                                                    'Presto Script'
+                                                )
+                                            "
+                                        ></textarea>
+                                    </div>
+                                    <div class="field col-6">
+                                        <label for="sql_script"
+                                            >SQL Script</label
+                                        >
+                                        <textarea
+                                            rows="8"
+                                            cols="30"
+                                            class="p-inputtextarea p-inputtext p-component p-element"
+                                            formControlName="sql_script"
+                                            (click)="
+                                                getText(
+                                                    scriptForm.get('sql_script')
+                                                        .value,
+                                                    scriptForm,
+                                                    'sql_script',
+                                                    'SQL Script'
+                                                )
+                                            "
+                                        ></textarea>
+                                    </div>
+                                </div>
+                                <div class="field">
+                                    <label for="sql_definition"
+                                        >Script Definition <sup>*</sup></label
+                                    ><br />
+                                    <textarea
+                                        style="width: 100%"
+                                        cols="2"
+                                        rows="5"
+                                        formControlName="sql_definition"
+                                    ></textarea>
+                                </div>
+                                <div class="grid formgrid">
+                                    <div
+                                        formArrayName="variable"
+                                        *ngFor="
+                                            let item of scriptForm.get(
+                                                'variable'
+                                            ).controls;
+                                            let i = index
+                                        "
+                                        class="col-6"
+                                        [ngStyle]="{
+                                            display:
+                                                scriptDefaultVariables.includes(
+                                                    scriptForm.get('variable')
+                                                        .value[i].var_name
+                                                )
+                                                    ? 'none'
+                                                    : 'block'
+                                        }"
+                                    >
+                                        <div [formGroupName]="i">
+                                            <!-- !scriptDefaultVariables.includes(scriptForm.get('variable').value[i].var_name) -->
+                                            <div class="grid formgrid">
+                                                <div
+                                                    class="field col-12 mb-2 lg:col-6 lg:mb-0"
+                                                >
+                                                    <label for="var_name"
+                                                        >Variable</label
+                                                    >
+                                                    <input
+                                                        id="var_name"
+                                                        pInputText
+                                                        formControlName="var_name"
+                                                        readonly
+                                                    />
+                                                </div>
+                                                <div
+                                                    class="field col-12 mb-2 lg:col-6 lg:mb-0"
+                                                >
+                                                    <label for="var_datatype"
+                                                        >Data Types
+                                                    </label>
+                                                    <p-autoComplete
+                                                        placeholder="Search"
+                                                        [dropdown]="true"
+                                                        [multiple]="false"
+                                                        [suggestions]="
+                                                            filteredDatatypes
+                                                        "
+                                                        (completeMethod)="
+                                                            filterDatatypes(
+                                                                $event
+                                                            )
+                                                        "
+                                                        [disabled]="
+                                                            scriptDefaultVariables.includes(
+                                                                (scriptForm.get(
+                                                                    'variable'
+                                                                )?.value)[i]
+                                                                    .var_name
+                                                            )
+                                                        "
+                                                        formControlName="var_datatype"
+                                                    ></p-autoComplete>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </ng-template>
+
+                <ng-template pTemplate="footer">
+                    <button
+                        pButton
+                        pRipple
+                        label="Cancel"
+                        icon="pi pi-times"
+                        class="p-button-text"
+                        (click)="scriptDialog = false"
+                    ></button>
+                    <button
+                        pButton
+                        pRipple
+                        #submitButton
+                        label="Save"
+                        icon="pi pi-check"
+                        class="p-button-text"
+                        (click)="saveScript()"
+                        [disabled]="scriptForm.invalid"
+                    ></button>
+                </ng-template>
+            </p-dialog>
+        </div>
+    </div>
+</div>
+
+<p-confirmDialog> </p-confirmDialog>
+
+<p-dialog header="ERROR!" [(visible)]="scirptError">
+    <ng-template pTemplate="content">
+        Your script must have
+        $AuditTestHistoryID,$AuditTestID,$RiskID,$ControlID and $ScriptID these
+        are case sensitive!
+    </ng-template>
+    <ng-template pTemplate="footer">
+        <button
+            pButton
+            pRipple
+            label="Ok!"
+            icon="pi pi-check"
+            class="p-button-text"
+            (click)="scirptError = false"
+        ></button>
+    </ng-template>
+</p-dialog>
+
+<p-dialog
+    [(visible)]="showScriptPop"
+    [header]="showScriptPopTitle"
+    [modal]="true"
+>
+    <ng-template pTemplate="content">
+        <textarea
+            [value]="showScriptContent"
+            cols="90"
+            rows="40"
+            disabled
+        ></textarea>
+    </ng-template>
+</p-dialog>
+
+<p-dialog
+    #textDialog
+    [header]="popupHeader"
+    [(visible)]="showPopupText"
+    [modal]="true"
+>
+    <ng-template pTemplate="content">
+        <form [formGroup]="textDialogForm">
+            <textarea
+                autofocus
+                name=""
+                id=""
+                cols="100"
+                rows="40"
+                formControlName="input"
+            ></textarea>
+        </form>
+    </ng-template>
+
+    <ng-template pTemplate="footer">
+        <button
+            pButton
+            pRipple
+            label="Ok"
+            icon="pi pi-check"
+            class="p-button-text"
+            (click)="showPopupText = false"
+        ></button>
+    </ng-template>
+</p-dialog>
