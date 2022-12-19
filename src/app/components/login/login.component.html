@@ -27,7 +27,7 @@
  </p-header> -->
 
 <section class="showcase">
-    <div class="video-container">
+    <!-- <div class="video-container">
         <!-- <video
             src="../../../assets/layout/video/login_page.mp4"
             autoplay
@@ -35,7 +35,7 @@
             loop
         ></video> -->
 
-        <video
+    <!-- <video
             loop
             muted
             autoplay
@@ -48,7 +48,7 @@
             />
             Your browser does not support the video tag.
         </video>
-    </div>
+    </div> -->
 
     <div class="content">
         <div class="mycontainer">
@@ -75,7 +75,7 @@
                                 [ngClass]="{
                                     'is-invalid': submitted && f.username.errors
                                 }"
-                                style="height: 65px; width: 300px"
+                                style="height: 65px; width: 300px;"
                             />
                             <div
                                 *ngIf="submitted && f.username.errors"
@@ -149,7 +149,7 @@
                         </div>
                         <div
                             class="form-floating mb-3"
-                            style="padding-left: 10px"
+                            style="padding-left: 10px;"
                         >
                             <!-- <button type="submit">Submit</button> -->
 
@@ -157,7 +157,7 @@
                                 class="btn btn-primary"
                                 #submitButton
                                 [disabled]="isLoading"
-                                style="height: 55px"
+                                style="height: 55px;"
                             >
                                 <i
                                     class="pi"
