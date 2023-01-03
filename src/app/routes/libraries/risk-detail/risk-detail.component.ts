@@ -545,14 +545,14 @@ export class RiskDetailComponent implements OnInit {
         this.riskDialog = true;
     }
 
-    deleteSelectedrisks() {
+    deleteSelectedrisks(risk) {
         // this.deleterisksDialog = true;
         this.confirmationService.confirm({
             header: 'Confirmation!',
             message: 'Are you sure you want to delete selected Risk?',
             icon: 'pi pi-exclamation-triangle',
             accept: () => {
-                this.confirmDeleteSelected();
+                this.confirmDeleteSelected(risk);
             },
             reject: () => {
                 //  console.log('rejected');
@@ -564,7 +564,7 @@ export class RiskDetailComponent implements OnInit {
         //   debugger;
         //  this.risk = {...risk};
         this.riskDialog = true;
-        const arrayToObject = Object.assign({}, ...this.selectedrisks);
+        const arrayToObject = Object.assign({}, ...[risk]);
         this.risk = { ...arrayToObject };
         //  this.selectedtotal=parseInt(this.risk.impact) * parseInt(this.risk.likelihood);
 
@@ -587,13 +587,13 @@ export class RiskDetailComponent implements OnInit {
         this.risk = { ...risk };
     }
 
-    confirmDeleteSelected() {
+    confirmDeleteSelected(risk) {
         this.deleterisksDialog = false;
         // this.risks = this.risks.filter(val => !this.selectedrisks.includes(val));
         // this.messageService.add({severity: 'success', summary: 'Successful', detail: 'risks Deleted', life: 3000});
         // // this.selectedrisks = null;
 
-        const arrayToObject = Object.assign({}, ...this.selectedrisks);
+        const arrayToObject = Object.assign({}, ...[risk]);
         this.risk = { ...arrayToObject };
 
         this.riskService

@@ -751,6 +751,8 @@
     </ng-template>
 </p-dialog>
 
+<p-confirmDialog> </p-confirmDialog>
+
 <p-dialog [(visible)]="showPop" [header]="showPopTitle" [modal]="true">
     <ng-template pTemplate="content">
         <textarea [value]="showContent" cols="90" rows="40" disabled></textarea>
@@ -773,7 +775,6 @@
         [scrollable]="true"
         scrollHeight="calc(100vh - 240px)"
         [tableStyle]="{ 'min-width': '50rem' }"
-        styleClass="p-datatable-gridlines"
         [globalFilterFields]="[
             'risk_uid',
             'auldesc',
@@ -794,8 +795,8 @@
                 class="table-header flex justify-content-between align-items-center"
             >
                 <span>Risk</span>
-                <span class="flex justify-content-between align-items-center"
-                    ><span class="p-input-icon-left mr-5">
+                <span class="flex justify-content-between align-items-center">
+                    <span class="p-input-icon-left mr-5">
                         <i class="pi pi-search"></i>
                         <input
                             pInputText
@@ -806,7 +807,7 @@
                             placeholder="Global Search"
                         />
                     </span>
-                    <span class="p-input-icon-left mb-2 md:mb-0">
+                    <!-- <span class="p-input-icon-left mb-2 md:mb-0">
                         <button
                             title="New"
                             pButton
@@ -846,28 +847,19 @@
                             icon=" pi pi-filter-slash"
                             (click)="clear(dt)"
                         ></button> </span
-                ></span>
+                > -->
+                </span>
             </div>
         </ng-template>
 
         <ng-template pTemplate="header">
             <tr>
-                <th pFrozenColumn style="width: 4rem">
-                    <!-- <p-tableHeaderCheckbox></p-tableHeaderCheckbox> -->
-                </th>
-
                 <th pSortableColumn="risk_uid" style="min-width: 14rem">
                     <div
                         class="flex justify-content-between align-items-center"
                     >
                         Risk UID
                         <p-sortIcon field="risk_uid"></p-sortIcon>
-                        <p-columnFilter
-                            type="text"
-                            field="risk_uid"
-                            display="menu"
-                            class="ml-auto"
-                        ></p-columnFilter>
                     </div>
                 </th>
 
@@ -877,12 +869,6 @@
                     >
                         AU level 3 Description
                         <p-sortIcon field="auldesc"></p-sortIcon>
-                        <p-columnFilter
-                            type="text"
-                            field="auldesc"
-                            display="menu"
-                            class="ml-auto"
-                        ></p-columnFilter>
                     </div>
                 </th>
 
@@ -892,12 +878,6 @@
                     >
                         Process
                         <p-sortIcon field="process"></p-sortIcon>
-                        <p-columnFilter
-                            type="text"
-                            field="process"
-                            display="menu"
-                            class="ml-auto"
-                        ></p-columnFilter>
                     </div>
                 </th>
 
@@ -910,12 +890,6 @@
                     >
                         Business Objective
                         <p-sortIcon field="business_objective"></p-sortIcon>
-                        <p-columnFilter
-                            type="text"
-                            field="business_objective"
-                            display="menu"
-                            class="ml-auto"
-                        ></p-columnFilter>
                     </div>
                 </th>
 
@@ -925,12 +899,6 @@
                     >
                         Audit Risk
                         <p-sortIcon field="risk"></p-sortIcon>
-                        <p-columnFilter
-                            type="text"
-                            field="risk"
-                            display="menu"
-                            class="ml-auto"
-                        ></p-columnFilter>
                     </div>
                 </th>
 
@@ -940,12 +908,6 @@
                     >
                         Risk Category
                         <p-sortIcon field="rtax1"></p-sortIcon>
-                        <p-columnFilter
-                            type="text"
-                            field="rtax1"
-                            display="menu"
-                            class="ml-auto"
-                        ></p-columnFilter>
                     </div>
                 </th>
 
@@ -955,12 +917,6 @@
                     >
                         Risk Type
                         <p-sortIcon field="rtax2"></p-sortIcon>
-                        <p-columnFilter
-                            type="text"
-                            field="rtax2"
-                            display="menu"
-                            class="ml-auto"
-                        ></p-columnFilter>
                     </div>
                 </th>
 
@@ -970,12 +926,6 @@
                     >
                         Comments
                         <p-sortIcon field="comment"></p-sortIcon>
-                        <p-columnFilter
-                            type="text"
-                            field="comment"
-                            display="menu"
-                            class="ml-auto"
-                        ></p-columnFilter>
                     </div>
                 </th>
 
@@ -985,12 +935,6 @@
                     >
                         Impact
                         <p-sortIcon field="impact"></p-sortIcon>
-                        <p-columnFilter
-                            type="text"
-                            field="impact"
-                            display="menu"
-                            class="ml-auto"
-                        ></p-columnFilter>
                     </div>
                 </th>
 
@@ -1000,12 +944,6 @@
                     >
                         Likelihood
                         <p-sortIcon field="likelihood"></p-sortIcon>
-                        <p-columnFilter
-                            type="text"
-                            field="likelihood"
-                            display="menu"
-                            class="ml-auto"
-                        ></p-columnFilter>
                     </div>
                 </th>
 
@@ -1015,12 +953,6 @@
                     >
                         Risk Score
                         <p-sortIcon field="risk_score"></p-sortIcon>
-                        <p-columnFilter
-                            type="text"
-                            field="risk_score"
-                            display="menu"
-                            class="ml-auto"
-                        ></p-columnFilter>
                     </div>
                 </th>
 
@@ -1030,26 +962,15 @@
                     >
                         Risk Exposure
                         <p-sortIcon field="risk_exposure"></p-sortIcon>
-                        <p-columnFilter
-                            type="text"
-                            field="risk_exposure"
-                            display="menu"
-                            class="ml-auto"
-                        ></p-columnFilter>
                     </div>
                 </th>
+
+                <th style="min-width: 14rem">Actions</th>
             </tr>
         </ng-template>
 
         <ng-template pTemplate="body" let-item>
             <tr class="p-selectable-row">
-                <td pFrozenColumn style="max-width: 4rem">
-                    <p-tableCheckbox
-                        [value]="item"
-                        (click)="selectRisk(item)"
-                    ></p-tableCheckbox>
-                </td>
-
                 <td>
                     <span class="p-column-title">Risk UID</span>
                     {{ item.risk_uid }}
@@ -1109,9 +1030,43 @@
                     <span class="p-column-title">Risk Exposure</span>
                     {{ item.codetext }}
                 </td>
+
+                <td style="min-width: 14rem">
+                    <span class="p-column-title">Actions</span>
+                    <span
+                        ><button
+                            pButton
+                            pRipple
+                            title="Edit"
+                            type="button"
+                            icon="pi pi-pencil"
+                            class="p-button-rounded p-button-info"
+                            (click)="editrisk(item)"
+                        ></button>
+                        <button
+                            pButton
+                            pRipple
+                            title="Delete"
+                            type="button"
+                            icon="pi pi-trash"
+                            class="p-button-rounded p-button-danger ml-2"
+                            (click)="deleteSelectedrisks(item)"
+                        ></button
+                    ></span>
+                </td>
             </tr>
         </ng-template>
     </p-table>
+
+    <button
+        pButton
+        pRipple
+        title="Add"
+        type="button"
+        icon="pi pi-plus"
+        class="p-button-rounded fixed add-banner-btn"
+        (click)="openNew()"
+    ></button>
 </div>
 
 <p-dialog

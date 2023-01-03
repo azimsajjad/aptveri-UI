@@ -854,7 +854,7 @@ export class ScriptDetailComponent implements OnInit {
                     .setValue(this.getAuditDesc(res.data[0].au_level_4_id));
                 this.scriptForm
                     .get('banner_id')
-                    .setValue(this.getBannerDesc(res.data[0].banner_id));
+                    .setValue(this.getBannerDesc(res.data[0].department_id));
                 this.scriptForm
                     .get('risk_id')
                     .setValue(this.getRiskDesc(res.data[0].risk_id));
