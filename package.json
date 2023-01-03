@@ -14,7 +14,7 @@
         "e2e": "ng e2e",
         "watch:dev": "ng build --watch --deploy-url /iRAA/ --base-href /iRAA/ --configuration=development",
         "watch:stage": "ng build --watch --deploy-url https://iRAAqa.iRAA.net/ --base-href ./ --configuration=staging",
-        "watch:prod": "ng build --watch --deploy-url https://mia.iRAA.net/ --base-href ./ --configuration=production",
+        "watch:prod": "ng build --watch --deploy-url https://iRAA.net/ --base-href ./ --configuration=production",
         "watch:addev": "ng build --watch --deploy-url /iRAA/ --base-href /iRAA/ --configuration=addev",
         "watch:mmdev": "ng build --watch --deploy-url https://iRAAdev.iRAA.net/ --base-href ./ --configuration=mmdev"
     },

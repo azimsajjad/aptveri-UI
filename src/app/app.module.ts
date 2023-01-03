@@ -134,7 +134,7 @@ export function tokenGetter() {
                 tokenGetter: tokenGetter,
                 allowedDomains: [
                     'https://localhost:7204',
-                    'http://192.168.1.9:5100',
+                    'http://192.168.1.38:5100',
                     'https://localhost:8082',
                     'https://localhost:8081',
                 ],
