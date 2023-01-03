@@ -1,0 +1,76 @@
+<div *ngIf="tableList" class="m-4">
+    <div class="flex align-items-center">
+        <p-dropdown
+            id="select_table"
+            placeholder="Select Table"
+            [options]="tableList"
+            [(ngModel)]="selectedTable"
+            optionLabel="tablename"
+        ></p-dropdown>
+
+        <div>
+            <input #file type="file" hidden (change)="sendFile($event)" />
+            <p-button
+                label="Select File"
+                icon="pi pi-file"
+                iconPos="left"
+                class="ml-4"
+                (click)="file.click()"
+            ></p-button>
+        </div>
+
+        <div>
+            <p-button
+                label="Upload"
+                icon="pi pi-upload"
+                iconPos="left"
+                class="ml-4"
+                (click)="upload()"
+            ></p-button>
+        </div>
+    </div>
+</div>
+
+<div class="loader">
+    <p-progressSpinner *ngIf="loading"></p-progressSpinner>
+</div>
+
+<div class="tab-view">
+    <p-tabView *ngIf="tableData">
+        <p-tabPanel header="Header 1">
+            <div class="grid">
+                <div class="col-12">
+                    <div class="card">
+                        <p-table
+                            [columns]="tableCols"
+                            [value]="tableData"
+                            responsiveLayout="scroll"
+                            rowHover="true"
+                            styleClass="p-datatable-gridlines"
+                        >
+                            <ng-template pTemplate="header" let-columns>
+                                <tr>
+                                    <th *ngFor="let col of columns">
+                                        {{ col.header }}
+                                    </th>
+                                </tr>
+                            </ng-template>
+                            <ng-template
+                                pTemplate="body"
+                                let-rowData
+                                let-columns="columns"
+                            >
+                                <tr>
+                                    <td *ngFor="let col of columns">
+                                        {{ rowData[col.field] }}
+                                    </td>
+                                </tr>
+                            </ng-template>
+                        </p-table>
+                    </div>
+                </div>
+            </div>
+        </p-tabPanel>
+        <p-tabPanel header="Log" *ngIf="false"> Content 2 </p-tabPanel>
+    </p-tabView>
+</div>

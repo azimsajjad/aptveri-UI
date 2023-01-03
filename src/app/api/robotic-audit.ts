@@ -43,3 +43,9 @@ export interface mastertable {
     tableschema?: string;
     tablename?: string;
 }
+
+export interface TableList {
+    filename: null;
+    path: null | string;
+    tablename: string;
+}

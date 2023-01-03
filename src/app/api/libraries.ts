@@ -1,8 +1,8 @@
 export interface Banner {
-    banner_id?: number;
-    banner_uid?: string;
-    division?: string;
-    banner?: string;
+    department_id?: number;
+    department_uid?: string;
+    organization?: string;
+    department?: string;
 }
 
 export interface auditDetails {
@@ -59,6 +59,7 @@ export interface auditunivthird {
 }
 
 export interface control {
+    department_uid?: any;
     control_id?: number;
     control_uid?: string;
     au_level_4_uid?: string;
@@ -113,6 +114,7 @@ export interface Script {
     banner_id?: any;
     control_id?: any;
     banner_uid?: string;
+    department_id?: any;
     control_uid?: string;
     original_version_id?: string;
     output_only?: boolean;

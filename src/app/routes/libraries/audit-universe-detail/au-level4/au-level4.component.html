@@ -1,0 +1,278 @@
+<div id="table1">
+    <p-table
+        #dt
+        [value]="AULevel4"
+        selectionMode="single"
+        [rows]="10"
+        [loading]="loading"
+        [rowHover]="true"
+        [paginator]="true"
+        [rowsPerPageOptions]="[10, 20, 30]"
+        [showCurrentPageReport]="true"
+        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+        [(selection)]="selectedAULevel4"
+        responsiveLayout="scroll"
+        [scrollable]="true"
+        scrollHeight="calc(100vh - 365px)"
+        [filterDelay]="0"
+        [globalFilterFields]="[
+            'au_level_4_uid',
+            'au_level_4_desc',
+            'au_level_4_definiton',
+            'au_level_4_comments'
+        ]"
+    >
+        <!-- <ng-template pTemplate="caption">
+            <div
+                class="grid grid-nogutter flex-column md:flex-row justify-content-between"
+            >
+                <h6 class="m-0">
+                    Audit Universe Level 4(
+                    {{ AULevel3Selection[0]?.au_level_3_uid }} -
+                    {{ AULevel3Selection[0]?.au_level_3_desc.slice(0, 30) }}
+                    )
+                </h6>
+
+                <span class="p-input-icon-left mb-2 md:mb-0">
+                    <button
+                        *ngIf="accountSvr.checkPermission(2, 7, 'A')"
+                        title="New"
+                        pButton
+                        pRipple
+                        icon="pi pi-plus"
+                        class="p-button-rounded p-button-success"
+                        (click)="open()"
+                    ></button>
+                    <button
+                        *ngIf="accountSvr.checkPermission(2, 7, 'C')"
+                        title="Edit"
+                        pButton
+                        pRipple
+                        icon="pi pi-pencil"
+                        class="p-button-rounded p-button-warning ml-2"
+                        (click)="open(selectedAULevel4[0])"
+                    ></button>
+                    <button
+                        *ngIf="accountSvr.checkPermission(2, 7, 'D')"
+                        title="Delete"
+                        pButton
+                        pRipple
+                        icon="pi pi-trash"
+                        class="p-button-rounded p-button-danger ml-2"
+                        (click)="deleteAuditUniverse(selectedAULevel4[0])"
+                    ></button>
+                    <button
+                        title="Clear"
+                        pButton
+                        pRipple
+                        class="p-button-rounded p-button-info ml-2"
+                        icon=" pi pi-filter-slash"
+                    ></button>
+                </span>
+            </div>
+        </ng-template> -->
+        <ng-template pTemplate="caption">
+            <div
+                class="table-header flex justify-content-between align-items-center"
+            >
+                <span class="text-xl"
+                    >Audit Universe Level 4(
+                    {{ AULevel3Selection[0]?.au_level_3_uid }} -
+                    {{ AULevel3Selection[0]?.au_level_3_desc.slice(0, 30) }}
+                    )</span
+                >
+                <span class="p-input-icon-left">
+                    <i class="pi pi-search"></i>
+                    <input
+                        pInputText
+                        type="text"
+                        (input)="
+                            dt.filterGlobal($event.target.value, 'contains')
+                        "
+                        placeholder="Global Search"
+                    />
+                </span>
+            </div>
+        </ng-template>
+        <ng-template pTemplate="header">
+            <tr>
+                <!-- <th style="max-width: 3rem"></th> -->
+                <th pSortableColumn="au_level_4_uid">
+                    <div
+                        class="flex justify-content-between align-items-center"
+                    >
+                        UID
+                        <p-sortIcon field="au_level_4_uid"></p-sortIcon>
+                    </div>
+                </th>
+                <th pSortableColumn="au_level_4_desc">
+                    <div
+                        class="flex justify-content-between align-items-center"
+                    >
+                        Discreption
+                        <p-sortIcon field="au_level_4_desc"></p-sortIcon>
+                    </div>
+                </th>
+                <th pSortableColumn="au_level_4_definiton">
+                    <div
+                        class="flex justify-content-between align-items-center"
+                    >
+                        Definition
+                        <p-sortIcon field="au_level_4_definiton"></p-sortIcon>
+                    </div>
+                </th>
+                <th pSortableColumn="au_level_4_comments">
+                    <div
+                        class="flex justify-content-between align-items-center"
+                    >
+                        Comment
+                        <p-sortIcon field="au_level_4_comments"></p-sortIcon>
+                    </div>
+                </th>
+                <th pSortableColumn="Actions">
+                    <div
+                        class="flex justify-content-between align-items-center"
+                    >
+                        Actions
+                    </div>
+                </th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-aulevel4>
+            <tr>
+                <!-- <td style="max-width: 3rem">
+                    <p-tableCheckbox
+                        [value]="aulevel4"
+                        (click)="selectRow(aulevel4)"
+                    ></p-tableCheckbox>
+                </td> -->
+                <td style="min-width: 12rem">
+                    {{ aulevel4.au_level_4_uid }}
+                </td>
+                <td style="min-width: 12rem">
+                    {{ aulevel4.au_level_4_desc }}
+                </td>
+                <td style="min-width: 12rem">
+                    {{ aulevel4.au_level_4_definiton }}
+                </td>
+                <td style="min-width: 12rem">
+                    {{ aulevel4.au_level_4_comments }}
+                </td>
+                <td>
+                    <span class="p-column-title">Actions</span>
+                    <span
+                        ><button
+                            pButton
+                            pRipple
+                            title="Edit"
+                            type="button"
+                            icon="pi pi-pencil"
+                            class="p-button-rounded p-button-info"
+                            (click)="open(aulevel4)"
+                        ></button>
+                        <button
+                            pButton
+                            pRipple
+                            title="Delete"
+                            type="button"
+                            icon="pi pi-trash"
+                            class="p-button-rounded p-button-danger ml-2"
+                            (click)="deleteAuditUniverse(aulevel4)"
+                        ></button
+                    ></span>
+                </td>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="emptymessage">
+            <tr>
+                <td colspan="5">No Audit Universer found.</td>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="loadingbody">
+            <tr>
+                <td colspan="5">Loading Audit Universer data. Please wait.</td>
+            </tr>
+        </ng-template>
+    </p-table>
+
+    <button
+        pButton
+        pRipple
+        title="Add"
+        type="button"
+        icon="pi pi-plus"
+        class="p-button-rounded fixed add-banner-btn"
+        (click)="open()"
+    ></button>
+
+    <p-dialog
+        [(visible)]="aul_4_Dialog"
+        [style]="{ width: '450px' }"
+        header="Audit Universe Level 3 Details"
+        [modal]="true"
+        class="p-fluid"
+    >
+        <ng-template pTemplate="content">
+            <form *ngIf="aul_4_Dialog" [formGroup]="aul4Form">
+                <div class="field">
+                    <label for="section_no">Section No. <sup>*</sup></label>
+                    <input
+                        id="section_no"
+                        pInputText
+                        formControlName="section_no"
+                        type="number"
+                    />
+                </div>
+                <div class="field">
+                    <label for="au_level_4_desc"
+                        >Description <sup>*</sup></label
+                    >
+                    <input
+                        id="au_level_4_desc"
+                        pInputText
+                        formControlName="au_level_4_desc"
+                    />
+                </div>
+                <div class="field">
+                    <label for="au_level_4_definiton"
+                        >Definition <sup>*</sup></label
+                    >
+                    <input
+                        id="au_level_4_definiton"
+                        pInputText
+                        formControlName="au_level_4_definiton"
+                    />
+                </div>
+                <div class="field">
+                    <label for="au_level_4_comments">Comment</label>
+                    <input
+                        id="au_level_4_comments"
+                        pInputText
+                        formControlName="au_level_4_comments"
+                    />
+                </div>
+            </form>
+        </ng-template>
+        <ng-template pTemplate="footer">
+            <button
+                pButton
+                pRipple
+                label="Cancel"
+                icon="pi pi-times"
+                class="p-button-text"
+                (click)="aul_4_Dialog = false"
+            ></button>
+            <button
+                pButton
+                pRipple
+                label="Save"
+                icon="pi pi-check"
+                class="p-button-text"
+                [disabled]="aul4Form.invalid"
+                (click)="submitAUL4Form()"
+            ></button>
+        </ng-template>
+    </p-dialog>
+
+    <p-confirmDialog></p-confirmDialog>
+</div>

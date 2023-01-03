@@ -70,6 +70,7 @@ import * as moment from 'moment';
             }
         `,
     ],
+    styleUrls: ['audit.component.scss'],
 })
 export class AuditComponent implements OnInit {
     auditDialog: boolean;
@@ -599,6 +600,7 @@ export class AuditComponent implements OnInit {
         } else {
             this.auditDialog = true;
         }
+        console.log(audit);
 
         this.auditForm = this.fb.group({
             audit_id: audit ? audit.audit_id : null,
@@ -616,7 +618,7 @@ export class AuditComponent implements OnInit {
             audit_name: [audit ? audit.audit_name : null, Validators.required],
             audit_schedule: audit ? audit.audit_schedule : null,
             banner_id: [
-                audit ? this.getBannerSelection(audit.banner_id) : null,
+                audit ? this.getBannerSelection(audit.department_id) : null,
                 Validators.required,
             ],
             end_date: audit
@@ -644,6 +646,7 @@ export class AuditComponent implements OnInit {
                     : '0',
             ],
         });
+        console.log(this.auditForm.value);
     }
 
     hideDialog() {
@@ -675,19 +678,21 @@ export class AuditComponent implements OnInit {
         const query = event.query;
         for (let i = 0; i < this.AuditBanner.length; i++) {
             const AuditBanner = this.AuditBanner[i];
-            if (AuditBanner.banner != null) {
+            if (AuditBanner.department != null) {
                 if (
-                    AuditBanner.banner
+                    AuditBanner.department
                         .toString()
                         .toLowerCase()
                         .indexOf(query.toLowerCase()) == 0 ||
-                    AuditBanner.banner_uid
+                    AuditBanner.department_uid
                         .toString()
                         .toLowerCase()
                         .indexOf(query.toLowerCase()) == 0
                 ) {
                     filtered.push(
-                        AuditBanner.banner_uid + ' - ' + AuditBanner.banner
+                        AuditBanner.department_uid +
+                            ' - ' +
+                            AuditBanner.department
                     );
                     filteredall.push(AuditBanner);
                 }
@@ -794,7 +799,7 @@ export class AuditComponent implements OnInit {
     }
     //to navigate to program audit
     ForwordTOAuditProgram(audit: audit) {
-        const arrayToObject = Object.assign({}, ...this.selectedaudits);
+        const arrayToObject = Object.assign({}, ...[audit]);
         this.audit = { ...arrayToObject };
         //  debugger;
         let useraccessn = 'no';
@@ -865,10 +870,12 @@ export class AuditComponent implements OnInit {
     // }
 
     getBannerSelection(id: number) {
+        console.log(id);
+
         let x = this.AuditBanner.filter((ele) => {
-            return ele.banner_id == id;
+            return ele.department_id == id;
         })[0];
-        return x.banner_uid + ' - ' + x.banner;
+        return x.department_uid + ' - ' + x.department;
     }
 
     getBannerId(val: String) {

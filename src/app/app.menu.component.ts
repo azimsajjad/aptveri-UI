@@ -55,10 +55,15 @@ export class AppMenuComponent implements OnInit {
             {
                 label: 'Libraries',
                 items: [
+                    // {
+                    //     label: 'Banner',
+                    //     icon: 'pi pi-fw pi-globe',
+                    //     routerLink: ['/pages/banners-detail'],
+                    // },
                     {
                         label: 'Banner',
                         icon: 'pi pi-fw pi-globe',
-                        routerLink: ['/pages/banners-detail'],
+                        routerLink: ['/pages/banner'],
                     },
                     // {
                     //     label: 'Audit Universe',
@@ -68,7 +73,18 @@ export class AppMenuComponent implements OnInit {
                     {
                         label: 'Audit Universe',
                         icon: 'pi pi-fw pi-user-edit',
-                        routerLink: ['/pages/audit-universe-all'],
+                        items: [
+                            {
+                                label: 'Read',
+                                icon: 'pi pi-fw pi-book',
+                                routerLink: ['/pages/audit-universe-all'],
+                            },
+                            {
+                                label: 'Create',
+                                icon: 'pi pi-fw pi-pencil',
+                                routerLink: ['/pages/audit-universe'],
+                            },
+                        ],
                     },
                     {
                         label: 'Risk',
@@ -94,6 +110,26 @@ export class AppMenuComponent implements OnInit {
                         label: 'Audit',
                         icon: 'pi pi-fw pi-id-card',
                         routerLink: ['/pages/audit'],
+                    },
+                    {
+                        label: 'Ad-Hoc Test',
+                        icon: 'pi pi-fw pi-exclamation-circle',
+                        routerLink: ['/pages/adhoc-test'],
+                    },
+                ],
+            },
+            {
+                label: 'Utilites',
+                items: [
+                    {
+                        label: 'Logs',
+                        icon: 'pi pi-code',
+                        routerLink: ['/pages/logs'],
+                    },
+                    {
+                        label: 'Upload',
+                        icon: 'pi pi-upload',
+                        routerLink: ['/pages/upload'],
                     },
                 ],
             },

@@ -20,6 +20,11 @@ import { ResultsComponent } from './routes/roboticsAudit/results/results.compone
 import { AuditComponent } from './routes/roboticsAudit/audit/audit.component';
 import { ViewResultComponent } from './routes/roboticsAudit/view-result/view-result.component';
 import { AuLevelAllComponent } from './routes/libraries/audit-universe-detail/au-level-all/au-level-all.component';
+import { BannerComponent } from './routes/libraries/banner/banner.component';
+import { AuditUniverseDetailComponent } from './routes/libraries/audit-universe-detail/audit-universe-detail.component';
+import { AdhocTestComponent } from './routes/roboticsAudit/adhoc-test/adhoc-test.component';
+import { LogsComponent } from './routes/utilities/logs/logs.component';
+import { UploadComponent } from './routes/utilities/upload/upload.component';
 
 @NgModule({
     imports: [
@@ -45,8 +50,18 @@ import { AuLevelAllComponent } from './routes/libraries/audit-universe-detail/au
                             canActivate: [AuthGuard],
                         },
                         {
+                            path: 'pages/audit-universe',
+                            component: AuditUniverseDetailComponent,
+                            canActivate: [AuthGuard],
+                        },
+                        {
                             path: 'pages/banners-detail',
                             component: BannersDetailComponent,
+                            canActivate: [AuthGuard],
+                        },
+                        {
+                            path: 'pages/banner',
+                            component: BannerComponent,
                             canActivate: [AuthGuard],
                         },
                         {
@@ -86,6 +101,21 @@ import { AuLevelAllComponent } from './routes/libraries/audit-universe-detail/au
                         {
                             path: 'pages/view-result/:target_table/:auditTHname',
                             component: ViewResultComponent,
+                            canActivate: [AuthGuard],
+                        },
+                        {
+                            path: 'pages/adhoc-test',
+                            component: AdhocTestComponent,
+                            canActivate: [AuthGuard],
+                        },
+                        {
+                            path: 'pages/logs',
+                            component: LogsComponent,
+                            canActivate: [AuthGuard],
+                        },
+                        {
+                            path: 'pages/upload',
+                            component: UploadComponent,
                             canActivate: [AuthGuard],
                         },
                     ],

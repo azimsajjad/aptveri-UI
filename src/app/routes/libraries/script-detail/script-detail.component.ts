@@ -152,7 +152,7 @@ export class ScriptDetailComponent implements OnInit {
                     Validators.required,
                 ],
                 banner_id: [
-                    this.getBannerDesc(script.banner_id),
+                    this.getBannerDesc(script.department_id),
                     Validators.required,
                 ],
                 sql_script: script.script_sql,
@@ -242,7 +242,7 @@ export class ScriptDetailComponent implements OnInit {
                     Validators.required,
                 ],
                 banner_id: [
-                    this.getBannerDesc(script.banner_id),
+                    this.getBannerDesc(script.department_id),
                     Validators.required,
                 ],
                 sql_script: script.script_sql,
@@ -895,18 +895,18 @@ export class ScriptDetailComponent implements OnInit {
 
     getBannerId(banner: string): number {
         let x: Script = this.banner.filter((ele) => {
-            return ele.banner_uid == banner;
+            return ele.department_uid == banner;
         });
 
-        return x[0].banner_id;
+        return x[0].department_id;
     }
 
     getBannerDesc(banner_id: number) {
         let x: Script = this.banner.filter((ele) => {
-            return ele.banner_id == banner_id;
+            return ele.department_id == banner_id;
         });
 
-        return x[0].banner_uid + ' - ' + x[0].division;
+        return x[0].department_uid + ' - ' + x[0].organization;
     }
 
     getAuditId(audit: string): number {

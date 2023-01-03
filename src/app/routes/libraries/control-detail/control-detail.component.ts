@@ -559,12 +559,14 @@ export class ControlDetailComponent implements OnInit {
         for (let i = 0; i < this.Banner.length; i++) {
             const Banner = this.Banner[i];
             if (
-                Banner.banner_uid.toLowerCase().indexOf(query.toLowerCase()) !=
-                    -1 ||
-                Banner.banner.toLowerCase().indexOf(query.toLowerCase()) != -1
+                Banner.department_uid
+                    .toLowerCase()
+                    .indexOf(query.toLowerCase()) != -1 ||
+                Banner.department.toLowerCase().indexOf(query.toLowerCase()) !=
+                    -1
             ) {
                 // filtered.push(Banner);
-                filtered.push(Banner.banner_uid + '-' + Banner.banner);
+                filtered.push(Banner.department_uid + '-' + Banner.department);
             }
         }
         this.filteredBanner = filtered;
@@ -587,8 +589,9 @@ export class ControlDetailComponent implements OnInit {
         this.controlDialog = true;
     }
 
-    deleteSelectedcontrols() {
+    deleteSelectedcontrols(control: control) {
         // this.deletecontrolsDialog = true;
+        this.selectedcontrols = [control];
         this.confirmationService.confirm({
             header: 'Confirmation!',
             message: 'Are you sure you want to delete selected Control?',
@@ -605,6 +608,7 @@ export class ControlDetailComponent implements OnInit {
     editcontrol(control: control) {
         //  debugger;
         //    this.control = {...control};
+        this.selectedcontrols = [control];
         this.controlDialog = true;
         const arrayToObject = Object.assign({}, ...this.selectedcontrols);
         this.control = { ...arrayToObject };
@@ -622,7 +626,7 @@ export class ControlDetailComponent implements OnInit {
         //this.selectedItem = [52, 55, 56, 58, 59];
         this.keyselected = this.control.key_control.toString();
         this.aulfselected = this.control.au_level_4_uid.toString();
-        this.bannerselected = this.control.banner_uid.toString();
+        this.bannerselected = this.control.department_uid?.toString();
         this.riskselected = this.control.risk_uid.toString();
     }
 
@@ -769,9 +773,9 @@ export class ControlDetailComponent implements OnInit {
     doOnSelectbanner(event) {
         //  debugger;
         let x = this.Banner.filter((ele) => {
-            return ele.banner_uid == event.split('-')[0];
+            return ele.department_uid == event.split('-')[0];
         });
-        this.bannerselected = x[0].banner_id;
+        this.bannerselected = x[0].department_id;
     }
 
     doOnSelectrisk(event) {
@@ -856,7 +860,8 @@ export class ControlDetailComponent implements OnInit {
                 //   this.datacontrols.control = this.control.control;
 
                 this.datacontrols.au_level_4_uid = this.aulfselected.toString();
-                this.datacontrols.banner_uid = this.bannerselected.toString();
+                this.datacontrols.department_uid =
+                    this.bannerselected.toString();
                 this.datacontrols.risk_uid = this.riskselected.toString();
                 this.datacontrols.control = this.control.control.toString();
                 this.datacontrols.comments = this.control.comments.toString();
@@ -931,7 +936,8 @@ export class ControlDetailComponent implements OnInit {
                 // this.control.control = this.control.control;
                 // this.controls.push(this.control);
                 this.datacontrols.au_level_4_uid = this.aulfselected.toString();
-                this.datacontrols.banner_uid = this.bannerselected.toString();
+                this.datacontrols.department_uid =
+                    this.bannerselected.toString();
                 this.datacontrols.risk_uid = this.riskselected.toString();
                 this.datacontrols.control = this.control.control.toString();
                 this.datacontrols.comments = this.control.comments.toString();

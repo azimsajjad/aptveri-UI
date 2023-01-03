@@ -1,4 +1,4 @@
-<div class="grid">
+<!-- <div class="grid">
     <div class="col-12">
         <div class="card">
             <p-toast></p-toast>
@@ -241,13 +241,6 @@
                                 ></p-columnFilter>
                             </div>
                         </th>
-                        <!-- <th pSortableColumn="user_access_id">
-							<div class="flex justify-content-between align-items-center">
-
-								 <p-sortIcon field="user_access_id"></p-sortIcon>
-								 USER ACCESS ID
-							</div>
-						</th> -->
                         <th pSortableColumn="audit_schedule">
                             <div
                                 class="flex justify-content-between align-items-center"
@@ -323,7 +316,6 @@
                             {{ audit.banner }}
                         </td>
                         <td style="min-width: 12rem">
-                            <!-- {{audit.au_level_2_id}} -->
 
                             <span *ngFor="let AU of AuditUniverse">
                                 <span
@@ -352,34 +344,6 @@
                         <td style="min-width: 12rem">
                             {{ audit.acp_audit }}
                         </td>
-
-                        <!--<td style="min-width: 12rem;">
-							{{audit.user_access_id}}
-							 <span  name="userValue" onload="displaytheUsername(audit.user_access_id)"  ngDefaultControl >
-							</span> -->
-                        <!-- <span  *ngFor=" let nameArr of  audit.user_access_id.split(',')">
-										<span  *ngFor="let allusers of listOfusers">
-
-												<span >
-														{{allusers.user_access_id == nameArr}}
-													</span>
-
-													<span >
-														{{nameArr.Count}}
-													</span>
-										</span>
-
-
-										<span  *ngFor="let allusers of listOfusers">
-
-											<span *ngIf="allusers.user_access_id === nameArr.user_access_id">
-													{{allusers.fullName }} ,
-											</span>
-
-										</span>
-								</span>
-
-						</td>-->
                         <td style="min-width: 12rem">
                             {{ audit.audit_schedule }}
                         </td>
@@ -583,311 +547,398 @@
             </ng-template>
         </p-dialog>
 
-        <!-- <p-dialog [(visible)]="auditDialog" [style]="{width: '80%'}" header="Audit" [modal]="true" class="p-fluid" >
-            <ng-template pTemplate="content">
-
-				<div class="p-fluid p-formgrid grid">
-					<div class="field col-12 md:col-4">
-						<label for="banner_id">Banner </label>
-						<p-autoComplete (onSelect)="doOnSelectBanner($event)"  [autoHighlight]="true" [(ngModel)]="audit.banner_id" [forceSelection]="true" [completeOnFocus]="true"  [minLength]="1"  placeholder="Search" id="banner_id"  [dropdown]="true" [suggestions]="filteredAuditBanner" (completeMethod)="filterBanner($event)" >
-						</p-autoComplete>
-
-
-
-
-                	</div>
-
-
-
-
-					<div class="field col-12 md:col-4">
-							<label for="au_level2_id">Audit Universe </label>
-							<p-autoComplete (onSelect)="doOnSelectAuditUniverse($event)"  [autoHighlight]="true" [(ngModel)]="audit.au_level_2_id" [forceSelection]="true" [completeOnFocus]="true"  [minLength]="1"  placeholder="Search" id="au_level_2_id"  [dropdown]="true" [suggestions]="filteredAuditUniverse" (completeMethod)="filterAU($event)" >
-							</p-autoComplete>
-               		 </div>
-
-
-					<div class="field col-12 md:col-4">
-
-						<div class="row">
-
-									<div class="col-lg-12 col-md-12" style="padding:4px;">
-										<label for="audit_name">Audit Name</label>
-									</div>
-						</div>
-						<div class="row">
-
-							<div class="col-lg-12 col-md-12" >
-								<input id="audit_name" pInputText [(ngModel)]="audit.audit_name" style="padding:10px;width: 100%;" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !audit.audit_name}"/>
-								<small class="ng-dirty ng-invalid" *ngIf="submitted && !audit.audit_name">Audit Name is required.</small>
-
-
-							</div>
-						</div>
-
-
-					</div>
-				</div>
-
-				<div class="p-fluid p-formgrid grid">
-					<div class="field col-12 md:col-4">
-						<div class="row">
-
-							<div class="col-lg-12 col-md-12" style="padding:7px;">
-								<label for="audit_board_id">Audit Board ID </label>
-							</div>
-						</div>
-						<div class="row">
-
-							<div class="col-lg-12 col-md-12" >
-								<input id="audit_board_id" pInputText [(ngModel)]="audit.audit_board_id" style="padding:10px;width: 100%;" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !audit.audit_board_id}"/>
-								<small class="ng-dirty ng-invalid" *ngIf="submitted && !audit.audit_board_id">Audit Board ID is required.</small>
-
-
-							</div>
-						</div>
-					</div>
-					<div class="field col-12 md:col-4">
-
-						<div class="row">
-
-									<div class="col-lg-12 col-md-12" style="padding:7px;">
-										<label for="quarter">Quarter </label>
-									</div>
-						</div>
-						<div class="row">
-
-							<div class="col-lg-12 col-md-12" >
-								<input type="number" min="1" max="4" id="quarter" pInputText [(ngModel)]="audit.quarter" style="padding:10px;width: 100%;" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !audit.quarter}"/>
-								<small class="ng-dirty ng-invalid" *ngIf="submitted && !audit.quarter">Quarter is required.</small>
-
-
-							</div>
-						</div>
-
-
-					</div>
-					<div class="field col-12 md:col-4">
-
-
-						<div class="row">
-
-							<div class="col-lg-12 col-md-12" style="padding:7px;">
-								<label for="user_acces_id">User Access</label>
-							</div>
-				</div>
-				<div class="row">
-
-
-
-					<div class="col-lg-12 col-md-12" >
-
-
-					<p-autoComplete  [(ngModel)]="SelectItem" placeholder="Search" id="user_acces_id" [dropdown]="true" [multiple]="true" [suggestions]="filteredlistOfusers" (completeMethod)="filterusers($event)" field="fullName"></p-autoComplete>
-
-				</div>
-
-
-				</div>
-
-					</div>
-				</div>
-
-				<div class="p-fluid p-formgrid grid">
-					<div class="field col-12 md:col-4">
-						<div class="row">
-
-									<div class="col-lg-12 col-md-12" style="padding:7px;">
-										<label for="acp_audit">ACP Audit</label>
-									</div>
-						</div>
-						<div class="row">
-
-							<div class="col-lg-12 col-md-12" >
-								<select name="acp_audit" [(ngModel)]="audit.acp_audit" id="acp_audit" style="padding:10px;width: 100%;">
-									<option value="0" disabled>Please Select</option>
-									<option value="true">Yes</option>
-									<option value="false">No</option>
-								</select>
-
-							</div>
-						</div>
-
-
-					</div>
-
-					<div class="field col-12 md:col-4">
-
-						<div class="row">
-
-									<div class="col-lg-12 col-md-12" style="padding:7px;">
-										<label for="results_url">Result URL </label>
-									</div>
-						</div>
-						<div class="row">
-
-							<div class="col-lg-12 col-md-12" >
-								 <input id="results_url" pInputText [(ngModel)]="audit.results_url" style="padding:10px;width: 100%;" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !audit.results_url}"/>
-								<small class="ng-dirty ng-invalid" *ngIf="submitted && !audit.results_url">Result URL is required.</small>
-
-								<input id="results_url" pInputText [(ngModel)]="audit.results_url" style="padding:10px;width: 100%;" autofocus />
-
-							</div>
-						</div>
-
-
-					</div>
-					<div class="field col-12 md:col-4">
-
-						<div class="row">
-
-									<div class="col-lg-12 col-md-12" style="padding:7px;">
-										<label for="results_url">Review Year </label>
-									</div>
-						</div>
-						<div class="row">
-
-							<div class="col-lg-12 col-md-12" >
-								<input type="number" id="review_year" pInputText [(ngModel)]="audit.review_year" style="padding:10px;width: 100%;" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !audit.review_year}" min="1111"
-								max="9999"/>
-								<small class="ng-dirty ng-invalid" *ngIf="submitted && !audit.review_year"  >Review Year is required.</small>
-
-
-							</div>
-						</div>
-
-
-					</div>
-				</div>
-
-
-				<div class="p-fluid p-formgrid grid">
-					<div class="field col-12 md:col-4">
-						<div class="row">
-
-									<div class="col-lg-12 col-md-12" style="padding:7px;">
-										<label for="start_date">Start Date</label>
-									</div>
-						</div>
-						<div class="row">
-
-							<div class="col-lg-12 col-md-12" >
-								<input type="datetime-local" id="start_date" pInputText [(ngModel)]="audit.start_date" style="padding:10px;width: 100%;" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !audit.start_date}"/>
-								<small class="ng-dirty ng-invalid" *ngIf="submitted && !audit.start_date">Start Date Name is required.</small>
-
-
-							</div>
-						</div>
-
-
-					</div>
-
-					<div class="field col-12 md:col-4">
-
-						<div class="row">
-
-									<div class="col-lg-12 col-md-12" style="padding:7px;">
-										<label for="end_date">End Date</label>
-									</div>
-						</div>
-						<div class="row">
-
-							<div class="col-lg-12 col-md-12" >
-								<input type="datetime-local" id="end_date" pInputText [(ngModel)]="audit.end_date" style="padding:10px;width: 100%;" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !audit.end_date}"/>
-								<small class="ng-dirty ng-invalid" *ngIf="submitted && !audit.end_date">End Date is required.</small>
-
-
-							</div>
-						</div>
-
-
-					</div>
-					<div class="field col-12 md:col-4">
-
-						<div class="row">
-
-									<div class="col-lg-12 col-md-12" style="padding:7px;">
-										<label for="audit_schedule">Audit SCHEDULE</label>
-									</div>
-						</div>
-						<div class="row">
-
-							<div class="col-lg-12 col-md-12" >
-								 <input id="audit_schedule" pInputText [(ngModel)]="audit.audit_schedule" style="padding:10px;width: 100%;"  autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !audit.audit_schedule}"/>
-								<input id="audit_schedule" pInputText [(ngModel)]="audit.audit_schedule" style="padding:10px;width: 100%;"  autofocus />
-
-
-							</div>
-						</div>
-
-
-					</div>
-					<div class="field col-12 md:col-4">
-
-						<div class="row">
-
-									<div class="col-lg-12 col-md-12" style="padding:7px;">
-										<label for="last_run_date">Last Run Date</label>
-									</div>
-						</div>
-						<div class="row">
-
-							<div class="col-lg-12 col-md-12" >
-								<input type="datetime-local" id="last_run_date" pInputText [(ngModel)]="audit.last_run_date" style="padding:10px;width: 100%;"  autofocus />
-								<small class="ng-dirty ng-invalid" *ngIf="submitted && !audit.last_run_date">Last Run Date is required.</small>
-
-
-							</div>
-						</div>
-
-
-					</div>
-				</div>
-
-
-					<div class="p-fluid p-formgrid grid">
-
-
-
-
-
-				<div class="field col-12 md:col-4"></div>
-
-
-
-
-
-			</div>
-
-            </ng-template>
-
-            <ng-template pTemplate="footer">
-                <button pButton pRipple label="Cancel" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
-                <button pButton pRipple label="Save" icon="pi pi-check" class="p-button-text" (click)="saveaudit()"></button>
-            </ng-template>
-        </p-dialog> -->
-
-        <!-- <p-dialog [(visible)]="deleteauditDialog" header="Confirm" [modal]="true" [style]="{width:'450px'}">
-            <div class="flex align-items-center justify-content-center">
-                <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem"></i>
-                <span *ngIf="audits">Are you sure you want to delete?</span>
-            </div>
-            <ng-template pTemplate="footer">
-                <button pButton pRipple icon="pi pi-times" class="p-button-text" label="No" (click)="deleteriskDialog = false"></button>
-                <button pButton pRipple icon="pi pi-check" class="p-button-text" label="Yes" (click)="confirmDelete()"></button>
-            </ng-template>
-        </p-dialog>
-
-        <p-dialog [(visible)]="deleteauditsDialog" header="Confirm" [modal]="true" [style]="{width:'450px'}">
-            <div class="flex align-items-center justify-content-center">
-                <i class="pi pi-exclamation-triangle mr-3" style="font-size: 2rem"></i>
-                <span>Are you sure you want to delete selected audit?</span>
-            </div>
-            <ng-template pTemplate="footer">
-                <button pButton pRipple icon="pi pi-times" class="p-button-text" label="No" (click)="deleterisksDialog = false"></button>
-                <button pButton pRipple icon="pi pi-check" class="p-button-text" label="Yes" (click)="confirmDeleteSelected()"></button>
-            </ng-template>
-        </p-dialog> -->
+       
         <p-confirmDialog> </p-confirmDialog>
     </div>
+</div> -->
+
+<div id="table1">
+    <p-table
+        #dt
+        [value]="audits"
+        selectionMode="single"
+        [rows]="10"
+        [loading]="loading"
+        [rowHover]="true"
+        [paginator]="true"
+        [globalFilterFields]="[
+            'audit_uid',
+            'audit_board_id',
+            'audit_name',
+            'department_id',
+            'au_level_2_id',
+            'review_year',
+            'quarter',
+            'start_date',
+            'end_date',
+            'acp_audit',
+            'audit_schedule',
+            'results_url',
+            'last_run_date'
+        ]"
+        [rowsPerPageOptions]="[10, 20, 30]"
+        [showCurrentPageReport]="true"
+        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+        [(selection)]="selectedaudits"
+        responsiveLayout="scroll"
+        [scrollable]="true"
+        scrollHeight="calc(100vh - 240px)"
+    >
+        <ng-template pTemplate="caption">
+            <div
+                class="table-header flex justify-content-between align-items-center"
+            >
+                <span class="text-xl">List of Audit</span>
+                <span class="p-input-icon-left">
+                    <i class="pi pi-search"></i>
+                    <input
+                        pInputText
+                        type="text"
+                        (input)="
+                            dt.filterGlobal($event.target.value, 'contains')
+                        "
+                        placeholder="Global Search"
+                    />
+                </span>
+            </div>
+        </ng-template>
+
+        <ng-template pTemplate="header">
+            <tr>
+                <th pSortableColumn="audit_uid" style="min-width: 14rem">
+                    <div class="flex align-items-center">
+                        Audit UID
+                        <p-sortIcon field="audit_uid"></p-sortIcon>
+                    </div>
+                </th>
+
+                <th pSortableColumn="audit_board_id" style="min-width: 14rem">
+                    <div class="flex align-items-center">
+                        Audit Board ID
+                        <p-sortIcon field="audit_board_id"></p-sortIcon>
+                    </div>
+                </th>
+
+                <th pSortableColumn="audit_name" style="min-width: 14rem">
+                    <div class="flex align-items-center">
+                        Audit Name
+                        <p-sortIcon field="audit_name"></p-sortIcon>
+                    </div>
+                </th>
+
+                <th pSortableColumn="department_id" style="min-width: 14rem">
+                    <div class="flex align-items-center">
+                        Department ID
+                        <p-sortIcon field="department_id"></p-sortIcon>
+                    </div>
+                </th>
+
+                <th pSortableColumn="au_level_2_id" style="min-width: 14rem">
+                    <div class="flex align-items-center">
+                        AU Level 2 ID
+                        <p-sortIcon field="au_level_2_id"></p-sortIcon>
+                    </div>
+                </th>
+
+                <th pSortableColumn="review_year" style="min-width: 14rem">
+                    <div class="flex align-items-center">
+                        Review Year
+                        <p-sortIcon field="review_year"></p-sortIcon>
+                    </div>
+                </th>
+
+                <th pSortableColumn="quarter" style="min-width: 14rem">
+                    <div class="flex align-items-center">
+                        Quarter
+                        <p-sortIcon field="quarter"></p-sortIcon>
+                    </div>
+                </th>
+
+                <th pSortableColumn="start_date" style="min-width: 14rem">
+                    <div class="flex align-items-center">
+                        Start Date
+                        <p-sortIcon field="start_date"></p-sortIcon>
+                    </div>
+                </th>
+
+                <th pSortableColumn="end_date" style="min-width: 14rem">
+                    <div class="flex align-items-center">
+                        End Date
+                        <p-sortIcon field="end_date"></p-sortIcon>
+                    </div>
+                </th>
+
+                <th pSortableColumn="acp_audit" style="min-width: 14rem">
+                    <div class="flex align-items-center">
+                        ACP Audit
+                        <p-sortIcon field="acp_audit"></p-sortIcon>
+                    </div>
+                </th>
+
+                <th pSortableColumn="audit_schedule" style="min-width: 14rem">
+                    <div class="flex align-items-center">
+                        Audit Schedule
+                        <p-sortIcon field="audit_schedule"></p-sortIcon>
+                    </div>
+                </th>
+
+                <th pSortableColumn="results_url" style="min-width: 14rem">
+                    <div class="flex align-items-center">
+                        Results URL
+                        <p-sortIcon field="results_url"></p-sortIcon>
+                    </div>
+                </th>
+
+                <th pSortableColumn="last_run_date" style="min-width: 14rem">
+                    <div class="flex align-items-center">
+                        Last Run Date
+                        <p-sortIcon field="last_run_date"></p-sortIcon>
+                    </div>
+                </th>
+
+                <th style="min-width: 14rem">
+                    <div class="flex align-items-center">Actions</div>
+                </th>
+            </tr>
+        </ng-template>
+
+        <ng-template pTemplate="body" let-item>
+            <tr class="p-selectable-row">
+                <td>{{ item.audit_uid }}</td>
+                <td>{{ item.audit_board_id }}</td>
+                <td>{{ item.audit_name }}</td>
+                <td>{{ item.department_id }}</td>
+                <td>{{ item.au_level_2_id }}</td>
+                <td>{{ item.review_year }}</td>
+                <td>{{ item.quarter }}</td>
+                <td>{{ item.start_date }}</td>
+                <td>{{ item.end_date }}</td>
+                <td>{{ item.acp_audit }}</td>
+                <td>{{ item.audit_schedule }}</td>
+                <td>{{ item.results_url }}</td>
+                <td>{{ item.last_run_date }}</td>
+                <td>
+                    <span
+                        ><button
+                            pButton
+                            pRipple
+                            title="Edit"
+                            type="button"
+                            icon="pi pi-pencil"
+                            class="p-button-rounded p-button-info"
+                            (click)="openNew(item)"
+                        ></button>
+                        <button
+                            pButton
+                            pRipple
+                            title="Navigate To Audit Program"
+                            type="button"
+                            icon="pi pi-arrow-right"
+                            class="p-button-rounded p-button-secondary ml-2"
+                            (click)="ForwordTOAuditProgram(item)"
+                        ></button>
+                        <button
+                            pButton
+                            pRipple
+                            title="Delete"
+                            type="button"
+                            icon="pi pi-trash"
+                            class="p-button-rounded p-button-danger ml-2"
+                            (click)="deleteaudit(item)"
+                        ></button
+                    ></span>
+                </td>
+            </tr>
+        </ng-template>
+
+        <ng-template pTemplate="emptymessage">
+            <tr>
+                <td colspan="14">No Audit found.</td>
+            </tr>
+        </ng-template>
+    </p-table>
+
+    <button
+        pButton
+        pRipple
+        title="Add"
+        type="button"
+        icon="pi pi-plus"
+        class="p-button-rounded fixed add-banner-btn"
+        (click)="openNew(null)"
+    ></button>
+
+    <p-dialog
+        [(visible)]="auditDialog"
+        [style]="{ width: '80%' }"
+        header="Audit"
+        [modal]="true"
+        class="p-fluid"
+    >
+        <ng-template pTemplate="content">
+            <form [formGroup]="auditForm" class="grid">
+                <div class="field col-12 md:col-4">
+                    <label for="banner_id">Banner <sup>*</sup></label>
+                    <p-autoComplete
+                        appendTo="body"
+                        [autoHighlight]="true"
+                        [forceSelection]="true"
+                        [completeOnFocus]="true"
+                        [minLength]="1"
+                        placeholder="Search"
+                        id="banner_id"
+                        [dropdown]="true"
+                        [suggestions]="filteredAuditBanner"
+                        (completeMethod)="filterBanner($event)"
+                        formControlName="banner_id"
+                    >
+                    </p-autoComplete>
+                </div>
+                <div class="field col-12 md:col-4">
+                    <label for="au_level2_id"
+                        >Audit Universe <sup>*</sup></label
+                    >
+                    <p-autoComplete
+                        appendTo="body"
+                        [autoHighlight]="true"
+                        [forceSelection]="true"
+                        [completeOnFocus]="true"
+                        [minLength]="1"
+                        placeholder="Search"
+                        id="au_level_2_id"
+                        [dropdown]="true"
+                        [suggestions]="filteredAuditUniverse"
+                        (completeMethod)="filterAU($event)"
+                        formControlName="au_level_2_id"
+                        [disabled]="isAuditEdit"
+                    >
+                    </p-autoComplete>
+                </div>
+                <div class="field col-12 md:col-4">
+                    <label for="audit_name">Audit Name <sup>*</sup></label>
+                    <input
+                        id="audit_name"
+                        pInputText
+                        formControlName="audit_name"
+                    />
+                </div>
+                <div class="field col-12 md:col-4">
+                    <label for="audit_board_id"
+                        >Audit Board ID <sup>*</sup></label
+                    >
+                    <input
+                        id="audit_board_id"
+                        pInputText
+                        formControlName="audit_board_id"
+                    />
+                </div>
+                <div class="field col-12 md:col-4">
+                    <label for="quarter">Quarter <sup>*</sup></label>
+                    <p-dropdown
+                        appendTo="body"
+                        id="quarter"
+                        [options]="quarterList"
+                        formControlName="quarter"
+                        optionLabel="quarter"
+                        optionValue="code"
+                    ></p-dropdown>
+                </div>
+                <div class="field col-12 md:col-4">
+                    <label for="user_access"
+                        >User Access <sup class="opacity-0">*</sup></label
+                    >
+                    <p-multiSelect
+                        appendTo="body"
+                        id="user_access"
+                        [options]="listOfusers"
+                        formControlName="user_access_id"
+                        optionLabel="fullName"
+                        optionValue="userId"
+                    ></p-multiSelect>
+                </div>
+                <div class="field col-12 md:col-4">
+                    <label for="acp_audit"
+                        >ACP Audit <sup class="opacity-0">*</sup></label
+                    >
+                    <p-dropdown
+                        appendTo="body"
+                        id="acp_audit"
+                        [options]="acp_auditList"
+                        formControlName="acp_audit"
+                        optionLabel="acp_audit"
+                        optionValue="code"
+                    ></p-dropdown>
+                </div>
+                <div class="field col-12 md:col-4">
+                    <label for="results_url"
+                        >Result URL <sup class="opacity-0">*</sup></label
+                    >
+                    <input
+                        id="results_url"
+                        pInputText
+                        formControlName="results_url"
+                    />
+                </div>
+                <div class="field col-12 md:col-4">
+                    <label for="review_year">Review Year <sup>*</sup></label>
+                    <input
+                        type="number"
+                        id="review_year"
+                        pInputText
+                        formControlName="review_year"
+                        min="1111"
+                        max="9999"
+                    />
+                </div>
+                <div class="field col-12 md:col-4">
+                    <label for="start_date">Start Date </label>
+                    <p-calendar
+                        appendTo="body"
+                        id="start_date"
+                        formControlName="start_date"
+                        showTime="true"
+                    ></p-calendar>
+                </div>
+                <div class="field col-12 md:col-4">
+                    <label for="end_date">End Date </label>
+                    <p-calendar
+                        appendTo="body"
+                        id="end_date"
+                        formControlName="end_date"
+                        showTime="true"
+                    ></p-calendar>
+                </div>
+                <div class="field col-12 md:col-4">
+                    <label for="audit_schedule">Audit SCHEDULE</label>
+                    <input
+                        id="audit_schedule"
+                        pInputText
+                        formControlName="audit_schedule"
+                    />
+                </div>
+            </form>
+        </ng-template>
+        <ng-template pTemplate="footer">
+            <button
+                pButton
+                pRipple
+                label="Cancel"
+                icon="pi pi-times"
+                class="p-button-text"
+                (click)="hideDialog()"
+            ></button>
+            <button
+                pButton
+                pRipple
+                label="Save"
+                #submitButton
+                icon="pi pi-check"
+                class="p-button-text"
+                [disabled]="auditForm.invalid"
+                (click)="saveaudit()"
+            ></button>
+        </ng-template>
+    </p-dialog>
+
+    <p-confirmDialog> </p-confirmDialog>
 </div>

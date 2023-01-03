@@ -1,8 +1,7 @@
-<div class="grid">
+<!-- <div class="grid">
     <div class="col-12">
         <div class="card">
             <p-toast></p-toast>
-            <!-- <button (click)="exportResultToExcel()">Export The Report</button> -->
             <p-table
                 *ngIf="audits"
                 #dt1
@@ -411,16 +410,6 @@
                                 class="p-button-rounded p-button-info ml-2"
                                 (click)="dt2.clear()"
                             ></button>
-                            <!-- <button
-                                *ngIf="accountSvr.checkPermission(4, 13, 'V')"
-                                [disabled]="!auditTSelection?.length > 0"
-                                title="Download"
-                                pButton
-                                pRipple
-                                icon="pi pi-chart-pie"
-                                class="p-button-rounded p-button-info ml-2"
-                                (click)="getGraph('AT')"
-                            ></button> -->
                         </div>
                     </div>
                 </ng-template>
@@ -511,19 +500,6 @@
                                 ></p-columnFilter>
                             </div>
                         </th>
-                        <!-- <th pSortableColumn="script_uid">
-                            <div
-                                class="flex justify-content-between align-items-center"
-                            >
-                                <p-sortIcon field="script_uid"></p-sortIcon>
-                                SCRIPT UID
-                                <p-columnFilter
-                                    type="text"
-                                    field="script_uid"
-                                    display="menu"
-                                ></p-columnFilter>
-                            </div>
-                        </th> -->
                         <th pSortableColumn="target_table">
                             <div
                                 class="flex justify-content-between align-items-center"
@@ -591,19 +567,6 @@
                                 ></p-columnFilter>
                             </div>
                         </th>
-                        <!-- <th pSortableColumn="result_url">
-                            <div
-                                class="flex justify-content-between align-items-center"
-                            >
-                                <p-sortIcon field="result_url"></p-sortIcon>
-                                RESULTS URL
-                                <p-columnFilter
-                                    type="text"
-                                    field="result_url"
-                                    display="menu"
-                                ></p-columnFilter>
-                            </div>
-                        </th> -->
                         <th pSortableColumn="notes">
                             <div
                                 class="flex justify-content-between align-items-center"
@@ -617,19 +580,6 @@
                                 ></p-columnFilter>
                             </div>
                         </th>
-                        <!-- <th pSortableColumn="notes">
-                            <div
-                                class="flex justify-content-between align-items-center"
-                            >
-                                <p-sortIcon field="notes"></p-sortIcon>
-                                NOTES
-                                <p-columnFilter
-                                    type="text"
-                                    field="notes"
-                                    display="menu"
-                                ></p-columnFilter>
-                            </div>
-                        </th> -->
                         <th pSortableColumn="schedule_status">
                             <div
                                 class="flex justify-content-between align-items-center"
@@ -762,9 +712,6 @@
                         <td style="min-width: 12rem">
                             {{ auditT.banner }}
                         </td>
-                        <!-- <td style="min-width: 12rem">
-                            {{ auditT.script_uid }}
-                        </td> -->
                         <td style="min-width: 12rem">
                             {{ auditT.target_table }}
                         </td>
@@ -797,12 +744,6 @@
                         <td style="min-width: 12rem">
                             {{ auditT.results ? auditT.results : 'N/A' }}
                         </td>
-                        <!-- <td style="min-width: 12rem;">
-                            {{ auditT.result_url }}
-                        </td> -->
-                        <!-- <td style="min-width: 12rem">
-                            {{ auditT.created_date }}
-                        </td> -->
                         <td style="min-width: 12rem">
                             {{ auditT.notes }}
                         </td>
@@ -920,21 +861,6 @@
                             </div>
                         </th>
 
-                        <!-- <th pSortableColumn="audit_test_desc">
-                            <div
-                                class="flex justify-content-between align-items-center"
-                            >
-                                <p-sortIcon
-                                    field="audit_test_desc"
-                                ></p-sortIcon>
-                                AP DESCRIPTION
-                                <p-columnFilter
-                                    type="text"
-                                    field="audit_test_desc"
-                                    display="menu"
-                                ></p-columnFilter>
-                            </div>
-                        </th> -->
                         <th pSortableColumn="audit_test_desc">
                             <div
                                 class="flex justify-content-between align-items-center"
@@ -992,19 +918,6 @@
                                 ></p-columnFilter>
                             </div>
                         </th>
-                        <!-- <th pSortableColumn="script_uid">
-                            <div
-                                class="flex justify-content-between align-items-center"
-                            >
-                                <p-sortIcon field="script_uid"></p-sortIcon>
-                                SCRIPT UID
-                                <p-columnFilter
-                                    type="text"
-                                    field="script_uid"
-                                    display="menu"
-                                ></p-columnFilter>
-                            </div>
-                        </th> -->
                         <th pSortableColumn="script_defination">
                             <div
                                 class="flex justify-content-between align-items-center"
@@ -1072,34 +985,6 @@
                                 ></p-columnFilter>
                             </div>
                         </th>
-                        <!-- <th pSortableColumn="result_url">
-                            <div
-                                class="flex justify-content-between align-items-center"
-                            >
-                                <p-sortIcon field="result_url"></p-sortIcon>
-                                RESULT URL
-                                <p-columnFilter
-                                    type="text"
-                                    field="result_url"
-                                    display="menu"
-                                ></p-columnFilter>
-                            </div>
-                        </th> -->
-                        <!-- <th pSortableColumn="schedule_start_datetime">
-                            <div
-                                class="flex justify-content-between align-items-center"
-                            >
-                                <p-sortIcon
-                                    field="schedule_start_datetime"
-                                ></p-sortIcon>
-                                RUN DATETIME
-                                <p-columnFilter
-                                    type="text"
-                                    field="schedule_start_datetime"
-                                    display="menu"
-                                ></p-columnFilter>
-                            </div>
-                        </th> -->
                         <th pSortableColumn="notes">
                             <div
                                 class="flex justify-content-between align-items-center"
@@ -1239,10 +1124,6 @@
                         >
                             {{ auditT.audit_test_desc }}
                         </td>
-
-                        <!-- <td style="min-width: 12rem;">
-                            {{ auditT.audit_test_desc }}
-                        </td> -->
                         <td style="min-width: 12rem">
                             {{ auditT.au_level_4_desc }}
                         </td>
@@ -1272,9 +1153,6 @@
                         >
                             {{ auditT.control }}
                         </td>
-                        <!-- <td style="min-width: 12rem">
-                            {{ auditT.script_uid }}
-                        </td> -->
                         <td style="min-width: 12rem">
                             {{ auditT.script_defination }}
                         </td>
@@ -1307,12 +1185,6 @@
                         <td style="min-width: 12rem">
                             {{ auditT.results ? auditT.results : 'N/A' }}
                         </td>
-                        <!-- <td style="min-width: 12rem;">
-                            {{ auditT.result_url }}
-                        </td> -->
-                        <!-- <td style="min-width: 12rem">
-                            {{ auditT.schedule_start_datetime }}
-                        </td> -->
                         <td style="min-width: 12rem">
                             {{ auditT.notes }}
                         </td>
@@ -1478,26 +1350,7 @@
                                             "
                                             >*</sup
                                         >
-                                        <!-- <sup
-                                            class="opacity-0"
-                                            *ngIf="
-                                                auditProgramForm.get(
-                                                    'frequency_id'
-                                                ).value != null
-                                            "
-                                            >*</sup
-                                        > -->
                                     </label>
-                                    <!-- <p-calendar
-                                        appendTo="body"
-                                        id="ap_schedule_time"
-                                        [showIcon]="true"
-                                        [showButtonBar]="true"
-                                        formControlName="ap_schedule_time"
-                                        [hourFormat]="24"
-                                        [stepMinute]="0"
-                                        timeOnly="true"
-                                    ></p-calendar> -->
                                     <p-dropdown
                                         appendTo="body"
                                         id="ap_schedule_time"
@@ -1533,22 +1386,6 @@
                                     ></p-calendar>
                                 </div>
                             </div>
-                            <!-- <div
-                                class="col-12 mb-2 lg:col-6 lg:mb-0 p-dialog-content"
-                            >
-
-                                <div class="field">
-                                    <label for="last_run">Last Run</label>
-                                    <p-calendar
-                                        appendTo="body"
-                                        id="last_run"
-                                        [showIcon]="true"
-                                        [showButtonBar]="true"
-                                        formControlName="last_run"
-                                    >
-                                    </p-calendar>
-                                </div>
-                            </div> -->
                         </div>
                     </form>
                 </ng-template>
@@ -1691,25 +1528,6 @@
                                                 <label for="au_id"
                                                     >Risk <sup>*</sup></label
                                                 >
-                                                <!-- <p-autoComplete
-                                                appendTo="body"
-                                                placeholder="Search"
-                                                [dropdown]="true"
-                                                [multiple]="false"
-                                                [suggestions]="filteredRisk"
-                                                (completeMethod)="
-                                                    filterRisk($event)
-                                                "
-                                                formControlName="risk_id"
-                                                [disabled]="
-                                                    auditTestForm.get(
-                                                        'au_level_4_id'
-                                                    ).value == null
-                                                "
-                                                (onSelect)="
-                                                    onRiskSelect($event)
-                                                "
-                                            ></p-autoComplete> -->
                                                 <p-progressSpinner
                                                     *ngIf="loadingRisk"
                                                     [style]="{
@@ -1770,24 +1588,6 @@
                                                 <label for="au_id"
                                                     >Control <sup>*</sup></label
                                                 >
-                                                <!-- <p-autoComplete
-                                                appendTo="body"
-                                                placeholder="Search"
-                                                [dropdown]="true"
-                                                [multiple]="false"
-                                                [suggestions]="filteredControl"
-                                                (completeMethod)="
-                                                    filterControl($event)
-                                                "
-                                                formControlName="control_id"
-                                                [disabled]="
-                                                    auditTestForm.get('risk_id')
-                                                        .value == null
-                                                "
-                                                (onSelect)="
-                                                    onControlSelect($event)
-                                                "
-                                            ></p-autoComplete> -->
                                                 <p-progressSpinner
                                                     *ngIf="loadingControl"
                                                     [style]="{
@@ -1837,26 +1637,6 @@
                                                 <label for="au_id"
                                                     >Script <sup>*</sup></label
                                                 >
-                                                <!-- <p-autoComplete
-                                                appendTo="body"
-                                                placeholder="Search"
-                                                [dropdown]="true"
-                                                [multiple]="false"
-                                                [suggestions]="filteredScript"
-                                                (completeMethod)="
-                                                    filterScript($event)
-                                                "
-                                                formControlName="script_id"
-                                                (onSelect)="
-                                                    onSelectScript($event)
-                                                "
-                                                [disabled]="
-                                                    auditTestForm.get(
-                                                        'control_id'
-                                                    ).value == null &&
-                                                    script?.length > 0
-                                                "
-                                            ></p-autoComplete> -->
                                                 <p-progressSpinner
                                                     *ngIf="loadingScript"
                                                     [style]="{
@@ -1894,46 +1674,6 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <!-- <div class="grid">
-                                    <div class="col">
-                                        <div class="field">
-                                            <label for="store"
-                                                >Store <sup>*</sup></label
-                                            >
-                                            <p-dropdown
-                                                [options]="storeOption"
-                                                formControlName="strore"
-                                                [showClear]="true"
-                                            ></p-dropdown>
-                                        </div>
-                                    </div>
-                                    <div class="col">
-                                        <div class="field">
-                                            <label for="schedule_start_datetime"
-                                                >Start Time</label
-                                            >
-                                            <p-calendar
-                                                appendTo="body"
-                                                id="schedule_start_datetime"
-                                                [showIcon]="true"
-                                                [showButtonBar]="true"
-                                            ></p-calendar>
-                                        </div>
-                                    </div>
-                                    <div class="col">
-                                        <div class="field">
-                                            <label for="schedule_end_datetime"
-                                                >End Time</label
-                                            >
-                                            <p-calendar
-                                                appendTo="body"
-                                                id="schedule_end_datetime"
-                                                [showIcon]="true"
-                                                [showButtonBar]="true"
-                                            ></p-calendar>
-                                        </div>
-                                    </div>
-                                </div> -->
                                     <div
                                         *ngIf="noScript"
                                         class="text-center text-xl"
@@ -2121,49 +1861,6 @@
                                     "
                                 >
                                     <div *ngIf="scriptSelection">
-                                        <!-- <div
-                                            style="
-                                                display: table-row;
-                                                width: 100% !important;
-                                            "
-                                        >
-                                            <div
-                                                style="
-                                                    display: table-cell;
-                                                    width: 100% !important;
-                                                "
-                                                *ngIf="
-                                                    scriptSelection.script_presto
-                                                "
-                                            >
-                                                <div>Presto Script:</div>
-                                                <textarea
-                                                    [value]="
-                                                        scriptSelection.script_presto
-                                                    "
-                                                    cols="70"
-                                                    rows="20"
-                                                    disabled
-                                                ></textarea>
-                                            </div>
-                                            &nbsp;
-                                            <div
-                                                style="display: table-cell;"
-                                                *ngIf="
-                                                    scriptSelection.script_sql
-                                                "
-                                            >
-                                                <div>SQL Script:</div>
-                                                <textarea
-                                                    [value]="
-                                                        scriptSelection.script_sql
-                                                    "
-                                                    cols="70"
-                                                    rows="20"
-                                                    disabled
-                                                ></textarea>
-                                            </div>
-                                        </div> -->
                                         <div
                                             formArrayName="scriptVariables"
                                             *ngFor="
@@ -2530,4 +2227,24 @@
             (click)="showPopupText = false"
         ></button>
     </ng-template>
-</p-dialog>
+</p-dialog> -->
+
+<div id="table1">
+    <p-table
+        *ngIf="audits"
+        #dt1
+        [value]="auditP"
+        selectionMode="single"
+        [rows]="10"
+        [loading]="loadingP"
+        [rowHover]="true"
+        [paginator]="true"
+        [rowsPerPageOptions]="[5, 10, 20]"
+        [showCurrentPageReport]="true"
+        [(selection)]="auditPSelection"
+        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+        responsiveLayout="scroll"
+        [scrollable]="true"
+    >
+    </p-table>
+</div>

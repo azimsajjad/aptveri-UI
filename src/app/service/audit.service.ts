@@ -329,7 +329,9 @@ export class AuditService {
 
     //Get the banner data
     public sendGetBannerRequest() {
-        return this.http.get(`${environment.api_prefix}libraries/loadbanners`);
+        return this.http.get(
+            `${environment.api_prefix}libraries/loaddepartments`
+        );
     }
 
     //Get the AuditUniverse data
