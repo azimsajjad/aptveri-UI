@@ -4,7 +4,7 @@
 
 html {
     height: 100%;
-    font-size: $fontSize;
+    font-size: $scale;
 }
 
 body {
@@ -23,9 +23,6 @@ a {
     color: var(--primary-color);
 }
 
-.layout-theme-light {
-    background-color: #edf1f5;
-    border-left: 4px solid transparent;
-    border-left-color: #0071ce;
-
+.layout-wrapper {
+    min-height: 100vh;
 }

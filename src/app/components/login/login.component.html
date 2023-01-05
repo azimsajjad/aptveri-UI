@@ -1,55 +1,4 @@
-<!-- <div class="container">
-    <form #loginForm="ngForm" (ngSubmit)="login(loginForm)">
-      <h2 class="form-signin-heading">Login</h2>
-        <div *ngIf="invalidLogin" class="alert alert-danger">Invalid username or password.</div>
-        <br/>
-        <label for="username" class="sr-only">Email address</label>
-        <input type="email" id="username" name="username" [(ngModel)]="credentials.username"
-          class="form-control" placeholder="User Name" required>
-        <br/>
-        <label for="password" class="sr-only">Password</label>
-        <input type="password" id="password" name="password" [(ngModel)]="credentials.password"
-          class="form-control" placeholder="Password" required>
-        <br/>
-        <button class="btn btn-lg btn-primary" type="submit" [disabled]="!loginForm.valid">Log in</button>
-    </form>
-  </div> -->
-
-<!-- <p-header> <form #loginForm="ngForm" (ngSubmit)="login(loginForm)" class="login-form">
-    <input type="text" class="form-control" required id="username" name="username" [(ngModel)]="credentials.username"
-        placeholder="username"  pInputText class="w-small mb-1" >
-    <input type="password" class="form-control" required id="password" name="password"
-        [(ngModel)]="credentials.password" placeholder="password" />
-                        <button pButton  label="Sign In" class="p-2 text-small"></button>
-
-    <!-- <p class="message">Not registered? <a href="#">Create an account</a></p>
-</form>
- </p-header> -->
-
-<section class="showcase">
-    <!-- <div class="video-container">
-        <!-- <video
-            src="../../../assets/layout/video/login_page.mp4"
-            autoplay
-            muted
-            loop
-        ></video> -->
-
-    <!-- <video
-            loop
-            muted
-            autoplay
-            oncanplay="this.play()"
-            onloadedmetadata="this.muted = true"
-        >
-            <source
-                src="../../../assets/layout/video/login_page.mp4"
-                type="video/mp4"
-            />
-            Your browser does not support the video tag.
-        </video>
-    </div> -->
-
+<!-- <section class="showcase">
     <div class="content">
         <div class="mycontainer">
             <div id="header_container">
@@ -75,7 +24,7 @@
                                 [ngClass]="{
                                     'is-invalid': submitted && f.username.errors
                                 }"
-                                style="height: 65px; width: 300px;"
+                                style="height: 65px; width: 300px"
                             />
                             <div
                                 *ngIf="submitted && f.username.errors"
@@ -96,20 +45,6 @@
                             </div>
                         </div>
                         <div class="form-floating mb-3">
-                            <!-- <input
-                                type="password"
-                                class="form-control"
-                                required
-                                id="password"
-                                name="password"
-                                [(ngModel)]="credentials.password"
-                                placeholder="password"
-                                formControlName="password"
-                                [ngClass]="{
-                                    'is-invalid': submitted && f.password.errors
-                                }"
-                            /> -->
-
                             <input
                                 type="password"
                                 class="form-control"
@@ -149,15 +84,13 @@
                         </div>
                         <div
                             class="form-floating mb-3"
-                            style="padding-left: 10px;"
+                            style="padding-left: 10px"
                         >
-                            <!-- <button type="submit">Submit</button> -->
-
                             <button
                                 class="btn btn-primary"
                                 #submitButton
                                 [disabled]="isLoading"
-                                style="height: 55px;"
+                                style="height: 55px"
                             >
                                 <i
                                     class="pi"
@@ -174,4 +107,96 @@
             </div>
         </div>
     </div>
-</section>
+</section> -->
+
+<div class="table1 grid flex align-items-start flex-wrap card-container">
+    <div
+        class="hidden md:flex md:col-6 align-items-center justify-content-center bg-green-100"
+        style="min-height: 100vh"
+    >
+        <span class="text-4xl">Mazars Logo</span>
+    </div>
+    <div
+        class="col-12 md:col-6 flex align-items-center justify-content-center"
+        style="min-height: 100vh"
+    >
+        <div class="card p-8">
+            <div class="text-center">
+                <div class="text-900 text-3xl font-medium mb-3">Log In</div>
+                <span class="text-600 font-medium">Welcome Back!</span>
+            </div>
+
+            <div>
+                <form
+                    [formGroup]="registerForm"
+                    #loginForm="ngForm"
+                    (ngSubmit)="login(loginForm)"
+                >
+                    <div>
+                        <label
+                            for="username"
+                            class="block text-900 text-xl font-medium mb-2"
+                            >Username</label
+                        ><input
+                            id="username"
+                            type="text"
+                            placeholder="username"
+                            [(ngModel)]="credentials.username"
+                            formControlName="username"
+                            class="p-inputtext p-component p-element md:w-30rem mb-5"
+                            style="padding: 1rem"
+                        />
+                    </div>
+
+                    <div class="">
+                        <label
+                            for="password"
+                            class="block text-900 font-medium text-xl mb-2"
+                            >Password</label
+                        ><input
+                            type="password"
+                            class="form-control"
+                            required
+                            id="password"
+                            name="password"
+                            [(ngModel)]="credentials.password"
+                            placeholder="password"
+                            formControlName="password"
+                            class="p-inputtext p-component p-element md:w-30rem mb-5"
+                            [ngClass]="{
+                                'is-invalid': submitted && f.password.errors
+                            }"
+                        />
+                    </div>
+
+                    <div
+                        class="flex align-items-center justify-content-between mb-5 gap-5"
+                    >
+                        <a
+                            class="font-medium no-underline ml-2 text-right cursor-pointer"
+                            >Forgot password?</a
+                        >
+                    </div>
+
+                    <div class="text-center">
+                        <button
+                            class="p-element p-3 text-xl p-button p-component"
+                            #submitButton
+                            [disabled]="isLoading"
+                            style="height: 55px"
+                        >
+                            <i
+                                class="pi"
+                                [ngClass]="{
+                                    'pi-spin pi-spinner': isLoading,
+                                    'pi-check': !isLoading
+                                }"
+                            ></i>
+                            {{ button }}
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

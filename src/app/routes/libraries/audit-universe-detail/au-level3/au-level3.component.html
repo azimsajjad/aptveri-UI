@@ -13,7 +13,7 @@
         [(selection)]="selectedAULevel3"
         responsiveLayout="scroll"
         [scrollable]="true"
-        scrollHeight="calc(100vh - 365px)"
+        scrollHeight="calc(100vh - 468px)"
         [filterDelay]="0"
         [globalFilterFields]="[
             'au_level_3_uid',
@@ -22,55 +22,6 @@
             'au_level_3_comments'
         ]"
     >
-        <!-- <ng-template pTemplate="caption">
-            <div
-                class="grid grid-nogutter flex-column md:flex-row justify-content-between"
-            >
-                <h6 class="m-0">
-                    Audit Universe Level 3(
-                    {{ AULevel2Selection[0]?.au_level_2_uid }} -
-                    {{ AULevel2Selection[0]?.au_level_2_desc.slice(0, 30) }}
-                    )
-                </h6>
-
-                <span class="p-input-icon-left mb-2 md:mb-0">
-                    <button
-                        *ngIf="accountSvr.checkPermission(2, 7, 'A')"
-                        title="New"
-                        pButton
-                        pRipple
-                        icon="pi pi-plus"
-                        class="p-button-rounded p-button-success"
-                        (click)="open()"
-                    ></button>
-                    <button
-                        *ngIf="accountSvr.checkPermission(2, 7, 'C')"
-                        title="Edit"
-                        pButton
-                        pRipple
-                        icon="pi pi-pencil"
-                        class="p-button-rounded p-button-warning ml-2"
-                        (click)="open(selectedAULevel3[0])"
-                    ></button>
-                    <button
-                        *ngIf="accountSvr.checkPermission(2, 7, 'D')"
-                        title="Delete"
-                        pButton
-                        pRipple
-                        icon="pi pi-trash"
-                        class="p-button-rounded p-button-danger ml-2"
-                        (click)="deleteAuditUniverse(selectedAULevel3[0])"
-                    ></button>
-                    <button
-                        title="Clear"
-                        pButton
-                        pRipple
-                        class="p-button-rounded p-button-info ml-2"
-                        icon=" pi pi-filter-slash"
-                    ></button>
-                </span>
-            </div>
-        </ng-template> -->
         <ng-template pTemplate="caption">
             <div
                 class="table-header flex justify-content-between align-items-center"
@@ -140,22 +91,22 @@
         </ng-template>
         <ng-template pTemplate="body" let-aulevel3>
             <tr>
-                <td style="max-width: 3rem">
+                <td class="text-base" style="max-width: 3rem">
                     <p-tableCheckbox
                         (click)="getSelection(aulevel3)"
                         [value]="aulevel3"
                     ></p-tableCheckbox>
                 </td>
-                <td style="min-width: 12rem">
+                <td class="text-base" style="min-width: 12rem">
                     {{ aulevel3.au_level_3_uid }}
                 </td>
-                <td style="min-width: 12rem">
+                <td class="text-base" style="min-width: 12rem">
                     {{ aulevel3.au_level_3_desc }}
                 </td>
-                <td style="min-width: 12rem">
+                <td class="text-base" style="min-width: 12rem">
                     {{ aulevel3.au_level_3_definiton }}
                 </td>
-                <td style="min-width: 12rem">
+                <td class="text-base" style="min-width: 12rem">
                     {{ aulevel3.au_level_3_comments }}
                 </td>
                 <td>
@@ -201,7 +152,7 @@
         title="Add"
         type="button"
         icon="pi pi-plus"
-        class="p-button-rounded fixed add-banner-btn"
+        class="p-button-rounded p-button-lg fixed add-banner-btn"
         (click)="open()"
     ></button>
 

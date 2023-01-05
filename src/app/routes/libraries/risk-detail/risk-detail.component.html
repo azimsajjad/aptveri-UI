@@ -760,54 +760,60 @@
 </p-dialog>
 
 <div id="table1">
-    <p-table
-        #dt
-        [value]="risks"
-        [(selection)]="selectedrisks"
-        [rowHover]="true"
-        [rows]="10"
-        [showCurrentPageReport]="true"
-        [rowsPerPageOptions]="[10, 25, 50]"
-        [loading]="loading"
-        [paginator]="true"
-        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
-        [filterDelay]="0"
-        [scrollable]="true"
-        scrollHeight="calc(100vh - 240px)"
-        [tableStyle]="{ 'min-width': '50rem' }"
-        [globalFilterFields]="[
-            'risk_uid',
-            'auldesc',
-            'process',
-            'business_objective',
-            'risk',
-            'rtax1',
-            'rtax2',
-            'comment',
-            'impact',
-            'likelihood',
-            'risk_score',
-            'codetext'
-        ]"
-    >
-        <ng-template pTemplate="caption">
-            <div
-                class="table-header flex justify-content-between align-items-center"
-            >
-                <span>Risk</span>
-                <span class="flex justify-content-between align-items-center">
-                    <span class="p-input-icon-left mr-5">
-                        <i class="pi pi-search"></i>
-                        <input
-                            pInputText
-                            type="text"
-                            (input)="
-                                dt.filterGlobal($event.target.value, 'contains')
-                            "
-                            placeholder="Global Search"
-                        />
-                    </span>
-                    <!-- <span class="p-input-icon-left mb-2 md:mb-0">
+    <div class="card">
+        <p-table
+            #dt
+            [value]="risks"
+            [(selection)]="selectedrisks"
+            [rowHover]="true"
+            [rows]="10"
+            [showCurrentPageReport]="true"
+            [rowsPerPageOptions]="[10, 25, 50]"
+            [loading]="loading"
+            [paginator]="true"
+            currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+            [filterDelay]="0"
+            [scrollable]="true"
+            scrollHeight="calc(100vh - 378px)"
+            [tableStyle]="{ 'min-width': '50rem' }"
+            [globalFilterFields]="[
+                'risk_uid',
+                'auldesc',
+                'process',
+                'business_objective',
+                'risk',
+                'rtax1',
+                'rtax2',
+                'comment',
+                'impact',
+                'likelihood',
+                'risk_score',
+                'codetext'
+            ]"
+        >
+            <ng-template pTemplate="caption">
+                <div
+                    class="table-header flex justify-content-between align-items-center"
+                >
+                    <span class="text-xl">Risk</span>
+                    <span
+                        class="flex justify-content-between align-items-center"
+                    >
+                        <span class="p-input-icon-left mr-5">
+                            <i class="pi pi-search"></i>
+                            <input
+                                pInputText
+                                type="text"
+                                (input)="
+                                    dt.filterGlobal(
+                                        $event.target.value,
+                                        'contains'
+                                    )
+                                "
+                                placeholder="Global Search"
+                            />
+                        </span>
+                        <!-- <span class="p-input-icon-left mb-2 md:mb-0">
                         <button
                             title="New"
                             pButton
@@ -848,215 +854,221 @@
                             (click)="clear(dt)"
                         ></button> </span
                 > -->
-                </span>
-            </div>
-        </ng-template>
+                    </span>
+                </div>
+            </ng-template>
 
-        <ng-template pTemplate="header">
-            <tr>
-                <th pSortableColumn="risk_uid" style="min-width: 14rem">
-                    <div
-                        class="flex justify-content-between align-items-center"
+            <ng-template pTemplate="header">
+                <tr>
+                    <th pSortableColumn="risk_uid" style="min-width: 14rem">
+                        <div
+                            class="flex justify-content-between align-items-center"
+                        >
+                            Risk UID
+                            <p-sortIcon field="risk_uid"></p-sortIcon>
+                        </div>
+                    </th>
+
+                    <th pSortableColumn="auldesc" style="min-width: 14rem">
+                        <div
+                            class="flex justify-content-between align-items-center"
+                        >
+                            AU level 3 Description
+                            <p-sortIcon field="auldesc"></p-sortIcon>
+                        </div>
+                    </th>
+
+                    <th pSortableColumn="process" style="min-width: 14rem">
+                        <div
+                            class="flex justify-content-between align-items-center"
+                        >
+                            Process
+                            <p-sortIcon field="process"></p-sortIcon>
+                        </div>
+                    </th>
+
+                    <th
+                        pSortableColumn="business_objective"
+                        style="min-width: 14rem"
                     >
-                        Risk UID
-                        <p-sortIcon field="risk_uid"></p-sortIcon>
-                    </div>
-                </th>
+                        <div
+                            class="flex justify-content-between align-items-center"
+                        >
+                            Business Objective
+                            <p-sortIcon field="business_objective"></p-sortIcon>
+                        </div>
+                    </th>
 
-                <th pSortableColumn="auldesc" style="min-width: 14rem">
-                    <div
-                        class="flex justify-content-between align-items-center"
+                    <th pSortableColumn="risk" style="min-width: 14rem">
+                        <div
+                            class="flex justify-content-between align-items-center"
+                        >
+                            Audit Risk
+                            <p-sortIcon field="risk"></p-sortIcon>
+                        </div>
+                    </th>
+
+                    <th pSortableColumn="rtax1" style="min-width: 14rem">
+                        <div
+                            class="flex justify-content-between align-items-center"
+                        >
+                            Risk Category
+                            <p-sortIcon field="rtax1"></p-sortIcon>
+                        </div>
+                    </th>
+
+                    <th pSortableColumn="rtax2" style="min-width: 14rem">
+                        <div
+                            class="flex justify-content-between align-items-center"
+                        >
+                            Risk Type
+                            <p-sortIcon field="rtax2"></p-sortIcon>
+                        </div>
+                    </th>
+
+                    <th pSortableColumn="comment" style="min-width: 14rem">
+                        <div
+                            class="flex justify-content-between align-items-center"
+                        >
+                            Comments
+                            <p-sortIcon field="comment"></p-sortIcon>
+                        </div>
+                    </th>
+
+                    <th pSortableColumn="impact" style="min-width: 14rem">
+                        <div
+                            class="flex justify-content-between align-items-center"
+                        >
+                            Impact
+                            <p-sortIcon field="impact"></p-sortIcon>
+                        </div>
+                    </th>
+
+                    <th pSortableColumn="likelihood" style="min-width: 14rem">
+                        <div
+                            class="flex justify-content-between align-items-center"
+                        >
+                            Likelihood
+                            <p-sortIcon field="likelihood"></p-sortIcon>
+                        </div>
+                    </th>
+
+                    <th pSortableColumn="risk_score" style="min-width: 14rem">
+                        <div
+                            class="flex justify-content-between align-items-center"
+                        >
+                            Risk Score
+                            <p-sortIcon field="risk_score"></p-sortIcon>
+                        </div>
+                    </th>
+
+                    <th
+                        pSortableColumn="risk_exposure"
+                        style="min-width: 14rem"
                     >
-                        AU level 3 Description
-                        <p-sortIcon field="auldesc"></p-sortIcon>
-                    </div>
-                </th>
+                        <div
+                            class="flex justify-content-between align-items-center"
+                        >
+                            Risk Exposure
+                            <p-sortIcon field="risk_exposure"></p-sortIcon>
+                        </div>
+                    </th>
 
-                <th pSortableColumn="process" style="min-width: 14rem">
-                    <div
-                        class="flex justify-content-between align-items-center"
-                    >
-                        Process
-                        <p-sortIcon field="process"></p-sortIcon>
-                    </div>
-                </th>
+                    <th style="min-width: 14rem">Actions</th>
+                </tr>
+            </ng-template>
 
-                <th
-                    pSortableColumn="business_objective"
-                    style="min-width: 14rem"
-                >
-                    <div
-                        class="flex justify-content-between align-items-center"
-                    >
-                        Business Objective
-                        <p-sortIcon field="business_objective"></p-sortIcon>
-                    </div>
-                </th>
+            <ng-template pTemplate="body" let-item>
+                <tr class="p-selectable-row">
+                    <td class="text-base">
+                        <span class="p-column-title">Risk UID</span>
+                        {{ item.risk_uid }}
+                    </td>
 
-                <th pSortableColumn="risk" style="min-width: 14rem">
-                    <div
-                        class="flex justify-content-between align-items-center"
-                    >
-                        Audit Risk
-                        <p-sortIcon field="risk"></p-sortIcon>
-                    </div>
-                </th>
+                    <td class="text-base">
+                        <span class="p-column-title"
+                            >AU level 3 Description</span
+                        >
+                        {{ item.auldesc }}
+                    </td>
 
-                <th pSortableColumn="rtax1" style="min-width: 14rem">
-                    <div
-                        class="flex justify-content-between align-items-center"
-                    >
-                        Risk Category
-                        <p-sortIcon field="rtax1"></p-sortIcon>
-                    </div>
-                </th>
+                    <td class="text-base">
+                        <span class="p-column-title">Process</span>
+                        {{ item.process }}
+                    </td>
 
-                <th pSortableColumn="rtax2" style="min-width: 14rem">
-                    <div
-                        class="flex justify-content-between align-items-center"
-                    >
-                        Risk Type
-                        <p-sortIcon field="rtax2"></p-sortIcon>
-                    </div>
-                </th>
+                    <td class="text-base">
+                        <span class="p-column-title">Business Objective</span>
+                        {{ item.business_objective }}
+                    </td>
 
-                <th pSortableColumn="comment" style="min-width: 14rem">
-                    <div
-                        class="flex justify-content-between align-items-center"
-                    >
-                        Comments
-                        <p-sortIcon field="comment"></p-sortIcon>
-                    </div>
-                </th>
+                    <td class="text-base">
+                        <span class="p-column-title">Audit Risk</span>
+                        {{ item.risk }}
+                    </td>
 
-                <th pSortableColumn="impact" style="min-width: 14rem">
-                    <div
-                        class="flex justify-content-between align-items-center"
-                    >
-                        Impact
-                        <p-sortIcon field="impact"></p-sortIcon>
-                    </div>
-                </th>
+                    <td class="text-base">
+                        <span class="p-column-title">Risk Category</span>
+                        {{ item.rtax1 }}
+                    </td>
 
-                <th pSortableColumn="likelihood" style="min-width: 14rem">
-                    <div
-                        class="flex justify-content-between align-items-center"
-                    >
-                        Likelihood
-                        <p-sortIcon field="likelihood"></p-sortIcon>
-                    </div>
-                </th>
+                    <td class="text-base">
+                        <span class="p-column-title">Risk Type</span>
+                        {{ item.rtax2 }}
+                    </td>
 
-                <th pSortableColumn="risk_score" style="min-width: 14rem">
-                    <div
-                        class="flex justify-content-between align-items-center"
-                    >
-                        Risk Score
-                        <p-sortIcon field="risk_score"></p-sortIcon>
-                    </div>
-                </th>
+                    <td class="text-base">
+                        <span class="p-column-title">Comment</span>
+                        {{ item.comment }}
+                    </td>
 
-                <th pSortableColumn="risk_exposure" style="min-width: 14rem">
-                    <div
-                        class="flex justify-content-between align-items-center"
-                    >
-                        Risk Exposure
-                        <p-sortIcon field="risk_exposure"></p-sortIcon>
-                    </div>
-                </th>
+                    <td class="text-base">
+                        <span class="p-column-title">Impact</span>
+                        {{ item.impact }}
+                    </td>
 
-                <th style="min-width: 14rem">Actions</th>
-            </tr>
-        </ng-template>
+                    <td class="text-base">
+                        <span class="p-column-title">Likelihood</span>
+                        {{ item.likelihood }}
+                    </td>
 
-        <ng-template pTemplate="body" let-item>
-            <tr class="p-selectable-row">
-                <td>
-                    <span class="p-column-title">Risk UID</span>
-                    {{ item.risk_uid }}
-                </td>
+                    <td class="text-base">
+                        <span class="p-column-title">Risk Score</span>
+                        {{ item.risk_score }}
+                    </td>
 
-                <td>
-                    <span class="p-column-title">AU level 3 Description</span>
-                    {{ item.auldesc }}
-                </td>
+                    <td class="text-base">
+                        <span class="p-column-title">Risk Exposure</span>
+                        {{ item.codetext }}
+                    </td>
 
-                <td>
-                    <span class="p-column-title">Process</span>
-                    {{ item.process }}
-                </td>
-
-                <td>
-                    <span class="p-column-title">Business Objective</span>
-                    {{ item.business_objective }}
-                </td>
-
-                <td>
-                    <span class="p-column-title">Audit Risk</span>
-                    {{ item.risk }}
-                </td>
-
-                <td>
-                    <span class="p-column-title">Risk Category</span>
-                    {{ item.rtax1 }}
-                </td>
-
-                <td>
-                    <span class="p-column-title">Risk Type</span>
-                    {{ item.rtax2 }}
-                </td>
-
-                <td>
-                    <span class="p-column-title">Comment</span>
-                    {{ item.comment }}
-                </td>
-
-                <td>
-                    <span class="p-column-title">Impact</span>
-                    {{ item.impact }}
-                </td>
-
-                <td>
-                    <span class="p-column-title">Likelihood</span>
-                    {{ item.likelihood }}
-                </td>
-
-                <td>
-                    <span class="p-column-title">Risk Score</span>
-                    {{ item.risk_score }}
-                </td>
-
-                <td>
-                    <span class="p-column-title">Risk Exposure</span>
-                    {{ item.codetext }}
-                </td>
-
-                <td style="min-width: 14rem">
-                    <span class="p-column-title">Actions</span>
-                    <span
-                        ><button
-                            pButton
-                            pRipple
-                            title="Edit"
-                            type="button"
-                            icon="pi pi-pencil"
-                            class="p-button-rounded p-button-info"
-                            (click)="editrisk(item)"
-                        ></button>
-                        <button
-                            pButton
-                            pRipple
-                            title="Delete"
-                            type="button"
-                            icon="pi pi-trash"
-                            class="p-button-rounded p-button-danger ml-2"
-                            (click)="deleteSelectedrisks(item)"
-                        ></button
-                    ></span>
-                </td>
-            </tr>
-        </ng-template>
-    </p-table>
+                    <td style="min-width: 14rem">
+                        <span class="p-column-title">Actions</span>
+                        <span
+                            ><button
+                                pButton
+                                pRipple
+                                title="Edit"
+                                type="button"
+                                icon="pi pi-pencil"
+                                class="p-button-rounded p-button-info"
+                                (click)="editrisk(item)"
+                            ></button>
+                            <button
+                                pButton
+                                pRipple
+                                title="Delete"
+                                type="button"
+                                icon="pi pi-trash"
+                                class="p-button-rounded p-button-danger ml-2"
+                                (click)="deleteSelectedrisks(item)"
+                            ></button
+                        ></span>
+                    </td>
+                </tr>
+            </ng-template>
+        </p-table>
+    </div>
 
     <button
         pButton
@@ -1064,7 +1076,7 @@
         title="Add"
         type="button"
         icon="pi pi-plus"
-        class="p-button-rounded fixed add-banner-btn"
+        class="p-button-rounded p-button-lg fixed add-banner-btn"
         (click)="openNew()"
     ></button>
 </div>

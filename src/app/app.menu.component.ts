@@ -8,7 +8,7 @@ import { AppMainComponent } from './app.main.component';
             <ul class="layout-menu" role="menu" (keydown)="onKeydown($event)">
                 <li
                     app-menu
-                    class="layout-menuitem-category"
+                    class="layout-menuitem-category text-l font-bold mb-3"
                     *ngFor="let item of model; let i = index"
                     [item]="item"
                     [index]="i"
@@ -23,6 +23,7 @@ import { AppMainComponent } from './app.main.component';
                     </div>
                     <ul role="menu">
                         <li
+                            class="font-normal mt-1"
                             app-menuitem
                             *ngFor="let child of item.items"
                             [item]="child"
@@ -61,15 +62,10 @@ export class AppMenuComponent implements OnInit {
                     //     routerLink: ['/pages/banners-detail'],
                     // },
                     {
-                        label: 'Banner',
+                        label: 'Organisation',
                         icon: 'pi pi-fw pi-globe',
                         routerLink: ['/pages/banner'],
                     },
-                    // {
-                    //     label: 'Audit Universe',
-                    //     icon: 'pi pi-fw pi-user-edit',
-                    //     routerLink: ['/pages/audit-universe-all'],
-                    // },
                     {
                         label: 'Audit Universe',
                         icon: 'pi pi-fw pi-user-edit',
@@ -111,11 +107,11 @@ export class AppMenuComponent implements OnInit {
                         icon: 'pi pi-fw pi-id-card',
                         routerLink: ['/pages/audit'],
                     },
-                    {
-                        label: 'Ad-Hoc Test',
-                        icon: 'pi pi-fw pi-exclamation-circle',
-                        routerLink: ['/pages/adhoc-test'],
-                    },
+                    // {
+                    //     label: 'Ad-Hoc Test',
+                    //     icon: 'pi pi-fw pi-exclamation-circle',
+                    //     routerLink: ['/pages/adhoc-test'],
+                    // },
                 ],
             },
             {

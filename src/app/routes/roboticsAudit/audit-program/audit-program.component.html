@@ -270,38 +270,38 @@
                                 (click)="selectRow(auditP)"
                             ></p-tableCheckbox>
                         </td>
-                        <td style="max-width: 7rem; min-width: 7rem">
+                        <td class="text-base" style="max-width: 7rem; min-width: 7rem">
                             <p-inputSwitch
                                 *ngIf="auditP.frequency_id > 0"
                                 (onChange)="changeStatus(auditP, $event)"
                                 [(ngModel)]="auditP.schedule_enable"
                             ></p-inputSwitch>
                         </td>
-                        <td style="min-width: 12rem">
+                        <td class="text-base" style="min-width: 12rem">
                             {{ auditP.audit_program_uid }}
                         </td>
-                        <td style="min-width: 12rem">
+                        <td class="text-base" style="min-width: 12rem">
                             {{ auditP.ap_name }}
                         </td>
-                        <td style="min-width: 12rem">
+                        <td class="text-base" style="min-width: 12rem">
                             {{ auditP.ap_desc }}
                         </td>
-                        <td style="min-width: 12rem">
+                        <td class="text-base" style="min-width: 12rem">
                             {{ auditP.au_level_3_desc }}
                         </td>
-                        <td style="min-width: 12rem">
+                        <td class="text-base" style="min-width: 12rem">
                             {{ auditP.ap_schedule_date | date }}
                         </td>
-                        <td style="min-width: 12rem">
+                        <td class="text-base" style="min-width: 12rem">
                             {{ auditP.next_run | date }}
                         </td>
-                        <td style="min-width: 12rem">
+                        <td class="text-base" style="min-width: 12rem">
                             {{ getFrequency(auditP.frequency_id) }}
                         </td>
-                        <td style="min-width: 12rem">
+                        <td class="text-base" style="min-width: 12rem">
                             {{ getTwoDigit(auditP.ap_schedule_time) }}
                         </td>
-                        <td style="min-width: 12rem">
+                        <td class="text-base" style="min-width: 12rem">
                             {{ auditP.full_name }}
                         </td>
                     </tr>
@@ -665,7 +665,7 @@
                                 (click)="selectTest(auditT)"
                             ></p-tableCheckbox>
                         </td>
-                        <td style="min-width: 12rem">
+                        <td class="text-base" style="min-width: 12rem">
                             {{ auditT.audit_test_uid }}
                         </td>
                         <td
@@ -680,7 +680,7 @@
                         >
                             {{ auditT.audit_test_desc }}
                         </td>
-                        <td style="min-width: 12rem">
+                        <td class="text-base" style="min-width: 12rem">
                             {{ auditT.au_level_4_desc }}
                         </td>
                         <td
@@ -709,13 +709,13 @@
                         >
                             {{ auditT.control }}
                         </td>
-                        <td style="min-width: 12rem">
+                        <td class="text-base" style="min-width: 12rem">
                             {{ auditT.banner }}
                         </td>
-                        <td style="min-width: 12rem">
+                        <td class="text-base" style="min-width: 12rem">
                             {{ auditT.target_table }}
                         </td>
-                        <td style="min-width: 12rem">
+                        <td class="text-base" style="min-width: 12rem">
                             {{ auditT.script_defination }}
                         </td>
                         <td
@@ -741,25 +741,25 @@
                         >
                             {{ auditT.script_sql }}
                         </td>
-                        <td style="min-width: 12rem">
+                        <td class="text-base" style="min-width: 12rem">
                             {{ auditT.results ? auditT.results : 'N/A' }}
                         </td>
-                        <td style="min-width: 12rem">
+                        <td class="text-base" style="min-width: 12rem">
                             {{ auditT.notes }}
                         </td>
-                        <td style="min-width: 12rem">
+                        <td class="text-base" style="min-width: 12rem">
                             {{ auditT.schedule_status }}
                         </td>
-                        <td style="min-width: 12rem">
+                        <td class="text-base" style="min-width: 12rem">
                             {{ auditT.schedule_start_datetime | date }}
                         </td>
-                        <td style="min-width: 12rem">
+                        <td class="text-base" style="min-width: 12rem">
                             {{ auditT.schedule_end_datetime | date }}
                         </td>
-                        <td style="min-width: 12rem">
+                        <td class="text-base" style="min-width: 12rem">
                             {{ auditT.last_run_date | date }}
                         </td>
-                        <td style="min-width: 12rem">
+                        <td class="text-base" style="min-width: 12rem">
                             {{ auditT.full_name }}
                         </td>
                     </tr>
@@ -1109,7 +1109,7 @@
                                 (click)="editHistroy(auditT)"
                             ></p-tableCheckbox>
                         </td>
-                        <td style="min-width: 12rem">
+                        <td class="text-base" style="min-width: 12rem">
                             {{ auditT.audit_history_uid }}
                         </td>
                         <td
@@ -1124,7 +1124,7 @@
                         >
                             {{ auditT.audit_test_desc }}
                         </td>
-                        <td style="min-width: 12rem">
+                        <td class="text-base" style="min-width: 12rem">
                             {{ auditT.au_level_4_desc }}
                         </td>
                         <td
@@ -1153,7 +1153,7 @@
                         >
                             {{ auditT.control }}
                         </td>
-                        <td style="min-width: 12rem">
+                        <td class="text-base" style="min-width: 12rem">
                             {{ auditT.script_defination }}
                         </td>
                         <td
@@ -1179,34 +1179,34 @@
                         >
                             {{ auditT.script_sql }}
                         </td>
-                        <td style="min-width: 12rem">
+                        <td class="text-base" style="min-width: 12rem">
                             {{ auditT.target_table }}
                         </td>
-                        <td style="min-width: 12rem">
+                        <td class="text-base" style="min-width: 12rem">
                             {{ auditT.results ? auditT.results : 'N/A' }}
                         </td>
-                        <td style="min-width: 12rem">
+                        <td class="text-base" style="min-width: 12rem">
                             {{ auditT.notes }}
                         </td>
-                        <td style="min-width: 12rem">
+                        <td class="text-base" style="min-width: 12rem">
                             {{ auditT.schedule_status }}
                         </td>
-                        <td style="min-width: 12rem">
+                        <td class="text-base" style="min-width: 12rem">
                             {{ auditT.schedule_start_datetime | date }}
                         </td>
-                        <td style="min-width: 12rem">
+                        <td class="text-base" style="min-width: 12rem">
                             {{ getTwoDigit(auditT.schedule_run_time) }}
                         </td>
-                        <td style="min-width: 12rem">
+                        <td class="text-base" style="min-width: 12rem">
                             {{ auditT.created_date | date : 'medium' }}
                         </td>
-                        <td style="min-width: 12rem">
+                        <td class="text-base" style="min-width: 12rem">
                             {{ auditT.job_run_status_text | titlecase }}
                         </td>
-                        <td style="min-width: 12rem">
+                        <td class="text-base" style="min-width: 12rem">
                             {{ auditT.error_message | titlecase }}
                         </td>
-                        <td style="min-width: 12rem">
+                        <td class="text-base" style="min-width: 12rem">
                             {{ auditT.audit_run_status_text | titlecase }}
                         </td>
                     </tr>
@@ -1687,7 +1687,7 @@
                                 <div>
                                     <table class="selectedVal">
                                         <tr>
-                                            <td style="width: 20% !important">
+                                            <td class="text-base" style="width: 20% !important">
                                                 Audit Universe L4
                                             </td>
                                             <td
@@ -2230,722 +2230,785 @@
 </p-dialog> -->
 
 <div id="table1">
-    <p-table
-        *ngIf="audits"
-        #dt1
-        [value]="auditP"
-        selectionMode="single"
-        [rows]="5"
-        [loading]="loadingP"
-        [rowHover]="true"
-        [paginator]="true"
-        [rowsPerPageOptions]="[5, 10, 20]"
-        [showCurrentPageReport]="true"
-        [(selection)]="auditPSelection"
-        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
-        responsiveLayout="scroll"
-        [scrollable]="true"
-        [globalFilterFields]="[
-            'audit_program_uid',
-            'ap_name',
-            'ap_desc',
-            'au_level_3_desc',
-            'ap_schedule_date',
-            'next_run',
-            'frequency_id',
-            'ap_schedule_time',
-            'full_name'
-        ]"
-    >
-        <ng-template pTemplate="caption">
-            <div
-                class="table-header flex justify-content-between align-items-center"
-            >
-                <span
-                    >Audit Program ({{ audits[0].audit_uid }} -
-                    {{ audits[0].audit_name }})</span
+    <div class="card">
+        <p-table
+            *ngIf="audits"
+            #dt1
+            [value]="auditP"
+            selectionMode="single"
+            [rows]="5"
+            [loading]="loadingP"
+            [rowHover]="true"
+            [paginator]="true"
+            [rowsPerPageOptions]="[5, 10, 20]"
+            [showCurrentPageReport]="true"
+            [(selection)]="auditPSelection"
+            currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+            responsiveLayout="scroll"
+            [scrollable]="true"
+            [globalFilterFields]="[
+                'audit_program_uid',
+                'ap_name',
+                'ap_desc',
+                'au_level_3_desc',
+                'ap_schedule_date',
+                'next_run',
+                'frequency_id',
+                'ap_schedule_time',
+                'full_name'
+            ]"
+        >
+            <ng-template pTemplate="caption">
+                <div
+                    class="table-header flex justify-content-between align-items-center"
                 >
-                <span class="flex justify-content-between align-items-center"
-                    ><span class="p-input-icon-left mr-5">
-                        <i class="pi pi-search"></i>
-                        <input
-                            pInputText
-                            type="text"
-                            (input)="
-                                dt.filterGlobal($event.target.value, 'contains')
-                            "
-                            placeholder="Global Search"
-                        />
-                    </span>
-                    <span class="p-input-icon-left mb-2 md:mb-0">
-                        <button
-                            [disabled]="!auditPSelection?.length > 0"
-                            title="Run Tests"
-                            pButton
-                            pRipple
-                            icon="pi pi-play"
-                            class="p-button-rounded p-button-purple-500"
-                            (click)="runProgram()"
-                        ></button>
-                        <button
-                            title="New"
-                            pButton
-                            pRipple
-                            icon="pi pi-plus"
-                            class="p-button-rounded p-button-success ml-2"
-                            (click)="openP(null, 'new')"
-                        ></button>
-                        <button
-                            [disabled]="auditPSelection?.length != 1"
-                            title="Edit"
-                            pButton
-                            pRipple
-                            icon="pi pi-pencil"
-                            class="p-button-rounded p-button-warning ml-2"
-                            (click)="openP(auditPSelection[0], 'edit')"
-                        ></button>
-                        <button
-                            [disabled]="auditPSelection?.length != 1"
-                            title="Delete"
-                            pButton
-                            pRipple
-                            icon="pi pi-trash"
-                            class="p-button-rounded p-button-danger ml-2"
-                            (click)="deleteProgram(auditPSelection[0])"
-                        ></button></span
-                ></span>
-            </div>
-        </ng-template>
+                    <span class="text-xl"
+                        >Audit Program ({{ audits[0].audit_uid }} -
+                        {{ audits[0].audit_name }})</span
+                    >
+                    <span
+                        class="flex justify-content-between align-items-center"
+                        ><span class="p-input-icon-left mr-5">
+                            <i class="pi pi-search"></i>
+                            <input
+                                pInputText
+                                type="text"
+                                (input)="
+                                    dt.filterGlobal(
+                                        $event.target.value,
+                                        'contains'
+                                    )
+                                "
+                                placeholder="Global Search"
+                            />
+                        </span>
+                        <span class="p-input-icon-left mb-2 md:mb-0">
+                            <button
+                                [disabled]="!auditPSelection?.length > 0"
+                                title="Run Tests"
+                                pButton
+                                pRipple
+                                icon="pi pi-play"
+                                class="p-button-rounded p-button-purple-500"
+                                (click)="runProgram()"
+                            ></button>
+                            <button
+                                title="New"
+                                pButton
+                                pRipple
+                                icon="pi pi-plus"
+                                class="p-button-rounded p-button-success ml-2"
+                                (click)="openP(null, 'new')"
+                            ></button>
+                            <button
+                                [disabled]="auditPSelection?.length != 1"
+                                title="Edit"
+                                pButton
+                                pRipple
+                                icon="pi pi-pencil"
+                                class="p-button-rounded p-button-warning ml-2"
+                                (click)="openP(auditPSelection[0], 'edit')"
+                            ></button>
+                            <button
+                                [disabled]="auditPSelection?.length != 1"
+                                title="Delete"
+                                pButton
+                                pRipple
+                                icon="pi pi-trash"
+                                class="p-button-rounded p-button-danger ml-2"
+                                (click)="deleteProgram(auditPSelection[0])"
+                            ></button></span
+                    ></span>
+                </div>
+            </ng-template>
 
-        <ng-template pTemplate="header">
-            <tr>
-                <th style="min-width: 4rem">
-                    <p-tableHeaderCheckbox
-                        (click)="getTests()"
-                    ></p-tableHeaderCheckbox>
-                </th>
+            <ng-template pTemplate="header">
+                <tr>
+                    <th style="min-width: 4rem">
+                        <p-tableHeaderCheckbox
+                            (click)="getTests()"
+                        ></p-tableHeaderCheckbox>
+                    </th>
 
-                <th style="min-width: 14rem">
-                    <div class="flex align-items-center">Schedule</div>
-                </th>
+                    <th style="min-width: 14rem">
+                        <div class="flex align-items-center">Schedule</div>
+                    </th>
 
-                <th
-                    pSortableColumn="audit_program_uid"
-                    style="min-width: 14rem"
+                    <th
+                        pSortableColumn="audit_program_uid"
+                        style="min-width: 14rem"
+                    >
+                        <div class="flex align-items-center">
+                            AP UID
+                            <p-sortIcon field="audit_program_uid"></p-sortIcon>
+                        </div>
+                    </th>
+
+                    <th pSortableColumn="ap_name" style="min-width: 14rem">
+                        <div class="flex align-items-center">
+                            AP Name
+                            <p-sortIcon field="ap_name"></p-sortIcon>
+                        </div>
+                    </th>
+
+                    <th pSortableColumn="ap_desc" style="min-width: 14rem">
+                        <div class="flex align-items-center">
+                            Audit Description
+                            <p-sortIcon field="ap_desc"></p-sortIcon>
+                        </div>
+                    </th>
+
+                    <th
+                        pSortableColumn="au_level_3_desc"
+                        style="min-width: 14rem"
+                    >
+                        <div class="flex align-items-center">
+                            AU Description
+                            <p-sortIcon field="au_level_3_desc"></p-sortIcon>
+                        </div>
+                    </th>
+
+                    <th
+                        pSortableColumn="ap_schedule_date"
+                        style="min-width: 14rem"
+                    >
+                        <div class="flex align-items-center">
+                            AP Schedule Start Date
+                            <p-sortIcon field="ap_schedule_date"></p-sortIcon>
+                        </div>
+                    </th>
+
+                    <th pSortableColumn="next_run" style="min-width: 14rem">
+                        <div class="flex align-items-center">
+                            AP Schedule End Date
+                            <p-sortIcon field="next_run"></p-sortIcon>
+                        </div>
+                    </th>
+
+                    <th pSortableColumn="frequency_id" style="min-width: 14rem">
+                        <div class="flex align-items-center">
+                            Frequency
+                            <p-sortIcon field="frequency_id"></p-sortIcon>
+                        </div>
+                    </th>
+
+                    <th
+                        pSortableColumn="ap_schedule_time"
+                        style="min-width: 14rem"
+                    >
+                        <div class="flex align-items-center">
+                            AP Schedule Time (HH24)
+                            <p-sortIcon field="ap_schedule_time"></p-sortIcon>
+                        </div>
+                    </th>
+
+                    <th pSortableColumn="full_name" style="min-width: 14rem">
+                        <div class="flex align-items-center">
+                            Created By
+                            <p-sortIcon field="ap_schedule_time"></p-sortIcon>
+                        </div>
+                    </th>
+                </tr>
+            </ng-template>
+
+            <ng-template pTemplate="body" let-item>
+                <tr class="p-selectable-row">
+                    <td class="text-base" style="max-width: 4rem">
+                        <p-tableCheckbox
+                            [value]="item"
+                            (click)="selectRow(item)"
+                        ></p-tableCheckbox>
+                    </td>
+                    <td>
+                        <p-inputSwitch
+                            *ngIf="item.frequency_id > 0"
+                            (onChange)="changeStatus(item, $event)"
+                            [(ngModel)]="item.schedule_enable"
+                        ></p-inputSwitch>
+                    </td>
+                    <td>{{ item.audit_program_uid }}</td>
+                    <td>{{ item.ap_name }}</td>
+                    <td>{{ item.ap_desc }}</td>
+                    <td>{{ item.au_level_3_desc }}</td>
+                    <td>{{ item.ap_schedule_date | date }}</td>
+                    <td>{{ item.next_run | date }}</td>
+                    <td>{{ getFrequency(item.frequency_id) }}</td>
+                    <td>{{ getTwoDigit(item.ap_schedule_time) }}</td>
+                    <td>{{ item.full_name }}</td>
+                </tr>
+            </ng-template>
+
+            <ng-template pTemplate="emptymessage">
+                <tr>
+                    <td colspan="11">No Audit found.</td>
+                </tr>
+            </ng-template>
+        </p-table>
+
+        <p-table
+            *ngIf="auditPSelection?.length"
+            #dt2
+            [value]="auditT"
+            [rows]="5"
+            [loading]="loadingT"
+            [rowHover]="true"
+            [paginator]="true"
+            [rowsPerPageOptions]="[5, 10, 20]"
+            [showCurrentPageReport]="true"
+            [(selection)]="auditTSelection"
+            currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+            responsiveLayout="scroll"
+            [scrollable]="true"
+            [globalFilterFields]="[
+                'audit_test_uid',
+                'audit_test_desc',
+                'au_level_4_desc',
+                'audit_risk',
+                'control',
+                'banner',
+                'target_table',
+                'script_defination',
+                'script_presto',
+                'script_sql',
+                'results',
+                'notes',
+                'schedule_status',
+                'schedule_start_datetime',
+                'schedule_end_datetime',
+                'last_run_date',
+                'full_name'
+            ]"
+        >
+            <ng-template pTemplate="caption">
+                <div
+                    class="table-header flex justify-content-between align-items-center"
                 >
-                    <div class="flex align-items-center">
-                        AP UID
-                        <p-sortIcon field="audit_program_uid"></p-sortIcon>
-                    </div>
-                </th>
+                    <span class="text-xl">Audit Test</span>
+                    <span
+                        class="flex justify-content-between align-items-center"
+                        ><span class="p-input-icon-left mr-5">
+                            <i class="pi pi-search"></i>
+                            <input
+                                pInputText
+                                type="text"
+                                (input)="
+                                    dt.filterGlobal(
+                                        $event.target.value,
+                                        'contains'
+                                    )
+                                "
+                                placeholder="Global Search"
+                            />
+                        </span>
+                        <span class="p-input-icon-left mb-2 md:mb-0">
+                            <button
+                                [disabled]="!auditTSelection?.length > 0"
+                                title="Run Test"
+                                pButton
+                                pRipple
+                                icon="pi pi-play"
+                                class="p-button-rounded p-button-purple-500"
+                                (click)="runTest(auditTSelection)"
+                            ></button>
+                            <button
+                                title="New"
+                                pButton
+                                pRipple
+                                icon="pi pi-plus"
+                                class="p-button-rounded p-button-success ml-2"
+                                (click)="openT(null, 'new')"
+                                [disabled]="auditPSelection?.length != 1"
+                            ></button>
+                            <button
+                                [disabled]="
+                                    auditTSelection?.length != 1 ||
+                                    auditTH?.length != 0
+                                "
+                                title="Edit"
+                                pButton
+                                pRipple
+                                type="button"
+                                icon="pi pi-pencil"
+                                class="p-button-rounded p-button-warning ml-2"
+                                (click)="openT(auditTSelection[0], 'edit')"
+                            ></button>
+                            <button
+                                [disabled]="
+                                    auditTSelection?.length != 1 ||
+                                    auditTH?.length != 0
+                                "
+                                title="Delete"
+                                pButton
+                                pRipple
+                                type="button"
+                                icon="pi pi-trash"
+                                class="p-button-rounded p-button-danger ml-2"
+                                (click)="deleteTest(auditTSelection[0])"
+                            ></button></span
+                    ></span>
+                </div>
+            </ng-template>
 
-                <th pSortableColumn="ap_name" style="min-width: 14rem">
-                    <div class="flex align-items-center">
-                        AP Name
-                        <p-sortIcon field="ap_name"></p-sortIcon>
-                    </div>
-                </th>
+            <ng-template pTemplate="header">
+                <tr>
+                    <th style="max-width: 4rem">
+                        <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+                    </th>
 
-                <th pSortableColumn="ap_desc" style="min-width: 14rem">
-                    <div class="flex align-items-center">
-                        Audit Description
-                        <p-sortIcon field="ap_desc"></p-sortIcon>
-                    </div>
-                </th>
+                    <th pSortableColumn="audit_test_uid">
+                        <div class="flex align-items-center">
+                            Audit Test UID
+                            <p-sortIcon field="audit_test_uid"></p-sortIcon>
+                        </div>
+                    </th>
 
-                <th pSortableColumn="au_level_3_desc" style="min-width: 14rem">
-                    <div class="flex align-items-center">
-                        AU Description
-                        <p-sortIcon field="au_level_3_desc"></p-sortIcon>
-                    </div>
-                </th>
-
-                <th pSortableColumn="ap_schedule_date" style="min-width: 14rem">
-                    <div class="flex align-items-center">
-                        AP Schedule Start Date
-                        <p-sortIcon field="ap_schedule_date"></p-sortIcon>
-                    </div>
-                </th>
-
-                <th pSortableColumn="next_run" style="min-width: 14rem">
-                    <div class="flex align-items-center">
-                        AP Schedule End Date
-                        <p-sortIcon field="next_run"></p-sortIcon>
-                    </div>
-                </th>
-
-                <th pSortableColumn="frequency_id" style="min-width: 14rem">
-                    <div class="flex align-items-center">
-                        Frequency
-                        <p-sortIcon field="frequency_id"></p-sortIcon>
-                    </div>
-                </th>
-
-                <th pSortableColumn="ap_schedule_time" style="min-width: 14rem">
-                    <div class="flex align-items-center">
-                        AP Schedule Time (HH24)
-                        <p-sortIcon field="ap_schedule_time"></p-sortIcon>
-                    </div>
-                </th>
-
-                <th pSortableColumn="full_name" style="min-width: 14rem">
-                    <div class="flex align-items-center">
+                    <th
+                        pSortableColumn="audit_test_desc"
+                        style="min-width: 14rem"
+                    >
+                        Audit Test Description
+                        <p-sortIcon field="audit_test_desc"></p-sortIcon>
+                    </th>
+                    <th
+                        pSortableColumn="au_level_4_desc"
+                        style="min-width: 14rem"
+                    >
+                        Audit Universe Leve 4
+                        <p-sortIcon field="au_level_4_desc"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="audit_risk" style="min-width: 14rem">
+                        Risk Description
+                        <p-sortIcon field="audit_risk"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="control" style="min-width: 14rem">
+                        Control Description
+                        <p-sortIcon field="control"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="banner" style="min-width: 14rem">
+                        Banner Description
+                        <p-sortIcon field="banner"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="target_table" style="min-width: 14rem">
+                        Target Table<p-sortIcon
+                            field="target_table"
+                        ></p-sortIcon>
+                    </th>
+                    <th
+                        pSortableColumn="script_defination"
+                        style="min-width: 14rem"
+                    >
+                        Script Defination
+                        <p-sortIcon field="script_defination"></p-sortIcon>
+                    </th>
+                    <th
+                        pSortableColumn="script_presto"
+                        style="min-width: 14rem"
+                    >
+                        Presto Script
+                        <p-sortIcon field="script_presto"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="script_sql" style="min-width: 14rem">
+                        SQL Script
+                        <p-sortIcon field="script_sql"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="result" style="min-width: 14rem">
+                        Result
+                        <p-sortIcon field="result"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="notes" style="min-width: 14rem">
+                        Notes
+                        <p-sortIcon field="notes"></p-sortIcon>
+                    </th>
+                    <th
+                        pSortableColumn="schedule_status"
+                        style="min-width: 14rem"
+                    >
+                        Schedule Status
+                        <p-sortIcon field="schedule_status"></p-sortIcon>
+                    </th>
+                    <th
+                        pSortableColumn="schedule_start_datetime"
+                        style="min-width: 14rem"
+                    >
+                        Schedule Start Date
+                        <p-sortIcon
+                            field="schedule_start_datetime"
+                        ></p-sortIcon>
+                    </th>
+                    <th
+                        pSortableColumn="schedule_end_datetime"
+                        style="min-width: 14rem"
+                    >
+                        Schedule End Date
+                        <p-sortIcon field="schedule_end_datetime"></p-sortIcon>
+                    </th>
+                    <th
+                        pSortableColumn="last_run_date"
+                        style="min-width: 14rem"
+                    >
+                        Last Run Date
+                        <p-sortIcon field="last_run_date"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="full_name" style="min-width: 14rem">
                         Created By
-                        <p-sortIcon field="ap_schedule_time"></p-sortIcon>
-                    </div>
-                </th>
-            </tr>
-        </ng-template>
+                        <p-sortIcon field="full_name"></p-sortIcon>
+                    </th>
+                </tr>
+            </ng-template>
 
-        <ng-template pTemplate="body" let-item>
-            <tr class="p-selectable-row">
-                <td style="max-width: 4rem">
-                    <p-tableCheckbox
-                        [value]="item"
-                        (click)="selectRow(item)"
-                    ></p-tableCheckbox>
-                </td>
-                <td>
-                    <p-inputSwitch
-                        *ngIf="item.frequency_id > 0"
-                        (onChange)="changeStatus(item, $event)"
-                        [(ngModel)]="item.schedule_enable"
-                    ></p-inputSwitch>
-                </td>
-                <td>{{ item.audit_program_uid }}</td>
-                <td>{{ item.ap_name }}</td>
-                <td>{{ item.ap_desc }}</td>
-                <td>{{ item.au_level_3_desc }}</td>
-                <td>{{ item.ap_schedule_date | date }}</td>
-                <td>{{ item.next_run | date }}</td>
-                <td>{{ getFrequency(item.frequency_id) }}</td>
-                <td>{{ getTwoDigit(item.ap_schedule_time) }}</td>
-                <td>{{ item.full_name }}</td>
-            </tr>
-        </ng-template>
+            <ng-template pTemplate="body" let-item>
+                <tr class="p-selectable-row">
+                    <td class="text-base" style="max-width: 4rem">
+                        <p-tableCheckbox
+                            [value]="item"
+                            (click)="selectTest(item)"
+                        ></p-tableCheckbox>
+                    </td>
+                    <td class="text-base" style="min-width: 14rem">
+                        {{ item.audit_test_uid }}
+                    </td>
+                    <td class="text-base" style="min-width: 14rem">
+                        {{ item.audit_test_desc.substring(0, 30) }}
+                    </td>
+                    <td class="text-base" style="min-width: 14rem">
+                        {{ item.au_level_4_desc }}
+                    </td>
+                    <td class="text-base" style="min-width: 14rem">
+                        {{ item.audit_risk.substring(0, 30) }}
+                    </td>
+                    <td class="text-base" style="min-width: 14rem">
+                        {{ item.control.substring(0, 30) }}
+                    </td>
+                    <td class="text-base" style="min-width: 14rem">
+                        {{ item.banner }}
+                    </td>
+                    <td class="text-base" style="min-width: 14rem">
+                        {{ item.target_table }}
+                    </td>
+                    <td class="text-base" style="min-width: 14rem">
+                        {{ item.script_defination }}
+                    </td>
+                    <td class="text-base" style="min-width: 14rem">
+                        {{ item.script_presto.substring(0, 30) }}
+                    </td>
+                    <td class="text-base" style="min-width: 14rem">
+                        {{ item.script_sql.substring(0, 30) }}
+                    </td>
+                    <td class="text-base" style="min-width: 14rem">
+                        {{ item.results ? item.results : 'N/A' }}
+                    </td>
+                    <td class="text-base" style="min-width: 14rem">
+                        {{ item.notes }}
+                    </td>
+                    <td class="text-base" style="min-width: 14rem">
+                        {{ item.schedule_status }}
+                    </td>
+                    <td class="text-base" style="min-width: 14rem">
+                        {{ item.schedule_start_datetime | date }}
+                    </td>
+                    <td class="text-base" style="min-width: 14rem">
+                        {{ item.schedule_end_datetime | date }}
+                    </td>
+                    <td class="text-base" style="min-width: 14rem">
+                        {{ item.last_run_date | date }}
+                    </td>
+                    <td class="text-base" style="min-width: 14rem">
+                        {{ item.full_name }}
+                    </td>
+                </tr>
+            </ng-template>
 
-        <ng-template pTemplate="emptymessage">
-            <tr>
-                <td colspan="11">No Audit found.</td>
-            </tr>
-        </ng-template>
-    </p-table>
+            <ng-template pTemplate="emptymessage">
+                <tr>
+                    <td colspan="18">No Audit Tests found.</td>
+                </tr>
+            </ng-template>
 
-    <p-table
-        *ngIf="auditPSelection?.length"
-        #dt2
-        [value]="auditT"
-        [rows]="5"
-        [loading]="loadingT"
-        [rowHover]="true"
-        [paginator]="true"
-        [rowsPerPageOptions]="[5, 10, 20]"
-        [showCurrentPageReport]="true"
-        [(selection)]="auditTSelection"
-        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
-        responsiveLayout="scroll"
-        [scrollable]="true"
-        [globalFilterFields]="[
-            'audit_test_uid',
-            'audit_test_desc',
-            'au_level_4_desc',
-            'audit_risk',
-            'control',
-            'banner',
-            'target_table',
-            'script_defination',
-            'script_presto',
-            'script_sql',
-            'results',
-            'notes',
-            'schedule_status',
-            'schedule_start_datetime',
-            'schedule_end_datetime',
-            'last_run_date',
-            'full_name'
-        ]"
-    >
-        <ng-template pTemplate="caption">
-            <div
-                class="table-header flex justify-content-between align-items-center"
-            >
-                <span>Audit Test</span>
-                <span class="flex justify-content-between align-items-center"
-                    ><span class="p-input-icon-left mr-5">
-                        <i class="pi pi-search"></i>
-                        <input
-                            pInputText
-                            type="text"
-                            (input)="
-                                dt.filterGlobal($event.target.value, 'contains')
-                            "
-                            placeholder="Global Search"
-                        />
-                    </span>
-                    <span class="p-input-icon-left mb-2 md:mb-0">
-                        <button
-                            [disabled]="!auditTSelection?.length > 0"
-                            title="Run Test"
-                            pButton
-                            pRipple
-                            icon="pi pi-play"
-                            class="p-button-rounded p-button-purple-500"
-                            (click)="runTest(auditTSelection)"
-                        ></button>
-                        <button
-                            title="New"
-                            pButton
-                            pRipple
-                            icon="pi pi-plus"
-                            class="p-button-rounded p-button-success ml-2"
-                            (click)="openT(null, 'new')"
-                            [disabled]="auditPSelection?.length != 1"
-                        ></button>
-                        <button
-                            [disabled]="
-                                auditTSelection?.length != 1 ||
-                                auditTH?.length != 0
-                            "
-                            title="Edit"
-                            pButton
-                            pRipple
-                            type="button"
-                            icon="pi pi-pencil"
-                            class="p-button-rounded p-button-warning ml-2"
-                            (click)="openT(auditTSelection[0], 'edit')"
-                        ></button>
-                        <button
-                            [disabled]="
-                                auditTSelection?.length != 1 ||
-                                auditTH?.length != 0
-                            "
-                            title="Delete"
-                            pButton
-                            pRipple
-                            type="button"
-                            icon="pi pi-trash"
-                            class="p-button-rounded p-button-danger ml-2"
-                            (click)="deleteTest(auditTSelection[0])"
-                        ></button></span
-                ></span>
-            </div>
-        </ng-template>
+            <ng-template pTemplate="loadingbody">
+                <tr>
+                    <td colspan="18">Loading Audit Tests data. Please wait.</td>
+                </tr>
+            </ng-template>
+        </p-table>
 
-        <ng-template pTemplate="header">
-            <tr>
-                <th style="max-width: 4rem">
-                    <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
-                </th>
-
-                <th pSortableColumn="audit_test_uid">
-                    <div class="flex align-items-center">
-                        Audit Test UID
-                        <p-sortIcon field="audit_test_uid"></p-sortIcon>
-                    </div>
-                </th>
-
-                <th pSortableColumn="audit_test_desc" style="min-width: 14rem">
-                    Audit Test Description
-                    <p-sortIcon field="audit_test_desc"></p-sortIcon>
-                </th>
-                <th pSortableColumn="au_level_4_desc" style="min-width: 14rem">
-                    Audit Universe Leve 4
-                    <p-sortIcon field="au_level_4_desc"></p-sortIcon>
-                </th>
-                <th pSortableColumn="audit_risk" style="min-width: 14rem">
-                    Risk Description
-                    <p-sortIcon field="audit_risk"></p-sortIcon>
-                </th>
-                <th pSortableColumn="control" style="min-width: 14rem">
-                    Control Description
-                    <p-sortIcon field="control"></p-sortIcon>
-                </th>
-                <th pSortableColumn="banner" style="min-width: 14rem">
-                    Banner Description
-                    <p-sortIcon field="banner"></p-sortIcon>
-                </th>
-                <th pSortableColumn="target_table" style="min-width: 14rem">
-                    Target Table<p-sortIcon field="target_table"></p-sortIcon>
-                </th>
-                <th
-                    pSortableColumn="script_defination"
-                    style="min-width: 14rem"
+        <p-table
+            *ngIf="auditTSelection?.length > 0 && auditPSelection?.length > 0"
+            #dt3
+            [value]="auditTH"
+            [rows]="5"
+            [loading]="loadingTH"
+            [rowHover]="true"
+            [paginator]="true"
+            [rowsPerPageOptions]="[5, 10, 20]"
+            [showCurrentPageReport]="true"
+            (onRowSelect)="selecthistory()"
+            (onRowUnselect)="selecthistory()"
+            [(selection)]="auditTHSelection"
+            currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+            responsiveLayout="scroll"
+            [scrollable]="true"
+            [globalFilterFields]="[
+                'audit_history_uid',
+                'audit_test_desc',
+                'au_level_4_desc',
+                'audit_risk',
+                'control',
+                'target_table',
+                'script_defination',
+                'script_presto',
+                'script_sql',
+                'results',
+                'notes',
+                'schedule_status',
+                'schedule_start_datetime',
+                'schedule_run_time',
+                'created_date',
+                'job_run_status_text',
+                'error_message',
+                'audit_run_status_text'
+            ]"
+        >
+            <ng-template pTemplate="caption">
+                <div
+                    class="table-header flex justify-content-between align-items-center"
                 >
-                    Script Defination
-                    <p-sortIcon field="script_defination"></p-sortIcon>
-                </th>
-                <th pSortableColumn="script_presto" style="min-width: 14rem">
-                    Presto Script
-                    <p-sortIcon field="script_presto"></p-sortIcon>
-                </th>
-                <th pSortableColumn="script_sql" style="min-width: 14rem">
-                    SQL Script
-                    <p-sortIcon field="script_sql"></p-sortIcon>
-                </th>
-                <th pSortableColumn="result" style="min-width: 14rem">
-                    Result
-                    <p-sortIcon field="result"></p-sortIcon>
-                </th>
-                <th pSortableColumn="notes" style="min-width: 14rem">
-                    Notes
-                    <p-sortIcon field="notes"></p-sortIcon>
-                </th>
-                <th pSortableColumn="schedule_status" style="min-width: 14rem">
-                    Schedule Status
-                    <p-sortIcon field="schedule_status"></p-sortIcon>
-                </th>
-                <th
-                    pSortableColumn="schedule_start_datetime"
-                    style="min-width: 14rem"
-                >
-                    Schedule Start Date
-                    <p-sortIcon field="schedule_start_datetime"></p-sortIcon>
-                </th>
-                <th
-                    pSortableColumn="schedule_end_datetime"
-                    style="min-width: 14rem"
-                >
-                    Schedule End Date
-                    <p-sortIcon field="schedule_end_datetime"></p-sortIcon>
-                </th>
-                <th pSortableColumn="last_run_date" style="min-width: 14rem">
-                    Last Run Date
-                    <p-sortIcon field="last_run_date"></p-sortIcon>
-                </th>
-                <th pSortableColumn="full_name" style="min-width: 14rem">
-                    Created By
-                    <p-sortIcon field="full_name"></p-sortIcon>
-                </th>
-            </tr>
-        </ng-template>
+                    <span class="text-xl">Audit Test History</span>
+                    <span
+                        class="flex justify-content-between align-items-center"
+                        ><span class="p-input-icon-left mr-5">
+                            <i class="pi pi-search"></i>
+                            <input
+                                pInputText
+                                type="text"
+                                (input)="
+                                    dt.filterGlobal(
+                                        $event.target.value,
+                                        'contains'
+                                    )
+                                "
+                                placeholder="Global Search"
+                            />
+                        </span>
+                        <span class="p-input-icon-left mb-2 md:mb-0">
+                            <button
+                                title="Refresh"
+                                pButton
+                                pRipple
+                                type="button"
+                                icon="pi pi-refresh"
+                                class="p-button-rounded p-button-secondary ml-2"
+                                (click)="refreshHistory()"
+                            ></button>
+                            &nbsp;
+                            <button
+                                title="Download Excel"
+                                pButton
+                                pRipple
+                                icon="pi pi-file-excel"
+                                class="p-button-rounded p-button-purple-500"
+                                [disabled]="auditTHSelection?.length < 1"
+                                (click)="downloadExcel()"
+                            ></button>
 
-        <ng-template pTemplate="body" let-item>
-            <tr class="p-selectable-row">
-                <td style="max-width: 4rem">
-                    <p-tableCheckbox
-                        [value]="item"
-                        (click)="selectTest(item)"
-                    ></p-tableCheckbox>
-                </td>
-                <td style="min-width: 14rem">
-                    {{ item.audit_test_uid }}
-                </td>
-                <td style="min-width: 14rem">
-                    {{ item.audit_test_desc.substring(0, 30) }}
-                </td>
-                <td style="min-width: 14rem">
-                    {{ item.au_level_4_desc }}
-                </td>
-                <td style="min-width: 14rem">
-                    {{ item.audit_risk.substring(0, 30) }}
-                </td>
-                <td style="min-width: 14rem">
-                    {{ item.control.substring(0, 30) }}
-                </td>
-                <td style="min-width: 14rem">
-                    {{ item.banner }}
-                </td>
-                <td style="min-width: 14rem">
-                    {{ item.target_table }}
-                </td>
-                <td style="min-width: 14rem">
-                    {{ item.script_defination }}
-                </td>
-                <td style="min-width: 14rem">
-                    {{ item.script_presto.substring(0, 30) }}
-                </td>
-                <td style="min-width: 14rem">
-                    {{ item.script_sql.substring(0, 30) }}
-                </td>
-                <td style="min-width: 14rem">
-                    {{ item.results ? item.results : 'N/A' }}
-                </td>
-                <td style="min-width: 14rem">
-                    {{ item.notes }}
-                </td>
-                <td style="min-width: 14rem">
-                    {{ item.schedule_status }}
-                </td>
-                <td style="min-width: 14rem">
-                    {{ item.schedule_start_datetime | date }}
-                </td>
-                <td style="min-width: 14rem">
-                    {{ item.schedule_end_datetime | date }}
-                </td>
-                <td style="min-width: 14rem">
-                    {{ item.last_run_date | date }}
-                </td>
-                <td style="min-width: 14rem">
-                    {{ item.full_name }}
-                </td>
-            </tr>
-        </ng-template>
+                            <button
+                                [disabled]="auditTHSelection?.length != 1"
+                                title="Delete"
+                                pButton
+                                pRipple
+                                type="button"
+                                icon="pi pi-trash"
+                                class="p-button-rounded p-button-danger ml-2"
+                                (click)="
+                                    deleteAuditHistroy(auditTHSelection[0])
+                                "
+                            ></button></span
+                    ></span>
+                </div>
+            </ng-template>
 
-        <ng-template pTemplate="emptymessage">
-            <tr>
-                <td colspan="18">No Audit Tests found.</td>
-            </tr>
-        </ng-template>
+            <ng-template pTemplate="header">
+                <tr>
+                    <th style="min-width: 4rem">
+                        <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+                    </th>
 
-        <ng-template pTemplate="loadingbody">
-            <tr>
-                <td colspan="18">Loading Audit Tests data. Please wait.</td>
-            </tr>
-        </ng-template>
-    </p-table>
+                    <th
+                        pSortableColumn="audit_history_uid"
+                        style="min-width: 14rem"
+                    >
+                        Audit Test History UID
+                        <p-sortIcon field="audit_history_uid"></p-sortIcon>
+                    </th>
+                    <th
+                        pSortableColumn="audit_test_desc"
+                        style="min-width: 14rem"
+                    >
+                        Audit Test Description
+                        <p-sortIcon field="audit_test_desc"></p-sortIcon>
+                    </th>
+                    <th
+                        pSortableColumn="au_level_4_desc"
+                        style="min-width: 14rem"
+                    >
+                        Audit Universe Leve 4
+                        <p-sortIcon field="au_level_4_desc"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="audit_risk" style="min-width: 14rem">
+                        Risk Description
+                        <p-sortIcon field="audit_risk"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="control" style="min-width: 14rem">
+                        Control Description
+                        <p-sortIcon field="control"></p-sortIcon>
+                    </th>
+                    <th
+                        pSortableColumn="script_defination"
+                        style="min-width: 14rem"
+                    >
+                        Script Defination
+                        <p-sortIcon field="script_defination"></p-sortIcon>
+                    </th>
+                    <th
+                        pSortableColumn="script_presto"
+                        style="min-width: 14rem"
+                    >
+                        Presto Script
+                        <p-sortIcon field="script_presto"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="script_sql" style="min-width: 14rem">
+                        SQL Script
+                        <p-sortIcon field="script_sql"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="target_table" style="min-width: 14rem">
+                        Target Table<p-sortIcon
+                            field="target_table"
+                        ></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="result" style="min-width: 14rem">
+                        Result
+                        <p-sortIcon field="result"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="notes" style="min-width: 14rem">
+                        Notes
+                        <p-sortIcon field="notes"></p-sortIcon>
+                    </th>
+                    <th
+                        pSortableColumn="schedule_status"
+                        style="min-width: 14rem"
+                    >
+                        Schedule Status
+                        <p-sortIcon field="schedule_status"></p-sortIcon>
+                    </th>
+                    <th
+                        pSortableColumn="schedule_start_datetime"
+                        style="min-width: 14rem"
+                    >
+                        Schedule Start Date
+                        <p-sortIcon
+                            field="schedule_start_datetime"
+                        ></p-sortIcon>
+                    </th>
+                    <th
+                        pSortableColumn="schedule_run_time"
+                        style="min-width: 14rem"
+                    >
+                        Schedule State Time
+                        <p-sortIcon field="schedule_run_time"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="created_date" style="min-width: 14rem">
+                        Created On
+                        <p-sortIcon field="created_date"></p-sortIcon>
+                    </th>
+                    <th
+                        pSortableColumn="job_run_status_text"
+                        style="min-width: 14rem"
+                    >
+                        Job Run Status
+                        <p-sortIcon field="job_run_status_text"></p-sortIcon>
+                    </th>
+                    <th
+                        pSortableColumn="error_message"
+                        style="min-width: 14rem"
+                    >
+                        Error
+                        <p-sortIcon field="error_message"></p-sortIcon>
+                    </th>
+                    <th
+                        pSortableColumn="audit_run_status_text"
+                        style="min-width: 14rem"
+                    >
+                        Audit Run Status
+                        <p-sortIcon field="audit_run_status_text"></p-sortIcon>
+                    </th>
+                </tr>
+            </ng-template>
 
-    <p-table
-        *ngIf="auditTSelection?.length > 0 && auditPSelection?.length > 0"
-        #dt3
-        [value]="auditTH"
-        [rows]="5"
-        [loading]="loadingTH"
-        [rowHover]="true"
-        [paginator]="true"
-        [rowsPerPageOptions]="[5, 10, 20]"
-        [showCurrentPageReport]="true"
-        (onRowSelect)="selecthistory()"
-        (onRowUnselect)="selecthistory()"
-        [(selection)]="auditTHSelection"
-        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
-        responsiveLayout="scroll"
-        [scrollable]="true"
-        [globalFilterFields]="[
-            'audit_history_uid',
-            'audit_test_desc',
-            'au_level_4_desc',
-            'audit_risk',
-            'control',
-            'target_table',
-            'script_defination',
-            'script_presto',
-            'script_sql',
-            'results',
-            'notes',
-            'schedule_status',
-            'schedule_start_datetime',
-            'schedule_run_time',
-            'created_date',
-            'job_run_status_text',
-            'error_message',
-            'audit_run_status_text'
-        ]"
-    >
-        <ng-template pTemplate="caption">
-            <div
-                class="table-header flex justify-content-between align-items-center"
-            >
-                <span>Audit Test History</span>
-                <span class="flex justify-content-between align-items-center"
-                    ><span class="p-input-icon-left mr-5">
-                        <i class="pi pi-search"></i>
-                        <input
-                            pInputText
-                            type="text"
-                            (input)="
-                                dt.filterGlobal($event.target.value, 'contains')
-                            "
-                            placeholder="Global Search"
-                        />
-                    </span>
-                    <span class="p-input-icon-left mb-2 md:mb-0">
-                        <button
-                            title="Refresh"
-                            pButton
-                            pRipple
-                            type="button"
-                            icon="pi pi-refresh"
-                            class="p-button-rounded p-button-secondary ml-2"
-                            (click)="refreshHistory()"
-                        ></button>
-                        &nbsp;
-                        <button
-                            title="Download Excel"
-                            pButton
-                            pRipple
-                            icon="pi pi-file-excel"
-                            class="p-button-rounded p-button-purple-500"
-                            [disabled]="auditTHSelection?.length < 1"
-                            (click)="downloadExcel()"
-                        ></button>
-
-                        <button
-                            [disabled]="auditTHSelection?.length != 1"
-                            title="Delete"
-                            pButton
-                            pRipple
-                            type="button"
-                            icon="pi pi-trash"
-                            class="p-button-rounded p-button-danger ml-2"
-                            (click)="deleteAuditHistroy(auditTHSelection[0])"
-                        ></button></span
-                ></span>
-            </div>
-        </ng-template>
-
-        <ng-template pTemplate="header">
-            <tr>
-                <th style="min-width: 4rem">
-                    <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
-                </th>
-
-                <th
-                    pSortableColumn="audit_history_uid"
-                    style="min-width: 14rem"
-                >
-                    Audit Test History UID
-                    <p-sortIcon field="audit_history_uid"></p-sortIcon>
-                </th>
-                <th pSortableColumn="audit_test_desc" style="min-width: 14rem">
-                    Audit Test Description
-                    <p-sortIcon field="audit_test_desc"></p-sortIcon>
-                </th>
-                <th pSortableColumn="au_level_4_desc" style="min-width: 14rem">
-                    Audit Universe Leve 4
-                    <p-sortIcon field="au_level_4_desc"></p-sortIcon>
-                </th>
-                <th pSortableColumn="audit_risk" style="min-width: 14rem">
-                    Risk Description
-                    <p-sortIcon field="audit_risk"></p-sortIcon>
-                </th>
-                <th pSortableColumn="control" style="min-width: 14rem">
-                    Control Description
-                    <p-sortIcon field="control"></p-sortIcon>
-                </th>
-                <th
-                    pSortableColumn="script_defination"
-                    style="min-width: 14rem"
-                >
-                    Script Defination
-                    <p-sortIcon field="script_defination"></p-sortIcon>
-                </th>
-                <th pSortableColumn="script_presto" style="min-width: 14rem">
-                    Presto Script
-                    <p-sortIcon field="script_presto"></p-sortIcon>
-                </th>
-                <th pSortableColumn="script_sql" style="min-width: 14rem">
-                    SQL Script
-                    <p-sortIcon field="script_sql"></p-sortIcon>
-                </th>
-                <th pSortableColumn="target_table" style="min-width: 14rem">
-                    Target Table<p-sortIcon field="target_table"></p-sortIcon>
-                </th>
-                <th pSortableColumn="result" style="min-width: 14rem">
-                    Result
-                    <p-sortIcon field="result"></p-sortIcon>
-                </th>
-                <th pSortableColumn="notes" style="min-width: 14rem">
-                    Notes
-                    <p-sortIcon field="notes"></p-sortIcon>
-                </th>
-                <th pSortableColumn="schedule_status" style="min-width: 14rem">
-                    Schedule Status
-                    <p-sortIcon field="schedule_status"></p-sortIcon>
-                </th>
-                <th
-                    pSortableColumn="schedule_start_datetime"
-                    style="min-width: 14rem"
-                >
-                    Schedule Start Date
-                    <p-sortIcon field="schedule_start_datetime"></p-sortIcon>
-                </th>
-                <th
-                    pSortableColumn="schedule_run_time"
-                    style="min-width: 14rem"
-                >
-                    Schedule State Time
-                    <p-sortIcon field="schedule_run_time"></p-sortIcon>
-                </th>
-                <th pSortableColumn="created_date" style="min-width: 14rem">
-                    Created On
-                    <p-sortIcon field="created_date"></p-sortIcon>
-                </th>
-                <th
-                    pSortableColumn="job_run_status_text"
-                    style="min-width: 14rem"
-                >
-                    Job Run Status
-                    <p-sortIcon field="job_run_status_text"></p-sortIcon>
-                </th>
-                <th pSortableColumn="error_message" style="min-width: 14rem">
-                    Error
-                    <p-sortIcon field="error_message"></p-sortIcon>
-                </th>
-                <th
-                    pSortableColumn="audit_run_status_text"
-                    style="min-width: 14rem"
-                >
-                    Audit Run Status
-                    <p-sortIcon field="audit_run_status_text"></p-sortIcon>
-                </th>
-            </tr>
-        </ng-template>
-
-        <ng-template pTemplate="body" let-item>
-            <tr class="p-selectable-row">
-                <td style="max-width: 4rem">
-                    <p-tableCheckbox
-                        [value]="item"
-                        (click)="editHistroy(item)"
-                    ></p-tableCheckbox>
-                </td>
-                <td style="min-width: 14rem">
-                    {{ item.audit_history_uid }}
-                </td>
-                <td style="min-width: 14rem">
-                    {{ item.audit_test_desc.substring(0, 30) }}
-                </td>
-                <td style="min-width: 14rem">
-                    {{ item.au_level_4_desc }}
-                </td>
-                <td style="min-width: 14rem">
-                    {{ item.audit_risk.substring(0, 30) }}
-                </td>
-                <td style="min-width: 14rem">
-                    {{ item.control.substring(0, 30) }}
-                </td>
-                <td style="min-width: 14rem">
-                    {{ item.script_defination }}
-                </td>
-                <td style="min-width: 14rem">
-                    {{ item.script_presto.substring(0, 30) }}
-                </td>
-                <td style="min-width: 14rem">
-                    {{ item.script_sql.substring(0, 30) }}
-                </td>
-                <td style="min-width: 14rem">
-                    {{ item.target_table }}
-                </td>
-                <td style="min-width: 14rem">
-                    {{ item.results ? item.results : 'N/A' }}
-                </td>
-                <td style="min-width: 12rem">
-                    {{ item.notes }}
-                </td>
-                <td style="min-width: 12rem">
-                    {{ item.schedule_status }}
-                </td>
-                <td style="min-width: 12rem">
-                    {{ item.schedule_start_datetime | date }}
-                </td>
-                <td style="min-width: 12rem">
-                    {{ getTwoDigit(item.schedule_run_time) }}
-                </td>
-                <td style="min-width: 12rem">
-                    {{ item.created_date | date : 'medium' }}
-                </td>
-                <td style="min-width: 12rem">
-                    {{ item.job_run_status_text | titlecase }}
-                </td>
-                <td style="min-width: 12rem">
-                    {{ item.error_message | titlecase }}
-                </td>
-                <td style="min-width: 12rem">
-                    {{ item.audit_run_status_text | titlecase }}
-                </td>
-            </tr>
-        </ng-template>
-    </p-table>
+            <ng-template pTemplate="body" let-item>
+                <tr class="p-selectable-row">
+                    <td class="text-base" style="max-width: 4rem">
+                        <p-tableCheckbox
+                            [value]="item"
+                            (click)="editHistroy(item)"
+                        ></p-tableCheckbox>
+                    </td>
+                    <td class="text-base" style="min-width: 14rem">
+                        {{ item.audit_history_uid }}
+                    </td>
+                    <td class="text-base" style="min-width: 14rem">
+                        {{ item.audit_test_desc.substring(0, 30) }}
+                    </td>
+                    <td class="text-base" style="min-width: 14rem">
+                        {{ item.au_level_4_desc }}
+                    </td>
+                    <td class="text-base" style="min-width: 14rem">
+                        {{ item.audit_risk.substring(0, 30) }}
+                    </td>
+                    <td class="text-base" style="min-width: 14rem">
+                        {{ item.control.substring(0, 30) }}
+                    </td>
+                    <td class="text-base" style="min-width: 14rem">
+                        {{ item.script_defination }}
+                    </td>
+                    <td class="text-base" style="min-width: 14rem">
+                        {{ item.script_presto.substring(0, 30) }}
+                    </td>
+                    <td class="text-base" style="min-width: 14rem">
+                        {{ item.script_sql.substring(0, 30) }}
+                    </td>
+                    <td class="text-base" style="min-width: 14rem">
+                        {{ item.target_table }}
+                    </td>
+                    <td class="text-base" style="min-width: 14rem">
+                        {{ item.results ? item.results : 'N/A' }}
+                    </td>
+                    <td class="text-base" style="min-width: 12rem">
+                        {{ item.notes }}
+                    </td>
+                    <td class="text-base" style="min-width: 12rem">
+                        {{ item.schedule_status }}
+                    </td>
+                    <td class="text-base" style="min-width: 12rem">
+                        {{ item.schedule_start_datetime | date }}
+                    </td>
+                    <td class="text-base" style="min-width: 12rem">
+                        {{ getTwoDigit(item.schedule_run_time) }}
+                    </td>
+                    <td class="text-base" style="min-width: 12rem">
+                        {{ item.created_date | date : 'medium' }}
+                    </td>
+                    <td class="text-base" style="min-width: 12rem">
+                        {{ item.job_run_status_text | titlecase }}
+                    </td>
+                    <td class="text-base" style="min-width: 12rem">
+                        {{ item.error_message | titlecase }}
+                    </td>
+                    <td class="text-base" style="min-width: 12rem">
+                        {{ item.audit_run_status_text | titlecase }}
+                    </td>
+                </tr>
+            </ng-template>
+        </p-table>
+    </div>
 
     <p-dialog
         [(visible)]="auditProgramDialog"
@@ -3441,7 +3504,10 @@
                         <div>
                             <table class="selectedVal">
                                 <tr>
-                                    <td style="width: 20% !important">
+                                    <td
+                                        class="text-base"
+                                        style="width: 20% !important"
+                                    >
                                         Audit Universe L4
                                     </td>
                                     <td

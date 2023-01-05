@@ -12,7 +12,7 @@
         currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
         responsiveLayout="scroll"
         [scrollable]="true"
-        scrollHeight="calc(100vh - 390px)"
+        scrollHeight="calc(100vh - 468px)"
         [filterDelay]="0"
         [globalFilterFields]="[
             'au_level_1_uid',
@@ -130,19 +130,19 @@
         </ng-template>
         <ng-template pTemplate="body" let-aulevel1>
             <tr>
-                <td style="max-width: 3rem">
+                <td class="text-base" style="max-width: 3rem">
                     <p-tableCheckbox
                         (click)="getSelection(aulevel1)"
                         [value]="aulevel1"
                     ></p-tableCheckbox>
                 </td>
-                <td style="min-width: 12rem">
+                <td class="text-base" style="min-width: 12rem">
                     {{ aulevel1.au_level_1_uid }}
                 </td>
-                <td style="min-width: 12rem">
+                <td class="text-base" style="min-width: 12rem">
                     {{ aulevel1.au_level_1_desc }}
                 </td>
-                <td style="min-width: 12rem">
+                <td class="text-base" style="min-width: 12rem">
                     {{ aulevel1.section_no }}
                 </td>
 
@@ -189,7 +189,7 @@
         title="Add"
         type="button"
         icon="pi pi-plus"
-        class="p-button-rounded fixed add-banner-btn"
+        class="p-button-rounded p-button-lg fixed add-banner-btn"
         (click)="open()"
     ></button>
 
