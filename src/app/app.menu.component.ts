@@ -62,7 +62,7 @@ export class AppMenuComponent implements OnInit {
                     //     routerLink: ['/pages/banners-detail'],
                     // },
                     {
-                        label: 'Organisation',
+                        label: 'Department',
                         icon: 'pi pi-fw pi-globe',
                         routerLink: ['/pages/banner'],
                     },
@@ -71,14 +71,14 @@ export class AppMenuComponent implements OnInit {
                         icon: 'pi pi-fw pi-user-edit',
                         items: [
                             {
-                                label: 'Read',
-                                icon: 'pi pi-fw pi-book',
-                                routerLink: ['/pages/audit-universe-all'],
-                            },
-                            {
                                 label: 'Create',
                                 icon: 'pi pi-fw pi-pencil',
                                 routerLink: ['/pages/audit-universe'],
+                            },
+                            {
+                                label: 'Read',
+                                icon: 'pi pi-fw pi-book',
+                                routerLink: ['/pages/audit-universe-all'],
                             },
                         ],
                     },

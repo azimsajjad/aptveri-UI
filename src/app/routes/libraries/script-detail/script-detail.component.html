@@ -874,7 +874,7 @@
 
                     <th pSortableColumn="banner_desc" style="min-width: 14rem">
                         <div class="flex align-items-center">
-                            Banner Description
+                            Department Description
                             <p-sortIcon field="banner_desc"></p-sortIcon>
                         </div>
                     </th>
@@ -985,7 +985,12 @@
                         </div>
                     </th>
 
-                    <th pSortableColumn="action" style="min-width: 14rem">
+                    <th
+                        pSortableColumn="action"
+                        style="width: 200px"
+                        pFrozenColumn
+                        alignFrozen="right"
+                    >
                         <div
                             class="flex justify-content-between align-items-center"
                         >
@@ -1025,7 +1030,13 @@
                     <td class="text-base">{{ item.output_only }}</td>
                     <td class="text-base">{{ item.role_access }}</td>
                     <td class="text-base">{{ item.record_status }}</td>
-                    <td class="text-base">
+                    <td
+                        class="text-base"
+                        style="width: 200px"
+                        pFrozenColumn
+                        class="font-bold"
+                        alignFrozen="right"
+                    >
                         <span class="p-column-title">Actions</span>
                         <span
                             ><button
@@ -1052,7 +1063,7 @@
                                 title="Delete"
                                 type="button"
                                 icon="pi pi-trash"
-                                class="p-button-rounded p-button-danger ml-2"
+                                class="p-button-rounded p-button-info ml-2"
                                 (click)="deleteScript(item)"
                             ></button
                         ></span>
@@ -1080,7 +1091,7 @@
         title="Add"
         type="button"
         icon="pi pi-plus"
-        class="p-button-rounded p-button-lg fixed add-banner-btn"
+        class="p-button-rounded p-button-lg fixed add-details"
         (click)="openNew(null, 'new')"
     ></button>
 
@@ -1127,7 +1138,9 @@
                             />
                         </div>
                         <div class="field">
-                            <label for="au_id">Banner UID <sup>*</sup></label>
+                            <label for="au_id"
+                                >Department UID <sup>*</sup></label
+                            >
                             <input
                                 type="text"
                                 pInputText

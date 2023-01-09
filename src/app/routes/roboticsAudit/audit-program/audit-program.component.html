@@ -2289,7 +2289,7 @@
                                 pButton
                                 pRipple
                                 icon="pi pi-play"
-                                class="p-button-rounded p-button-purple-500"
+                                class="p-button-rounded p-button-info"
                                 (click)="runProgram()"
                             ></button>
                             <button
@@ -2297,7 +2297,7 @@
                                 pButton
                                 pRipple
                                 icon="pi pi-plus"
-                                class="p-button-rounded p-button-success ml-2"
+                                class="p-button-rounded p-button-info ml-2"
                                 (click)="openP(null, 'new')"
                             ></button>
                             <button
@@ -2306,7 +2306,7 @@
                                 pButton
                                 pRipple
                                 icon="pi pi-pencil"
-                                class="p-button-rounded p-button-warning ml-2"
+                                class="p-button-rounded p-button-info ml-2"
                                 (click)="openP(auditPSelection[0], 'edit')"
                             ></button>
                             <button
@@ -2315,7 +2315,7 @@
                                 pButton
                                 pRipple
                                 icon="pi pi-trash"
-                                class="p-button-rounded p-button-danger ml-2"
+                                class="p-button-rounded p-button-info ml-2"
                                 (click)="deleteProgram(auditPSelection[0])"
                             ></button></span
                     ></span>
@@ -2507,7 +2507,7 @@
                                 pButton
                                 pRipple
                                 icon="pi pi-play"
-                                class="p-button-rounded p-button-purple-500"
+                                class="p-button-rounded p-button-info"
                                 (click)="runTest(auditTSelection)"
                             ></button>
                             <button
@@ -2515,7 +2515,7 @@
                                 pButton
                                 pRipple
                                 icon="pi pi-plus"
-                                class="p-button-rounded p-button-success ml-2"
+                                class="p-button-rounded p-button-info ml-2"
                                 (click)="openT(null, 'new')"
                                 [disabled]="auditPSelection?.length != 1"
                             ></button>
@@ -2529,7 +2529,7 @@
                                 pRipple
                                 type="button"
                                 icon="pi pi-pencil"
-                                class="p-button-rounded p-button-warning ml-2"
+                                class="p-button-rounded p-button-info ml-2"
                                 (click)="openT(auditTSelection[0], 'edit')"
                             ></button>
                             <button
@@ -2542,7 +2542,7 @@
                                 pRipple
                                 type="button"
                                 icon="pi pi-trash"
-                                class="p-button-rounded p-button-danger ml-2"
+                                class="p-button-rounded p-button-info ml-2"
                                 (click)="deleteTest(auditTSelection[0])"
                             ></button></span
                     ></span>
@@ -2573,7 +2573,7 @@
                         pSortableColumn="au_level_4_desc"
                         style="min-width: 14rem"
                     >
-                        Audit Universe Leve 4
+                        Audit Universe Level 4
                         <p-sortIcon field="au_level_4_desc"></p-sortIcon>
                     </th>
                     <th pSortableColumn="audit_risk" style="min-width: 14rem">
@@ -2585,7 +2585,7 @@
                         <p-sortIcon field="control"></p-sortIcon>
                     </th>
                     <th pSortableColumn="banner" style="min-width: 14rem">
-                        Banner Description
+                        Department Description
                         <p-sortIcon field="banner"></p-sortIcon>
                     </th>
                     <th pSortableColumn="target_table" style="min-width: 14rem">
@@ -2796,7 +2796,7 @@
                                 pRipple
                                 type="button"
                                 icon="pi pi-refresh"
-                                class="p-button-rounded p-button-secondary ml-2"
+                                class="p-button-rounded p-button-info ml-2"
                                 (click)="refreshHistory()"
                             ></button>
                             &nbsp;
@@ -2805,7 +2805,7 @@
                                 pButton
                                 pRipple
                                 icon="pi pi-file-excel"
-                                class="p-button-rounded p-button-purple-500"
+                                class="p-button-rounded p-button-info"
                                 [disabled]="auditTHSelection?.length < 1"
                                 (click)="downloadExcel()"
                             ></button>
@@ -2817,7 +2817,7 @@
                                 pRipple
                                 type="button"
                                 icon="pi pi-trash"
-                                class="p-button-rounded p-button-danger ml-2"
+                                class="p-button-rounded p-button-info ml-2"
                                 (click)="
                                     deleteAuditHistroy(auditTHSelection[0])
                                 "
@@ -2850,7 +2850,7 @@
                         pSortableColumn="au_level_4_desc"
                         style="min-width: 14rem"
                     >
-                        Audit Universe Leve 4
+                        Audit Universe Level 4
                         <p-sortIcon field="au_level_4_desc"></p-sortIcon>
                     </th>
                     <th pSortableColumn="audit_risk" style="min-width: 14rem">
@@ -3219,7 +3219,7 @@
                                 <div class="col align-self-center">
                                     <div class="field">
                                         <label for="au_id"
-                                            >Banner UID <sup>*</sup></label
+                                            >Department UID <sup>*</sup></label
                                         >
                                         <p-autoComplete
                                             appendTo="body"

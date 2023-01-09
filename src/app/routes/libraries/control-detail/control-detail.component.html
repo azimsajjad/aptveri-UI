@@ -435,7 +435,7 @@
                 </div>
 
                 <div class="field col-12 md:col-4">
-                    <label for="banner_uid">Banner UID <sup>*</sup></label>
+                    <label for="banner_uid">Department UID <sup>*</sup></label>
                     <!-- <input id="banner_uid" pInputText [(ngModel)]="control.banner_uid" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !control.banner_uid}"/>
         <small class="ng-dirty ng-invalid" *ngIf="submitted && !control.banner_uid">banner_uid is required.</small> -->
 
@@ -472,7 +472,7 @@
                             form.controls.bannerdesc.invalid &&
                             form.controls.bannerdesc.dirty
                         "
-                        >Banner UID is required.</small
+                        >Department UID is required.</small
                     >
                 </div>
                 <div class="field col-12 md:col-4">
@@ -943,7 +943,7 @@
 
                     <th pSortableColumn="banner_uid" style="min-width: 14rem">
                         <div class="flex align-items-center">
-                            Banner UID
+                            Department UID
                             <p-sortIcon field="banner_uid"></p-sortIcon>
                         </div>
                     </th>
@@ -1011,7 +1011,12 @@
                         </div>
                     </th>
 
-                    <th pSortableColumn="action" style="min-width: 14rem">
+                    <th
+                        style="width: 120px"
+                        class="justify-content-center"
+                        pFrozenColumn
+                        alignFrozen="right"
+                    >
                         <div
                             class="flex justify-content-between align-items-center"
                         >
@@ -1023,55 +1028,64 @@
 
             <ng-template pTemplate="body" let-item>
                 <tr>
-                    <td class="text-base" pFrozenColumn>
+                    <td
+                        class="text-base"
+                        pFrozenColumn
+                        style="min-width: 14rem"
+                    >
                         {{ item.control_uid }}
                     </td>
 
-                    <td class="text-base">
+                    <td class="text-base" style="min-width: 14rem">
                         {{ item.aulftxt }}
                     </td>
 
-                    <td class="text-base">
+                    <td class="text-base" style="min-width: 14rem">
                         {{ item.bannertxt }}
                     </td>
 
-                    <td class="text-base">
+                    <td class="text-base" style="min-width: 14rem">
                         {{ item.risktxt }}
                     </td>
 
-                    <td class="text-base">
+                    <td class="text-base" style="min-width: 14rem">
                         {{ item.control }}
                     </td>
 
-                    <td class="text-base">
+                    <td class="text-base" style="min-width: 14rem">
                         {{ item.comments }}
                     </td>
 
-                    <td class="text-base">
+                    <td class="text-base" style="min-width: 14rem">
                         {{ item.controltxt }}
                     </td>
 
-                    <td class="text-base">
+                    <td class="text-base" style="min-width: 14rem">
                         {{ item.frequencytxt }}
                     </td>
 
-                    <td class="text-base">
+                    <td class="text-base" style="min-width: 14rem">
                         {{ item.autotxt }}
                     </td>
 
-                    <td class="text-base">
+                    <td class="text-base" style="min-width: 14rem">
                         {{ item.categorytxt }}
                     </td>
 
-                    <td class="text-base">
+                    <td class="text-base" style="min-width: 14rem">
                         {{ item.asstxt }}
                     </td>
 
-                    <td class="text-base">
+                    <td class="text-base" style="min-width: 14rem">
                         {{ item.keytxt }}
                     </td>
 
-                    <td class="text-base">
+                    <td
+                        style="width: 120px"
+                        pFrozenColumn
+                        class="font-bold"
+                        alignFrozen="right"
+                    >
                         <span
                             ><button
                                 pButton
@@ -1088,7 +1102,7 @@
                                 title="Delete"
                                 type="button"
                                 icon="pi pi-trash"
-                                class="p-button-rounded p-button-danger ml-2"
+                                class="p-button-rounded p-button-info ml-2"
                                 (click)="deleteSelectedcontrols(item)"
                             ></button
                         ></span>
@@ -1116,7 +1130,7 @@
         title="Add"
         type="button"
         icon="pi pi-plus"
-        class="p-button-rounded p-button-lg fixed add-banner-btn"
+        class="p-button-rounded p-button-lg fixed add-details"
         (click)="openNew()"
     ></button>
 </div>
