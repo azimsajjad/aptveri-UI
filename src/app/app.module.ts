@@ -95,7 +95,6 @@ export function tokenGetter() {
         AppMenuitemComponent,
         DashboardComponent,
         MessagesComponent,
-        MessagesComponent,
         EmptyComponent,
         LoginComponent,
         ErrorComponent,

@@ -31,6 +31,13 @@ export class BannerComponent implements OnInit {
 
     ngOnInit() {
         this.getBanner();
+
+        this.messageService.add({
+            severity: 'error',
+            summary: 'ERROR!!',
+            detail: 'Something Went Wrong !!',
+            life: 3000,
+        });
     }
 
     getBanner() {
@@ -52,8 +59,6 @@ export class BannerComponent implements OnInit {
                 })
             )
             .subscribe((res) => {
-                console.log(res);
-
                 res.map((res) => {
                     res.record_status == 0
                         ? (res.record_status = false)

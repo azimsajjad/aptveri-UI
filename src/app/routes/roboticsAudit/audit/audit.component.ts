@@ -254,8 +254,10 @@ export class AuditComponent implements OnInit {
                     }
                 });
         } else {
-            this.auditForm.value['created_by'] =
-                this.selectedaudits[0]['created_by'];
+            console.log(this.auditForm.value);
+
+            // this.auditForm.value['created_by'] =
+            //     this.selectedaudits[0]['created_by'];
 
             this.auditService
                 .sendPutAuditRequest(
@@ -645,6 +647,7 @@ export class AuditComponent implements OnInit {
                       })
                     : '0',
             ],
+            created_by: audit ? audit.created_by : null,
         });
         console.log(this.auditForm.value);
     }
@@ -880,9 +883,9 @@ export class AuditComponent implements OnInit {
 
     getBannerId(val: String) {
         let x = this.AuditBanner.filter((ele) => {
-            return ele.banner_uid + ' - ' + ele.banner == val;
+            return ele.department_uid + ' - ' + ele.department == val;
         })[0];
-        return x.banner_id;
+        return x.department_id;
     }
 
     getAuditUniverseSelection(id: number) {
