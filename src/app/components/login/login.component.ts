@@ -292,7 +292,7 @@ export const retryWaitMilliSeconds = 1000;
 })
 export class LoginComponent implements OnInit {
     invalidLogin: boolean;
-    button = 'Submit';
+    button = 'SUBMIT';
     isLoading = false;
     credentials: LoginModel = { username: '', password: '' };
     private REST_API_SERVER = environment.api_prefix;

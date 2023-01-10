@@ -107,25 +107,54 @@
             </div>
         </div>
     </div>
-</section> -->
+</section> bg-green-100-->
 
 <div class="table1 grid flex align-items-start flex-wrap card-container">
     <div
-        class="hidden md:flex md:col-6 align-items-center justify-content-center bg-green-100"
-        style="min-height: 100vh"
+        class="hidden md:flex md:col-6 align-items-center justify-content-center"
+        style="min-height: 100vh;"
     >
-        <span class="text-4xl">Mazars Logo</span>
+        <span style="position: absolute; top: 40%;"
+            >A Complete Auditing Solutions</span
+        >
+
+        <img
+            src="../assets/layout/images/ADL-black.png"
+            style="height: 6rem !important; position: relative;"
+            alt="aptusdatalabs"
+        />
+
+        <img
+            class="h-12rem"
+            src="../assets/layout/images/iRAA_PNG.png"
+            style="position: absolute; top: 25%;"
+            alt="iRAA"
+        />
+
+        <!-- <span class="text-4xl">Mazars Logo</span> -->
     </div>
     <div
         class="col-12 md:col-6 flex align-items-center justify-content-center"
-        style="min-height: 100vh"
+        style="min-height: 100vh;"
     >
-        <div class="card p-8">
+        <div
+            class="card p-5"
+            style="
+                box-shadow: 0px 2px 1px -1px rgb(0 0 0 / 20%),
+                    0px 1px 1px 0px rgb(0 0 0 / 14%),
+                    0px 1px 3px 0px rgb(0 0 0 / 12%);
+                border-radius: 4px !important;
+                min-height: 22rem !important ;
+                padding: 56px;
+                flex-direction: column;
+                display: flex;
+            "
+        >
             <div class="text-center">
                 <div class="text-900 text-3xl font-medium mb-3">Log In</div>
                 <span class="text-600 font-medium">Welcome Back!</span>
             </div>
-
+            <br />
             <div>
                 <form
                     [formGroup]="registerForm"
@@ -133,34 +162,36 @@
                     (ngSubmit)="login(loginForm)"
                 >
                     <div>
-                        <label
+                        <!-- <label
                             for="username"
                             class="block text-900 text-xl font-medium mb-2"
                             >Username</label
-                        ><input
+                        > -->
+                        <input
                             id="username"
                             type="text"
-                            placeholder="username"
+                            placeholder="Username"
                             [(ngModel)]="credentials.username"
                             formControlName="username"
                             class="p-inputtext p-component p-element md:w-30rem mb-5"
-                            style="padding: 1rem"
+                            style="padding: 1rem;"
                         />
                     </div>
 
                     <div class="">
-                        <label
+                        <!-- <label
                             for="password"
                             class="block text-900 font-medium text-xl mb-2"
                             >Password</label
-                        ><input
+                        > -->
+                        <input
                             type="password"
                             class="form-control"
                             required
                             id="password"
                             name="password"
                             [(ngModel)]="credentials.password"
-                            placeholder="password"
+                            placeholder="Password"
                             formControlName="password"
                             class="p-inputtext p-component p-element md:w-30rem mb-5"
                             [ngClass]="{
@@ -169,31 +200,45 @@
                         />
                     </div>
 
-                    <div
-                        class="flex align-items-center justify-content-between mb-5 gap-5"
-                    >
-                        <a
-                            class="font-medium no-underline ml-2 text-right cursor-pointer"
-                            >Forgot password?</a
-                        >
-                    </div>
-
                     <div class="text-center">
                         <button
                             class="p-element p-3 text-xl p-button p-component"
                             #submitButton
                             [disabled]="isLoading"
-                            style="height: 55px"
+                            style="
+                                height: 40px;
+                                width: 100%;
+                                display: flex;
+                                align-items: center;
+                                justify-content: center;
+                            "
                         >
-                            <i
+                            <!-- <i
                                 class="pi"
                                 [ngClass]="{
                                     'pi-spin pi-spinner': isLoading,
                                     'pi-check': !isLoading
                                 }"
                             ></i>
+                            &nbsp; -->
                             {{ button }}
                         </button>
+                    </div>
+                    <div
+                        style="
+                            padding-top: 1rem;
+
+                            font-weight: 500;
+                            line-height: 1.57;
+                            letter-spacing: 0.00714em;
+                            color: #005baa;
+                        "
+                        class="flex align-items-center justify-content-between mb-5 gap-5"
+                    >
+                        <a
+                            class="font-medium no-underline ml-2 text-right cursor-pointer"
+                            >Forgot password?</a
+                        >
                     </div>
                 </form>
             </div>

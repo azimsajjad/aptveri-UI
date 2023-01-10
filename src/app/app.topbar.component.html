@@ -10,7 +10,7 @@
         <img
             class="h-10rem"
             src="../assets/layout/images/iRAA_PNG.png"
-            alt=""
+            alt="iRAA"
         />
     </a>
 
@@ -23,17 +23,31 @@
     </a>
 
     <br />
-
     <div
         class="layout-topbar-menu"
         [ngClass]="{
             'layout-topbar-menu-mobile-active': appMain.topMenuActive
         }"
     >
-        <ul *ngIf="isUserAuthenticated()" style="list-style-type: none">
+        <img
+            src="../assets/layout/images/ADL-black.png"
+            style="height: 2.9rem !important;"
+            alt="aptusdatalabs"
+        />
+
+        <ul
+            *ngIf="isUserAuthenticated()"
+            style="list-style-type: none; padding-left: 0.5rem !important;"
+        >
             <li>
                 <i class="pi pi-user"
-                    >&nbsp;<span>{{ emailid | titlecase }}</span></i
+                    >&nbsp;<span
+                        style="
+                            padding-right: 0px !important;
+                            font-weight: bold;
+                        "
+                        >{{ emailid | titlecase }}</span
+                    ></i
                 >
             </li>
         </ul>
@@ -42,9 +56,14 @@
             class="p-link layout-topbar-button"
             *ngIf="isUserAuthenticated()"
             (click)="logOut()"
+            style="padding: -10px !important;"
             ><i
                 class="pi pi-sign-out mb-1"
-                style="font-size: 14px; margin-top: 6px"
+                style="
+                    font-size: 14px;
+                    margin-top: 6px;
+                    padding-left: -10px !important;
+                "
             ></i
         ></a>
     </div>

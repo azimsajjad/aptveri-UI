@@ -33,14 +33,14 @@
 
         &.layout-static {
             .layout-main-container {
-                margin-left: 300px;
+                margin-left: 200px;
             }
+                          &.layout-static-sidebar-inactive {
+                              .layout-sidebar {
+                                  transform: translateX(-100%);
+                                  left: 0;
+                              }
 
-            &.layout-static-inactive {
-                .layout-sidebar {
-                    transform: translateX(-100%);
-                    left: 0;
-                }
 
                 .layout-main-container {
                     margin-left: 0;
