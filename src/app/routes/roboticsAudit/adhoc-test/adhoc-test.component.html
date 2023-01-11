@@ -25,7 +25,7 @@
                         pButton
                         pRipple
                         icon="pi pi-play"
-                        class="p-button-rounded p-button-purple-500"
+                        class="p-button-rounded p-button-info"
                         (click)="runAdhoc(selectedAdhoc)"
                         [disabled]="
                             selectedAdhoc?.length == 0 ||
@@ -37,7 +37,7 @@
                         pButton
                         pRipple
                         icon="pi pi-plus"
-                        class="p-button-rounded p-button-success ml-2"
+                        class="p-button-rounded p-button-info ml-2"
                         (click)="open()"
                     ></button>
                     <button
@@ -46,7 +46,7 @@
                         pRipple
                         type="button"
                         icon="pi pi-trash"
-                        class="p-button-rounded p-button-danger ml-2"
+                        class="p-button-rounded p-button-info ml-2"
                         (click)="deleteAdhoc(selectedAdhoc[0])"
                         [disabled]="selectedAdhoc?.length != 1"
                     ></button>

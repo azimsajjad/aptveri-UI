@@ -773,6 +773,7 @@
 <div id="table1">
     <div class="card">
         <p-table
+            *ngIf="showTable"
             #dt
             [value]="script"
             [rows]="10"
@@ -1084,9 +1085,247 @@
                 </tr>
             </ng-template>
         </p-table>
+
+        <div *ngIf="!showTable">
+            <form [formGroup]="scriptForm">
+                <div class="grid formgrid">
+                    <div
+                        class="col-12 mb-2 lg:col-4 lg:mb-0 p-dialog-content div-1"
+                    >
+                        <div class="field">
+                            <label for="control_uid"
+                                >Control UID <sup>*</sup></label
+                            >
+                            <p-autoComplete
+                                id="control_uid"
+                                [style]="{ width: '100%' }"
+                                placeholder="Search"
+                                [dropdown]="true"
+                                [multiple]="false"
+                                [suggestions]="filteredControl"
+                                (completeMethod)="filterControl($event)"
+                                formControlName="control_id"
+                                (onSelect)="selectControl($event)"
+                            ></p-autoComplete>
+                        </div>
+                        <div class="field">
+                            <label for="au_id"
+                                >AU LEVEL4 UID <sup>*</sup></label
+                            >
+                            <input
+                                id="au_id"
+                                class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"
+                                type="text"
+                                pInputText
+                                formControlName="au_id"
+                                [readonly]="true"
+                            />
+                        </div>
+                        <div class="field">
+                            <label for="banner_id"
+                                >Department UID <sup>*</sup></label
+                            >
+                            <input
+                                id="banner_id"
+                                type="text"
+                                class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"
+                                pInputText
+                                formControlName="banner_id"
+                                [readonly]="true"
+                            />
+                        </div>
+                        <div class="field">
+                            <label for="risk_id">Risk UID <sup>*</sup></label>
+                            <input
+                                id="risk_id"
+                                type="text"
+                                class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"
+                                pInputText
+                                formControlName="risk_id"
+                                [readonly]="true"
+                                (click)="
+                                    showScript(
+                                        scriptForm.get('risk_id').value,
+                                        'Risk UID'
+                                    )
+                                "
+                                title="Click to view full detail"
+                            />
+                        </div>
+                        <div class="field">
+                            <label>Schedule Day</label>
+                            <p-autoComplete
+                                appendTo="body"
+                                [style]="{ width: '100%' }"
+                                placeholder="Search"
+                                [dropdown]="true"
+                                [multiple]="false"
+                                [suggestions]="filteredDay"
+                                (completeMethod)="filterDay($event)"
+                                formControlName="schedule_day"
+                            ></p-autoComplete>
+                        </div>
+                        <div class="field">
+                            <label
+                                for="
+                                    role_access"
+                                >Role Access</label
+                            >
+                            <p-multiSelect
+                                appendTo="body"
+                                [style]="{ width: '100%' }"
+                                [options]="profiles"
+                                optionLabel="role"
+                                optionValue="id"
+                                display="chip"
+                                formControlName="role_access"
+                            ></p-multiSelect>
+                        </div>
+                    </div>
+                    <div class="col-12 mb-2 lg:col-8 lg:mb-0">
+                        <div class="grid formgrid">
+                            <div class="field col-6">
+                                <label for="script_presto"
+                                    >Federated Script</label
+                                >
+                                <textarea
+                                    rows="18"
+                                    cols="50"
+                                    class="p-inputtextarea p-inputtext p-component p-element"
+                                    formControlName="script_presto"
+                                    (click)="
+                                        getText(
+                                            scriptForm.get('script_presto')
+                                                .value,
+                                            scriptForm,
+                                            'script_presto',
+                                            'Federated Script'
+                                        )
+                                    "
+                                ></textarea>
+                            </div>
+                            <div class="field col-6">
+                                <label for="sql_script">SQL Script</label>
+                                <textarea
+                                    rows="18"
+                                    cols="50"
+                                    class="p-inputtextarea p-inputtext p-component p-element"
+                                    formControlName="sql_script"
+                                    (click)="
+                                        getText(
+                                            scriptForm.get('sql_script').value,
+                                            scriptForm,
+                                            'sql_script',
+                                            'SQL Script'
+                                        )
+                                    "
+                                ></textarea>
+                            </div>
+                        </div>
+                        <div class="field">
+                            <label for="sql_definition"
+                                >Script Definition <sup>*</sup></label
+                            ><br />
+                            <textarea
+                                style="width: 100%"
+                                cols="2"
+                                rows="5"
+                                formControlName="sql_definition"
+                            ></textarea>
+                        </div>
+                        <div class="grid formgrid">
+                            <div
+                                formArrayName="variable"
+                                *ngFor="
+                                    let item of scriptForm.get('variable')
+                                        .controls;
+                                    let i = index
+                                "
+                                class="col-6"
+                                [ngStyle]="{
+                                    display: scriptDefaultVariables.includes(
+                                        scriptForm.get('variable').value[i]
+                                            .var_name
+                                    )
+                                        ? 'none'
+                                        : 'block'
+                                }"
+                            >
+                                <div [formGroupName]="i">
+                                    <div class="grid formgrid">
+                                        <div
+                                            class="field col-12 mb-2 lg:col-6 lg:mb-0"
+                                        >
+                                            <label for="var_name"
+                                                >Variable</label
+                                            >
+                                            <input
+                                                id="var_name"
+                                                pInputText
+                                                formControlName="var_name"
+                                                readonly
+                                            />
+                                        </div>
+                                        <div
+                                            class="field col-12 mb-2 lg:col-6 lg:mb-0"
+                                        >
+                                            <label for="var_datatype"
+                                                >Data Types
+                                            </label>
+                                            <p-autoComplete
+                                                placeholder="Search"
+                                                [dropdown]="true"
+                                                [multiple]="false"
+                                                [suggestions]="
+                                                    filteredDatatypes
+                                                "
+                                                (completeMethod)="
+                                                    filterDatatypes($event)
+                                                "
+                                                [disabled]="
+                                                    scriptDefaultVariables.includes(
+                                                        (scriptForm.get(
+                                                            'variable'
+                                                        )?.value)[i].var_name
+                                                    )
+                                                "
+                                                formControlName="var_datatype"
+                                            ></p-autoComplete>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 flex justify-content-between mt-4">
+                        <div class="ml-auto">
+                            <button
+                                pButton
+                                pRipple
+                                label="Cancel"
+                                icon="pi pi-times"
+                                class="p-button-text"
+                                (click)="showTable = true"
+                            ></button>
+                            <button
+                                pButton
+                                pRipple
+                                #submitButton
+                                label="Save"
+                                icon="pi pi-check"
+                                class="p-button-text"
+                                (click)="saveScript()"
+                                [disabled]="scriptForm.invalid"
+                            ></button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
     </div>
 
     <button
+        *ngIf="showTable"
         pButton
         pRipple
         title="Add"
@@ -1096,7 +1335,7 @@
         (click)="openNew(null, 'new')"
     ></button>
 
-    <p-dialog
+    <!-- <p-dialog
         [(visible)]="scriptDialog"
         [style]="{ width: '100%', height: '80%' }"
         header="Script Details"
@@ -1332,7 +1571,7 @@
                 [disabled]="scriptForm.invalid"
             ></button>
         </ng-template>
-    </p-dialog>
+    </p-dialog> -->
     <p-confirmDialog> </p-confirmDialog>
 
     <p-dialog header="ERROR!" [(visible)]="scirptError">

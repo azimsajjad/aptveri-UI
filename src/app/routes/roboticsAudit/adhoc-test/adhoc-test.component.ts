@@ -114,9 +114,9 @@ export class AdhocTestComponent implements OnInit {
     saveAdhoc() {
         this.loading = true;
 
-        // this.adhocForm
-        //     .get('banner_id')
-        //     .setValue(this.getBannerId(this.adhocForm.get('banner_id').value));
+        this.adhocForm
+            .get('banner_id')
+            .setValue(this.getBannerId(this.adhocForm.get('banner_id').value));
         this.adhocForm
             .get('au_level_4_id')
             .setValue(
@@ -323,51 +323,52 @@ export class AdhocTestComponent implements OnInit {
     filteredAuditUniverseL4;
     filteredScript;
 
-    // filterBanner(event) {
-    //     const filtered: any[] = [];
-    //     const query = event.query;
-    //     for (let i = 0; i < this.banner.length; i++) {
-    //         const ele = this.banner[i];
-    //         if (ele.banner_uid == null) {
-    //             filtered.push(ele.banner_uid);
-    //         } else if (
-    //             ele.banner_uid
-    //                 .toString()
-    //                 .toLowerCase()
-    //                 .indexOf(query.toLowerCase()) == 0 ||
-    //             ele.banner
-    //                 .toString()
-    //                 .toLowerCase()
-    //                 .indexOf(query.toLowerCase()) == 0
-    //         ) {
-    //             filtered.push(ele.banner_uid + ' - ' + ele.banner);
-    //         }
-    //         this.filteredBanner = filtered;
-    //     }
-    // }
+    filterBanner(event) {
+        const filtered: any[] = [];
+        const query = event.query;
+        for (let i = 0; i < this.banner.length; i++) {
+            const ele = this.banner[i];
+            if (ele.department_uid == null) {
+                filtered.push(ele.department_uid);
+            } else if (
+                ele.department_uid
+                    .toString()
+                    .toLowerCase()
+                    .indexOf(query.toLowerCase()) == 0 ||
+                ele.department
+                    .toString()
+                    .toLowerCase()
+                    .indexOf(query.toLowerCase()) == 0
+            ) {
+                filtered.push(ele.department_uid + ' - ' + ele.department);
+            }
+            this.filteredBanner = filtered;
+        }
+    }
 
-    // getBannerId(val: String): number {
-    //     let x = this.banner.filter((ele) => {
-    //         return ele.organization_uid + ' - ' + ele.department == val;
-    //     });
-    //     return x[0]?.organization_id || null;
-    // }
+    getBannerId(val: String): number {
+        let x = this.banner.filter((ele) => {
+            return ele.department_uid + ' - ' + ele.department == val;
+        });
+        return x[0]?.department_id || null;
+    }
 
-    // getBanner(banner_id: number): any {
-    //     let x = this.banner.filter((ele) => {
-    //         return ele.banner_id == banner_id;
-    //     });
-    //     if (x.length > 0) return x[0].banner_uid + ' - ' + x[0].banner;
-    //     else {
-    //         this.adhocTestDialog = false;
-    //         this.messageService.add({
-    //             severity: 'info',
-    //             summary: 'Info !!',
-    //             detail: "Selected Adhoc Test's Script not found !!",
-    //             life: 6000,
-    //         });
-    //     }
-    // }
+    getBanner(banner_id: number): any {
+        let x = this.banner.filter((ele) => {
+            return ele.department_id == banner_id;
+        });
+        if (x.length > 0)
+            return x[0].department_uid + ' - ' + x[0].organization;
+        else {
+            this.adhocTestDialog = false;
+            this.messageService.add({
+                severity: 'info',
+                summary: 'Info !!',
+                detail: "Selected Adhoc Test's Script not found !!",
+                life: 6000,
+            });
+        }
+    }
 
     filterAuditUniverse4(event) {
         const filtered: any[] = [];

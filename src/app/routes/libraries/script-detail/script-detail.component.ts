@@ -41,6 +41,7 @@ export class ScriptDetailComponent implements OnInit {
     textDialogForm: FormGroup;
     popupText;
     profiles;
+    showTable: boolean = true;
 
     @ViewChild('textDialog') textDialog: Dialog;
 
@@ -128,6 +129,7 @@ export class ScriptDetailComponent implements OnInit {
     }
 
     openNew(script: Script, type: string) {
+        this.showTable = false;
         this.scriptEditMode = type;
 
         if (this.scriptEditMode == 'edit') {
