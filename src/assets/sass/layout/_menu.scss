@@ -91,6 +91,12 @@
             &:focus {
                 @include focused-inset();
             }
+                         &.router-link-exact-active {
+                             font-weight: 700;
+                             color: white;
+                             background-color: #86C143;
+
+                         }
         }
 
         ul {

@@ -647,7 +647,7 @@ export class AuditComponent implements OnInit {
                       })
                     : '0',
             ],
-            created_by: audit ? audit.created_by : null,
+            created_by: audit ? audit.created_by : 0,
         });
         console.log(this.auditForm.value);
     }
