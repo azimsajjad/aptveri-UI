@@ -12,51 +12,47 @@ import { DomSanitizer } from '@angular/platform-browser';
     templateUrl: './dashboard.component.html',
 })
 export class DashboardComponent implements OnInit {
-    items: MenuItem[];
-
-    products: Product[];
-
     chartData: any;
+    pieData: any;
+    basicData: any;
 
-    chartOptions: any;
-
-    subscription: Subscription;
-
-    config: AppConfig;
-
-    auditStatusCount: AuditStatusCount;
-
-    iframeSRC;
-
-    constructor(
-        public configService: ConfigService,
-        private auditService: AuditService,
-        private sanitizer: DomSanitizer
-    ) {}
+    constructor(public configService: ConfigService) {}
 
     ngOnInit() {
-        this.auditService.getDashboardURL().subscribe((res) => {
-            this.iframeSRC = this.sanitizer.bypassSecurityTrustResourceUrl(
-                res.data[0].codeName
-            );
-        });
-        this.auditService.getAllAuditStatus().subscribe((res) => {
-            this.auditStatusCount = res.data[0];
-        });
+        this.pieData = {
+            labels: ['Script', 'Control', 'Risk'],
+            datasets: [
+                {
+                    data: [300, 50, 100],
+                    backgroundColor: ['#1c5b9c', '#86c143', '#FFA726'],
+                    hoverBackgroundColor: ['#1c5b9ccf', '#86c143d4', '#FFB74D'],
+                },
+            ],
+        };
 
-        this.config = this.configService.config;
-        this.subscription = this.configService.configUpdate$.subscribe(
-            (config) => {
-                this.config = config;
-                this.updateChartOptions();
-            }
-        );
-        //  this.productService.getProductsSmall().then(data => this.products = data);
-
-        this.items = [
-            { label: 'Add New', icon: 'pi pi-fw pi-plus' },
-            { label: 'Remove', icon: 'pi pi-fw pi-minus' },
-        ];
+        this.basicData = {
+            labels: [
+                'January',
+                'February',
+                'March',
+                'April',
+                'May',
+                'June',
+                'July',
+            ],
+            datasets: [
+                {
+                    label: 'Audit Program',
+                    backgroundColor: '#1c5b9c',
+                    data: [65, 59, 80, 81, 56, 55, 40],
+                },
+                {
+                    label: 'Audit Test',
+                    backgroundColor: '#86c143',
+                    data: [28, 48, 40, 19, 86, 27, 90],
+                },
+            ],
+        };
 
         this.chartData = {
             labels: [
@@ -70,87 +66,22 @@ export class DashboardComponent implements OnInit {
             ],
             datasets: [
                 {
-                    label: 'First Dataset',
+                    label: 'Audit Program',
                     data: [65, 59, 80, 81, 56, 55, 40],
                     fill: false,
-                    backgroundColor: '#2f4860',
-                    borderColor: '#2f4860',
+                    backgroundColor: '#1c5b9c',
+                    borderColor: '#1c5b9c',
                     tension: 0.4,
                 },
                 {
-                    label: 'Second Dataset',
+                    label: 'Audit Test',
                     data: [28, 48, 40, 19, 86, 27, 90],
                     fill: false,
-                    backgroundColor: '#00bb7e',
-                    borderColor: '#00bb7e',
+                    backgroundColor: '#86c143',
+                    borderColor: '#86c143',
                     tension: 0.4,
                 },
             ],
-        };
-    }
-
-    updateChartOptions() {
-        if (this.config.dark) this.applyDarkTheme();
-        else this.applyLightTheme();
-    }
-
-    applyDarkTheme() {
-        this.chartOptions = {
-            plugins: {
-                legend: {
-                    labels: {
-                        color: '#ebedef',
-                    },
-                },
-            },
-            scales: {
-                x: {
-                    ticks: {
-                        color: '#ebedef',
-                    },
-                    grid: {
-                        color: 'rgba(160, 167, 181, .3)',
-                    },
-                },
-                y: {
-                    ticks: {
-                        color: '#ebedef',
-                    },
-                    grid: {
-                        color: 'rgba(160, 167, 181, .3)',
-                    },
-                },
-            },
-        };
-    }
-
-    applyLightTheme() {
-        this.chartOptions = {
-            plugins: {
-                legend: {
-                    labels: {
-                        color: '#495057',
-                    },
-                },
-            },
-            scales: {
-                x: {
-                    ticks: {
-                        color: '#495057',
-                    },
-                    grid: {
-                        color: '#ebedef',
-                    },
-                },
-                y: {
-                    ticks: {
-                        color: '#495057',
-                    },
-                    grid: {
-                        color: '#ebedef',
-                    },
-                },
-            },
         };
     }
 }

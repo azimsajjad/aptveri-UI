@@ -71,13 +71,20 @@
     </div>
 </div>
 <div class="grid">
-    <div class="col-12">
+    <div class="col-12 lg:col-6">
         <div class="card">
-            <h5>Sales Overview</h5>
+            <h5>Audit</h5>
+            <p-chart type="bar" [data]="basicData"></p-chart><br />
+            <p-chart type="line" [data]="chartData"></p-chart>
+        </div>
+    </div>
+    <div class="col-12 lg:col-6">
+        <div class="card">
+            <h5>Library</h5>
             <p-chart
-                type="line"
-                [data]="chartData"
-                [options]="chartOptions"
+                type="pie"
+                [data]="pieData"
+                [style]="{ width: '40%' }"
             ></p-chart>
         </div>
     </div>

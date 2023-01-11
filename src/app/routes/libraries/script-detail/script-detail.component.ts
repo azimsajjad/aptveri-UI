@@ -467,6 +467,7 @@ export class ScriptDetailComponent implements OnInit {
                                 this.getScript();
 
                                 this.scriptDialog = false;
+                                this.showTable = true;
                                 this.loading = false;
                                 this.messageService.add({
                                     severity: 'success',
@@ -582,6 +583,7 @@ export class ScriptDetailComponent implements OnInit {
                                 this.getScript();
 
                                 this.scriptDialog = false;
+                                this.showTable = true;
                                 this.loading = false;
                                 this.messageService.add({
                                     severity: 'success',
@@ -594,6 +596,7 @@ export class ScriptDetailComponent implements OnInit {
                                 this.getScript();
 
                                 this.scriptDialog = false;
+                                this.showTable = true;
                                 this.loading = false;
                                 this.messageService.add({
                                     severity: 'info',
@@ -702,6 +705,7 @@ export class ScriptDetailComponent implements OnInit {
                                 this.getScript();
 
                                 this.scriptDialog = false;
+                                this.showTable = true;
                                 this.loading = false;
                                 this.messageService.add({
                                     severity: 'success',
