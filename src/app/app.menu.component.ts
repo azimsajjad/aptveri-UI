@@ -56,11 +56,11 @@ export class AppMenuComponent implements OnInit {
             {
                 label: 'Libraries',
                 items: [
-                    // {
-                    //     label: 'Banner',
-                    //     icon: 'pi pi-fw pi-globe',
-                    //     routerLink: ['/pages/banners-detail'],
-                    // },
+                    {
+                        label: 'Organisation',
+                        icon: 'pi pi-fw pi-building',
+                        routerLink: ['/pages/organisation'],
+                    },
                     {
                         label: 'Department',
                         icon: 'pi pi-fw pi-globe',
@@ -126,6 +126,11 @@ export class AppMenuComponent implements OnInit {
                         label: 'Upload',
                         icon: 'pi pi-upload',
                         routerLink: ['/pages/upload'],
+                    },
+                    {
+                        label: 'Users',
+                        icon: 'pi pi-users',
+                        routerLink: ['/pages/users'],
                     },
                 ],
             },

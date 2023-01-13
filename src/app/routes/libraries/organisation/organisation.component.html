@@ -3,29 +3,24 @@
     <div class="card px-6 py-6">
         <p-table
             #dt
-            [value]="banner"
+            [value]="allOrg"
             [rowHover]="true"
             [rows]="10"
             [showCurrentPageReport]="true"
             [rowsPerPageOptions]="[10, 25, 50]"
-            [loading]="loadingTable"
             [paginator]="true"
             currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
             responsiveLayout="scroll"
             [scrollable]="true"
-            scrollHeight="calc(100vh - 378px)"
+            scrollHeight="calc(100vh - 367px)"
             [filterDelay]="0"
-            [globalFilterFields]="[
-                'department_uid',
-                'organization',
-                'department'
-            ]"
+            [globalFilterFields]="['organization', 'organization_description']"
         >
             <ng-template pTemplate="caption">
                 <div
                     class="table-header flex justify-content-between align-items-center"
                 >
-                    <span class="text-xl">List of Department</span>
+                    <span class="text-xl">List of Organisations</span>
                     <span class="p-input-icon-left">
                         <i class="pi pi-search"></i>
                         <input
@@ -42,27 +37,22 @@
 
             <ng-template pTemplate="header">
                 <tr>
-                    <th
-                        pSortableColumn="department_uid"
-                        style="min-width: 14rem"
-                    >
-                        <div class="flex align-items-center">
-                            DEPARTMENT UID
-                            <p-sortIcon field="department_uid"></p-sortIcon>
-                        </div>
-                    </th>
-
                     <th pSortableColumn="organization" style="min-width: 14rem">
                         <div class="flex align-items-center">
-                            ORGANISATION
+                            Organisation
                             <p-sortIcon field="organization"></p-sortIcon>
                         </div>
                     </th>
 
-                    <th pSortableColumn="department" style="min-width: 14rem">
+                    <th
+                        pSortableColumn="organization_description"
+                        style="min-width: 14rem"
+                    >
                         <div class="flex align-items-center">
-                            DEPARTMENT
-                            <p-sortIcon field="department"></p-sortIcon>
+                            Organisation Description
+                            <p-sortIcon
+                                field="organization_description"
+                            ></p-sortIcon>
                         </div>
                     </th>
 
@@ -79,18 +69,13 @@
             <ng-template pTemplate="body" let-item>
                 <tr class="p-selectable-row">
                     <td class="text-base">
-                        <span class="p-column-title">Department UID</span>
-                        {{ item.department_uid }}
-                    </td>
-
-                    <td class="text-base">
                         <span class="p-column-title">Organisation</span>
                         {{ item.organization }}
                     </td>
 
                     <td class="text-base">
-                        <span class="p-column-title">Department</span>
-                        {{ item.department }}
+                        <span class="p-column-title">Email</span>
+                        {{ item.organization_description }}
                     </td>
 
                     <td class="text-base">
@@ -103,7 +88,7 @@
                                 type="button"
                                 icon="pi pi-pencil"
                                 class="p-button-rounded p-button-info"
-                                (click)="openBanner(item)"
+                                (click)="openOrg(item)"
                             ></button>
                             <button
                                 pButton
@@ -112,7 +97,7 @@
                                 type="button"
                                 icon="pi pi-trash"
                                 class="p-button-rounded p-button-info ml-2"
-                                (click)="deleteBanner(item)"
+                                (click)="deleteOrg(item)"
                             ></button
                         ></span>
                     </td>
@@ -121,7 +106,7 @@
 
             <ng-template pTemplate="emptymessage">
                 <tr>
-                    <td colspan="4">No Banner found.</td>
+                    <td colspan="4">No User found.</td>
                 </tr>
             </ng-template>
         </p-table>
@@ -134,39 +119,40 @@
         type="button"
         icon="pi pi-plus"
         class="p-button-rounded p-button-lg fixed add-details"
-        (click)="openBanner()"
+        (click)="openOrg()"
     ></button>
 
     <form
-        *ngIf="bannerDialog"
-        [formGroup]="bannerForm"
-        (ngSubmit)="bannerFormSubmit()"
+        *ngIf="orgDialog"
+        [formGroup]="orgForm"
+        (ngSubmit)="orgForm.valid && orgFormSubmit()"
     >
         <p-dialog
-            header="Department Details"
-            [(visible)]="bannerDialog"
+            header="Organisation Details"
+            [(visible)]="orgDialog"
             [style]="{ width: '30vw' }"
         >
             <div class="field">
                 <label for="organization" class="block">Organisation</label>
-                <p-dropdown
-                    appendTo="body"
-                    [options]="allOrg"
-                    formControlName="organization"
-                    optionLabel="organization"
-                    dataKey="organization"
-                    [style]="{ width: '100%' }"
-                ></p-dropdown>
-            </div>
-
-            <div class="field">
-                <label for="department" class="block">Department</label>
                 <input
-                    id="department"
+                    id="organization"
                     type="text"
                     pInputText
                     [style]="{ width: '100%' }"
-                    formControlName="department"
+                    formControlName="organization"
+                />
+            </div>
+
+            <div class="field">
+                <label for="organization_description" class="block"
+                    >Description</label
+                >
+                <input
+                    id="organization_description"
+                    type="text"
+                    pInputText
+                    [style]="{ width: '100%' }"
+                    formControlName="organization_description"
                 />
             </div>
 
@@ -174,9 +160,9 @@
                 <p-button
                     type="reset"
                     icon="pi pi-times"
-                    (click)="bannerDialog = false"
+                    (click)="orgDialog = false"
                     label="Cancel"
-                    styleClass="p-button-text p-button-danger"
+                    styleClass="p-button-text p-button-primary"
                 ></p-button>
                 <p-button
                     type="submit"

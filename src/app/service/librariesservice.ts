@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Banner, control } from '../api/libraries';
+import { AddOrgBody, Banner, control, EditOrgBody } from '../api/libraries';
 import { risk } from '../api/libraries';
 import { environment } from 'src/environments/environment';
 
@@ -199,6 +199,32 @@ export class BannerService {
                     'content-type': 'application/json; charset=utf-8',
                 }),
             }
+        );
+    }
+
+    public getAllOrganizations(): Observable<any> {
+        return this.httpClient.get(
+            environment.api_prefix + 'libraries/loadorganizations'
+        );
+    }
+
+    public addOrganisation(organisation: AddOrgBody): Observable<any> {
+        return this.httpClient.post(
+            environment.api_prefix + 'libraries/addorganizations',
+            organisation
+        );
+    }
+
+    public editOrganisation(organisation: EditOrgBody): Observable<any> {
+        return this.httpClient.put(
+            environment.api_prefix + 'libraries/putorganization',
+            organisation
+        );
+    }
+
+    public deleteOrganization(id: any): Observable<any> {
+        return this.httpClient.delete(
+            environment.api_prefix + 'libraries/deleteorganization/' + id
         );
     }
 }

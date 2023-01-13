@@ -25,6 +25,8 @@ import { AuditUniverseDetailComponent } from './routes/libraries/audit-universe-
 import { AdhocTestComponent } from './routes/roboticsAudit/adhoc-test/adhoc-test.component';
 import { LogsComponent } from './routes/utilities/logs/logs.component';
 import { UploadComponent } from './routes/utilities/upload/upload.component';
+import { UsersComponent } from './routes/utilities/users/users.component';
+import { OrganisationComponent } from './routes/libraries/organisation/organisation.component';
 
 @NgModule({
     imports: [
@@ -116,6 +118,16 @@ import { UploadComponent } from './routes/utilities/upload/upload.component';
                         {
                             path: 'pages/upload',
                             component: UploadComponent,
+                            canActivate: [AuthGuard],
+                        },
+                        {
+                            path: 'pages/users',
+                            component: UsersComponent,
+                            canActivate: [AuthGuard],
+                        },
+                        {
+                            path: 'pages/organisation',
+                            component: OrganisationComponent,
                             canActivate: [AuthGuard],
                         },
                     ],

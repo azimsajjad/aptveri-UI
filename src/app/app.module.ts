@@ -56,6 +56,8 @@ import { AdhocTestComponent } from './routes/roboticsAudit/adhoc-test/adhoc-test
 import { LogsComponent } from './routes/utilities/logs/logs.component';
 import { UploadComponent } from './routes/utilities/upload/upload.component';
 import { UploadService } from './service/upload.service';
+import { UsersComponent } from './routes/utilities/users/users.component';
+import { OrganisationComponent } from './routes/libraries/organisation/organisation.component';
 
 export function tokenGetter() {
     return localStorage.getItem('jwt');
@@ -118,6 +120,8 @@ export function tokenGetter() {
         BannerComponent,
         LogsComponent,
         UploadComponent,
+        UsersComponent,
+        OrganisationComponent,
     ],
     providers: [
         { provide: LocationStrategy, useClass: HashLocationStrategy },

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { catchError, finalize, map, throwError } from 'rxjs';
-import { Banner } from 'src/app/api/libraries';
+import { Banner, Organisation } from 'src/app/api/libraries';
 import { AuthService } from 'src/app/service/auth.service';
 import { BannerService } from 'src/app/service/librariesservice';
 
@@ -23,6 +23,7 @@ export class BannerComponent implements OnInit {
 
     banner;
     selectedBanner;
+    allOrg: Organisation[];
 
     loadingTable: boolean = true;
     bannerDialog: boolean = false;
@@ -32,11 +33,8 @@ export class BannerComponent implements OnInit {
     ngOnInit() {
         this.getBanner();
 
-        this.messageService.add({
-            severity: 'error',
-            summary: 'ERROR!!',
-            detail: 'Something Went Wrong !!',
-            life: 3000,
+        this.bannerService.getAllOrganizations().subscribe((res) => {
+            this.allOrg = res.data;
         });
     }
 
@@ -73,7 +71,7 @@ export class BannerComponent implements OnInit {
         this.bannerForm = this.fb.group({
             department_uid: ele ? ele.department_uid : null,
             organization: [
-                ele ? ele.organization : null,
+                ele ? ele.organization : this.allOrg[0].organization,
                 [Validators.required, Validators.minLength(1)],
             ],
             department: [
