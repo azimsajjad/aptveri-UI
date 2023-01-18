@@ -15,10 +15,7 @@ export class LogsComponent implements OnInit {
 
     ngOnInit(): void {
         this.http
-            .get(
-                environment.api_prefix +
-                    'auditUniverse/getaudituniverselevelall'
-            )
+            .get(environment.api_prefix + 'audit/log/0')
             .pipe(map((res: any) => res.data))
             .subscribe((res) => {
                 console.log(res);

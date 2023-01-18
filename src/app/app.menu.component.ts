@@ -69,16 +69,17 @@ export class AppMenuComponent implements OnInit {
                     {
                         label: 'Audit Universe',
                         icon: 'pi pi-fw pi-user-edit',
+                        // routerLink: ['/test'],
                         items: [
+                            {
+                                label: 'List',
+                                icon: 'pi pi-fw pi-book',
+                                routerLink: ['/pages/audit-universe-all'],
+                            },
                             {
                                 label: 'Create',
                                 icon: 'pi pi-fw pi-pencil',
                                 routerLink: ['/pages/audit-universe'],
-                            },
-                            {
-                                label: 'Read',
-                                icon: 'pi pi-fw pi-book',
-                                routerLink: ['/pages/audit-universe-all'],
                             },
                         ],
                     },

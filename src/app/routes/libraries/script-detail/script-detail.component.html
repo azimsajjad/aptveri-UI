@@ -771,7 +771,7 @@
 <p-toast></p-toast>
 
 <div id="table1">
-    <div class="card px-6 py-6">
+    <div class="card px-3 py-3">
         <p-table
             *ngIf="showTable"
             #dt
@@ -785,7 +785,7 @@
             currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
             responsiveLayout="scroll"
             [scrollable]="true"
-            scrollHeight="calc(100vh - 378px)"
+            scrollHeight="calc(100vh - 305px)"
             [filterDelay]="0"
             [globalFilterFields]="[
                 'script_uid',
@@ -1019,7 +1019,9 @@
                     <td class="text-base">{{ item.version }}</td>
                     <td class="text-base">{{ item.original_version_id }}</td>
                     <td class="text-base">{{ item.au_level_4_desc }}</td>
-                    <td class="text-base">{{ item.risk_desc }}</td>
+                    <td class="text-base">
+                        {{ item.risk_desc }}
+                    </td>
                     <td class="text-base">{{ item.banner_desc }}</td>
                     <td class="text-base">{{ item.control_desc }}</td>
                     <td class="text-base">
@@ -1236,7 +1238,7 @@
                                 >Script Definition <sup>*</sup></label
                             ><br />
                             <textarea
-                                style="width: 100%"
+                                style="width: 100%;"
                                 cols="2"
                                 rows="5"
                                 formControlName="sql_definition"
