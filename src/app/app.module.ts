@@ -59,6 +59,7 @@ import { UploadService } from './service/upload.service';
 import { UsersComponent } from './routes/utilities/users/users.component';
 import { OrganisationComponent } from './routes/libraries/organisation/organisation.component';
 import { AuditDashboardComponent } from './routes/roboticsAudit/audit-dashboard/audit-dashboard.component';
+import { MasterComponent } from './routes/utilities/master/master.component';
 
 export function tokenGetter() {
     return localStorage.getItem('jwt');
@@ -124,6 +125,7 @@ export function tokenGetter() {
         UsersComponent,
         OrganisationComponent,
         AuditDashboardComponent,
+        MasterComponent,
     ],
     providers: [
         { provide: LocationStrategy, useClass: HashLocationStrategy },

@@ -1,0 +1,87 @@
+<div id="table1">
+    <div class="card px-6 py-6">
+        <div class="grid">
+            <div class="col-12 md:col-4">
+                <p-dropdown
+                    [options]="masterCategory"
+                    [(ngModel)]="selectedPage"
+                    optionLabel="name"
+                    dataKey="code"
+                    placeholder="Select Page"
+                    [style]="{ width: '100%' }"
+                ></p-dropdown>
+            </div>
+            <div class="col-12 md:col-4" *ngIf="selectedPage">
+                <p-dropdown
+                    [options]="selectedPage.items"
+                    [(ngModel)]="selectedOption"
+                    optionLabel="name"
+                    dataKey="code"
+                    placeholder="Select Option"
+                    [style]="{ width: '100%' }"
+                ></p-dropdown>
+            </div>
+            <div class="col-12 md:col-4 my-auto" *ngIf="selectedOption">
+                <button
+                    pButton
+                    pRipple
+                    type="button"
+                    label="Add"
+                    class="p-button-raised p-button-text"
+                    icon="pi pi-plus"
+                    iconPos="left"
+                    (click)="openDialog()"
+                ></button>
+            </div>
+        </div>
+    </div>
+
+    <form
+        *ngIf="addDialog"
+        [formGroup]="addForm"
+        (ngSubmit)="addForm.valid && addFormSubmit()"
+    >
+        <p-dialog
+            [header]="selectedPage?.name + ' : ' + selectedOption?.name"
+            [(visible)]="addDialog"
+            [style]="{ width: '30vw' }"
+        >
+            <div class="field">
+                <label for="name" class="block">Name</label>
+                <input
+                    id="name"
+                    type="text"
+                    pInputText
+                    [style]="{ width: '100%' }"
+                    formControlName="name"
+                />
+            </div>
+            <div class="field">
+                <label for="code" class="block">Code</label>
+                <input
+                    id="code"
+                    type="text"
+                    pInputText
+                    [style]="{ width: '100%' }"
+                    formControlName="code"
+                />
+            </div>
+
+            <ng-template pTemplate="footer">
+                <p-button
+                    type="reset"
+                    icon="pi pi-times"
+                    (click)="addDialog = false"
+                    label="Cancel"
+                    styleClass="p-button-text p-button-danger"
+                ></p-button>
+                <p-button
+                    type="submit"
+                    icon="pi pi-check"
+                    label="Save"
+                    styleClass="p-button-text p-button-primary"
+                ></p-button>
+            </ng-template>
+        </p-dialog>
+    </form>
+</div>
