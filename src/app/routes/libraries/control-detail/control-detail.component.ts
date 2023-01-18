@@ -5,7 +5,7 @@ import {
     ChangeDetectorRef,
     ElementRef,
 } from '@angular/core';
-import { control } from '../../../api/libraries';
+import { control, Organisation } from '../../../api/libraries';
 import { BannerService } from '../../../service/librariesservice';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { Table } from 'primeng/table';
@@ -96,6 +96,7 @@ export class ControlDetailComponent implements OnInit {
     showPopupText: boolean = false;
     textDialogForm: FormGroup;
     popupText;
+    allOrg: Organisation[];
 
     @ViewChild('textDialog') textDialog: Dialog;
 
@@ -123,6 +124,10 @@ export class ControlDetailComponent implements OnInit {
     ) {}
 
     ngOnInit() {
+        this.controlService.getAllOrganizations().subscribe((res) => {
+            this.allOrg = res.data;
+        });
+
         this.form = this.fb.group({
             aulfdesc: [
                 '',

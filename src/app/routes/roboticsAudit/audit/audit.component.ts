@@ -9,6 +9,8 @@ import { environment } from 'src/environments/environment';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { catchError, finalize, map, throwError } from 'rxjs';
 import * as moment from 'moment';
+import { Organisation } from 'src/app/api/libraries';
+import { BannerService } from 'src/app/service/librariesservice';
 
 @Component({
     selector: 'app-audit',
@@ -125,6 +127,7 @@ export class AuditComponent implements OnInit {
     rowsPerPageOptions = [5, 10, 20];
 
     auditForm: FormGroup;
+    allOrg: Organisation[];
 
     constructor(
         private auditService: AuditService,
@@ -132,7 +135,8 @@ export class AuditComponent implements OnInit {
         private confirmationService: ConfirmationService,
         public accountSvr: AuthService,
         private router: Router,
-        private fb: FormBuilder
+        private fb: FormBuilder,
+        private libraryService: BannerService
     ) {}
 
     ngOnInit(): void {
@@ -159,6 +163,10 @@ export class AuditComponent implements OnInit {
             { field: 'results_url', header: 'RESULT URL' },
             { field: 'last_run_date', header: 'LAST RUN DATE' },
         ];
+
+        this.libraryService.getAllOrganizations().subscribe((res) => {
+            this.allOrg = res.data;
+        });
     }
     ngAfterViewInit() {}
     //Get all the audits

@@ -97,16 +97,12 @@
                                 class="p-button-rounded p-button-info"
                                 (click)="openUser(item)"
                             ></button>
-                            <button
-                                pButton
-                                pRipple
-                                title="Delete"
-                                type="button"
-                                icon="pi pi-trash"
-                                class="p-button-rounded p-button-info ml-2"
-                                (click)="deleteUser(item)"
-                            ></button
-                        ></span>
+                            <p-inputSwitch
+                                class="ml-4"
+                                (onChange)="updateUser(item, $event)"
+                                [(ngModel)]="item.acct_status"
+                            ></p-inputSwitch>
+                        </span>
                     </td>
                 </tr>
             </ng-template>
@@ -140,17 +136,6 @@
             [style]="{ width: '30vw' }"
         >
             <div class="field">
-                <label for="roleName">Role</label>
-                <p-dropdown
-                    id="roleName"
-                    [options]="allRole"
-                    formControlName="roleName"
-                    optionLabel="role"
-                    [style]="{ width: '100%' }"
-                ></p-dropdown>
-            </div>
-
-            <div class="field">
                 <label for="fullName" class="block">Username</label>
                 <input
                     id="fullName"
@@ -181,6 +166,19 @@
                     [style]="{ width: '100%' }"
                     formControlName="password"
                 />
+            </div>
+
+            <div class="field">
+                <label for="roleName">Role</label>
+                <p-dropdown
+                    appendTo="body"
+                    id="roleName"
+                    [options]="allRole"
+                    formControlName="roleName"
+                    optionLabel="role"
+                    placeholder="Select Role"
+                    [style]="{ width: '100%' }"
+                ></p-dropdown>
             </div>
 
             <ng-template pTemplate="footer">

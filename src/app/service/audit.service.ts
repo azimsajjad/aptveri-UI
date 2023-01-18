@@ -472,4 +472,17 @@ export class AuditService {
             `${environment.api_prefix + 'Audit/Navigate/'}${id}/${isuser}`
         );
     }
+
+    public getAuditDashboard(
+        organization_id: number,
+        department_id: number,
+        ap_schedule_start_date: string,
+        ap_schedule_end_date: string,
+        results: 'pass' | 'fail'
+    ): Observable<any> {
+        return this.http.get(
+            environment.api_prefix +
+                `audit/auditreport/${organization_id}/${department_id}/${ap_schedule_start_date}/${ap_schedule_end_date}/${results}`
+        );
+    }
 }

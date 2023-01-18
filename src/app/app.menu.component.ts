@@ -112,6 +112,11 @@ export class AppMenuComponent implements OnInit {
                         icon: 'pi pi-fw pi-exclamation-circle',
                         routerLink: ['/pages/adhoc-test'],
                     },
+                    {
+                        label: 'Audti Dashboard',
+                        icon: 'pi pi-fw pi-chart-pie',
+                        routerLink: ['/pages/audit-dashboard'],
+                    },
                 ],
             },
             {

@@ -27,6 +27,7 @@ import { LogsComponent } from './routes/utilities/logs/logs.component';
 import { UploadComponent } from './routes/utilities/upload/upload.component';
 import { UsersComponent } from './routes/utilities/users/users.component';
 import { OrganisationComponent } from './routes/libraries/organisation/organisation.component';
+import { AuditDashboardComponent } from './routes/roboticsAudit/audit-dashboard/audit-dashboard.component';
 
 @NgModule({
     imports: [
@@ -128,6 +129,11 @@ import { OrganisationComponent } from './routes/libraries/organisation/organisat
                         {
                             path: 'pages/organisation',
                             component: OrganisationComponent,
+                            canActivate: [AuthGuard],
+                        },
+                        {
+                            path: 'pages/audit-dashboard',
+                            component: AuditDashboardComponent,
                             canActivate: [AuthGuard],
                         },
                     ],
