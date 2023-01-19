@@ -1,7 +1,17 @@
 <div id="table1">
     <div class="card px-6 py-6">
         <div class="grid">
-            <div class="col-12 md:col-4">
+            <div class="col-12 md:col-3">
+                <p-dropdown
+                    [options]="allOrg"
+                    [(ngModel)]="selectedOrg"
+                    optionLabel="organization"
+                    dataKey="organization_id"
+                    placeholder="Select Organisation"
+                    [style]="{ width: '100%' }"
+                ></p-dropdown>
+            </div>
+            <div class="col-12 md:col-3">
                 <p-dropdown
                     [options]="masterCategory"
                     [(ngModel)]="selectedPage"
@@ -11,7 +21,7 @@
                     [style]="{ width: '100%' }"
                 ></p-dropdown>
             </div>
-            <div class="col-12 md:col-4" *ngIf="selectedPage">
+            <div class="col-12 md:col-3" *ngIf="selectedPage">
                 <p-dropdown
                     [options]="selectedPage.items"
                     [(ngModel)]="selectedOption"
@@ -21,7 +31,7 @@
                     [style]="{ width: '100%' }"
                 ></p-dropdown>
             </div>
-            <div class="col-12 md:col-4 my-auto" *ngIf="selectedOption">
+            <div class="col-12 md:col-3 my-auto" *ngIf="selectedOption">
                 <button
                     pButton
                     pRipple

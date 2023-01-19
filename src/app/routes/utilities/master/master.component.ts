@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Organisation } from 'src/app/api/libraries';
+import { BannerService } from 'src/app/service/librariesservice';
 
 @Component({
     selector: 'app-master',
@@ -7,18 +9,29 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
     styleUrls: ['./master.component.scss'],
 })
 export class MasterComponent implements OnInit {
-    constructor(private fb: FormBuilder) {}
+    constructor(
+        private fb: FormBuilder,
+        private libraryService: BannerService
+    ) {}
 
     selectedPage;
     selectedOption;
+    selectedOrg;
+    allOrg: Organisation[];
 
     addDialog: boolean = false;
     addForm: FormGroup;
 
-    ngOnInit(): void {}
+    ngOnInit(): void {
+        this.libraryService.getAllOrganizations().subscribe((res) => {
+            this.allOrg = res.data;
+            this.allOrg[0].organization;
+        });
+    }
 
     openDialog() {
         this.addForm = this.fb.group({
+            organization_id: this.selectedOrg.organization_id,
             page: this.selectedPage.code,
             option: this.selectedOption.code,
             name: [null, Validators.required],
