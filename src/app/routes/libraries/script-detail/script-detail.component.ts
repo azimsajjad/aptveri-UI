@@ -13,7 +13,7 @@ import {
     map,
     throwError,
 } from 'rxjs';
-import { Script } from 'src/app/api/libraries';
+import { Organisation, Script } from 'src/app/api/libraries';
 import { AuditUniverseService } from 'src/app/service/audituniverseservice';
 import { BannerService } from 'src/app/service/librariesservice';
 import { ScriptService } from 'src/app/service/scriptservices';
@@ -54,6 +54,7 @@ export class ScriptDetailComponent implements OnInit {
     audit: any;
     filteredAudit: any;
     showScriptContent;
+    allOrg: Organisation[];
 
     script: Script;
 
@@ -87,13 +88,15 @@ export class ScriptDetailComponent implements OnInit {
         let cont = this.bannerService.sendGetcontrolRequest();
         let aud = this.auditUniverseService.getAuditUniverseLevel4Script(0);
         let pro = this.scriptService.getProfiles();
+        let org = this.bannerService.getAllOrganizations();
 
-        forkJoin([ban, ri, cont, aud, pro]).subscribe((results: any) => {
+        forkJoin([ban, ri, cont, aud, pro, org]).subscribe((results: any) => {
             this.banner = results[0].data;
             this.risk = results[1].data;
             this.control = results[2].data;
             this.audit = results[3].data.data;
             this.profiles = results[4].data;
+            this.allOrg = results[5].data;
             this.loading = false;
         });
     }

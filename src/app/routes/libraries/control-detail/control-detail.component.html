@@ -350,7 +350,7 @@
         <input type="text" pInputText id="control_uid" [(ngModel)]="controls.control_uid" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !product.control_uid}"/>
         <small class="ng-dirty ng-invalid" *ngIf="submitted && !controls.control_uid">control_uid is required.</small>
     </div> -->
-                <div class="field col-12 md:col-8">
+                <div class="field col-12 md:col-4">
                     <label for="risk_uid">Risk UID <sup>*</sup></label>
                     <!-- <input id="risk_uid" pInputText [(ngModel)]="control.risk_uid" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !control.risk_uid}"/>
         <small class="ng-dirty ng-invalid" *ngIf="submitted && !control.risk_uid">risk_uid is required.</small> -->
@@ -391,6 +391,17 @@
                         "
                         >Risk UID is required.</small
                     >
+                </div>
+                <div class="field col-12 md:col-4">
+                    <label for="department">Department <sup>*</sup></label>
+                    <p-dropdown
+                        appendTo="body"
+                        [options]="allOrg"
+                        formControlName="organization"
+                        optionLabel="organization"
+                        dataKey="organization"
+                        [style]="{ width: '100%' }"
+                    ></p-dropdown>
                 </div>
                 <div class="field col-12 md:col-4">
                     <label for="au_level_4_uid"
@@ -925,7 +936,7 @@
                     <th
                         pFrozenColumn
                         pSortableColumn="control_uid"
-                        style="min-width: 14rem;"
+                        style="min-width: 14rem"
                     >
                         <div class="flex align-items-center">
                             CONTROL UID
@@ -935,7 +946,7 @@
 
                     <th
                         pSortableColumn="au_level_4_uid"
-                        style="min-width: 14rem;"
+                        style="min-width: 14rem"
                     >
                         <div class="flex align-items-center">
                             AU LEVEL 4 UID
@@ -943,73 +954,70 @@
                         </div>
                     </th>
 
-                    <th pSortableColumn="banner_uid" style="min-width: 14rem;">
+                    <th pSortableColumn="banner_uid" style="min-width: 14rem">
                         <div class="flex align-items-center">
                             DEPARTMENT UID
                             <p-sortIcon field="banner_uid"></p-sortIcon>
                         </div>
                     </th>
 
-                    <th pSortableColumn="risk_uid" style="min-width: 14rem;">
+                    <th pSortableColumn="risk_uid" style="min-width: 14rem">
                         <div class="flex align-items-center">
                             RISK UID
                             <p-sortIcon field="risk_uid"></p-sortIcon>
                         </div>
                     </th>
 
-                    <th pSortableColumn="control" style="min-width: 14rem;">
+                    <th pSortableColumn="control" style="min-width: 14rem">
                         <div class="flex align-items-center">
                             CONTROL
                             <p-sortIcon field="control"></p-sortIcon>
                         </div>
                     </th>
 
-                    <th pSortableColumn="comments" style="min-width: 14rem;">
+                    <th pSortableColumn="comments" style="min-width: 14rem">
                         <div class="flex align-items-center">
                             COMMENT
                             <p-sortIcon field="comments"></p-sortIcon>
                         </div>
                     </th>
 
-                    <th
-                        pSortableColumn="control_type"
-                        style="min-width: 14rem;"
-                    >
+                    <th pSortableColumn="control_type" style="min-width: 14rem">
                         <div class="flex align-items-center">
                             CONTROL TYPE
                             <p-sortIcon field="control_type"></p-sortIcon>
                         </div>
                     </th>
 
-                    <th pSortableColumn="frequency" style="min-width: 14rem;">
+                    <th pSortableColumn="frequency" style="min-width: 14rem">
                         <div class="flex align-items-center">
                             FREQUENCY
                             <p-sortIcon field="frequency"></p-sortIcon>
                         </div>
                     </th>
 
-                    <th pSortableColumn="automation" style="min-width: 14rem;">
+                    <th pSortableColumn="automation" style="min-width: 14rem">
                         <div class="flex align-items-center">
                             AUTOMATION
                             <p-sortIcon field="automation"></p-sortIcon>
                         </div>
                     </th>
 
-                    <th pSortableColumn="category" style="min-width: 14rem;">
+                    <th pSortableColumn="category" style="min-width: 14rem">
                         <div class="flex align-items-center">
                             CATEGORY
                             <p-sortIcon field="category"></p-sortIcon>
                         </div>
                     </th>
 
-                    <th pSortableColumn="assertion" style="min-width: 14rem;">
+                    <th pSortableColumn="assertion" style="min-width: 14rem">
                         <div class="flex align-items-center">
                             ASSERTION
                             <p-sortIcon field="assertion"></p-sortIcon>
                         </div>
                     </th>
 
-                    <th pSortableColumn="key_control" style="min-width: 14rem;">
+                    <th pSortableColumn="key_control" style="min-width: 14rem">
                         <div class="flex align-items-center">
                             KEY CONTROL
                             <p-sortIcon field="key_control"></p-sortIcon>
@@ -1017,7 +1025,7 @@
                     </th>
 
                     <th
-                        style="width: 120px;"
+                        style="width: 120px"
                         class="justify-content-center"
                         pFrozenColumn
                         alignFrozen="right"
@@ -1036,57 +1044,57 @@
                     <td
                         class="text-base"
                         pFrozenColumn
-                        style="min-width: 14rem;"
+                        style="min-width: 14rem"
                     >
                         {{ item.control_uid }}
                     </td>
 
-                    <td class="text-base" style="min-width: 14rem;">
+                    <td class="text-base" style="min-width: 14rem">
                         {{ item.aulftxt }}
                     </td>
 
-                    <td class="text-base" style="min-width: 14rem;">
+                    <td class="text-base" style="min-width: 14rem">
                         {{ item.bannertxt }}
                     </td>
 
-                    <td class="text-base" style="min-width: 14rem;">
+                    <td class="text-base" style="min-width: 14rem">
                         {{ item.risktxt }}
                     </td>
 
-                    <td class="text-base" style="min-width: 14rem;">
+                    <td class="text-base" style="min-width: 14rem">
                         {{ item.control }}
                     </td>
 
-                    <td class="text-base" style="min-width: 14rem;">
+                    <td class="text-base" style="min-width: 14rem">
                         {{ item.comments }}
                     </td>
 
-                    <td class="text-base" style="min-width: 14rem;">
+                    <td class="text-base" style="min-width: 14rem">
                         {{ item.controltxt }}
                     </td>
 
-                    <td class="text-base" style="min-width: 14rem;">
+                    <td class="text-base" style="min-width: 14rem">
                         {{ item.frequencytxt }}
                     </td>
 
-                    <td class="text-base" style="min-width: 14rem;">
+                    <td class="text-base" style="min-width: 14rem">
                         {{ item.autotxt }}
                     </td>
 
-                    <td class="text-base" style="min-width: 14rem;">
+                    <td class="text-base" style="min-width: 14rem">
                         {{ item.categorytxt }}
                     </td>
 
-                    <td class="text-base" style="min-width: 14rem;">
+                    <td class="text-base" style="min-width: 14rem">
                         {{ item.asstxt }}
                     </td>
 
-                    <td class="text-base" style="min-width: 14rem;">
+                    <td class="text-base" style="min-width: 14rem">
                         {{ item.keytxt }}
                     </td>
 
                     <td
-                        style="width: 120px;"
+                        style="width: 120px"
                         pFrozenColumn
                         class="font-bold"
                         alignFrozen="right"

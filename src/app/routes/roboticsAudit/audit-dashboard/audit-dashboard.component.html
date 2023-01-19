@@ -1,0 +1,255 @@
+<p-toast></p-toast>
+<div id="table1">
+    <div class="card px-6 py-6">
+        <p-table
+            #dt
+            [value]="result"
+            [rowHover]="true"
+            [rows]="10"
+            [showCurrentPageReport]="true"
+            [rowsPerPageOptions]="[10, 25, 50]"
+            [loading]="loadingTable"
+            [paginator]="true"
+            currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+            responsiveLayout="scroll"
+            [scrollable]="true"
+            scrollHeight="calc(100vh - 378px)"
+            [filterDelay]="0"
+            [globalFilterFields]="[
+                'audit_board_id',
+                'audit_name',
+                'audit_uid',
+                'department',
+                'full_name',
+                'notes',
+                'organization',
+                'review_year'
+            ]"
+        >
+            <ng-template pTemplate="caption">
+                <div
+                    class="table-header flex justify-content-between align-items-center"
+                >
+                    <span class="text-xl">Audit Dashboard</span>
+                    <span class="p-input-icon-left">
+                        <i class="pi pi-search"></i>
+                        <input
+                            pInputText
+                            type="text"
+                            (input)="
+                                dt.filterGlobal($event.target.value, 'contains')
+                            "
+                            placeholder="Global Search"
+                        />
+                    </span>
+                </div>
+            </ng-template>
+
+            <ng-template pTemplate="header">
+                <tr>
+                    <th pSortableColumn="audit_uid">
+                        <div class="flex align-items-center">
+                            AUDIT UID
+                            <p-sortIcon field="audit_uid"></p-sortIcon>
+                        </div>
+                    </th>
+
+                    <th pSortableColumn="audit_board_id">
+                        <div class="flex align-items-center">
+                            AUDIT BOARD ID
+                            <p-sortIcon field="audit_board_id"></p-sortIcon>
+                        </div>
+                    </th>
+
+                    <th pSortableColumn="audit_name">
+                        <div class="flex align-items-center">
+                            AUDIT NAME
+                            <p-sortIcon field="audit_name"></p-sortIcon>
+                        </div>
+                    </th>
+
+                    <th pSortableColumn="department">
+                        <div class="flex align-items-center">
+                            DEPARTMENT
+                            <p-sortIcon field="department"></p-sortIcon>
+                        </div>
+                    </th>
+
+                    <th pSortableColumn="full_name">
+                        <div class="flex align-items-center">
+                            CREATED BY
+                            <p-sortIcon field="full_name"></p-sortIcon>
+                        </div>
+                    </th>
+
+                    <th pSortableColumn="organization">
+                        <div class="flex align-items-center">
+                            ORGANISATION
+                            <p-sortIcon field="organization"></p-sortIcon>
+                        </div>
+                    </th>
+
+                    <th pSortableColumn="review_year">
+                        <div class="flex align-items-center">
+                            REVIEW YEAR
+                            <p-sortIcon field="review_year"></p-sortIcon>
+                        </div>
+                    </th>
+
+                    <th pSortableColumn="notes">
+                        <div class="flex align-items-center">
+                            NOTES
+                            <p-sortIcon field="notes"></p-sortIcon>
+                        </div>
+                    </th>
+
+                    <th pSortableColumn="results">
+                        <div class="flex align-items-center">
+                            RESULT
+                            <p-sortIcon field="results"></p-sortIcon>
+                        </div>
+                    </th>
+                </tr>
+            </ng-template>
+
+            <ng-template pTemplate="body" let-item>
+                <tr class="p-selectable-row">
+                    <td class="text-base">
+                        {{ item.audit_uid }}
+                    </td>
+
+                    <td class="text-base">
+                        {{ item.audit_board_id }}
+                    </td>
+
+                    <td class="text-base">
+                        {{ item.audit_name }}
+                    </td>
+
+                    <td class="text-base">
+                        {{ item.department }}
+                    </td>
+
+                    <td class="text-base">
+                        {{ item.full_name }}
+                    </td>
+
+                    <td class="text-base">
+                        {{ item.organization }}
+                    </td>
+
+                    <td class="text-base">
+                        {{ item.review_year }}
+                    </td>
+
+                    <td class="text-base">
+                        {{ item.notes }}
+                    </td>
+
+                    <td class="text-base">
+                        {{ item.results }}
+                    </td>
+                </tr>
+            </ng-template>
+        </p-table>
+    </div>
+
+    <button
+        pButton
+        pRipple
+        title="Filter"
+        type="button"
+        icon="pi pi-filter"
+        class="p-button-rounded p-button-lg fixed add-details"
+        (click)="openDailog()"
+    ></button>
+
+    <form
+        *ngIf="filterDialog"
+        [formGroup]="filterForm"
+        (ngSubmit)="filterFormSubmit()"
+    >
+        <p-dialog
+            header="Filter"
+            [(visible)]="filterDialog"
+            [style]="{ width: '30vw' }"
+        >
+            <div class="field">
+                <label for="organization_id" class="block">Organisation</label>
+                <p-dropdown
+                    appendTo="body"
+                    [options]="allOrg"
+                    formControlName="organization_id"
+                    optionLabel="organization"
+                    [dataKey]="organization_id"
+                    placeholder="Select Organisation"
+                    [style]="{ width: '100%' }"
+                ></p-dropdown>
+            </div>
+
+            <div class="field">
+                <label for="department_id" class="block">Department</label>
+                <p-dropdown
+                    appendTo="body"
+                    [options]="allDept"
+                    formControlName="department_id"
+                    optionLabel="department"
+                    [dataKey]="department_uid"
+                    placeholder="Select Department"
+                    [style]="{ width: '100%' }"
+                ></p-dropdown>
+            </div>
+
+            <div class="field">
+                <label for="ap_schedule_start_date">Start Date</label>
+                <p-calendar
+                    appendTo="body"
+                    formControlName="ap_schedule_start_date"
+                    inputId="ap_schedule_start_date"
+                    [showIcon]="true"
+                    [style]="{ width: '100%' }"
+                ></p-calendar>
+            </div>
+
+            <div class="field">
+                <label for="ap_schedule_end_date">End Date</label>
+                <p-calendar
+                    appendTo="body"
+                    formControlName="ap_schedule_end_date"
+                    inputId="ap_schedule_end_date"
+                    [showIcon]="true"
+                    [style]="{ width: '100%' }"
+                ></p-calendar>
+            </div>
+
+            <div class="field">
+                <label for="results" class="block">Department</label>
+                <p-dropdown
+                    appendTo="body"
+                    [options]="resultsOpt"
+                    formControlName="results"
+                    optionLabel="name"
+                    dataKey="results"
+                    placeholder="Select Result"
+                    [style]="{ width: '100%' }"
+                ></p-dropdown>
+            </div>
+
+            <ng-template pTemplate="footer">
+                <p-button
+                    type="reset"
+                    icon="pi pi-times"
+                    (click)="filterDialog = false"
+                    label="Cancel"
+                    styleClass="p-button-text p-button-primary"
+                ></p-button>
+                <p-button
+                    type="submit"
+                    icon="pi pi-check"
+                    label="Save"
+                    styleClass="p-button-text p-button-primary"
+                ></p-button>
+            </ng-template>
+        </p-dialog>
+    </form>
+</div>

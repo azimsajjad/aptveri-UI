@@ -1,4 +1,5 @@
 export interface User {
+    acct_status: any;
     userId: number;
     fullName: string;
     email: string;
@@ -14,4 +15,19 @@ export interface Role {
     role: string;
     role_description: string;
     active: boolean;
+}
+
+export interface CreateUser {
+    fullName: string;
+    email: string;
+    roleName: Role;
+    password: string;
+}
+
+export interface EditUser {
+    userId: number;
+    fullName: string;
+    email: string;
+    roleName: Role;
+    password: string;
 }

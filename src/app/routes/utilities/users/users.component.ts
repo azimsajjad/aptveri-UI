@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ConfirmationService, MessageService } from 'primeng/api';
-import { forkJoin } from 'rxjs';
+import { catchError, finalize } from 'rxjs';
 import { Role, User } from 'src/app/api/users';
 import { UserService } from 'src/app/service/user.service';
 
@@ -15,7 +15,6 @@ export class UsersComponent implements OnInit {
     constructor(
         private userService: UserService,
         private fb: FormBuilder,
-        private confirmService: ConfirmationService,
         private messageService: MessageService
     ) {}
 
@@ -31,7 +30,12 @@ export class UsersComponent implements OnInit {
 
     getAllUsers() {
         this.userService.getAllUsers().subscribe((res) => {
-            this.users = res.data;
+            this.users = res.data.map((ele: User) => {
+                ele.acct_status == 1
+                    ? (ele.acct_status = true)
+                    : (ele.acct_status = false);
+                return ele;
+            });
         });
     }
 
@@ -49,7 +53,7 @@ export class UsersComponent implements OnInit {
                 [Validators.required, Validators.email],
             ],
             fullName: [ele?.fullName || null, Validators.required],
-            roleName: [ele?.roleName || 'Admin', Validators.required],
+            roleName: [ele?.roleName || null, Validators.required],
             password: [null, ele ? null : Validators.required],
         });
         this.userDialog = true;
@@ -57,28 +61,111 @@ export class UsersComponent implements OnInit {
 
     userFormSubmit() {
         if (this.userForm.get('userId').value) {
-            console.log('edit');
+            this.userService
+                .editUser(this.userForm.value)
+                .pipe(
+                    catchError((err) => {
+                        this.messageService.add({
+                            severity: 'error',
+                            summary: 'ERROR!',
+                            detail: 'something went wrong!',
+                            life: 3000,
+                        });
+                        throw new Error(err);
+                    }),
+                    finalize(() => {
+                        this.userDialog = false;
+                        this.getAllUsers();
+                    })
+                )
+                .subscribe((res) => {
+                    if (res.data) {
+                        this.messageService.add({
+                            severity: 'success',
+                            summary: 'Success!!',
+                            detail: 'User Updated!',
+                            life: 3000,
+                        });
+                    } else {
+                        this.messageService.add({
+                            severity: 'info',
+                            summary: 'INFO!',
+                            detail: res.message,
+                            life: 3000,
+                        });
+                    }
+                });
         } else {
-            console.log('add');
+            this.userService
+                .addUser(this.userForm.value)
+                .pipe(
+                    catchError((err) => {
+                        this.messageService.add({
+                            severity: 'error',
+                            summary: 'ERROR!',
+                            detail: 'something went wrong!',
+                            life: 3000,
+                        });
+                        throw new Error(err);
+                    }),
+                    finalize(() => {
+                        this.userDialog = false;
+                        this.getAllUsers();
+                    })
+                )
+                .subscribe((res) => {
+                    if (res.data) {
+                        this.messageService.add({
+                            severity: 'success',
+                            summary: 'Success!!',
+                            detail: 'User Created',
+                            life: 3000,
+                        });
+                    } else {
+                        this.messageService.add({
+                            severity: 'info',
+                            summary: 'INFO!',
+                            detail: res.message,
+                            life: 3000,
+                        });
+                    }
+                });
         }
     }
 
-    deleteUser(ele: User) {
-        this.confirmService.confirm({
-            header: 'Confirmation!',
-            message: 'Are you sure to delete this User?',
-            icon: 'pi pi-exclamation-triangle',
-            accept: () => {
-                this.messageService.add({
-                    severity: 'success',
-                    summary: 'Success!!',
-                    detail: 'User: ' + ele.fullName + ' has been deleted',
-                    life: 3000,
-                });
-            },
-            reject: () => {
-                console.log('rejected');
-            },
-        });
+    updateUser(ele: User, event) {
+        this.userService
+            .disableUser(ele.userId, event.checked)
+            .pipe(
+                catchError((err) => {
+                    this.messageService.add({
+                        severity: 'error',
+                        summary: 'ERROR!',
+                        detail: 'something went wrong!',
+                        life: 3000,
+                    });
+                    throw new Error(err);
+                }),
+                finalize(() => {
+                    this.getAllUsers();
+                })
+            )
+            .subscribe((res) => {
+                if (res.data) {
+                    this.messageService.add({
+                        severity: 'success',
+                        summary: 'Success!!',
+                        detail: 'User: ' + ele.fullName + ' has been deleted',
+                        life: 3000,
+                    });
+                } else {
+                    this.messageService.add({
+                        severity: 'info',
+                        summary: 'INFO!',
+                        detail: res.message,
+                        life: 3000,
+                    });
+                }
+            });
     }
 }

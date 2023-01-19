@@ -494,8 +494,8 @@ export class AuditProgramComponent implements OnInit {
             ],
             banner_id: this.getBanner(
                 auditTest
-                    ? auditTest.banner_id
-                    : this.auditPSelection[0].banner_id
+                    ? auditTest.department_id
+                    : this.auditPSelection[0].department_id
             ),
             ap_id: this.auditPSelection[0].audit_program_id,
             risk_id: [
@@ -907,7 +907,7 @@ export class AuditProgramComponent implements OnInit {
                         }
                     });
                     ele['banner_uid'] = this.banner?.filter((ele) => {
-                        return ele.banner_id == ele.banner_id;
+                        return ele.department_id == ele.department_id;
                     })[0].banner_uid;
                     x.push(ele);
                     return ele;
@@ -2826,15 +2826,16 @@ export class AuditProgramComponent implements OnInit {
 
     getBanner(id: number) {
         let x = this.banner.filter((ele) => {
-            return ele.banner_id == id;
+            return ele.department_id == id;
         });
-        return x[0].banner_uid + ' - ' + x[0].banner;
+        return x[0].department_uid + ' - ' + x[0].department;
     }
+
     getBannerId(val: string) {
         let x = this.banner.filter((ele) => {
-            return ele.banner_uid + ' - ' + ele.banner == val;
+            return ele.department_uid + ' - ' + ele.department == val;
         });
-        return x[0].banner_id;
+        return x[0].department_id;
     }
 
     backClicked() {
