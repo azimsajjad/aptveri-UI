@@ -5,7 +5,7 @@ import {
     ChangeDetectorRef,
     ElementRef,
 } from '@angular/core';
-import { risk, auditunivthird } from '../../../api/libraries';
+import { risk, auditunivthird, Organisation } from '../../../api/libraries';
 import { BannerService } from '../../../service/librariesservice';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { Table } from 'primeng/table';
@@ -77,6 +77,7 @@ export class RiskDetailComponent implements OnInit {
     showPop;
     showPopTitle;
     showContent;
+    allOrg: Organisation[];
 
     @ViewChild('textDialog') textDialog: Dialog;
 
@@ -101,6 +102,10 @@ export class RiskDetailComponent implements OnInit {
     ngOnInit() {
         //   this.getRiskExposuretype();
         //   this.getAuThirdtype();
+        this.riskService.getAllOrganizations().subscribe((res) => {
+            this.allOrg = res.data;
+        });
+
         this.form = this.fb.group({
             auldesc: [
                 '',
