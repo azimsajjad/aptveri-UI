@@ -49,7 +49,7 @@
     --surface-overlay: #ffffff;
     --surface-border: #dfe7ef;
     --surface-hover: #f6f9fc;
-    --focus-ring: 0 0 0 0.2rem #86C143;
+    --focus-ring: 0 0 0 0.2rem ##FFFFFF;
     --maskbg: rgba(0, 0, 0, 0.4);
 }
 

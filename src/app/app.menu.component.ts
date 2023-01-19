@@ -124,14 +124,9 @@ export class AppMenuComponent implements OnInit {
                 label: 'Utilites',
                 items: [
                     {
-                        label: 'Logs',
-                        icon: 'pi pi-code',
-                        routerLink: ['/pages/logs'],
-                    },
-                    {
-                        label: 'Upload',
-                        icon: 'pi pi-upload',
-                        routerLink: ['/pages/upload'],
+                        label: 'Master',
+                        icon: 'pi pi-box',
+                        routerLink: ['/pages/master'],
                     },
                     {
                         label: 'Users',
@@ -139,9 +134,14 @@ export class AppMenuComponent implements OnInit {
                         routerLink: ['/pages/users'],
                     },
                     {
-                        label: 'Master',
-                        icon: 'pi pi-box',
-                        routerLink: ['/pages/master'],
+                        label: 'Upload',
+                        icon: 'pi pi-upload',
+                        routerLink: ['/pages/upload'],
+                    },
+                    {
+                        label: 'Logs',
+                        icon: 'pi pi-code',
+                        routerLink: ['/pages/logs'],
                     },
                 ],
             },
