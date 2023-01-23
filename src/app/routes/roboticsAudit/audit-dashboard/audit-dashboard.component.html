@@ -41,72 +41,118 @@
                             "
                             placeholder="Global Search"
                         />
+                        <p-button icon="pi pi-download" class="ml-4"></p-button>
                     </span>
                 </div>
             </ng-template>
 
             <ng-template pTemplate="header">
                 <tr>
-                    <th pSortableColumn="audit_uid">
+                   <th pSortableColumn="audit_uid">
                         <div class="flex align-items-center">
-                            AUDIT UID
                             <p-sortIcon field="audit_uid"></p-sortIcon>
+                            Audit UID
+                            <p-columnFilter
+                                type="text"
+                                field="audit_uid"
+                                display="menu"
+                            ></p-columnFilter>
                         </div>
                     </th>
 
                     <th pSortableColumn="audit_board_id">
                         <div class="flex align-items-center">
-                            AUDIT BOARD ID
                             <p-sortIcon field="audit_board_id"></p-sortIcon>
+                            Audit Board
+                            <p-columnFilter
+                                type="text"
+                                field="audit_board_id"
+                                display="menu"
+                            ></p-columnFilter>
                         </div>
                     </th>
 
                     <th pSortableColumn="audit_name">
                         <div class="flex align-items-center">
-                            AUDIT NAME
                             <p-sortIcon field="audit_name"></p-sortIcon>
+                            Audit Name
+                            <p-columnFilter
+                                type="text"
+                                field="audit_name"
+                                display="menu"
+                            ></p-columnFilter>
                         </div>
                     </th>
 
                     <th pSortableColumn="department">
                         <div class="flex align-items-center">
-                            DEPARTMENT
                             <p-sortIcon field="department"></p-sortIcon>
+                            Department
+                            <p-columnFilter
+                                type="text"
+                                field="department"
+                                display="menu"
+                            ></p-columnFilter>
                         </div>
                     </th>
 
                     <th pSortableColumn="full_name">
                         <div class="flex align-items-center">
-                            CREATED BY
                             <p-sortIcon field="full_name"></p-sortIcon>
+                            Full Name
+                            <p-columnFilter
+                                type="text"
+                                field="full_name"
+                                display="menu"
+                            ></p-columnFilter>
                         </div>
                     </th>
 
                     <th pSortableColumn="organization">
                         <div class="flex align-items-center">
-                            ORGANISATION
                             <p-sortIcon field="organization"></p-sortIcon>
+                            Organisation
+                            <p-columnFilter
+                                type="text"
+                                field="organization"
+                                display="menu"
+                            ></p-columnFilter>
                         </div>
                     </th>
 
                     <th pSortableColumn="review_year">
                         <div class="flex align-items-center">
-                            REVIEW YEAR
                             <p-sortIcon field="review_year"></p-sortIcon>
+                            Review Year
+                            <p-columnFilter
+                                type="text"
+                                field="review_year"
+                                display="menu"
+                            ></p-columnFilter>
                         </div>
                     </th>
 
                     <th pSortableColumn="notes">
                         <div class="flex align-items-center">
-                            NOTES
                             <p-sortIcon field="notes"></p-sortIcon>
+                            Notes
+                            <p-columnFilter
+                                type="text"
+                                field="notes"
+                                display="menu"
+                            ></p-columnFilter>
                         </div>
                     </th>
 
                     <th pSortableColumn="results">
                         <div class="flex align-items-center">
-                            RESULT
                             <p-sortIcon field="results"></p-sortIcon>
+                            Result
+                            <p-columnFilter
+                                type="text"
+                                field="results"
+                                display="menu"
+                            ></p-columnFilter>
                         </div>
                     </th>
                 </tr>
@@ -154,7 +200,7 @@
         </p-table>
     </div>
 
-    <button
+    <!-- <button
         pButton
         pRipple
         title="Filter"
@@ -162,7 +208,7 @@
         icon="pi pi-filter"
         class="p-button-rounded p-button-lg fixed add-details"
         (click)="openDailog()"
-    ></button>
+    ></button> -->
 
     <form
         *ngIf="filterDialog"

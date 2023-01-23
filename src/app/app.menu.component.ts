@@ -124,10 +124,11 @@ export class AppMenuComponent implements OnInit {
                 label: 'Utilites',
                 items: [
                     {
-                        label: 'Master',
+                        label: 'Library Master',
                         icon: 'pi pi-box',
                         routerLink: ['/pages/master'],
                     },
+                ],
                     {
                         label: 'Users',
                         icon: 'pi pi-users',
