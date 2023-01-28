@@ -7074,7 +7074,7 @@ p-treeselect.ng-invalid.ng-dirty>.p-treeselect {
     color: #6c757d;
 }
 #table1 .pi {
-    font-size: 1rem;
+    font-size: 0.7rem;
 }
 #table1 .p-link {
     font-size: 1rem;
@@ -8816,15 +8816,15 @@ p-treeselect.ng-invalid.ng-dirty>.p-treeselect {
     border-radius: 2rem;
 }
 #table1 .p-button.p-button-icon-only {
-    width: 3rem;
-    padding: 0.75rem 0;
+    width: 1.8rem;
+    padding: 0.3rem 0;
 }
 #table1 .p-button.p-button-icon-only .p-button-icon-left, #table1 .p-button.p-button-icon-only .p-button-icon-right {
     margin: 0;
 }
 #table1 .p-button.p-button-icon-only.p-button-rounded {
     border-radius: 50%;
-    height: 3rem;
+    height: 1.8rem;
 }
 #table1 .p-button.p-button-sm {
     font-size: 0.875rem;
@@ -9595,8 +9595,9 @@ p-treeselect.ng-invalid.ng-dirty>.p-treeselect {
     text-align: left;
     border: 1px solid #dee2e6;
     border-width: 0 0 1px 0;
-    padding: 0.3rem 0.3rem;
+
 }
+/* padding: 0.3rem 0.3rem; */
 #table1 .p-datatable .p-datatable-tbody > tr > td .p-row-toggler, #table1 .p-datatable .p-datatable-tbody > tr > td .p-row-editor-init, #table1 .p-datatable .p-datatable-tbody > tr > td .p-row-editor-save, #table1 .p-datatable .p-datatable-tbody > tr > td .p-row-editor-cancel {
     width: 2rem;
     height: 2rem;
