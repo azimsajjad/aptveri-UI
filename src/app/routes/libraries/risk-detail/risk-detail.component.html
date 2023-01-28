@@ -1061,8 +1061,23 @@
     class="p-fluid"
 >
     <ng-template pTemplate="content">
+        {{ risk.organization }}
         <form [formGroup]="form">
             <div class="p-fluid p-formgrid grid">
+                <div class="field col-12 md:col-4">
+                    <label for="department">Organisation <sup>*</sup></label>
+                    <p-dropdown
+                        appendTo="body"
+                        [options]="allOrg"
+                        formControlName="organization"
+                        optionLabel="organization"
+                        dataKey="organization"
+                        [(ngModel)]="risk.organization"
+                        [style]="{ width: '100%' }"
+                        placeholder="Select Organisation"
+                    ></p-dropdown>
+                </div>
+
                 <div class="field col-12 md:col-4">
                     <label for="au_level_3_uid"
                         >AU Level-3 UID <sup>*</sup></label
@@ -1097,19 +1112,6 @@
                         "
                         >AU Level-3 UID is required.</small
                     >
-                </div>
-
-                <div class="field col-12 md:col-4">
-                    <label for="department">Organisation <sup>*</sup></label>
-                    <p-dropdown
-                        appendTo="body"
-                        [options]="allOrg"
-                        formControlName="organization"
-                        optionLabel="organization"
-                        dataKey="organization"
-                        [style]="{ width: '100%' }"
-                        placeholder="Select Organisation"
-                    ></p-dropdown>
                 </div>
 
                 <div class="field col-12 md:col-4">

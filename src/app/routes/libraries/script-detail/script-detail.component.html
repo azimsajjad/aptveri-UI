@@ -1095,6 +1095,19 @@
                         class="col-12 mb-2 lg:col-4 lg:mb-0 p-dialog-content div-1"
                     >
                         <div class="field">
+                            <label for="organization"> Organisation </label>
+                            <p-dropdown
+                                id="organization"
+                                appendTo="body"
+                                [options]="allOrg"
+                                formControlName="organization"
+                                optionLabel="organization"
+                                dataKey="organization"
+                                [style]="{ width: '100%' }"
+                                placeholder="Select Organisation"
+                            ></p-dropdown>
+                        </div>
+                        <div class="field">
                             <label for="control_uid"
                                 >Control UID <sup>*</sup></label
                             >
@@ -1122,19 +1135,6 @@
                                 formControlName="au_id"
                                 [readonly]="true"
                             />
-                        </div>
-                        <div class="field">
-                            <label for="organization"> Organisation </label>
-                            <p-dropdown
-                                id="organization"
-                                appendTo="body"
-                                [options]="allOrg"
-                                formControlName="organization"
-                                optionLabel="organization"
-                                dataKey="organization"
-                                [style]="{ width: '100%' }"
-                                placeholder="Select Organisation"
-                            ></p-dropdown>
                         </div>
                         <div class="field">
                             <label for="banner_id"

@@ -208,6 +208,7 @@ export class ControlDetailComponent implements OnInit {
                     Validators.minLength(1),
                 ]),
             ],
+            organization: [null, [Validators.required]],
         });
         this.getcontrol();
 
@@ -891,6 +892,8 @@ export class ControlDetailComponent implements OnInit {
                 this.datacontrols.key_control = this.keyselected.toString();
 
                 this.datacontrols.control_uid = this.control.control_uid;
+                this.datacontrols.organization_id =
+                    this.form.get('organization').value.organization_id;
 
                 //   this.controlService.sendPutcontrolRequest(this.datacontrols).subscribe(
                 //       res => {
@@ -965,6 +968,8 @@ export class ControlDetailComponent implements OnInit {
                     asste.length - 1
                 );
                 this.datacontrols.key_control = this.keyselected.toString();
+                this.datacontrols.organization_id =
+                    this.form.get('organization').value.organization_id;
 
                 //   this.controlService.sendPostcontrolRequest(this.datacontrols).subscribe(
                 //       res => {

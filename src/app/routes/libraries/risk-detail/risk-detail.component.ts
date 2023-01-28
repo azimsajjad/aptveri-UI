@@ -179,6 +179,7 @@ export class RiskDetailComponent implements OnInit {
                     Validators.minLength(1),
                 ]),
             ],
+            organization: [null, [Validators.required]],
         });
         this.getrisk();
         // this.getRisktaxoneControltype();
@@ -366,9 +367,7 @@ export class RiskDetailComponent implements OnInit {
                         : (res.record_status = true);
                     return res;
                 });
-                //console.log(res);
                 this.risks = res;
-                //console.log(res)
             });
     }
 
@@ -740,17 +739,8 @@ export class RiskDetailComponent implements OnInit {
                 this.datarisks.likelihood = this.selectedlikelihood;
                 this.datarisks.risk_score = this.selectedtotal;
                 this.datarisks.risk_uid = this.risk.risk_uid;
-                //     this.riskService.sendPutRiskRequest(this.datarisks).subscribe(
-                //         res => {
-                //       //    console.log(res);
-                //           if(res > 0)
-                //           {
-                //             this.getrisk();
-                //             this.messageService.add({severity: 'success', summary: 'Successful', detail: 'risk Updated', life: 3000});
-                //             this.selectedrisks=null
-                //           }
-                //         }
-                //   );
+                this.datarisks.organization_id =
+                    this.form.get('organization').value.organization_id;
 
                 this.riskService
                     .sendPutRiskRequest(this.datarisks)
@@ -816,6 +806,10 @@ export class RiskDetailComponent implements OnInit {
                 this.datarisks.impact = this.selectedimpact;
                 this.datarisks.likelihood = this.selectedlikelihood;
                 this.datarisks.risk_score = this.selectedtotal;
+                // console.log(this.form.value);
+
+                this.datarisks.organization_id =
+                    this.form.get('organization').value.organization_id;
 
                 this.riskService
                     .sendPostRiskRequest(this.datarisks)
@@ -834,9 +828,6 @@ export class RiskDetailComponent implements OnInit {
                     .subscribe((res) => {
                         if (res.data) {
                             this.getrisk();
-                            // this.selectedrisks = null;
-
-                            //this.scriptDialog = false;
                             this.loading = false;
                             this.messageService.add({
                                 severity: 'success',
@@ -846,9 +837,6 @@ export class RiskDetailComponent implements OnInit {
                             });
                         } else {
                             this.getrisk();
-                            // this.selectedrisks = null;
-
-                            //this.scriptDialog = false;
                             this.loading = false;
                             this.messageService.add({
                                 severity: 'error',
@@ -858,17 +846,6 @@ export class RiskDetailComponent implements OnInit {
                             });
                         }
                     });
-
-                //     this.riskService.sendPostRiskRequest(this.datarisks).subscribe(
-                //         res => {
-                //        //   console.log(res);
-                //           if(res > 0)
-                //           {
-                //             this.getrisk();
-                //             this.messageService.add({severity: 'success', summary: 'Successful', detail: 'risk Created', life: 3000});
-                //           }
-                //         }
-                //   );
             }
 
             this.risks = [...this.risks];

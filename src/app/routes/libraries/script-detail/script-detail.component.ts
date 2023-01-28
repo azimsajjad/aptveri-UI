@@ -433,6 +433,8 @@ export class ScriptDetailComponent implements OnInit {
                     ) || '',
                 scriptVaribales: this.scriptForm.value.variable,
                 record_status: 1,
+                organization_id:
+                    this.scriptForm.get('organization').value.organization_id,
             };
 
             if (
@@ -545,6 +547,8 @@ export class ScriptDetailComponent implements OnInit {
                 scriptVaribales: this.scriptForm.value.variable,
                 record_status:
                     this.scriptForm.value.record_status == true ? 1 : 0,
+                organization_id:
+                    this.scriptForm.get('organization').value.organization_id,
             };
 
             if (
@@ -671,6 +675,8 @@ export class ScriptDetailComponent implements OnInit {
                     ) || '',
                 scriptVaribales: this.scriptForm.value.variable,
                 record_status: 1,
+                organization_id:
+                    this.scriptForm.get('organization').value.organization_id,
             };
 
             if (

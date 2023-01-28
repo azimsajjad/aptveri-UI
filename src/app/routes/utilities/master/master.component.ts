@@ -1,48 +1,117 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import {
+    FormBuilder,
+    FormControl,
+    FormGroup,
+    Validators,
+} from '@angular/forms';
+import { MessageService } from 'primeng/api';
+import { catchError, finalize, forkJoin } from 'rxjs';
 import { Organisation } from 'src/app/api/libraries';
+import { PageOption } from 'src/app/api/utils';
 import { BannerService } from 'src/app/service/librariesservice';
+import { UtilsService } from 'src/app/service/utils.service';
 
 @Component({
     selector: 'app-master',
     templateUrl: './master.component.html',
     styleUrls: ['./master.component.scss'],
+    providers: [MessageService],
 })
 export class MasterComponent implements OnInit {
     constructor(
         private fb: FormBuilder,
-        private libraryService: BannerService
+        private libraryService: BannerService,
+        private utilService: UtilsService,
+        private messageService: MessageService
     ) {}
 
-    selectedPage;
-    selectedOption;
+    selectedPage = new FormControl(null);
+    selectedOption = new FormControl(null);
     selectedOrg;
     allOrg: Organisation[];
+    pageOption: PageOption[];
+    optionsOptions: PageOption[];
 
     addDialog: boolean = false;
     addForm: FormGroup;
 
     ngOnInit(): void {
-        this.libraryService.getAllOrganizations().subscribe((res) => {
-            this.allOrg = res.data;
-            this.allOrg[0].organization;
+        let org = this.libraryService.getAllOrganizations();
+        let page = this.utilService.getPageOption();
+
+        forkJoin([org, page]).subscribe((results) => {
+            this.allOrg = results[0].data;
+            this.pageOption = this.filterUnique(results[1].data, 'page_name');
+        });
+
+        this.selectedPage.valueChanges.subscribe((res: PageOption) => {
+            this.utilService.getPageOption(res.page_id).subscribe((resp) => {
+                this.optionsOptions = resp.data;
+            });
         });
     }
 
     openDialog() {
         this.addForm = this.fb.group({
             organization_id: this.selectedOrg.organization_id,
-            page: this.selectedPage.code,
-            option: this.selectedOption.code,
+            option_id: this.selectedOption.value.option_id,
+            option: this.selectedPage.value.option_name,
             name: [null, Validators.required],
             code: [null, Validators.required],
         });
-
         this.addDialog = true;
     }
 
     addFormSubmit() {
-        console.log(this.addForm.value);
+        this.utilService
+            .addLibraryDropdown(this.addForm.value)
+            .pipe(
+                catchError((err) => {
+                    this.messageService.add({
+                        severity: 'error',
+                        summary: 'ERROR!!',
+                        detail: 'Something Went Wrong !!',
+                        life: 3000,
+                    });
+                    throw new Error(err);
+                }),
+                finalize(() => {
+                    this.addForm.reset();
+                    this.selectedOrg = null;
+                    this.selectedOption.reset();
+                    this.selectedPage.reset();
+                    this.addDialog = false;
+                })
+            )
+            .subscribe((res) => {
+                if (res.data) {
+                    this.messageService.add({
+                        severity: 'success',
+                        summary: 'Success!!',
+                        detail: 'Options succesfully added',
+                        life: 3000,
+                    });
+                } else {
+                    this.messageService.add({
+                        severity: 'info',
+                        summary: 'INFO!!',
+                        detail: res.message,
+                        life: 3000,
+                    });
+                }
+            });
+    }
+
+    filterUnique(arr, element) {
+        let unique = {};
+        return arr.filter((obj) => {
+            if (!unique[obj[element]]) {
+                unique[obj[element]] = true;
+                return true;
+            }
+            return false;
+        });
     }
 
     masterCategory: DropdownItem[] = [

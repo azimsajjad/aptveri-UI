@@ -1,3 +1,4 @@
+<p-toast></p-toast>
 <div id="table1">
     <div class="card px-6 py-6">
         <div class="grid">
@@ -12,29 +13,32 @@
                     [style]="{ width: '100%' }"
                 ></p-dropdown>
             </div>
-            <div class="col-12 md:col-3">
+            <div class="col-12 md:col-3" *ngIf="selectedOrg">
                 <label class="text-l font-bold">Page</label>
                 <p-dropdown
-                    [options]="masterCategory"
-                    [(ngModel)]="selectedPage"
-                    optionLabel="name"
-                    dataKey="code"
+                    [options]="pageOption"
+                    [formControl]="selectedPage"
+                    optionLabel="page_name"
+                    dataKey="page_id"
                     placeholder="Select Page"
                     [style]="{ width: '100%' }"
                 ></p-dropdown>
             </div>
-            <div class="col-12 md:col-3" *ngIf="selectedPage">
+            <div class="col-12 md:col-3" *ngIf="selectedPage.value">
                 <label class="text-l font-bold">Option</label>
                 <p-dropdown
-                    [options]="selectedPage.items"
-                    [(ngModel)]="selectedOption"
-                    optionLabel="name"
-                    dataKey="code"
+                    [options]="optionsOptions"
+                    [formControl]="selectedOption"
+                    optionLabel="option_name"
+                    dataKey="option_id"
                     placeholder="Select Option"
                     [style]="{ width: '100%' }"
                 ></p-dropdown>
             </div>
-            <div class="col-12 md:col-3 my-auto mb-0" *ngIf="selectedOption">
+            <div
+                class="col-12 md:col-3 my-auto mb-0"
+                *ngIf="selectedOption.value"
+            >
                 <button
                     pButton
                     pRipple

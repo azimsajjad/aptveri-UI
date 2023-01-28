@@ -39,7 +39,8 @@ export interface risk {
     coddesc?: string;
     rtonedesc?: string;
     rttwodesc?: string;
-
+    organization?: string;
+    organization_id?: number;
     auluid?: string;
     codetext?: string;
     rtax1?: string;
@@ -86,7 +87,8 @@ export interface control {
     created_date?: string;
     updated_by?: number;
     updated_date?: string;
-
+    organization_id?: number;
+    organization?: string;
     categorytxt?: string;
     controltxt?: string;
     frequencytxt?: string;
