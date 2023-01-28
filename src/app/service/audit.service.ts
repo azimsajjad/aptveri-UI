@@ -474,15 +474,28 @@ export class AuditService {
     }
 
     public getAuditDashboard(
-        organization_id: number,
-        department_id: number,
-        ap_schedule_start_date: string,
-        ap_schedule_end_date: string,
-        results: 'pass' | 'fail'
+        organization_id: number = 0,
+        department_id: number = 0,
+        ap_schedule_start_date: any = 0,
+        ap_schedule_end_date: any = 0,
+        results: 'pass' | 'fail' | 0 = 0
     ): Observable<any> {
         return this.http.get(
             environment.api_prefix +
                 `audit/auditreport/${organization_id}/${department_id}/${ap_schedule_start_date}/${ap_schedule_end_date}/${results}`
+        );
+    }
+
+    public downloadCSV(
+        organization_id: number = 0,
+        department_id: number = 0,
+        ap_schedule_start_date: any = 0,
+        ap_schedule_end_date: any = 0,
+        results: 'pass' | 'fail' | 0 = 0
+    ): Observable<any> {
+        return this.http.get(
+            environment.api_prefix +
+                `audit/auditdashbord/${organization_id}/${department_id}/${ap_schedule_start_date}/${ap_schedule_end_date}/${results}`
         );
     }
 }

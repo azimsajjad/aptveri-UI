@@ -350,6 +350,19 @@
         <input type="text" pInputText id="control_uid" [(ngModel)]="controls.control_uid" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !product.control_uid}"/>
         <small class="ng-dirty ng-invalid" *ngIf="submitted && !controls.control_uid">control_uid is required.</small>
     </div> -->
+
+                <div class="field col-12 md:col-4">
+                    <label for="department">Organisation <sup>*</sup></label>
+                    <p-dropdown
+                        appendTo="body"
+                        [options]="allOrg"
+                        formControlName="organization"
+                        optionLabel="organization"
+                        dataKey="organization"
+                        [style]="{ width: '100%' }"
+                        placeholder="Select Organisation"
+                    ></p-dropdown>
+                </div>
                 <div class="field col-12 md:col-4">
                     <label for="risk_uid">Risk UID <sup>*</sup></label>
                     <!-- <input id="risk_uid" pInputText [(ngModel)]="control.risk_uid" required autofocus [ngClass]="{'ng-invalid ng-dirty' : submitted && !control.risk_uid}"/>
@@ -391,18 +404,6 @@
                         "
                         >Risk UID is required.</small
                     >
-                </div>
-                <div class="field col-12 md:col-4">
-                    <label for="department">Organisation <sup>*</sup></label>
-                    <p-dropdown
-                        appendTo="body"
-                        [options]="allOrg"
-                        formControlName="organization"
-                        optionLabel="organization"
-                        dataKey="organization"
-                        [style]="{ width: '100%' }"
-                        placeholder="Select Organisation"
-                    ></p-dropdown>
                 </div>
                 <div class="field col-12 md:col-4">
                     <label for="au_level_4_uid"

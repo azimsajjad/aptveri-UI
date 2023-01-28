@@ -3,7 +3,7 @@
     <div class="card px-6 py-6">
         <p-table
             #dt
-            [value]="result"
+            [value]="filteredResult"
             [rowHover]="true"
             [rows]="10"
             [showCurrentPageReport]="true"
@@ -41,7 +41,51 @@
                             "
                             placeholder="Global Search"
                         />
-                        <p-button icon="pi pi-download" class="ml-4"></p-button>
+                        <p-dropdown
+                            class="ml-2"
+                            [options]="auditUIDs"
+                            optionLabel="name"
+                            dataKey="code"
+                            placeholder="audit.."
+                            [formControl]="selectedAuditUID"
+                        ></p-dropdown>
+                        <p-dropdown
+                            class="ml-2"
+                            [options]="departments"
+                            optionLabel="name"
+                            dataKey="code"
+                            placeholder="department.."
+                            [formControl]="selectedDepartment"
+                        ></p-dropdown>
+                        <p-dropdown
+                            class="ml-2"
+                            [options]="organisations"
+                            optionLabel="name"
+                            dataKey="code"
+                            placeholder="organisations.."
+                            [formControl]="selectedOrg"
+                        ></p-dropdown>
+                        <p-dropdown
+                            class="ml-2"
+                            [options]="reviewYears"
+                            optionLabel="name"
+                            dataKey="code"
+                            placeholder="year.."
+                            [formControl]="selectedReviewYear"
+                        ></p-dropdown>
+                        <p-dropdown
+                            class="ml-2"
+                            [options]="results"
+                            optionLabel="name"
+                            dataKey="code"
+                            placeholder="result.."
+                            [formControl]="selectedResult"
+                        ></p-dropdown>
+                        <p-button
+                            icon="pi pi-download"
+                            class="ml-4"
+                            (click)="downloadcav()"
+                        ></p-button>
                     </span>
                 </div>
             </ng-template>
@@ -52,35 +96,6 @@
                         <div class="flex align-items-center">
                             <p-sortIcon field="audit_uid"></p-sortIcon>
                             Audit UID
-                            <!-- <p-columnFilter
-                                type="text"
-                                field="audit_uid"
-                                display="menu"
-                            ></p-columnFilter> -->
-                        </div>
-                    </th>
-
-                    <th pSortableColumn="audit_board_id">
-                        <div class="flex align-items-center">
-                            <p-sortIcon field="audit_board_id"></p-sortIcon>
-                            Audit Board
-                            <!-- <p-columnFilter
-                                type="text"
-                                field="audit_board_id"
-                                display="menu"
-                            ></p-columnFilter> -->
-                        </div>
-                    </th>
-
-                    <th pSortableColumn="audit_name">
-                        <div class="flex align-items-center">
-                            <p-sortIcon field="audit_name"></p-sortIcon>
-                            Audit Name
-                            <!-- <p-columnFilter
-                                type="text"
-                                field="audit_name"
-                                display="menu"
-                            ></p-columnFilter> -->
                         </div>
                     </th>
 
@@ -88,23 +103,6 @@
                         <div class="flex align-items-center">
                             <p-sortIcon field="department"></p-sortIcon>
                             Department
-                            <!-- <p-columnFilter
-                                type="text"
-                                field="department"
-                                display="menu"
-                            ></p-columnFilter> -->
-                        </div>
-                    </th>
-
-                    <th pSortableColumn="full_name">
-                        <div class="flex align-items-center">
-                            <p-sortIcon field="full_name"></p-sortIcon>
-                            Full Name
-                            <!-- <p-columnFilter
-                                type="text"
-                                field="full_name"
-                                display="menu"
-                            ></p-columnFilter> -->
                         </div>
                     </th>
 
@@ -112,11 +110,6 @@
                         <div class="flex align-items-center">
                             <p-sortIcon field="organization"></p-sortIcon>
                             Organisation
-                            <!-- <p-columnFilter
-                                type="text"
-                                field="organization"
-                                display="menu"
-                            ></p-columnFilter> -->
                         </div>
                     </th>
 
@@ -124,23 +117,6 @@
                         <div class="flex align-items-center">
                             <p-sortIcon field="review_year"></p-sortIcon>
                             Review Year
-                            <!-- <p-columnFilter
-                                type="text"
-                                field="review_year"
-                                display="menu"
-                            ></p-columnFilter> -->
-                        </div>
-                    </th>
-
-                    <th pSortableColumn="notes">
-                        <div class="flex align-items-center">
-                            <p-sortIcon field="notes"></p-sortIcon>
-                            Notes
-                            <!-- <p-columnFilter
-                                type="text"
-                                field="notes"
-                                display="menu"
-                            ></p-columnFilter> -->
                         </div>
                     </th>
 
@@ -148,11 +124,6 @@
                         <div class="flex align-items-center">
                             <p-sortIcon field="results"></p-sortIcon>
                             Result
-                            <!-- <p-columnFilter
-                                type="text"
-                                field="results"
-                                display="menu"
-                            ></p-columnFilter> -->
                         </div>
                     </th>
                 </tr>
@@ -165,19 +136,7 @@
                     </td>
 
                     <td class="text-base">
-                        {{ item.audit_board_id }}
-                    </td>
-
-                    <td class="text-base">
-                        {{ item.audit_name }}
-                    </td>
-
-                    <td class="text-base">
                         {{ item.department }}
-                    </td>
-
-                    <td class="text-base">
-                        {{ item.full_name }}
                     </td>
 
                     <td class="text-base">
@@ -186,10 +145,6 @@
 
                     <td class="text-base">
                         {{ item.review_year }}
-                    </td>
-
-                    <td class="text-base">
-                        {{ item.notes }}
                     </td>
 
                     <td class="text-base">
@@ -210,7 +165,7 @@
         (click)="openDailog()"
     ></button> -->
 
-    <form
+    <!-- <form
         *ngIf="filterDialog"
         [formGroup]="filterForm"
         (ngSubmit)="filterFormSubmit()"
@@ -297,5 +252,5 @@
                 ></p-button>
             </ng-template>
         </p-dialog>
-    </form>
+    </form> -->
 </div>
