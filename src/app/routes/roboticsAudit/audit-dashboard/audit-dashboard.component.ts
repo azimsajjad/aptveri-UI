@@ -102,6 +102,18 @@ export class AuditDashboardComponent implements OnInit {
                 this.result = res.data;
                 this.loadingTable = false;
                 this.filterDialog = false;
+
+                console.log(
+                    this.getUniqueValues(this.result, 'audit_board_id')
+                );
+
+                console.log(
+                    this.filterArrayByElement(
+                        this.result,
+                        'audit_board_id',
+                        'TESTing'
+                    )
+                );
             });
     }
 
@@ -120,5 +132,15 @@ export class AuditDashboardComponent implements OnInit {
 
     getResult(result) {
         return result?.code;
+    }
+
+    getUniqueValues(arr, element) {
+        return [...new Set(arr.map((i) => i[element]))];
+    }
+
+    filterArrayByElement(arr, element, value) {
+        return arr.filter((obj) => {
+            return obj[element] === value;
+        });
     }
 }

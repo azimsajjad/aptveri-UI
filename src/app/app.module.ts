@@ -60,6 +60,7 @@ import { UsersComponent } from './routes/utilities/users/users.component';
 import { OrganisationComponent } from './routes/libraries/organisation/organisation.component';
 import { AuditDashboardComponent } from './routes/roboticsAudit/audit-dashboard/audit-dashboard.component';
 import { MasterComponent } from './routes/utilities/master/master.component';
+import { UtilsService } from './service/utils.service';
 
 export function tokenGetter() {
     return localStorage.getItem('jwt');
@@ -141,6 +142,7 @@ export function tokenGetter() {
         AdhocService,
         AuditService,
         UploadService,
+        UtilsService,
         { provide: HTTP_INTERCEPTORS, useClass: httpInterceptor, multi: true },
         {
             provide: HTTP_INTERCEPTORS,

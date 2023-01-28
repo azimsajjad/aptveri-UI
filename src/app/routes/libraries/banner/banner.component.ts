@@ -71,7 +71,9 @@ export class BannerComponent implements OnInit {
         this.bannerForm = this.fb.group({
             department_uid: ele ? ele.department_uid : null,
             organization: [
-                ele ? ele.organization : this.allOrg[0].organization,
+                ele
+                    ? this.getOrgnaisation(ele.organization)
+                    : this.allOrg[0].organization,
                 [Validators.required, Validators.minLength(1)],
             ],
             department: [
@@ -79,13 +81,23 @@ export class BannerComponent implements OnInit {
                 [Validators.required, Validators.minLength(1)],
             ],
         });
+
         this.bannerDialog = true;
     }
 
     bannerFormSubmit() {
+        let apiObj = {
+            department: this.bannerForm.value.department,
+            department_uid: this.bannerForm.value.department_uid,
+            organization:
+                this.bannerForm.get('organization').value.organization,
+            organization_id:
+                this.bannerForm.get('organization').value.organization_id,
+        };
+
         if (this.bannerForm.get('department_uid').value == null) {
             this.bannerService
-                .sendPostRequest(this.bannerForm.value)
+                .sendPostRequest(apiObj)
                 .pipe(
                     catchError((err) => {
                         this.messageService.add({
@@ -121,7 +133,7 @@ export class BannerComponent implements OnInit {
                 });
         } else {
             this.bannerService
-                .sendPutRequest(this.bannerForm.value)
+                .sendPutRequest(apiObj)
                 .pipe(
                     catchError((err) => {
                         this.messageService.add({
@@ -156,6 +168,10 @@ export class BannerComponent implements OnInit {
                     }
                 });
         }
+    }
+
+    getOrgnaisation(organization: string) {
+        return this.allOrg.find((x) => x.organization == organization);
     }
 
     deleteBanner(ele: Banner) {
