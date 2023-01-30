@@ -146,12 +146,14 @@
         (ngSubmit)="bannerFormSubmit()"
     >
         <p-dialog
-            header="Department Details"
+            header="Department Detail"
             [(visible)]="bannerDialog"
             [style]="{ width: '30vw' }"
         >
             <div class="field">
-                <label for="organization" class="block">Organisation</label>
+                <label for="organization" class="block"
+                    >Organisation<sup>*</sup></label
+                >
                 <p-dropdown
                     appendTo="body"
                     [options]="allOrg"
@@ -164,7 +166,9 @@
             </div>
 
             <div class="field">
-                <label for="department" class="block">Department</label>
+                <label for="department" class="block"
+                    >Department<sup>*</sup></label
+                >
                 <input
                     id="department"
                     type="text"
@@ -180,13 +184,14 @@
                     icon="pi pi-times"
                     (click)="bannerDialog = false"
                     label="Cancel"
-                    styleClass="p-button-text p-button-danger"
+                    styleClass="p-button-secondary"
                 ></p-button>
                 <p-button
                     type="submit"
                     icon="pi pi-check"
                     label="Save"
-                    styleClass="p-button-text p-button-primary"
+                    styleClass="p-button-primary"
+                    [disabled]="bannerForm.invalid"
                 ></p-button>
             </ng-template>
         </p-dialog>

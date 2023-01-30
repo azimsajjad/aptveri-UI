@@ -69,6 +69,7 @@ export class RiskDetailComponent implements OnInit {
     selectedimpact: any = 0;
     selectedlikelihood: any = 0;
     selectedtotal: any = 0;
+    showTable: boolean = true;
 
     submitted: boolean;
     showPopupText: boolean = false;
@@ -546,7 +547,8 @@ export class RiskDetailComponent implements OnInit {
         this.selectedlikelihood = '';
         this.selectedtotal = '';
         this.submitted = false;
-        this.riskDialog = true;
+        // this.riskDialog = true;
+        this.showTable = false;
     }
 
     deleteSelectedrisks(risk) {
@@ -567,7 +569,8 @@ export class RiskDetailComponent implements OnInit {
     editrisk(risk: risk) {
         //   debugger;
         //  this.risk = {...risk};
-        this.riskDialog = true;
+        //  this.riskDialog = true;
+        this.showTable = false;
         const arrayToObject = Object.assign({}, ...[risk]);
         this.risk = { ...arrayToObject };
         //  this.selectedtotal=parseInt(this.risk.impact) * parseInt(this.risk.likelihood);
@@ -708,6 +711,7 @@ export class RiskDetailComponent implements OnInit {
 
     hideDialog() {
         this.riskDialog = false;
+        this.showTable = true;
         this.submitted = false;
     }
 
@@ -849,7 +853,8 @@ export class RiskDetailComponent implements OnInit {
             }
 
             this.risks = [...this.risks];
-            this.riskDialog = false;
+            //   this.riskDialog = false;
+            this.showTable = true;
             this.risk = {};
         }
         this.submitButton.nativeElement.disabled = false;

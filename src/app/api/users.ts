@@ -5,6 +5,7 @@ export interface User {
     email: string;
     roleName: string;
     lastLogon: string;
+    created_date: string;
     adToken?: any;
     authToken?: any;
     menuModules?: any;

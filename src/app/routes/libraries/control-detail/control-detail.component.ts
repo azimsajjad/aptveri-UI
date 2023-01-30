@@ -97,6 +97,7 @@ export class ControlDetailComponent implements OnInit {
     textDialogForm: FormGroup;
     popupText;
     allOrg: Organisation[];
+    showTable: boolean = true;
 
     @ViewChild('textDialog') textDialog: Dialog;
 
@@ -592,7 +593,8 @@ export class ControlDetailComponent implements OnInit {
         this.selectedItem = [];
         this.selectedcatItem = [];
         this.submitted = false;
-        this.controlDialog = true;
+        //  this.controlDialog = true;
+        this.showTable = false;
     }
 
     deleteSelectedcontrols(control: control) {
@@ -615,7 +617,9 @@ export class ControlDetailComponent implements OnInit {
         //  debugger;
         //    this.control = {...control};
         this.selectedcontrols = [control];
-        this.controlDialog = true;
+        //this.controlDialog = true;
+        this.showTable = false;
+
         const arrayToObject = Object.assign({}, ...this.selectedcontrols);
         this.control = { ...arrayToObject };
         const asstt = this.control.assertion.toString();
@@ -755,7 +759,9 @@ export class ControlDetailComponent implements OnInit {
     }
 
     hideDialog() {
-        this.controlDialog = false;
+        // this.controlDialog = false;
+        this.showTable = true;
+
         this.submitted = false;
     }
 
@@ -1015,7 +1021,9 @@ export class ControlDetailComponent implements OnInit {
             }
 
             this.controls = [...this.controls];
-            this.controlDialog = false;
+            //   this.controlDialog = false;
+            this.showTable = true;
+
             this.control = {};
             this.selectedItem = [];
             this.selectedcatItem = [];

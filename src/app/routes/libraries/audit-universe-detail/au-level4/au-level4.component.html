@@ -52,7 +52,7 @@
                     <div
                         class="flex justify-content-between align-items-center"
                     >
-                        UID
+                        AU UID
                         <p-sortIcon field="au_level_4_uid"></p-sortIcon>
                     </div>
                 </th>
@@ -60,7 +60,7 @@
                     <div
                         class="flex justify-content-between align-items-center"
                     >
-                        Discreption
+                        DESCRIPTION
                         <p-sortIcon field="au_level_4_desc"></p-sortIcon>
                     </div>
                 </th>
@@ -68,7 +68,7 @@
                     <div
                         class="flex justify-content-between align-items-center"
                     >
-                        Definition
+                        DEFINITION
                         <p-sortIcon field="au_level_4_definiton"></p-sortIcon>
                     </div>
                 </th>
@@ -76,7 +76,7 @@
                     <div
                         class="flex justify-content-between align-items-center"
                     >
-                        Comment
+                        COMMENTS
                         <p-sortIcon field="au_level_4_comments"></p-sortIcon>
                     </div>
                 </th>
@@ -84,23 +84,23 @@
                     <div
                         class="flex justify-content-between align-items-center"
                     >
-                        Actions
+                        ACTIONS
                     </div>
                 </th>
             </tr>
         </ng-template>
         <ng-template pTemplate="body" let-aulevel4>
             <tr>
-                <td class="text-base" style="min-width: 12rem">
+                <td class="text-base" style="min-width: 12rem;">
                     {{ aulevel4.au_level_4_uid }}
                 </td>
-                <td class="text-base" style="min-width: 12rem">
+                <td class="text-base" style="min-width: 12rem;">
                     {{ aulevel4.au_level_4_desc }}
                 </td>
-                <td class="text-base" style="min-width: 12rem">
+                <td class="text-base" style="min-width: 12rem;">
                     {{ aulevel4.au_level_4_definiton }}
                 </td>
-                <td class="text-base" style="min-width: 12rem">
+                <td class="text-base" style="min-width: 12rem;">
                     {{ aulevel4.au_level_4_comments }}
                 </td>
                 <td>
@@ -153,7 +153,7 @@
     <p-dialog
         [(visible)]="aul_4_Dialog"
         [style]="{ width: '450px' }"
-        header="Audit Universe Level 3 Details"
+        header="Audit Universe Level 4 Detail"
         [modal]="true"
         class="p-fluid"
     >
@@ -199,23 +199,20 @@
             </form>
         </ng-template>
         <ng-template pTemplate="footer">
-            <button
-                pButton
-                pRipple
+            <p-button
                 label="Cancel"
                 icon="pi pi-times"
-                class="p-button-text"
+                styleClass="p-button-secondary"
                 (click)="aul_4_Dialog = false"
-            ></button>
-            <button
-                pButton
-                pRipple
+            ></p-button>
+            <p-button
                 label="Save"
                 icon="pi pi-check"
-                class="p-button-text"
+                class="p-button-primary"
                 [disabled]="aul4Form.invalid"
                 (click)="submitAUL4Form()"
-            ></button>
+                [disabled]="aul4Form.invalid"
+            ></p-button>
         </ng-template>
     </p-dialog>
 

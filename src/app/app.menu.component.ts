@@ -108,11 +108,11 @@ export class AppMenuComponent implements OnInit {
                         icon: 'pi pi-fw pi-id-card',
                         routerLink: ['/pages/audit'],
                     },
-                    {
-                        label: 'Ad-Hoc Test',
-                        icon: 'pi pi-fw pi-exclamation-circle',
-                        routerLink: ['/pages/adhoc-test'],
-                    },
+                    // {
+                    //     label: 'Ad-Hoc Test',
+                    //     icon: 'pi pi-fw pi-exclamation-circle',
+                    //     routerLink: ['/pages/adhoc-test'],
+                    // },
                     {
                         label: 'Audit Dashboard',
                         icon: 'pi pi-fw pi-chart-pie',

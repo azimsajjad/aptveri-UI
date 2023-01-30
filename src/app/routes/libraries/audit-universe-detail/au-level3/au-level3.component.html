@@ -48,12 +48,12 @@
         </ng-template>
         <ng-template pTemplate="header">
             <tr>
-                <th style="max-width: 3rem"></th>
+                <th style="max-width: 3rem;"></th>
                 <th pSortableColumn="au_level_3_uid">
                     <div
                         class="flex justify-content-between align-items-center"
                     >
-                        UID
+                        AU UID
                         <p-sortIcon field="au_level_3_uid"></p-sortIcon>
                     </div>
                 </th>
@@ -61,7 +61,7 @@
                     <div
                         class="flex justify-content-between align-items-center"
                     >
-                        Discreption
+                        DESCRIPTION
                         <p-sortIcon field="au_level_3_desc"></p-sortIcon>
                     </div>
                 </th>
@@ -69,7 +69,7 @@
                     <div
                         class="flex justify-content-between align-items-center"
                     >
-                        Definition
+                        DEFINTION
                         <p-sortIcon field="au_level_3_definiton"></p-sortIcon>
                     </div>
                 </th>
@@ -77,7 +77,7 @@
                     <div
                         class="flex justify-content-between align-items-center"
                     >
-                        Comment
+                        COMMENTS
                         <p-sortIcon field="au_level_3_comments"></p-sortIcon>
                     </div>
                 </th>
@@ -85,29 +85,29 @@
                     <div
                         class="flex justify-content-between align-items-center"
                     >
-                        Actions
+                        ACTIONS
                     </div>
                 </th>
             </tr>
         </ng-template>
         <ng-template pTemplate="body" let-aulevel3>
             <tr>
-                <td class="text-base" style="max-width: 3rem">
+                <td class="text-base" style="max-width: 3rem;">
                     <p-tableCheckbox
                         (click)="getSelection(aulevel3)"
                         [value]="aulevel3"
                     ></p-tableCheckbox>
                 </td>
-                <td class="text-base" style="min-width: 12rem">
+                <td class="text-base" style="min-width: 12rem;">
                     {{ aulevel3.au_level_3_uid }}
                 </td>
-                <td class="text-base" style="min-width: 12rem">
+                <td class="text-base" style="min-width: 12rem;">
                     {{ aulevel3.au_level_3_desc }}
                 </td>
-                <td class="text-base" style="min-width: 12rem">
+                <td class="text-base" style="min-width: 12rem;">
                     {{ aulevel3.au_level_3_definiton }}
                 </td>
-                <td class="text-base" style="min-width: 12rem">
+                <td class="text-base" style="min-width: 12rem;">
                     {{ aulevel3.au_level_3_comments }}
                 </td>
                 <td>
@@ -122,7 +122,7 @@
                             class="p-button-rounded p-button-info"
                             (click)="open(aulevel3)"
                         ></button>
-                        <button
+                        <p-button
                             pButton
                             pRipple
                             title="Delete"
@@ -130,7 +130,7 @@
                             icon="pi pi-trash"
                             class="p-button-rounded p-button-info ml-2"
                             (click)="deleteAuditUniverse(aulevel3)"
-                        ></button
+                        ></p-button
                     ></span>
                 </td>
             </tr>
@@ -160,7 +160,7 @@
     <p-dialog
         [(visible)]="aul_3_Dialog"
         [style]="{ width: '450px' }"
-        header="Audit Universe Level 3 Details"
+        header="Audit Universe Level 3 Detail"
         [modal]="true"
         class="p-fluid"
     >
@@ -206,23 +206,19 @@
             </form>
         </ng-template>
         <ng-template pTemplate="footer">
-            <button
-                pButton
-                pRipple
+            <p-button
                 label="Cancel"
                 icon="pi pi-times"
-                class="p-button-text"
+                styleClass="p-button-secondary"
                 (click)="aul_3_Dialog = false"
-            ></button>
-            <button
-                pButton
-                pRipple
+            ></p-button>
+            <p-button
                 label="Save"
                 icon="pi pi-check"
-                class="p-button-text"
+                class="p-button-primary"
                 [disabled]="aul3Form.invalid"
                 (click)="submitAUL3Form()"
-            ></button>
+            ></p-button>
         </ng-template>
     </p-dialog>
 

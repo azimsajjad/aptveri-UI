@@ -31,6 +31,7 @@ export class UsersComponent implements OnInit {
     getAllUsers() {
         this.userService.getAllUsers().subscribe((res) => {
             this.users = res.data.map((ele: User) => {
+                //  console.log(this.users);
                 ele.acct_status == 1
                     ? (ele.acct_status = true)
                     : (ele.acct_status = false);

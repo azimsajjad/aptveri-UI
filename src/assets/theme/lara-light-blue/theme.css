@@ -7633,22 +7633,22 @@ p-treeselect.ng-invalid.ng-dirty>.p-treeselect {
     right: 3rem;
 }
 #table1 .p-checkbox {
-    width: 22px;
-    height: 22px;
+    width: 14px;
+    height: 14px;
 }
 #table1 .p-checkbox .p-checkbox-box {
     border: 2px solid #ced4da;
     background: #fff;
-    width: 22px;
-    height: 22px;
+    width: 14px;
+    height: 14px;
     color: #495057;
-    border-radius: 6px;
+    border-radius: 2px;
     transition: background-color 0.2s, color 0.2s, border-color 0.2s, box-shadow 0.2s;
 }
 #table1 .p-checkbox .p-checkbox-box .p-checkbox-icon {
     transition-duration: 0.2s;
     color: #fff;
-    font-size: 14px;
+    font-size: 9px;
 }
 #table1 .p-checkbox .p-checkbox-box.p-highlight {
     border-color: #1E5B9C;

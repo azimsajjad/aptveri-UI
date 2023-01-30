@@ -1,6 +1,107 @@
 <p-toast></p-toast>
 <div id="table1">
     <div class="card px-6 py-6">
+        <p-toolbar styleClass="mb-4 gap-2">
+            <ng-template pTemplate="left">
+                <div class="grid">
+                    <!-- <p-dropdown
+                    class="ml-2"
+                    [options]="auditUIDs"
+                    optionLabel="name"
+                    dataKey="code"
+                    placeholder="audit.."
+                    [formControl]="selectedAuditUID"
+                ></p-dropdown> -->
+                    <div class="col-4 md:col-2">
+                        <label class="text-l font-bold">Department</label>
+                        <p-dropdown
+                            class="ml-2"
+                            [options]="departments"
+                            optionLabel="name"
+                            dataKey="code"
+                            placeholder="Select Department"
+                            [formControl]="selectedDepartment"
+                        ></p-dropdown>
+                    </div>
+                    <div class="col-4 md:col-2">
+                        <label class="text-l font-bold">Organisation</label>
+                        <p-dropdown
+                            class="ml-2"
+                            [options]="organisations"
+                            optionLabel="name"
+                            dataKey="code"
+                            placeholder="Select Organisation"
+                            [formControl]="selectedOrg"
+                        ></p-dropdown>
+                    </div>
+
+                    <!-- <p-dropdown
+                    class="ml-2"
+                    [options]="reviewYears"
+                    optionLabel="name"
+                    dataKey="code"
+                    placeholder="year.."
+                    [formControl]="selectedReviewYear"
+                ></p-dropdown> -->
+                    <div class="col-4 md:col-2">
+                        <label class="text-l font-bold" for="start_date"
+                            >From Date
+                        </label>
+                        <p-calendar
+                            id="start_date"
+                            formControlName="start_date"
+                        ></p-calendar>
+                    </div>
+                    <div class="col-4 md:col-2">
+                        <label class="text-l font-bold" for="end_date"
+                            >To Date
+                        </label>
+                        <p-calendar
+                            id="end_date"
+                            formControlName="end_date"
+                        ></p-calendar>
+                    </div>
+                    <div class="col-4 md:col-2">
+                        <label class="text-l font-bold">Result</label>
+                        <p-dropdown
+                            class="ml-2"
+                            [options]="results"
+                            optionLabel="name"
+                            dataKey="code"
+                            placeholder="Select Result"
+                            [formControl]="selectedResult"
+                        ></p-dropdown>
+                    </div>
+                    <div class="col-4 md:col-2">
+                        <br />
+                        <p-button
+                            type="submit"
+                            icon="pi pi-check"
+                            label="Submit"
+                            styleClass="p-button-primary"
+                        ></p-button>
+                    </div>
+                </div>
+                <!-- &nbsp;
+                <p-button
+                    type="submit"
+                    icon="pi pi-check"
+                    label="Submit"
+                    styleClass="p-button-primary"
+                ></p-button> -->
+            </ng-template>
+
+            <!-- <ng-template pTemplate="right">
+                <button
+                    pButton
+                    pRipple
+                    label="Export"
+                    icon="pi pi-upload"
+                    class="p-button-secondary"
+                ></button>
+            </ng-template> -->
+        </p-toolbar>
+
         <p-table
             #dt
             [value]="filteredResult"
@@ -32,7 +133,7 @@
                 >
                     <span class="text-xl">Audit Dashboard</span>
                     <span class="p-input-icon-left">
-                        <i class="pi pi-search"></i>
+                        <!-- <i class="pi pi-search"></i>
                         <input
                             pInputText
                             type="text"
@@ -40,94 +141,59 @@
                                 dt.filterGlobal($event.target.value, 'contains')
                             "
                             placeholder="Global Search"
-                        />
-                        <p-dropdown
-                            class="ml-2"
-                            [options]="auditUIDs"
-                            optionLabel="name"
-                            dataKey="code"
-                            placeholder="audit.."
-                            [formControl]="selectedAuditUID"
-                        ></p-dropdown>
-                        <p-dropdown
-                            class="ml-2"
-                            [options]="departments"
-                            optionLabel="name"
-                            dataKey="code"
-                            placeholder="department.."
-                            [formControl]="selectedDepartment"
-                        ></p-dropdown>
-                        <p-dropdown
-                            class="ml-2"
-                            [options]="organisations"
-                            optionLabel="name"
-                            dataKey="code"
-                            placeholder="organisations.."
-                            [formControl]="selectedOrg"
-                        ></p-dropdown>
-                        <p-dropdown
-                            class="ml-2"
-                            [options]="reviewYears"
-                            optionLabel="name"
-                            dataKey="code"
-                            placeholder="year.."
-                            [formControl]="selectedReviewYear"
-                        ></p-dropdown>
-                        <p-dropdown
-                            class="ml-2"
-                            [options]="results"
-                            optionLabel="name"
-                            dataKey="code"
-                            placeholder="result.."
-                            [formControl]="selectedResult"
-                        ></p-dropdown>
+                        /> -->
+
                         <p-button
                             icon="pi pi-download"
-                            class="ml-4"
+                            class="ml-10"
+                            iconPos="left"
+                            label="Export"
+                            pTooltip="Export to csv"
+                            tooltipPosition="top"
+                            styleClass="p-button-secondary"
                             (click)="downloadcav()"
                         ></p-button>
                     </span>
                 </div>
             </ng-template>
-  <ng-template pTemplate="header">
+            <ng-template pTemplate="header">
                 <tr>
                     <th pSortableColumn="audit_uid">
                         <div class="flex align-items-center">
                             <p-sortIcon field="audit_uid"></p-sortIcon>
-                            Audit UID
+                            AUDIT UID
                         </div>
                     </th>
 
                     <th pSortableColumn="department">
                         <div class="flex align-items-center">
                             <p-sortIcon field="department"></p-sortIcon>
-                            Department
+                            DEPARTMENT
                         </div>
                     </th>
 
                     <th pSortableColumn="organization">
                         <div class="flex align-items-center">
                             <p-sortIcon field="organization"></p-sortIcon>
-                            Organisation
+                            ORGANIZATION
                         </div>
                     </th>
 
                     <th pSortableColumn="review_year">
                         <div class="flex align-items-center">
                             <p-sortIcon field="review_year"></p-sortIcon>
-                            Review Year
+                            REVIEW YEAR
                         </div>
                     </th>
 
                     <th pSortableColumn="results">
                         <div class="flex align-items-center">
                             <p-sortIcon field="results"></p-sortIcon>
-                            Result
+                            RESULT
                         </div>
                     </th>
                 </tr>
             </ng-template>
-
 
             <ng-template pTemplate="body" let-item>
                 <tr class="p-selectable-row">

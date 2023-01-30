@@ -109,6 +109,7 @@ export class AuditComponent implements OnInit {
     private app_URL = environment.app_url;
     name = 'Get Current Url Route Demo';
     currentRoute: string;
+    showTable: boolean = true;
 
     //display the username
     // displaytheUsername :any;
@@ -239,7 +240,9 @@ export class AuditComponent implements OnInit {
                         return throwError(err);
                     }),
                     finalize(() => {
-                        this.auditDialog = false;
+                        //   this.auditDialog = false;
+                        this.showTable = true;
+
                         this.loading = false;
                     })
                 )
@@ -284,7 +287,9 @@ export class AuditComponent implements OnInit {
                     }),
                     finalize(() => {
                         this.selectedaudits = null;
-                        this.auditDialog = false;
+                        // this.auditDialog = false;
+                        this.showTable = true;
+
                         this.loading = false;
                     })
                 )
@@ -601,14 +606,18 @@ export class AuditComponent implements OnInit {
                 .subscribe((res) => {
                     this.loading = false;
                     if (res.length > 0) {
-                        this.auditDialog = true;
+                        //   this.auditDialog = true;
+                        this.showTable = false;
+
                         this.isAuditEdit = true;
                     } else {
-                        this.auditDialog = true;
+                        // this.auditDialog = true;
+                        this.showTable = false;
                     }
                 });
         } else {
-            this.auditDialog = true;
+            //  this.auditDialog = true;
+            this.showTable = false;
         }
         console.log(audit);
 
@@ -661,7 +670,8 @@ export class AuditComponent implements OnInit {
     }
 
     hideDialog() {
-        this.auditDialog = false;
+        //this.auditDialog = false;
+        this.showTable = true;
         this.submitted = false;
     }
 

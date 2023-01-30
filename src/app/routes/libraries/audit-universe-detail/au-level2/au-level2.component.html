@@ -47,12 +47,12 @@
         </ng-template>
         <ng-template pTemplate="header">
             <tr>
-                <th style="max-width: 3rem"></th>
+                <th style="max-width: 3rem;"></th>
                 <th pSortableColumn="uid">
                     <div
                         class="flex justify-content-between align-items-center"
                     >
-                        UID
+                        AU UID
                         <p-sortIcon field="au_level_2_uid"></p-sortIcon>
                     </div>
                 </th>
@@ -60,7 +60,7 @@
                     <div
                         class="flex justify-content-between align-items-center"
                     >
-                        Discreption
+                        DESCRIPTION
                         <p-sortIcon field="au_level_2_desc"></p-sortIcon>
                     </div>
                 </th>
@@ -68,23 +68,23 @@
                     <div
                         class="flex justify-content-between align-items-center"
                     >
-                        Actions
+                        ACTIONS
                     </div>
                 </th>
             </tr>
         </ng-template>
         <ng-template pTemplate="body" let-aulevel2>
             <tr>
-                <td class="text-base" style="max-width: 3rem">
+                <td class="text-base" style="max-width: 3rem;">
                     <p-tableCheckbox
                         (click)="getSelection(aulevel2)"
                         [value]="aulevel2"
                     ></p-tableCheckbox>
                 </td>
-                <td class="text-base" style="min-width: 12rem">
+                <td class="text-base" style="min-width: 12rem;">
                     {{ aulevel2.au_level_2_uid }}
                 </td>
-                <td class="text-base" style="min-width: 12rem">
+                <td class="text-base" style="min-width: 12rem;">
                     {{ aulevel2.au_level_2_desc }}
                 </td>
                 <td>
@@ -137,7 +137,7 @@
     <p-dialog
         [(visible)]="aul_2_Dialog"
         [style]="{ width: '450px' }"
-        header="Audit Universe Level 2 Details"
+        header="Audit Universe Level 2 Detail"
         [modal]="true"
         class="p-fluid"
     >
@@ -165,22 +165,19 @@
             </form>
         </ng-template>
         <ng-template pTemplate="footer">
-            <button
-                pButton
-                pRipple
+            <p-button
                 label="Cancel"
                 icon="pi pi-times"
-                class="p-button-text"
+                styleClass="p-button-secondary"
                 (click)="aul_2_Dialog = false"
-            ></button>
-            <button
-                pButton
-                pRipple
+            ></p-button>
+            <p-button
                 label="Save"
                 icon="pi pi-check"
-                class="p-button-text"
+                class="p-button-primary"
                 (click)="submitAUL2Form()"
-            ></button>
+                [disabled]="aul2Form.invalid"
+            ></p-button>
         </ng-template>
     </p-dialog>
 

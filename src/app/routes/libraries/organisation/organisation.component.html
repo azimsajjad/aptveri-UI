@@ -20,7 +20,7 @@
                 <div
                     class="table-header flex justify-content-between align-items-center"
                 >
-                    <span class="text-xl">List of Organisations</span>
+                    <span class="text-xl">List of Organisation</span>
                     <span class="p-input-icon-left">
                         <i class="pi pi-search"></i>
                         <input
@@ -131,12 +131,14 @@
         (ngSubmit)="orgForm.valid && orgFormSubmit()"
     >
         <p-dialog
-            header="Organisation Details"
+            header="Organisation Detail"
             [(visible)]="orgDialog"
             [style]="{ width: '30vw' }"
         >
             <div class="field">
-                <label for="organization" class="block">Organisation</label>
+                <label for="organization" class="block"
+                    >Organisation<sup>*</sup></label
+                >
                 <input
                     id="organization"
                     type="text"
@@ -148,7 +150,7 @@
 
             <div class="field">
                 <label for="organization_description" class="block"
-                    >Description</label
+                    >Description<sup>*</sup></label
                 >
                 <input
                     id="organization_description"
@@ -165,13 +167,14 @@
                     icon="pi pi-times"
                     (click)="orgDialog = false"
                     label="Cancel"
-                    styleClass="p-button-text p-button-primary"
+                    styleClass="p-button-secondary"
                 ></p-button>
                 <p-button
                     type="submit"
                     icon="pi pi-check"
                     label="Save"
-                    styleClass="p-button-text p-button-primary"
+                    styleClass="p-button-primary"
+                    [disabled]="orgForm.invalid"
                 ></p-button>
             </ng-template>
         </p-dialog>

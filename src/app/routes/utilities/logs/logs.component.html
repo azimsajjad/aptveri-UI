@@ -27,7 +27,7 @@
                 <div
                     class="table-header flex justify-content-between align-items-center"
                 >
-                    <span class="text-xl">List of Logs</span>
+                    <span class="text-xl">List of Log</span>
                     <span class="p-input-icon-left">
                         <i class="pi pi-search"></i>
                         <input
@@ -93,27 +93,27 @@
 
             <ng-template pTemplate="body" let-item>
                 <tr class="p-selectable-row">
-                    <td>
+                    <td class="text-base" style="min-width: 14rem;">
                         {{ item.event_id }}
                     </td>
 
-                    <td>
+                    <td class="text-base" style="min-width: 14rem;">
                         {{ item.event_type }}
                     </td>
 
-                    <td>
+                    <td class="text-base" style="min-width: 14rem;">
                         {{ item.description }}
                     </td>
 
-                    <td>
+                    <td class="text-base" style="min-width: 14rem;">
                         {{ item.log_id }}
                     </td>
 
-                    <td>
+                    <td class="text-base" style="min-width: 14rem;">
                         {{ item.username }}
                     </td>
 
-                    <td>
+                    <td class="text-base" style="min-width: 14rem;">
                         {{ item.event_datetime | date: 'medium' }}
                     </td>
                 </tr>
