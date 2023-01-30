@@ -717,7 +717,7 @@ export class RiskDetailComponent implements OnInit {
 
     saverisk() {
         //  debugger;
-        this.submitButton.nativeElement.disabled = true;
+        // this.submitButton.nativeElement.disabled = true;
 
         this.submitted = true;
         //alert(this.selectedau_level_3_uid);
@@ -857,7 +857,7 @@ export class RiskDetailComponent implements OnInit {
             this.showTable = true;
             this.risk = {};
         }
-        this.submitButton.nativeElement.disabled = false;
+        // this.submitButton.nativeElement.disabled = false;
     }
     selectEngineeringDisplayName(event: any) {
         //  debugger;
@@ -962,5 +962,20 @@ export class RiskDetailComponent implements OnInit {
         this.showPop = true;
         this.showPopTitle = title;
         this.showContent = detail;
+    }
+
+    filteredOrg: Organisation[];
+    filterOrg(event) {
+        this.filteredOrg = [];
+        for (let i = 0; i < this.allOrg.length; i++) {
+            let org = this.allOrg[i];
+            if (
+                org.organization
+                    .toLowerCase()
+                    .indexOf(event.query.toLowerCase()) == 0
+            ) {
+                this.filteredOrg.push(org);
+            }
+        }
     }
 }

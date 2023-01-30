@@ -3,7 +3,6 @@ import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { Dialog } from 'primeng/dialog';
 import { Table } from 'primeng/table';
-import { title } from 'process';
 import {
     catchError,
     combineLatest,
@@ -128,6 +127,7 @@ export class ScriptDetailComponent implements OnInit {
                     return res;
                 });
                 this.script = res;
+                console.log(this.script);
             });
     }
 
@@ -139,6 +139,10 @@ export class ScriptDetailComponent implements OnInit {
             this.storeScriptVariables = script.scriptVaribales;
 
             this.scriptForm = this._formbuilder.group({
+                organization: [
+                    this.getOrg(script.organization_id) || null,
+                    Validators.required,
+                ],
                 record_id: script.record_id,
                 script_id: script.script_id,
                 version_id: script.version_id,
@@ -201,6 +205,7 @@ export class ScriptDetailComponent implements OnInit {
         } else if (this.scriptEditMode == 'new') {
             this.storeScriptVariables = [];
             this.scriptForm = this._formbuilder.group({
+                organization: [null, Validators.required],
                 au_id: [null, Validators.required],
                 risk_id: [null, Validators.required],
                 banner_id: [null, Validators.required],
@@ -232,6 +237,10 @@ export class ScriptDetailComponent implements OnInit {
         } else {
             this.storeScriptVariables = script.scriptVaribales;
             this.scriptForm = this._formbuilder.group({
+                organization: [
+                    this.getOrg(script.organization_id) || null,
+                    Validators.required,
+                ],
                 script_id: script.script_id,
                 version_id: script.version_id,
                 control_id: [
@@ -363,7 +372,7 @@ export class ScriptDetailComponent implements OnInit {
             }
         });
 
-        this.scriptForm.get('variable').valueChanges.subscribe((res) => {
+        this.scriptForm.get('variable')?.valueChanges.subscribe((res) => {
             res.forEach((ele) => {
                 if (ele.var_datatype != '') {
                     if (
@@ -377,6 +386,16 @@ export class ScriptDetailComponent implements OnInit {
                 }
             });
         });
+
+        this.scriptForm
+            .get('organization')
+            .valueChanges.subscribe((res: Organisation) => {
+                this.scriptService
+                    .getScriptControls(res.organization_id)
+                    .subscribe((res) => {
+                        this.control = res.data;
+                    });
+            });
 
         this.scriptDialog = true;
     }
@@ -445,12 +464,12 @@ export class ScriptDetailComponent implements OnInit {
                     this.scriptDefaultVariables.every((x) => {
                         return this.scriptForm
                             .get('script_presto')
-                            .value.includes(x);
+                            .value?.includes(x);
                     }) ||
                     this.scriptDefaultVariables.every((x) => {
                         return this.scriptForm
                             .get('sql_script')
-                            .value.includes(x);
+                            .value?.includes(x);
                     })
                 ) {
                     this.scriptService
@@ -1101,6 +1120,25 @@ export class ScriptDetailComponent implements OnInit {
         }
 
         this.filteredDatatypes = filtered;
+    }
+
+    filteredOrg: Organisation[];
+    filterOrg(event) {
+        this.filteredOrg = [];
+        for (let i = 0; i < this.allOrg.length; i++) {
+            let org = this.allOrg[i];
+            if (
+                org.organization
+                    .toLowerCase()
+                    .indexOf(event.query.toLowerCase()) == 0
+            ) {
+                this.filteredOrg.push(org);
+            }
+        }
+    }
+
+    getOrg(id) {
+        return this.allOrg.find((x) => x.organization_id === id);
     }
 
     day = [

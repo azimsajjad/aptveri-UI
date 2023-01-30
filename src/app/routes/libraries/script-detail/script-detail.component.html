@@ -827,21 +827,15 @@
 
             <ng-template pTemplate="header">
                 <tr>
-                    <th style="min-width: 14rem;" pFrozenColumn>
-                        STATUS
-                    </th>
-                    <th
-                        pFrozenColumn
-                        pSortableColumn="script_uid"
-                        style="min-width: 14rem;"
-                    >
+                    <th style="max-width: 5rem" pFrozenColumn>STATUS</th>
+                    <th pSortableColumn="script_uid" style="min-width: 14rem">
                         <div class="flex align-items-center">
                             SCRIPT UID
                             <p-sortIcon field="script_uid"></p-sortIcon>
                         </div>
                     </th>
 
-                    <th pSortableColumn="version" style="min-width: 14rem;">
+                    <th pSortableColumn="version" style="min-width: 14rem">
                         <div class="flex align-items-center">
                             VERSION
                             <p-sortIcon field="version"></p-sortIcon>
@@ -850,7 +844,7 @@
 
                     <th
                         pSortableColumn="original_version_id"
-                        style="min-width: 14rem;"
+                        style="min-width: 14rem"
                     >
                         <div class="flex align-items-center">
                             ORIGINAL VERSION ID
@@ -862,7 +856,7 @@
 
                     <th
                         pSortableColumn="au_level_4_desc"
-                        style="min-width: 14rem;"
+                        style="min-width: 14rem"
                     >
                         <div class="flex align-items-center">
                             AU LEVEL 4 DESCRIPTION
@@ -870,24 +864,21 @@
                         </div>
                     </th>
 
-                    <th pSortableColumn="risk_desc" style="min-width: 14rem;">
+                    <th pSortableColumn="risk_desc" style="min-width: 14rem">
                         <div class="flex align-items-center">
                             RISK DESCRIPTION
                             <p-sortIcon field="risk_desc"></p-sortIcon>
                         </div>
                     </th>
 
-                    <th pSortableColumn="banner_desc" style="min-width: 14rem;">
+                    <th pSortableColumn="banner_desc" style="min-width: 14rem">
                         <div class="flex align-items-center">
                             DEPARTMENT DESCRIPTION
                             <p-sortIcon field="banner_desc"></p-sortIcon>
                         </div>
                     </th>
 
-                    <th
-                        pSortableColumn="control_desc"
-                        style="min-width: 14rem;"
-                    >
+                    <th pSortableColumn="control_desc" style="min-width: 14rem">
                         <div class="flex align-items-center">
                             CONTROL DESCRIPTION
                             <p-sortIcon field="control_desc"></p-sortIcon>
@@ -896,7 +887,7 @@
 
                     <th
                         pSortableColumn="script_presto"
-                        style="min-width: 14rem;"
+                        style="min-width: 14rem"
                     >
                         <div class="flex align-items-center">
                             FEDERATED SCRIPT
@@ -904,7 +895,7 @@
                         </div>
                     </th>
 
-                    <th pSortableColumn="script_sql" style="min-width: 14rem;">
+                    <th pSortableColumn="script_sql" style="min-width: 14rem">
                         <div class="flex align-items-center">
                             SQL SCRIPT
                             <p-sortIcon field="script_sql"></p-sortIcon>
@@ -913,7 +904,7 @@
 
                     <th
                         pSortableColumn="script_defination"
-                        style="min-width: 14rem;"
+                        style="min-width: 14rem"
                     >
                         <div class="flex align-items-center">
                             Script DEFINITION
@@ -921,20 +912,14 @@
                         </div>
                     </th>
 
-                    <th
-                        pSortableColumn="target_table"
-                        style="min-width: 14rem;"
-                    >
+                    <th pSortableColumn="target_table" style="min-width: 14rem">
                         <div class="flex align-items-center">
                             TARGET TABLE
                             <p-sortIcon field="target_table"></p-sortIcon>
                         </div>
                     </th>
 
-                    <th
-                        pSortableColumn="schedule_day"
-                        style="min-width: 14rem;"
-                    >
+                    <th pSortableColumn="schedule_day" style="min-width: 14rem">
                         <div class="flex align-items-center">
                             SCHEDULE DAY
                             <p-sortIcon field="schedule_day"></p-sortIcon>
@@ -943,7 +928,7 @@
 
                     <th
                         pSortableColumn="start_time_interval"
-                        style="min-width: 14rem;"
+                        style="min-width: 14rem"
                     >
                         <div class="flex align-items-center">
                             START TIME INTERVAL
@@ -955,7 +940,7 @@
 
                     <th
                         pSortableColumn="start_time_interval_end"
-                        style="min-width: 14rem;"
+                        style="min-width: 14rem"
                     >
                         <div class="flex align-items-center">
                             END TIME INTERVAL
@@ -967,7 +952,7 @@
 
                     <th
                         pSortableColumn="schedule_status"
-                        style="min-width: 14rem;"
+                        style="min-width: 14rem"
                     >
                         <div class="flex align-items-center">
                             SCHEDULE STATUS
@@ -975,14 +960,14 @@
                         </div>
                     </th>
 
-                    <th pSortableColumn="output_only" style="min-width: 14rem;">
+                    <th pSortableColumn="output_only" style="min-width: 14rem">
                         <div class="flex align-items-center">
                             OUTPUT
                             <p-sortIcon field="output_only"></p-sortIcon>
                         </div>
                     </th>
 
-                    <th pSortableColumn="role_access" style="min-width: 14rem;">
+                    <th pSortableColumn="role_access" style="min-width: 14rem">
                         <div class="flex align-items-center">
                             ROLE ACCESS
                             <p-sortIcon field="role_access"></p-sortIcon>
@@ -991,7 +976,7 @@
 
                     <th
                         pSortableColumn="record_status"
-                        style="min-width: 14rem;"
+                        style="min-width: 14rem"
                     >
                         <div class="flex align-items-center">
                             STATUS
@@ -1001,7 +986,7 @@
 
                     <th
                         pSortableColumn="action"
-                        style="width: 200px;"
+                        style="width: 200px"
                         pFrozenColumn
                         alignFrozen="right"
                         class="justify-content-LEFT"
@@ -1013,41 +998,37 @@
 
             <ng-template pTemplate="body" let-item>
                 <tr class="p-selectable-row">
-                    <td pFrozenColumn style="min-width: 14rem;">
+                    <td pFrozenColumn style="max-width: 5rem">
                         <p-inputSwitch
-                            (onChange)="changeStatus(script, $event)"
-                            [(ngModel)]="script.record_status"
+                            (onChange)="changeStatus(item, $event)"
+                            [(ngModel)]="item.schedule_status"
                         ></p-inputSwitch>
                     </td>
-                    <td
-                        class="text-base"
-                        style="min-width: 14rem;"
-                        pFrozenColumn
-                    >
+                    <td class="text-base" style="min-width: 14rem">
                         {{ item.script_uid }}
                     </td>
-                    <td class="text-base" style="min-width: 14rem;">
+                    <td class="text-base" style="min-width: 14rem">
                         {{ item.version }}
                     </td>
-                    <td class="text-base" style="min-width: 14rem;">
+                    <td class="text-base" style="min-width: 14rem">
                         {{ item.original_version_id }}
                     </td>
-                    <td class="text-base" style="min-width: 14rem;">
+                    <td class="text-base" style="min-width: 14rem">
                         {{ item.au_level_4_desc }}
                     </td>
-                    <td class="text-base" style="min-width: 14rem;">
+                    <td class="text-base" style="min-width: 14rem">
                         {{ item.risk_desc.substring(0, 40) }}
                     </td>
-                    <td class="text-base" style="min-width: 14rem;">
+                    <td class="text-base" style="min-width: 14rem">
                         {{ item.banner_desc }}
                     </td>
-                    <td class="text-base" style="min-width: 14rem;">
-                        {{ item.control_desc }}
+                    <td class="text-base" style="min-width: 14rem">
+                        {{ item.control_desc.slice(0, 50) }}
                     </td>
-                    <td class="text-base" style="min-width: 14rem;">
+                    <td class="text-base" style="min-width: 14rem">
                         {{ item.script_presto.substring(0, 30) }}
                     </td>
-                    <td class="text-base" style="min-width: 14rem;">
+                    <td class="text-base" style="min-width: 14rem">
                         {{ item.script_sql.substring(0, 30) }}
                     </td>
                     <td class="text-base">{{ item.script_defination }}</td>
@@ -1064,7 +1045,7 @@
                     <td class="text-base">{{ item.role_access }}</td>
                     <td class="text-base">{{ item.record_status }}</td>
                     <td
-                        style="width: 200px;"
+                        style="width: 200px"
                         pFrozenColumn
                         class="justify-content-LEFT"
                         alignFrozen="right"
@@ -1124,16 +1105,16 @@
                     >
                         <div class="field">
                             <label for="organization"> Organisation </label>
-                            <p-dropdown
-                                id="organization"
+                            <p-autoComplete
                                 appendTo="body"
-                                [options]="allOrg"
                                 formControlName="organization"
-                                optionLabel="organization"
-                                dataKey="organization"
-                                [style]="{ width: '100%' }"
+                                [suggestions]="filteredOrg"
+                                (completeMethod)="filterOrg($event)"
+                                field="organization"
+                                [dropdown]="true"
                                 placeholder="Select Organisation"
-                            ></p-dropdown>
+                                [style]="{ width: '100%' }"
+                            ></p-autoComplete>
                         </div>
                         <div class="field">
                             <label for="control_uid">Control<sup>*</sup></label>
@@ -1147,6 +1128,9 @@
                                 (completeMethod)="filterControl($event)"
                                 formControlName="control_id"
                                 (onSelect)="selectControl($event)"
+                                [disabled]="
+                                    scriptForm.get('organization').value == null
+                                "
                             ></p-autoComplete>
                         </div>
                         <div class="field">
@@ -1266,7 +1250,7 @@
                                 >Script Definition <sup>*</sup></label
                             ><br />
                             <textarea
-                                style="width: 100%;"
+                                style="width: 100%"
                                 cols="2"
                                 rows="5"
                                 formControlName="sql_definition"

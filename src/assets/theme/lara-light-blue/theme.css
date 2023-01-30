@@ -12939,4 +12939,7 @@ p-treeselect.ng-invalid.ng-dirty>.p-treeselect {
 #table1 .p-datatable .p-datatable-tbody > tr.p-datatable-dragpoint-bottom > td {
     box-shadow: inset 0 -2px 0 0 #1E5B9C;;
 }
+#table1 p-autoComplete button{
+    width: 2.8rem !important;
+}
 

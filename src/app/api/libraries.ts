@@ -110,6 +110,7 @@ export interface code_values {
 }
 
 export interface Script {
+    organization_id?: number;
     au_level_u_uid?: string;
     au_level_4_id?: any;
     risk_id?: any;

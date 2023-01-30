@@ -24,6 +24,7 @@ export class BannerComponent implements OnInit {
     banner;
     selectedBanner;
     allOrg: Organisation[];
+    filteredOrg: Organisation[];
 
     loadingTable: boolean = true;
     bannerDialog: boolean = false;
@@ -68,6 +69,8 @@ export class BannerComponent implements OnInit {
     }
 
     openBanner(ele: Banner = null) {
+        console.log(ele);
+
         this.bannerForm = this.fb.group({
             department_uid: ele ? ele.department_uid : null,
             organization: [
@@ -81,6 +84,8 @@ export class BannerComponent implements OnInit {
                 [Validators.required, Validators.minLength(1)],
             ],
         });
+
+        console.log(this.bannerForm.value);
 
         this.bannerDialog = true;
     }
@@ -170,10 +175,6 @@ export class BannerComponent implements OnInit {
         }
     }
 
-    getOrgnaisation(organization: string) {
-        return this.allOrg.find((x) => x.organization == organization);
-    }
-
     deleteBanner(ele: Banner) {
         this.confirmationService.confirm({
             header: 'Confirmation!',
@@ -218,5 +219,25 @@ export class BannerComponent implements OnInit {
                 // console.log('rejected');
             },
         });
+    }
+
+    // filters
+
+    getOrgnaisation(organization: string) {
+        return this.allOrg.find((x) => x.organization == organization);
+    }
+
+    filterOrg(event) {
+        this.filteredOrg = [];
+        for (let i = 0; i < this.allOrg.length; i++) {
+            let org = this.allOrg[i];
+            if (
+                org.organization
+                    .toLowerCase()
+                    .indexOf(event.query.toLowerCase()) == 0
+            ) {
+                this.filteredOrg.push(org);
+            }
+        }
     }
 }
