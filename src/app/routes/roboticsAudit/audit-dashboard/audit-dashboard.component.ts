@@ -26,7 +26,11 @@ export class AuditDashboardComponent implements OnInit {
     reviewYears;
     results;
 
+    minDate: Date = new Date();
+
     ngOnInit(): void {
+        this.minDate.setFullYear(this.minDate.getFullYear() - 1);
+
         this.auditService.getAuditDashboard().subscribe((res) => {
             this.result = res.data;
             this.filteredResult = this.result;
