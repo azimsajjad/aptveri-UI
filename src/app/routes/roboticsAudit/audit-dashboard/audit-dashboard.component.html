@@ -1,18 +1,14 @@
 <p-toast></p-toast>
 <div id="table1">
     <div class="card px-6 py-6">
-        <p-toolbar styleClass="mb-4 gap-2">
+        <p-toolbar styleClass="mb-4 gap-2" [style]="{ width: '100%' }">
             <ng-template pTemplate="left">
-                <div class="grid">
-                    <!-- <p-dropdown
-                    class="ml-2"
-                    [options]="auditUIDs"
-                    optionLabel="name"
-                    dataKey="code"
-                    placeholder="audit.."
-                    [formControl]="selectedAuditUID"
-                ></p-dropdown> -->
-                    <div class="col-4 md:col-2">
+                <form
+                    *ngIf="result?.length > 0"
+                    [formGroup]="filterForm"
+                    class="grid"
+                >
+                    <div class="col-12 md:col-3">
                         <label class="text-l font-bold">Department</label>
                         <p-dropdown
                             class="ml-2"
@@ -20,10 +16,12 @@
                             optionLabel="name"
                             dataKey="code"
                             placeholder="Select Department"
-                            [formControl]="selectedDepartment"
+                            formControlName="department"
+                            [style]="{ width: '100%' }"
                         ></p-dropdown>
                     </div>
-                    <div class="col-4 md:col-2">
+
+                    <div class="col-12 md:col-3">
                         <label class="text-l font-bold">Organisation</label>
                         <p-dropdown
                             class="ml-2"
@@ -31,37 +29,23 @@
                             optionLabel="name"
                             dataKey="code"
                             placeholder="Select Organisation"
-                            [formControl]="selectedOrg"
+                            formControlName="org"
+                            [style]="{ width: '100%' }"
                         ></p-dropdown>
                     </div>
 
-                    <!-- <p-dropdown
-                    class="ml-2"
-                    [options]="reviewYears"
-                    optionLabel="name"
-                    dataKey="code"
-                    placeholder="year.."
-                    [formControl]="selectedReviewYear"
-                ></p-dropdown> -->
-                    <div class="col-4 md:col-2">
-                        <label class="text-l font-bold" for="start_date"
-                            >From Date
-                        </label>
+                    <div class="col-12 md:col-3">
+                        <label class="text-l font-bold">Date range</label>
                         <p-calendar
-                            id="start_date"
-                            formControlName="start_date"
+                            selectionMode="range"
+                            [readonlyInput]="true"
+                            inputId="range"
+                            formControlName="range"
+                            [style]="{ width: '100%' }"
                         ></p-calendar>
                     </div>
-                    <div class="col-4 md:col-2">
-                        <label class="text-l font-bold" for="end_date"
-                            >To Date
-                        </label>
-                        <p-calendar
-                            id="end_date"
-                            formControlName="end_date"
-                        ></p-calendar>
-                    </div>
-                    <div class="col-4 md:col-2">
+
+                    <div class="col-12 md:col-3">
                         <label class="text-l font-bold">Result</label>
                         <p-dropdown
                             class="ml-2"
@@ -69,37 +53,24 @@
                             optionLabel="name"
                             dataKey="code"
                             placeholder="Select Result"
-                            [formControl]="selectedResult"
+                            formControlName="result"
+                            [style]="{ width: '100%' }"
                         ></p-dropdown>
                     </div>
-                    <div class="col-4 md:col-2">
-                        <br />
-                        <p-button
-                            type="submit"
-                            icon="pi pi-check"
-                            label="Submit"
-                            styleClass="p-button-primary"
-                        ></p-button>
-                    </div>
-                </div>
-                <!-- &nbsp;
-                <p-button
-                    type="submit"
-                    icon="pi pi-check"
-                    label="Submit"
-                    styleClass="p-button-primary"
-                ></p-button> -->
-            </ng-template>
 
-            <!-- <ng-template pTemplate="right">
-                <button
-                    pButton
-                    pRipple
-                    label="Export"
-                    icon="pi pi-upload"
-                    class="p-button-secondary"
-                ></button>
-            </ng-template> -->
+                    <!-- <div class="col-12 md:col-3">
+                        <p-button
+                            icon="pi pi-filter"
+                            class="ml-10"
+                            iconPos="left"
+                            label="Clear"
+                            tooltipPosition="top"
+                            styleClass="p-button-secondary"
+                            (click)="filterForm.reset()"
+                        ></p-button>
+                    </div> -->
+                </form>
+            </ng-template>
         </p-toolbar>
 
         <p-table
@@ -220,103 +191,30 @@
             </ng-template>
         </p-table>
     </div>
-
-    <!-- <button
-        pButton
-        pRipple
-        title="Filter"
-        type="button"
-        icon="pi pi-filter"
-        class="p-button-rounded p-button-lg fixed add-details"
-        (click)="openDailog()"
-    ></button> -->
-
-    <!-- <form
-        *ngIf="filterDialog"
-        [formGroup]="filterForm"
-        (ngSubmit)="filterFormSubmit()"
-    >
-        <p-dialog
-            header="Filter"
-            [(visible)]="filterDialog"
-            [style]="{ width: '30vw' }"
-        >
-            <div class="field">
-                <label for="organization_id" class="block">Organisation</label>
-                <p-dropdown
-                    appendTo="body"
-                    [options]="allOrg"
-                    formControlName="organization_id"
-                    optionLabel="organization"
-                    [dataKey]="organization_id"
-                    placeholder="Select Organisation"
-                    [style]="{ width: '100%' }"
-                ></p-dropdown>
-            </div>
-
-            <div class="field">
-                <label for="department_id" class="block">Department</label>
-                <p-dropdown
-                    appendTo="body"
-                    [options]="allDept"
-                    formControlName="department_id"
-                    optionLabel="department"
-                    [dataKey]="department_uid"
-                    placeholder="Select Department"
-                    [style]="{ width: '100%' }"
-                ></p-dropdown>
-            </div>
-
-            <div class="field">
-                <label for="ap_schedule_start_date">Start Date</label>
-                <p-calendar
-                    appendTo="body"
-                    formControlName="ap_schedule_start_date"
-                    inputId="ap_schedule_start_date"
-                    [showIcon]="true"
-                    [style]="{ width: '100%' }"
-                ></p-calendar>
-            </div>
-
-            <div class="field">
-                <label for="ap_schedule_end_date">End Date</label>
-                <p-calendar
-                    appendTo="body"
-                    formControlName="ap_schedule_end_date"
-                    inputId="ap_schedule_end_date"
-                    [showIcon]="true"
-                    [style]="{ width: '100%' }"
-                ></p-calendar>
-            </div>
-
-            <div class="field">
-                <label for="results" class="block">Department</label>
-                <p-dropdown
-                    appendTo="body"
-                    [options]="resultsOpt"
-                    formControlName="results"
-                    optionLabel="name"
-                    dataKey="results"
-                    placeholder="Select Result"
-                    [style]="{ width: '100%' }"
-                ></p-dropdown>
-            </div>
-
-            <ng-template pTemplate="footer">
-                <p-button
-                    type="reset"
-                    icon="pi pi-times"
-                    (click)="filterDialog = false"
-                    label="Cancel"
-                    styleClass="p-button-text p-button-primary"
-                ></p-button>
-                <p-button
-                    type="submit"
-                    icon="pi pi-check"
-                    label="Save"
-                    styleClass="p-button-text p-button-primary"
-                ></p-button>
-            </ng-template>
-        </p-dialog>
-    </form> -->
 </div>
+
+<!-- <div class="col-12 md:col-2">
+                        <label class="text-l font-bold">Audit UID</label>
+                        <p-dropdown
+                            class="ml-2"
+                            [options]="auditUIDs"
+                            optionLabel="name"
+                            dataKey="code"
+                            placeholder="audit.."
+                            formControlName="selectedAuditUID"
+                            [style]="{ width: '100%' }"
+                        ></p-dropdown>
+                    </div> -->
+
+<!-- <div class="col-12 md:col-2"
+                        ><label class="text-l font-bold">Review Year</label>
+                        <p-dropdown
+                            class="ml-2"
+                            [options]="reviewYears"
+                            optionLabel="name"
+                            dataKey="code"
+                            placeholder="year.."
+                            formControlName="selectedReviewYear"
+                            [style]="{ width: '100%' }"
+                        ></p-dropdown
+                    ></div> -->

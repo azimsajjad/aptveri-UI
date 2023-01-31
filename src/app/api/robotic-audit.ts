@@ -37,6 +37,7 @@ export interface AuditTest {
     scriptVariables?: ScriptVariable[];
     frequency: number;
     schedule_run_time: number;
+    organization_id?: any;
 }
 
 export interface mastertable {

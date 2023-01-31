@@ -136,6 +136,7 @@ export class AuditService {
             version_id: auditTest.version_id,
             frequency: 0,
             schedule_run_time: 0,
+            organization_id: auditTest.organization_id,
         });
     }
 
@@ -160,6 +161,7 @@ export class AuditService {
                 version_id: auditTest.version_id,
                 frequency: auditTest.frequency || 0,
                 schedule_run_time: auditTest.schedule_run_time,
+                organization_id: auditTest.organization_id,
             }
         );
     }
@@ -187,6 +189,7 @@ export class AuditService {
             version_id: auditTest.version_id,
             frequency: auditTest.frequency || null,
             schedule_run_time: auditTest.schedule_run_time,
+            organization_id: auditTest.organization_id,
         });
     }
 

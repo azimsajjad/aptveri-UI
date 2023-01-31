@@ -186,24 +186,18 @@ export class AuditComponent implements OnInit {
                 });
                 return ele;
             });
-            // console.log(result);
             this.audits = result.data;
             this.loading = false;
         });
     }
 
     getallusers() {
-        // debugger;
         this.auditService.sendGetallusersRequest().subscribe((result: any) => {
-            //console.log(result);
             this.listOfusers = result.data;
             this.loading = false;
         });
     }
     saveaudit() {
-        // debugger;
-        this.submitButton.nativeElement.disabled = true;
-
         this.loading = true;
         this.auditForm
             .get('banner_id')
@@ -224,6 +218,13 @@ export class AuditComponent implements OnInit {
         this.auditForm
             .get('user_access_id')
             .setValue(this.auditForm.get('user_access_id').value?.toString());
+        this.auditForm
+            .get('organization_id')
+            .setValue(
+                this.auditForm
+                    .get('organization_id')
+                    .value.organization_id.toString()
+            );
 
         if (this.auditForm.value.audit_id == null) {
             this.auditForm.removeControl('audit_id');
@@ -265,8 +266,6 @@ export class AuditComponent implements OnInit {
                     }
                 });
         } else {
-            console.log(this.auditForm.value);
-
             // this.auditForm.value['created_by'] =
             //     this.selectedaudits[0]['created_by'];
 
@@ -309,206 +308,9 @@ export class AuditComponent implements OnInit {
                             detail: res.message,
                             life: 3000,
                         });
-                        //   console.log(res.message);
                     }
                 });
         }
-        //save the audit
-
-        // debugger;
-        // this.submitted = true;
-        // this.dataaudits = {};
-        // if (this.audit.audit_name.trim()) {
-        //     if (this.audit.audit_id) {
-        //         this.dataaudits.au_level_2_id = Number(
-        //             this.selectedaudituniversedata
-        //         );
-        //         this.dataaudits.banner_id = Number(this.selectedbannerdata);
-        //         if (Number.isNaN(this.dataaudits.au_level_2_id)) {
-        //             this.doOnSelectAuditUniverse(
-        //                 this.selectedaudituniversedata
-        //             );
-        //             this.dataaudits.au_level_2_id = Number(
-        //                 this.selectedaudituniversedata
-        //             );
-        //         }
-        //         if (Number.isNaN(this.dataaudits.banner_id)) {
-        //             this.doOnSelectBanner(this.selectedbannerdata);
-        //             this.dataaudits.banner_id = Number(this.selectedbannerdata);
-        //         }
-        //         this.dataaudits.audit_name = this.audit.audit_name;
-        //         this.dataaudits.audit_board_id = this.audit.audit_board_id;
-        //         this.dataaudits.quarter = this.audit.quarter;
-        //         var ObjectOfuser_access_id;
-        //         var idofUser = '';
-        //         var arrayToObjectFromuser_access_id = this.SelectItem;
-        //         for (
-        //             let index = 0;
-        //             index < arrayToObjectFromuser_access_id.length;
-        //             index++
-        //         ) {
-        //             ObjectOfuser_access_id =
-        //                 arrayToObjectFromuser_access_id[index];
-        //             idofUser += ObjectOfuser_access_id.userId + ',';
-        //         }
-        //         var removedLastCommafromstring = idofUser.replace(/,\s*$/, '');
-        //         this.dataaudits.user_access_id = removedLastCommafromstring;
-        //         var checkingvalueofinput = this.audit.acp_audit + '';
-        //         var valofACPAudit;
-        //         if (checkingvalueofinput == 'true') {
-        //             valofACPAudit = true;
-        //         } else {
-        //             valofACPAudit = false;
-        //         }
-        //         this.dataaudits.acp_audit = valofACPAudit;
-        //         this.dataaudits.results_url = this.audit.results_url;
-        //         this.dataaudits.review_year = this.audit.review_year;
-        //         this.dataaudits.start_date = this.audit.start_date;
-        //         this.dataaudits.end_date = this.audit.end_date;
-        //         this.dataaudits.last_run_date = this.audit.last_run_date;
-        //         //  const start_datetoISo = new Date(this.audit.start_date);
-        //         //  this.dataaudits.start_date = start_datetoISo.toISOString();
-        //         //  const end_datetoISo = new Date(this.audit.end_date);
-        //         //  this.dataaudits.end_date = end_datetoISo.toISOString();
-        //         //  const last_run_datetoISo = new Date(this.audit.last_run_date);
-        //         //  this.dataaudits.last_run_date = last_run_datetoISo.toISOString();
-        //         this.dataaudits.audit_schedule = this.audit.audit_schedule;
-        //         this.auditService
-        //             .sendPutAuditRequest(this.audit.audit_id, this.dataaudits)
-        //             .subscribe((res) => {
-        //                 if (res) {
-        //                     this.getaudit();
-        //                     this.messageService.add({
-        //                         severity: 'success',
-        //                         summary: 'Successful',
-        //                         detail: 'Audit Updated',
-        //                         life: 3000,
-        //                     });
-        //                 }
-        //             });
-        //     } else {
-        //         this.dataaudits.au_level_2_id = Number(
-        //             this.selectedaudituniversedata
-        //         );
-        //         this.dataaudits.banner_id = Number(this.selectedbannerdata);
-        //         this.dataaudits.audit_name = this.audit.audit_name;
-        //         this.dataaudits.audit_board_id = this.audit.audit_board_id;
-        //         this.dataaudits.quarter = this.audit.quarter;
-        //         var ObjectOfuser_access_id;
-        //         var idofUser = '';
-        //         var arrayToObjectFromuser_access_id = this.SelectItem;
-        //         for (
-        //             let index = 0;
-        //             index < arrayToObjectFromuser_access_id?.length;
-        //             index++
-        //         ) {
-        //             ObjectOfuser_access_id =
-        //                 arrayToObjectFromuser_access_id[index];
-        //             idofUser += ObjectOfuser_access_id.userId + ',';
-        //         }
-        //         var removedLastCommafromstring = idofUser.replace(/,\s*$/, '');
-        //         this.dataaudits.user_access_id = removedLastCommafromstring;
-        //         var checkingvalueofinput = this.audit.acp_audit + '';
-        //         var valofACPAudit;
-        //         if (checkingvalueofinput == 'true') {
-        //             valofACPAudit = true;
-        //         } else {
-        //             valofACPAudit = false;
-        //         }
-        //         this.dataaudits.acp_audit = valofACPAudit;
-        //         this.dataaudits.results_url = this.audit.results_url;
-        //         this.dataaudits.review_year = this.audit.review_year;
-        //         this.dataaudits.start_date = this.audit.start_date;
-        //         this.dataaudits.end_date = this.audit.end_date;
-        //         this.dataaudits.last_run_date = new Date(
-        //             new Date().toString().split('GMT')[0] + ' UTC'
-        //         )
-        //             .toISOString()
-        //             .split('')
-        //             .reverse()
-        //             .join('')
-        //             .substring(8)
-        //             .split('')
-        //             .reverse()
-        //             .join('');
-        //         // const start_datetoISo = new Date(this.audit.start_date);
-        //         // this.dataaudits.start_date = start_datetoISo.toISOString();
-        //         // const end_datetoISo = new Date(this.audit.end_date);
-        //         // this.dataaudits.end_date = end_datetoISo.toISOString();
-        //         // const last_run_datetoISo = new Date(this.audit.last_run_date);
-        //         // this.dataaudits.last_run_date = last_run_datetoISo.toISOString();
-        //         this.dataaudits.audit_schedule = this.audit.audit_schedule;
-        //         this.auditService
-        //             .sendPostAuditRequest(this.dataaudits)
-        //             .subscribe((result: any) => {
-        //                 //console.log(result);
-        //                 if (result) {
-        //                     this.getaudit();
-        //                     this.messageService.add({
-        //                         severity: 'success',
-        //                         summary: 'Successful',
-        //                         detail: 'Audit Created',
-        //                         life: 3000,
-        //                     });
-        //                 }
-        //             });
-        //     }
-        //     this.audits = [...this.audits];
-        //     this.auditDialog = false;
-        //     this.audit = {};
-        //     this.getaudit();
-        //     this.selectedaudits = null;
-        // }
-
-        this.submitButton.nativeElement.disabled = false;
-    }
-
-    //update the audit
-    editaudit(audit: audit) {
-        //debugger;
-        this.getaudit();
-        this.auditDialog = true;
-        const arrayToObject = Object.assign({}, ...this.selectedaudits);
-        this.audit = { ...arrayToObject };
-
-        //Bannner ID
-        var banID = Number(this.audit.banner_id) - 1;
-        var filterBan = this.AuditBanner[banID];
-        var finalBannerIdshow =
-            filterBan.banner_uid +
-            ' - ' +
-            filterBan.banner +
-            ' - ' +
-            filterBan.banner_id;
-        this.selectedbannerdata = finalBannerIdshow;
-        this.audit.banner_id = this.selectedbannerdata;
-
-        //Audit ID
-        var AuditUniID = Number(this.audit.au_level_2_id) - 1;
-        var filterAUID = this.AuditUniverse[AuditUniID];
-        var finalAUIDIdshow =
-            filterAUID.au_level_2_desc +
-            ' - ' +
-            filterAUID.au_level_2_uid +
-            ' - ' +
-            filterAUID.au_level_2_id;
-        this.selectedaudituniversedata = finalAUIDIdshow;
-        this.audit.au_level_2_id = this.selectedaudituniversedata;
-
-        var valofUserAccessID = this.audit.user_access_id;
-        var totallengthofExistinguseravailable = this.listOfusers;
-        var userExistIndb = valofUserAccessID.split(',');
-        var findingObjectOfLIstofuser: string[] = [];
-        for (var NoOfUser = 0; NoOfUser < userExistIndb.length; NoOfUser++) {
-            findingObjectOfLIstofuser.push(
-                this.listOfusers.find(
-                    (x) => x.userId == userExistIndb[NoOfUser]
-                )
-            );
-        }
-
-        this.SelectItem = findingObjectOfLIstofuser;
-        this.getaudit();
     }
 
     //delete the audit
@@ -536,53 +338,38 @@ export class AuditComponent implements OnInit {
                             'Are you sure you want to delete selected Audit?',
                         icon: 'pi pi-exclamation-triangle',
                         accept: () => {
-                            this.confirmDelete();
+                            this.auditService
+                                .sendDeleteAuditRequest(audit.audit_id)
+                                .subscribe((res) => {
+                                    if (res.data) {
+                                        this.getaudit();
+                                        this.messageService.add({
+                                            severity: 'success',
+                                            summary: 'Successful',
+                                            detail: 'Audit Deleted',
+                                            life: 3000,
+                                        });
+                                        this.audit = {};
+                                    } else {
+                                        this.getaudit();
+                                        this.messageService.add({
+                                            severity: 'info',
+                                            summary: 'Info',
+                                            detail: res.message,
+                                            life: 3000,
+                                        });
+                                        this.audit = {};
+                                    }
+                                });
                         },
-                        reject: () => {
-                            //     console.log('rejected');
-                        },
+                        reject: () => {},
                     });
                 }
             });
-    }
-
-    confirmDelete() {
-        this.deleteauditsDialog = false;
-        this.deleteauditDialog = false;
-
-        const arrayToObject = Object.assign({}, ...this.selectedaudits);
-        this.audit = { ...arrayToObject };
-        this.auditService
-            .sendDeleteAuditRequest(this.audit.audit_id)
-            .subscribe((res) => {
-                // console.log(res);
-                if (res.data) {
-                    this.getaudit();
-                    this.messageService.add({
-                        severity: 'success',
-                        summary: 'Successful',
-                        detail: 'Audit Deleted',
-                        life: 3000,
-                    });
-                    this.audit = {};
-                } else {
-                    this.getaudit();
-                    this.messageService.add({
-                        severity: 'info',
-                        summary: 'Info',
-                        detail: res.message,
-                        life: 3000,
-                    });
-                    this.audit = {};
-                }
-            });
-
-        this.selectedaudits = null;
     }
 
     clear(table: Table) {
         table.clear();
-        // this.filter.nativeElement.value = '';
     }
 
     isAuditEdit: boolean;
@@ -619,9 +406,12 @@ export class AuditComponent implements OnInit {
             //  this.auditDialog = true;
             this.showTable = false;
         }
-        console.log(audit);
 
         this.auditForm = this.fb.group({
+            organization_id: [
+                this.getOrg(audit?.organization_id) || null,
+                Validators.required,
+            ],
             audit_id: audit ? audit.audit_id : null,
             acp_audit: [audit ? audit.acp_audit : false, Validators.required],
             au_level_2_id: [
@@ -649,7 +439,7 @@ export class AuditComponent implements OnInit {
             quarter: [audit ? audit.quarter : 1, Validators.required],
             results_url: audit ? audit.results_url : null,
             review_year: [
-                audit ? audit.review_year : 2022,
+                audit ? audit.review_year : 2023,
                 Validators.required,
             ],
             start_date: audit
@@ -666,7 +456,6 @@ export class AuditComponent implements OnInit {
             ],
             created_by: audit ? audit.created_by : 0,
         });
-        console.log(this.auditForm.value);
     }
 
     hideDialog() {
@@ -681,8 +470,6 @@ export class AuditComponent implements OnInit {
         this.auditService.sendGetBannerRequest().subscribe((result: any) => {
             this.AuditBanner = result.data;
             this.loading = false;
-
-            // console.log(result);
         });
     }
 
@@ -727,9 +514,6 @@ export class AuditComponent implements OnInit {
     getAuditUniverse() {
         //debugger;
         this.auditService.getAuditUniverseLevel2(0).subscribe((result: any) => {
-            // console.log("audituniverse");
-            // console.log(result);
-
             this.AuditUniverse = result.data.data;
             this.loading = false;
         });
@@ -830,19 +614,7 @@ export class AuditComponent implements OnInit {
         this.auditService
             .sendNavigateAuditRequest(this.audit.audit_id, useraccessn)
             .subscribe((res) => {
-                // console.log(res);
                 if (res.data) {
-                    // const test =
-                    //     'pages/audit-program/' +
-                    //     encodeURIComponent(
-                    //         btoa(this.audit.audit_id.toString())
-                    //     ) +
-                    //     '/' +
-                    //     encodeURIComponent(btoa(useraccessn.toString())) +
-                    //     '/' +
-                    //     encodeURIComponent(
-                    //         btoa(this.audit.acp_audit.toString())
-                    //     );
                     if (useraccessn == 'no' && this.audit.acp_audit == true) {
                         this.messageService.add({
                             severity: 'info',
@@ -880,19 +652,28 @@ export class AuditComponent implements OnInit {
             });
 
         this.selectedaudits = null;
-
-        //console.log(this.router.url);
     }
 
-    //display the user value
-    // DisplayuserValue(displaytheUsername){
-    //   console.log( displaytheUsername);
+    filteredOrg: Organisation[];
+    filterOrg(event) {
+        this.filteredOrg = [];
+        for (let i = 0; i < this.allOrg.length; i++) {
+            let org = this.allOrg[i];
+            if (
+                org.organization
+                    .toLowerCase()
+                    .indexOf(event.query.toLowerCase()) == 0
+            ) {
+                this.filteredOrg.push(org);
+            }
+        }
+    }
 
-    // }
+    getOrg(id) {
+        return this.allOrg.find((x) => x.organization_id == id);
+    }
 
     getBannerSelection(id: number) {
-        console.log(id);
-
         let x = this.AuditBanner.filter((ele) => {
             return ele.department_id == id;
         })[0];

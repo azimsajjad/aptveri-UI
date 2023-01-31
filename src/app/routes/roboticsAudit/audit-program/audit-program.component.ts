@@ -1,5 +1,11 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import {
+    FormArray,
+    FormBuilder,
+    FormControl,
+    FormGroup,
+    Validators,
+} from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { Table } from 'primeng/table';
@@ -675,6 +681,7 @@ export class AuditProgramComponent implements OnInit {
 
     saveAuditTest() {
         this.submitButtonaudit.nativeElement.disabled = true;
+        console.log(this.auditTestMode);
 
         this.loadingT = true;
         this.auditTestForm.value['script_sql'] = this.getScriptSql(
@@ -711,7 +718,12 @@ export class AuditProgramComponent implements OnInit {
         this.auditTestForm.value.banner_id = this.getBannerId(
             this.auditTestForm.value.banner_id
         );
-        // console.log(this.auditTestForm.value);
+        this.auditTestForm.addControl(
+            'organization_id',
+            new FormControl(this.auditPSelection[0].organization_id)
+        );
+
+        console.log(this.auditTestForm.value);
 
         if (this.auditPSelection[0].schedule_status) {
             this.auditTestForm.value.frequency =
@@ -1695,19 +1707,19 @@ export class AuditProgramComponent implements OnInit {
         const query = event.query;
         for (let i = 0; i < this.banner.length; i++) {
             const ele = this.banner[i];
-            if (ele.banner_uid == null) {
-                filtered.push(ele.banner_uid);
+            if (ele.department_uid == null) {
+                filtered.push(ele.department_uid);
             } else if (
-                ele.banner_uid
+                ele.department_uid
                     .toString()
                     .toLowerCase()
                     .indexOf(query.toLowerCase()) != -1 ||
-                ele.banner
+                ele.department
                     .toString()
                     .toLowerCase()
                     .indexOf(query.toLowerCase()) != -1
             ) {
-                filtered.push(ele.banner_uid + ' - ' + ele.banner);
+                filtered.push(ele.department_uid + ' - ' + ele.department);
             }
             this.filteredBanner = filtered;
         }

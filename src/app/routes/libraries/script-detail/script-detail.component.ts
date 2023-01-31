@@ -127,7 +127,6 @@ export class ScriptDetailComponent implements OnInit {
                     return res;
                 });
                 this.script = res;
-                console.log(this.script);
             });
     }
 

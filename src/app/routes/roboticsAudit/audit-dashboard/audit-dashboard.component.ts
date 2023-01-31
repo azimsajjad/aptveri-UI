@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { Banner, Organisation } from 'src/app/api/libraries';
 import { AuditService } from 'src/app/service/audit.service';
@@ -12,26 +12,19 @@ import { BannerService } from 'src/app/service/librariesservice';
     providers: [MessageService, ConfirmationService],
 })
 export class AuditDashboardComponent implements OnInit {
-    constructor(private auditService: AuditService) {}
+    constructor(private auditService: AuditService, private fb: FormBuilder) {}
 
     loadingTable: boolean = true;
     filteredResult;
     result;
 
+    filterForm: FormGroup;
+
     auditUIDs;
-    selectedAuditUID = new FormControl(null);
-
     departments;
-    selectedDepartment = new FormControl(null);
-
     organisations;
-    selectedOrg = new FormControl(null);
-
     reviewYears;
-    selectedReviewYear = new FormControl(null);
-
     results;
-    selectedResult = new FormControl(null);
 
     ngOnInit(): void {
         this.auditService.getAuditDashboard().subscribe((res) => {
@@ -61,37 +54,32 @@ export class AuditDashboardComponent implements OnInit {
 
             this.results = this.getUniqueValues(res.data, 'results', 'results');
 
+            this.filterForm = this.fb.group({
+                department: null,
+                org: null,
+                range: null,
+                result: null,
+            });
+
+            this.filterForm.valueChanges.subscribe((res) => {
+                // console.log(res.range[0]?.getFullYear());
+
+                this.filteredResult = this.result.filter((ele) => {
+                    return (
+                        (res.org?.name == null ||
+                            ele.organization == res.org?.name) &&
+                        (res.department?.name == null ||
+                            ele.department == res.department?.name) &&
+                        (res.result?.name == null ||
+                            ele.results == res.result?.name)
+                        // && ((res.range[0] == null && res.range[1] == null) ||
+                        // (res.range[0] <= ele.ap_schedule_start_date &&
+                        //     res.range[0] >= ele.ap_schedule_start_date))
+                    );
+                });
+            });
+
             this.loadingTable = false;
-        });
-
-        this.selectedAuditUID.valueChanges.subscribe((res) => {
-            this.filteredResult = this.result.filter((ele) => {
-                return ele.audit_uid == res.code;
-            });
-        });
-
-        this.selectedDepartment.valueChanges.subscribe((res) => {
-            this.filteredResult = this.result.filter((ele) => {
-                return ele.department_id == res.code;
-            });
-        });
-
-        this.selectedOrg.valueChanges.subscribe((res) => {
-            this.filteredResult = this.result.filter((ele) => {
-                return ele.organization_id == res.code;
-            });
-        });
-
-        this.selectedReviewYear.valueChanges.subscribe((res) => {
-            this.filteredResult = this.result.filter((ele) => {
-                return ele.review_year == res.code;
-            });
-        });
-
-        this.selectedResult.valueChanges.subscribe((res) => {
-            this.filteredResult = this.result.filter((ele) => {
-                return ele.results == res.code;
-            });
         });
     }
 
