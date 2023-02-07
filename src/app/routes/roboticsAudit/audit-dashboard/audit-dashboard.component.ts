@@ -61,8 +61,10 @@ export class AuditDashboardComponent implements OnInit {
             this.filterForm = this.fb.group({
                 department: null,
                 org: null,
-                range: null,
+                from: null,
+                to: null,
                 result: null,
+                review_year: null,
             });
 
             this.filterForm.valueChanges.subscribe((res) => {
@@ -75,7 +77,9 @@ export class AuditDashboardComponent implements OnInit {
                         (res.department?.name == null ||
                             ele.department == res.department?.name) &&
                         (res.result?.name == null ||
-                            ele.results == res.result?.name)
+                            ele.results == res.result?.name) &&
+                        (res.review_year?.name == null ||
+                            ele.review_year == res.review_year?.name)
                         // && ((res.range[0] == null && res.range[1] == null) ||
                         // (res.range[0] <= ele.ap_schedule_start_date &&
                         //     res.range[0] >= ele.ap_schedule_start_date))

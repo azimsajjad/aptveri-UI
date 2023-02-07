@@ -26,7 +26,9 @@
                 ></p-dropdown>
             </div>
             <div class="col-12 md:col-3" *ngIf="selectedPage.value">
-                <label class="text-l font-bold">Option</label>
+                <label class="text-l font-bold">{{
+                    selectedPage.value.page_name
+                }}</label>
                 <p-dropdown
                     [options]="optionsOptions"
                     [formControl]="selectedOption"
@@ -60,7 +62,11 @@
         (ngSubmit)="addForm.valid && addFormSubmit()"
     >
         <p-dialog
-            [header]="selectedPage?.page_name + ' : ' + selectedOption.value"
+            [header]="
+                selectedPage?.value.page_name +
+                ' : ' +
+                selectedOption?.value.option_name
+            "
             [(visible)]="addDialog"
             [style]="{ width: '30vw' }"
         >

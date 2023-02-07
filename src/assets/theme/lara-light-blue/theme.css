@@ -12942,4 +12942,7 @@ p-treeselect.ng-invalid.ng-dirty>.p-treeselect {
 #table1 p-autoComplete button{
     width: 2.8rem !important;
 }
+#table1 p-calendar button{
+    width: 2.8rem !important;
+}
 

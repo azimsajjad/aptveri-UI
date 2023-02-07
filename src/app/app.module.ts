@@ -61,6 +61,9 @@ import { OrganisationComponent } from './routes/libraries/organisation/organisat
 import { AuditDashboardComponent } from './routes/roboticsAudit/audit-dashboard/audit-dashboard.component';
 import { MasterComponent } from './routes/utilities/master/master.component';
 import { UtilsService } from './service/utils.service';
+import { ProgramComponent } from './routes/roboticsAudit/audit-program/program/program.component';
+import { TestComponent } from './routes/roboticsAudit/audit-program/test/test.component';
+import { TestHistoryComponent } from './routes/roboticsAudit/audit-program/test-history/test-history.component';
 
 export function tokenGetter() {
     return localStorage.getItem('jwt');
@@ -127,6 +130,9 @@ export function tokenGetter() {
         OrganisationComponent,
         AuditDashboardComponent,
         MasterComponent,
+        ProgramComponent,
+        TestComponent,
+        TestHistoryComponent,
     ],
     providers: [
         { provide: LocationStrategy, useClass: HashLocationStrategy },

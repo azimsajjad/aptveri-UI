@@ -1,0 +1,630 @@
+<p-toast></p-toast>
+<div id="table1">
+    <p-table
+        *ngIf="showTable"
+        #dt2
+        [value]="auditTest"
+        [rows]="20"
+        [loading]="loading"
+        [rowHover]="true"
+        [paginator]="true"
+        [rowsPerPageOptions]="[20, 50, 100]"
+        [showCurrentPageReport]="true"
+        [(selection)]="auditTSelection"
+        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+        responsiveLayout="scroll"
+        [scrollable]="true"
+        [globalFilterFields]="[
+            'audit_test_uid',
+            'audit_test_desc',
+            'au_level_4_desc',
+            'audit_risk',
+            'control',
+            'banner',
+            'target_table',
+            'script_defination',
+            'script_presto',
+            'script_sql',
+            'results',
+            'notes',
+            'schedule_status',
+            'schedule_start_datetime',
+            'schedule_end_datetime',
+            'last_run_date',
+            'full_name'
+        ]"
+    >
+        <ng-template pTemplate="caption">
+            <div
+                class="table-header flex justify-content-between align-items-center"
+            >
+                <span class="text-xl">List of Audit Test</span>
+                <span class="flex justify-content-between align-items-center">
+                    <span class="p-input-icon-left mb-2 md:mb-0">
+                        <button
+                            [disabled]="!auditTSelection?.length > 0"
+                            title="Run Test"
+                            pButton
+                            pRipple
+                            icon="pi pi-play"
+                            class="p-button-rounded p-button-info"
+                            (click)="runTest(auditTSelection)"
+                        ></button>
+                        <button
+                            title="New"
+                            pButton
+                            pRipple
+                            icon="pi pi-plus"
+                            class="p-button-rounded p-button-info ml-2"
+                            (click)="openT(null)"
+                        ></button>
+                        <button
+                            title="Edit"
+                            pButton
+                            pRipple
+                            type="button"
+                            icon="pi pi-pencil"
+                            class="p-button-rounded p-button-info ml-2"
+                            (click)="openT(auditTSelection[0])"
+                            [disabled]="auditTSelection?.length != 1"
+                        ></button>
+                        <button
+                            title="Delete"
+                            pButton
+                            pRipple
+                            type="button"
+                            icon="pi pi-trash"
+                            class="p-button-rounded p-button-info ml-2"
+                            (click)="deleteTest(auditTSelection[0])"
+                            [disabled]="auditTSelection?.length != 1"
+                        ></button
+                    ></span>
+                    &nbsp;&nbsp;&nbsp;&nbsp;<span
+                        class="p-input-icon-left mr-5"
+                    >
+                        <i class="pi pi-search"></i>
+                        <input
+                            pInputText
+                            type="text"
+                            (input)="
+                                dt.filterGlobal($event.target.value, 'contains')
+                            "
+                            placeholder="Global Search"
+                        /> </span
+                ></span>
+            </div>
+        </ng-template>
+
+        <ng-template pTemplate="header">
+            <tr>
+                <th pFrozenColumn style="max-width: 4rem">
+                    <p-tableHeaderCheckbox
+                        (click)="selectTest()"
+                    ></p-tableHeaderCheckbox>
+                </th>
+
+                <th pSortableColumn="audit_test_uid">
+                    <div class="flex align-items-center">
+                        AUDIT TEST UID
+                        <p-sortIcon field="audit_test_uid"></p-sortIcon>
+                    </div>
+                </th>
+
+                <th pSortableColumn="audit_test_desc" style="min-width: 14rem">
+                    AUDIT TEST DESCRIPTION
+                    <p-sortIcon field="audit_test_desc"></p-sortIcon>
+                </th>
+                <th pSortableColumn="au_level_4_desc" style="min-width: 14rem">
+                    AUDIT UNIVERESE LEVEL 4
+                    <p-sortIcon field="au_level_4_desc"></p-sortIcon>
+                </th>
+                <th pSortableColumn="audit_risk" style="min-width: 14rem">
+                    RISK DESCRIPTION
+                    <p-sortIcon field="audit_risk"></p-sortIcon>
+                </th>
+                <th pSortableColumn="control" style="min-width: 14rem">
+                    CONTROL DESCRIPTION
+                    <p-sortIcon field="control"></p-sortIcon>
+                </th>
+                <th pSortableColumn="banner" style="min-width: 14rem">
+                    DEPARTMENT DESCRIPTION
+                    <p-sortIcon field="banner"></p-sortIcon>
+                </th>
+                <th pSortableColumn="target_table" style="min-width: 14rem">
+                    TARGET TABLE<p-sortIcon field="target_table"></p-sortIcon>
+                </th>
+                <th
+                    pSortableColumn="script_defination"
+                    style="min-width: 14rem"
+                >
+                    SCRIPT DEFINATION
+                    <p-sortIcon field="script_defination"></p-sortIcon>
+                </th>
+                <th pSortableColumn="script_presto" style="min-width: 14rem">
+                    FEDERATED SCRIPT
+                    <p-sortIcon field="script_presto"></p-sortIcon>
+                </th>
+                <th pSortableColumn="script_sql" style="min-width: 14rem">
+                    SQL SCRIPT
+                    <p-sortIcon field="script_sql"></p-sortIcon>
+                </th>
+                <th pSortableColumn="result" style="min-width: 14rem">
+                    RESULT
+                    <p-sortIcon field="result"></p-sortIcon>
+                </th>
+                <th pSortableColumn="notes" style="min-width: 14rem">
+                    NOTES
+                    <p-sortIcon field="notes"></p-sortIcon>
+                </th>
+                <th pSortableColumn="schedule_status" style="min-width: 14rem">
+                    SCHEDULE STATUS
+                    <p-sortIcon field="schedule_status"></p-sortIcon>
+                </th>
+                <th
+                    pSortableColumn="schedule_start_datetime"
+                    style="min-width: 14rem"
+                >
+                    SCHEDULE START DATE
+                    <p-sortIcon field="schedule_start_datetime"></p-sortIcon>
+                </th>
+                <th
+                    pSortableColumn="schedule_end_datetime"
+                    style="min-width: 14rem"
+                >
+                    SCHEDULE END DATE
+                    <p-sortIcon field="schedule_end_datetime"></p-sortIcon>
+                </th>
+                <th pSortableColumn="last_run_date" style="min-width: 14rem">
+                    LAST RUN DATE
+                    <p-sortIcon field="last_run_date"></p-sortIcon>
+                </th>
+                <th pSortableColumn="full_name" style="min-width: 14rem">
+                    CREATED BY
+                    <p-sortIcon field="full_name"></p-sortIcon>
+                </th>
+            </tr>
+        </ng-template>
+
+        <ng-template pTemplate="body" let-item>
+            <tr class="p-selectable-row">
+                <td pFrozenColumn class="text-base" style="max-width: 4rem">
+                    <p-tableCheckbox
+                        [value]="item"
+                        (click)="selectTest(item)"
+                    ></p-tableCheckbox>
+                </td>
+                <td class="text-base" style="min-width: 14rem">
+                    {{ item.audit_test_uid }}
+                </td>
+                <td class="text-base" style="min-width: 14rem">
+                    {{ item.audit_test_desc.substring(0, 30) }}
+                </td>
+                <td class="text-base" style="min-width: 14rem">
+                    {{ item.au_level_4_desc }}
+                </td>
+                <td class="text-base" style="min-width: 14rem">
+                    {{ item.audit_risk.substring(0, 30) }}
+                </td>
+                <td class="text-base" style="min-width: 14rem">
+                    {{ item.control.substring(0, 30) }}
+                </td>
+                <td class="text-base" style="min-width: 14rem">
+                    {{ item.banner }}
+                </td>
+                <td class="text-base" style="min-width: 14rem">
+                    {{ item.target_table }}
+                </td>
+                <td class="text-base" style="min-width: 14rem">
+                    {{ item.script_defination }}
+                </td>
+                <td class="text-base" style="min-width: 14rem">
+                    {{ item.script_presto.substring(0, 30) }}
+                </td>
+                <td class="text-base" style="min-width: 14rem">
+                    {{ item.script_sql.substring(0, 30) }}
+                </td>
+                <td class="text-base" style="min-width: 14rem">
+                    {{ item.results ? item.results : 'N/A' }}
+                </td>
+                <td class="text-base" style="min-width: 14rem">
+                    {{ item.notes }}
+                </td>
+                <td class="text-base" style="min-width: 14rem">
+                    {{ item.schedule_status }}
+                </td>
+                <td class="text-base" style="min-width: 14rem">
+                    {{ item.schedule_start_datetime | date }}
+                </td>
+                <td class="text-base" style="min-width: 14rem">
+                    {{ item.schedule_end_datetime | date }}
+                </td>
+                <td class="text-base" style="min-width: 14rem">
+                    {{ item.last_run_date | date }}
+                </td>
+                <td class="text-base" style="min-width: 14rem">
+                    {{ item.full_name }}
+                </td>
+            </tr>
+        </ng-template>
+
+        <ng-template pTemplate="emptymessage">
+            <tr>
+                <td colspan="18">No Audit Tests found.</td>
+            </tr>
+        </ng-template>
+
+        <ng-template pTemplate="loadingbody">
+            <tr>
+                <td colspan="18">Loading Audit Tests data. Please wait.</td>
+            </tr>
+        </ng-template>
+    </p-table>
+
+    <div *ngIf="!showTable">
+        <form
+            [formGroup]="auditTestForm"
+            (ngSubmit)="auditTestForm.valid && auditTestFormSubmit()"
+        >
+            <div class="grid">
+                <div class="field col-12 md:col-6">
+                    <label for="audit_test_desc"
+                        >Audit Test Description <sup>*</sup></label
+                    >
+                    <input
+                        id="audit_test_desc"
+                        pInputText
+                        formControlName="audit_test_desc"
+                        [style]="{ width: '100%' }"
+                    />
+                </div>
+
+                <div class="field col-12 md:col-6">
+                    <label for="au_id">Department<sup>*</sup></label>
+                    <p-autoComplete
+                        appendTo="body"
+                        placeholder="Search"
+                        [dropdown]="true"
+                        [multiple]="false"
+                        [suggestions]="filteredDepartment"
+                        (completeMethod)="filterDepartment($event)"
+                        formControlName="department_id"
+                        [style]="{ width: '100%' }"
+                    ></p-autoComplete>
+                </div>
+
+                <div class="field col-12 md:col-6">
+                    <label for="au_id">Audit Universe L4 <sup>*</sup></label>
+                    <p-autoComplete
+                        appendTo="body"
+                        placeholder="Search"
+                        [dropdown]="true"
+                        [suggestions]="filteredAuditUniverse4"
+                        (completeMethod)="filterAuditUniverse4($event)"
+                        formControlName="au_level_4_id"
+                        (onSelect)="onAuditUniverse4Select($event)"
+                        [style]="{ width: '100%' }"
+                    ></p-autoComplete>
+                    <small *ngIf="auditUniverse4?.length == 0" class="p-error"
+                        >No scripts found with related Audit program AU Level
+                        3</small
+                    >
+                </div>
+
+                <div class="field col-12 md:col-6">
+                    <label for="au_id">Risk <sup>*</sup></label>
+                    <p-progressSpinner
+                        *ngIf="loadingRisk"
+                        [style]="{
+                            width: '40px',
+                            height: '40px'
+                        }"
+                        styleClass="custom-spinner"
+                        strokeWidth="8"
+                        animationDuration=".5s"
+                    ></p-progressSpinner>
+                    <p-autoComplete
+                        *ngIf="!loadingRisk"
+                        [disabled]="isRiskEnable"
+                        placeholder="Search"
+                        [dropdown]="true"
+                        [suggestions]="filteredRisk"
+                        (completeMethod)="filterRisk($event)"
+                        formControlName="risk_id"
+                        (onSelect)="
+                            onRiskSelect($event); isControlEnable = false
+                        "
+                        [style]="{ width: '100%' }"
+                    ></p-autoComplete>
+                    <span *ngIf="!isRiskEnable">
+                        <small *ngIf="riskd?.length == 0" class="p-error"
+                            >No Risk Found</small
+                        >
+                    </span>
+                </div>
+
+                <div class="field col-12 md:col-6">
+                    <label for="">Control <sup>*</sup></label>
+                    <p-progressSpinner
+                        *ngIf="loadingControl"
+                        [style]="{
+                            width: '40px',
+                            height: '40px'
+                        }"
+                        styleClass="custom-spinner"
+                        strokeWidth="8"
+                        animationDuration=".5s"
+                    ></p-progressSpinner>
+                    <p-autoComplete
+                        *ngIf="!loadingControl"
+                        placeholder="Search"
+                        [showTransitionOptions]="'0ms'"
+                        [hideTransitionOptions]="'0ms'"
+                        [dropdown]="true"
+                        [multiple]="false"
+                        [suggestions]="filteredControl"
+                        (completeMethod)="filterControl($event)"
+                        formControlName="control_id"
+                        [disabled]="isControlEnable"
+                        (onSelect)="
+                            onControlSelect($event); isScriptEnable = false
+                        "
+                        [style]="{ width: '100%' }"
+                    ></p-autoComplete>
+                    <span *ngIf="!isControlEnable">
+                        <small *ngIf="controld?.length == 0" class="p-error"
+                            >No Control Found</small
+                        >
+                    </span>
+                </div>
+
+                <div class="field col-12 md:col-6">
+                    <label for="">Script <sup>*</sup></label>
+                    <p-progressSpinner
+                        *ngIf="loadingScript"
+                        [style]="{
+                            width: '40px',
+                            height: '40px'
+                        }"
+                        styleClass="custom-spinner"
+                        strokeWidth="8"
+                        animationDuration=".5s"
+                    ></p-progressSpinner>
+                    <p-autoComplete
+                        *ngIf="!loadingScript"
+                        appendTo="body"
+                        placeholder="Search"
+                        [showTransitionOptions]="'0ms'"
+                        [hideTransitionOptions]="'0ms'"
+                        [dropdown]="true"
+                        [multiple]="false"
+                        [suggestions]="filteredScript"
+                        (completeMethod)="filterScript($event)"
+                        formControlName="script_id"
+                        (onSelect)="onSelectScript($event)"
+                        [disabled]="isScriptEnable"
+                        [style]="{ width: '100%' }"
+                    ></p-autoComplete>
+                </div>
+                <div *ngIf="noScript" class="text-center text-xl">
+                    <span class="text-pink-500"
+                        >There are no active scripts for this combination</span
+                    >
+                </div>
+
+                <div
+                    style="display: table"
+                    class="selectedVal"
+                    *ngIf="scriptSelection && script?.length > 0"
+                >
+                    <div *ngIf="scriptSelection">
+                        <div
+                            formArrayName="scriptVariables"
+                            *ngFor="
+                                let item of auditTestForm.get('scriptVariables')
+                                    .controls;
+                                let i = index
+                            "
+                        >
+                            <div
+                                class="grid align-items-baseline"
+                                *ngIf="
+                                    !scriptDefaultVariables.includes(
+                                        scriptSelection.scriptVaribales[i]
+                                            .var_name
+                                    )
+                                "
+                            >
+                                <div class="col font-bold">
+                                    {{
+                                        scriptSelection.scriptVaribales[i]
+                                            .var_name
+                                    }}
+                                </div>
+                                <div class="col font-bold">
+                                    {{
+                                        scriptSelection.scriptVaribales[i]
+                                            .var_datatype
+                                    }}
+                                </div>
+                                <div class="col" [formGroupName]="i">
+                                    <div class="field">
+                                        <input
+                                            pInputText
+                                            formControlName="var_value"
+                                            placeholder="Variable Value"
+                                        />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div>
+                <table class="selectedVal">
+                    <tr>
+                        <td class="text-base" style="width: 20% !important">
+                            Audit Universe L4
+                        </td>
+                        <td
+                            title="Click to view full detail"
+                            style="
+                                width: 70% !important;
+
+                                white-space: nowrap;
+                                overflow: hidden;
+                                text-overflow: ellipsis;
+                            "
+                            (click)="
+                                showScript(
+                                    this.auditTestForm.get('au_level_4_id')
+                                        .value,
+                                    'Audit Universe L4'
+                                )
+                            "
+                        >
+                            {{ this.auditTestForm.get('au_level_4_id').value }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Risk Description</td>
+                        <td
+                            title="Click to view full detail"
+                            style="
+                                width: 70% !important;
+
+                                white-space: nowrap;
+                                overflow: hidden;
+                                text-overflow: ellipsis;
+                            "
+                            (click)="
+                                showScript(
+                                    this.auditTestForm.get('risk_id').value,
+                                    'Risk'
+                                )
+                            "
+                        >
+                            {{ this.auditTestForm.get('risk_id').value }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Control Description</td>
+                        <td
+                            title="Click to view full detail"
+                            style="
+                                width: 70% !important;
+
+                                white-space: nowrap;
+                                overflow: hidden;
+                                text-overflow: ellipsis;
+                            "
+                            (click)="
+                                showScript(
+                                    this.auditTestForm.get('control_id').value,
+                                    'Control'
+                                )
+                            "
+                        >
+                            {{ this.auditTestForm.get('control_id').value }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Script Description</td>
+                        <td
+                            title="Click to view full detail"
+                            style="
+                                width: 70% !important;
+
+                                white-space: nowrap;
+                                overflow: hidden;
+                                text-overflow: ellipsis;
+                            "
+                            (click)="
+                                showScript(
+                                    this.auditTestForm.get('script_id').value,
+                                    'Script'
+                                )
+                            "
+                        >
+                            {{ this.auditTestForm.get('script_id').value }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Presto Script</td>
+                        <td
+                            title="Click to view full detail"
+                            style="
+                                width: 70% !important;
+
+                                white-space: nowrap;
+                                overflow: hidden;
+                                text-overflow: ellipsis;
+                            "
+                            (click)="
+                                showScript(
+                                    this.scriptSelection.script_presto,
+                                    'Presto Script'
+                                )
+                            "
+                        >
+                            <div *ngIf="scriptSelection">
+                                {{ this.scriptSelection.script_presto }}
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>SQL Script</td>
+                        <td
+                            title="Click to view full detail"
+                            style="
+                                width: 70% !important;
+
+                                white-space: nowrap;
+                                overflow: hidden;
+                                text-overflow: ellipsis;
+                            "
+                            (click)="
+                                showScript(
+                                    this.scriptSelection.script_sql,
+                                    'SQL Script'
+                                )
+                            "
+                        >
+                            <div *ngIf="scriptSelection">
+                                {{ this.scriptSelection.script_sql }}
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="col-12 flex justify-content-between mt-4">
+                <div class="ml-auto">
+                    <p-button
+                        type="reset"
+                        label="Back"
+                        icon="pi pi-arrow-left"
+                        styleClass="p-button-secondary"
+                        (click)="showTable = true"
+                    ></p-button>
+                    &nbsp;
+                    <button
+                        type="submit"
+                        pButton
+                        pRipple
+                        #submitButton
+                        label="Save"
+                        icon="pi pi-check"
+                        styleClass="p-button-primary"
+                    ></button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<p-confirmDialog
+    header="Confirmation"
+    icon="pi pi-exclamation-triangle"
+></p-confirmDialog>

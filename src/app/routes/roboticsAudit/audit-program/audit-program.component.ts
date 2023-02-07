@@ -9,7 +9,6 @@ import {
 import { ActivatedRoute, Router } from '@angular/router';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { Table } from 'primeng/table';
-import { AuditProgram } from 'src/app/api/robotic-audit';
 import { AuditService } from 'src/app/service/audit.service';
 import { AuditUniverseService } from 'src/app/service/audituniverseservice';
 import { AuthService } from 'src/app/service/auth.service';
@@ -25,6 +24,7 @@ import * as moment from 'moment';
 import { Location } from '@angular/common';
 import { BannerService } from 'src/app/service/librariesservice';
 import { debug } from 'console';
+import { AuditProgram } from 'src/app/api/roboticsAudit/audit-program';
 
 @Component({
     selector: 'app-audit-program',
@@ -160,6 +160,17 @@ export class AuditProgramComponent implements OnInit {
             this.acp_audit = atob(res.acp_audit);
             this.useraccessn = atob(res.useraccessn);
         });
+    }
+
+    selectedAuditProgram: AuditProgram[];
+    selectedAuditTest;
+
+    getProgram(ele: AuditProgram[]) {
+        this.selectedAuditProgram = ele;
+    }
+
+    getTest(ele) {
+        this.selectedAuditTest = ele;
     }
 
     ngOnInit(): void {
