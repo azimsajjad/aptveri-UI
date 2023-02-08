@@ -311,38 +311,6 @@
                 </div>
 
                 <div class="field col-12 md:col-6">
-                    <label for="au_id">Risk <sup>*</sup></label>
-                    <p-progressSpinner
-                        *ngIf="loadingRisk"
-                        [style]="{
-                            width: '40px',
-                            height: '40px'
-                        }"
-                        styleClass="custom-spinner"
-                        strokeWidth="8"
-                        animationDuration=".5s"
-                    ></p-progressSpinner>
-                    <p-autoComplete
-                        *ngIf="!loadingRisk"
-                        [disabled]="isRiskEnable"
-                        placeholder="Search"
-                        [dropdown]="true"
-                        [suggestions]="filteredRisk"
-                        (completeMethod)="filterRisk($event)"
-                        formControlName="risk_id"
-                        (onSelect)="
-                            onRiskSelect($event); isControlEnable = false
-                        "
-                        [style]="{ width: '100%' }"
-                    ></p-autoComplete>
-                    <span *ngIf="!isRiskEnable">
-                        <small *ngIf="riskd?.length == 0" class="p-error"
-                            >No Risk Found</small
-                        >
-                    </span>
-                </div>
-
-                <div class="field col-12 md:col-6">
                     <label for="">Control <sup>*</sup></label>
                     <p-progressSpinner
                         *ngIf="loadingControl"
@@ -373,6 +341,37 @@
                     <span *ngIf="!isControlEnable">
                         <small *ngIf="controld?.length == 0" class="p-error"
                             >No Control Found</small
+                        >
+                    </span>
+                </div>
+                <div class="field col-12 md:col-6">
+                    <label for="au_id">Risk <sup>*</sup></label>
+                    <p-progressSpinner
+                        *ngIf="loadingRisk"
+                        [style]="{
+                            width: '40px',
+                            height: '40px'
+                        }"
+                        styleClass="custom-spinner"
+                        strokeWidth="8"
+                        animationDuration=".5s"
+                    ></p-progressSpinner>
+                    <p-autoComplete
+                        *ngIf="!loadingRisk"
+                        [disabled]="isRiskEnable"
+                        placeholder="Search"
+                        [dropdown]="true"
+                        [suggestions]="filteredRisk"
+                        (completeMethod)="filterRisk($event)"
+                        formControlName="risk_id"
+                        (onSelect)="
+                            onRiskSelect($event); isControlEnable = false
+                        "
+                        [style]="{ width: '100%' }"
+                    ></p-autoComplete>
+                    <span *ngIf="!isRiskEnable">
+                        <small *ngIf="riskd?.length == 0" class="p-error"
+                            >No Risk Found</small
                         >
                     </span>
                 </div>
