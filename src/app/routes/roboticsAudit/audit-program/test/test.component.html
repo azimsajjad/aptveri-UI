@@ -97,7 +97,7 @@
 
         <ng-template pTemplate="header">
             <tr>
-                <th pFrozenColumn style="max-width: 4rem">
+                <th pFrozenColumn style="max-width: 4rem;">
                     <p-tableHeaderCheckbox
                         (click)="selectTest()"
                     ></p-tableHeaderCheckbox>
@@ -110,75 +110,75 @@
                     </div>
                 </th>
 
-                <th pSortableColumn="audit_test_desc" style="min-width: 14rem">
+                <th pSortableColumn="audit_test_desc" style="min-width: 14rem;">
                     AUDIT TEST DESCRIPTION
                     <p-sortIcon field="audit_test_desc"></p-sortIcon>
                 </th>
-                <th pSortableColumn="au_level_4_desc" style="min-width: 14rem">
+                <th pSortableColumn="au_level_4_desc" style="min-width: 14rem;">
                     AUDIT UNIVERESE LEVEL 4
                     <p-sortIcon field="au_level_4_desc"></p-sortIcon>
                 </th>
-                <th pSortableColumn="audit_risk" style="min-width: 14rem">
+                <th pSortableColumn="audit_risk" style="min-width: 14rem;">
                     RISK DESCRIPTION
                     <p-sortIcon field="audit_risk"></p-sortIcon>
                 </th>
-                <th pSortableColumn="control" style="min-width: 14rem">
+                <th pSortableColumn="control" style="min-width: 14rem;">
                     CONTROL DESCRIPTION
                     <p-sortIcon field="control"></p-sortIcon>
                 </th>
-                <th pSortableColumn="banner" style="min-width: 14rem">
+                <th pSortableColumn="banner" style="min-width: 14rem;">
                     DEPARTMENT DESCRIPTION
                     <p-sortIcon field="banner"></p-sortIcon>
                 </th>
-                <th pSortableColumn="target_table" style="min-width: 14rem">
+                <th pSortableColumn="target_table" style="min-width: 14rem;">
                     TARGET TABLE<p-sortIcon field="target_table"></p-sortIcon>
                 </th>
                 <th
                     pSortableColumn="script_defination"
-                    style="min-width: 14rem"
+                    style="min-width: 14rem;"
                 >
                     SCRIPT DEFINATION
                     <p-sortIcon field="script_defination"></p-sortIcon>
                 </th>
-                <th pSortableColumn="script_presto" style="min-width: 14rem">
+                <th pSortableColumn="script_presto" style="min-width: 14rem;">
                     FEDERATED SCRIPT
                     <p-sortIcon field="script_presto"></p-sortIcon>
                 </th>
-                <th pSortableColumn="script_sql" style="min-width: 14rem">
+                <th pSortableColumn="script_sql" style="min-width: 14rem;">
                     SQL SCRIPT
                     <p-sortIcon field="script_sql"></p-sortIcon>
                 </th>
-                <th pSortableColumn="result" style="min-width: 14rem">
+                <th pSortableColumn="result" style="min-width: 14rem;">
                     RESULT
                     <p-sortIcon field="result"></p-sortIcon>
                 </th>
-                <th pSortableColumn="notes" style="min-width: 14rem">
+                <th pSortableColumn="notes" style="min-width: 14rem;">
                     NOTES
                     <p-sortIcon field="notes"></p-sortIcon>
                 </th>
-                <th pSortableColumn="schedule_status" style="min-width: 14rem">
+                <th pSortableColumn="schedule_status" style="min-width: 14rem;">
                     SCHEDULE STATUS
                     <p-sortIcon field="schedule_status"></p-sortIcon>
                 </th>
                 <th
                     pSortableColumn="schedule_start_datetime"
-                    style="min-width: 14rem"
+                    style="min-width: 14rem;"
                 >
                     SCHEDULE START DATE
                     <p-sortIcon field="schedule_start_datetime"></p-sortIcon>
                 </th>
                 <th
                     pSortableColumn="schedule_end_datetime"
-                    style="min-width: 14rem"
+                    style="min-width: 14rem;"
                 >
                     SCHEDULE END DATE
                     <p-sortIcon field="schedule_end_datetime"></p-sortIcon>
                 </th>
-                <th pSortableColumn="last_run_date" style="min-width: 14rem">
+                <th pSortableColumn="last_run_date" style="min-width: 14rem;">
                     LAST RUN DATE
                     <p-sortIcon field="last_run_date"></p-sortIcon>
                 </th>
-                <th pSortableColumn="full_name" style="min-width: 14rem">
+                <th pSortableColumn="full_name" style="min-width: 14rem;">
                     CREATED BY
                     <p-sortIcon field="full_name"></p-sortIcon>
                 </th>
@@ -187,61 +187,61 @@
 
         <ng-template pTemplate="body" let-item>
             <tr class="p-selectable-row">
-                <td pFrozenColumn class="text-base" style="max-width: 4rem">
+                <td pFrozenColumn class="text-base" style="max-width: 4rem;">
                     <p-tableCheckbox
                         [value]="item"
                         (click)="selectTest(item)"
                     ></p-tableCheckbox>
                 </td>
-                <td class="text-base" style="min-width: 14rem">
+                <td class="text-base" style="min-width: 14rem;">
                     {{ item.audit_test_uid }}
                 </td>
-                <td class="text-base" style="min-width: 14rem">
+                <td class="text-base" style="min-width: 14rem;">
                     {{ item.audit_test_desc.substring(0, 30) }}
                 </td>
-                <td class="text-base" style="min-width: 14rem">
+                <td class="text-base" style="min-width: 14rem;">
                     {{ item.au_level_4_desc }}
                 </td>
-                <td class="text-base" style="min-width: 14rem">
+                <td class="text-base" style="min-width: 14rem;">
                     {{ item.audit_risk.substring(0, 30) }}
                 </td>
-                <td class="text-base" style="min-width: 14rem">
+                <td class="text-base" style="min-width: 14rem;">
                     {{ item.control.substring(0, 30) }}
                 </td>
-                <td class="text-base" style="min-width: 14rem">
+                <td class="text-base" style="min-width: 14rem;">
                     {{ item.banner }}
                 </td>
-                <td class="text-base" style="min-width: 14rem">
+                <td class="text-base" style="min-width: 14rem;">
                     {{ item.target_table }}
                 </td>
-                <td class="text-base" style="min-width: 14rem">
+                <td class="text-base" style="min-width: 14rem;">
                     {{ item.script_defination }}
                 </td>
-                <td class="text-base" style="min-width: 14rem">
+                <td class="text-base" style="min-width: 14rem;">
                     {{ item.script_presto.substring(0, 30) }}
                 </td>
-                <td class="text-base" style="min-width: 14rem">
+                <td class="text-base" style="min-width: 14rem;">
                     {{ item.script_sql.substring(0, 30) }}
                 </td>
-                <td class="text-base" style="min-width: 14rem">
+                <td class="text-base" style="min-width: 14rem;">
                     {{ item.results ? item.results : 'N/A' }}
                 </td>
-                <td class="text-base" style="min-width: 14rem">
+                <td class="text-base" style="min-width: 14rem;">
                     {{ item.notes }}
                 </td>
-                <td class="text-base" style="min-width: 14rem">
+                <td class="text-base" style="min-width: 14rem;">
                     {{ item.schedule_status }}
                 </td>
-                <td class="text-base" style="min-width: 14rem">
+                <td class="text-base" style="min-width: 14rem;">
                     {{ item.schedule_start_datetime | date }}
                 </td>
-                <td class="text-base" style="min-width: 14rem">
+                <td class="text-base" style="min-width: 14rem;">
                     {{ item.schedule_end_datetime | date }}
                 </td>
-                <td class="text-base" style="min-width: 14rem">
+                <td class="text-base" style="min-width: 14rem;">
                     {{ item.last_run_date | date }}
                 </td>
-                <td class="text-base" style="min-width: 14rem">
+                <td class="text-base" style="min-width: 14rem;">
                     {{ item.full_name }}
                 </td>
             </tr>
@@ -277,7 +277,24 @@
                         [style]="{ width: '100%' }"
                     />
                 </div>
+            </div>
 
+            <div class="grid">
+                <div class="col align-self-center">
+                    <div class="field">
+                        <label for="au_id">Organization<sup>*</sup></label>
+                        <p-autoComplete
+                            appendTo="body"
+                            formControlName="organization_id"
+                            [suggestions]="filteredOrg"
+                            (completeMethod)="filterOrg($event)"
+                            [dropdown]="true"
+                            placeholder="Select Organisation"
+                            [style]="{ width: '100%' }"
+                            [disabled]="auditTestMode == 'edit'"
+                        ></p-autoComplete>
+                    </div>
+                </div>
                 <div class="field col-12 md:col-6">
                     <label for="au_id">Department<sup>*</sup></label>
                     <p-autoComplete
@@ -412,7 +429,7 @@
                 </div>
 
                 <div
-                    style="display: table"
+                    style="display: table;"
                     class="selectedVal"
                     *ngIf="scriptSelection && script?.length > 0"
                 >
@@ -464,7 +481,7 @@
             <div>
                 <table class="selectedVal">
                     <tr>
-                        <td class="text-base" style="width: 20% !important">
+                        <td class="text-base" style="width: 20% !important;">
                             Audit Universe L4
                         </td>
                         <td

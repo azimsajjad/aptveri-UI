@@ -13,6 +13,7 @@ import { AuditProgram } from 'src/app/api/roboticsAudit/audit-program';
 import { AuditService } from 'src/app/service/audit.service';
 import { BannerService } from 'src/app/service/librariesservice';
 import { ScriptService } from 'src/app/service/scriptservices';
+import { Banner, Organisation } from 'src/app/api/libraries';
 
 @Component({
     selector: 'app-test',
@@ -41,6 +42,8 @@ export class TestComponent implements OnInit, OnChanges {
     filteredControl;
     auditUniverse4;
     filteredAuditUniverse4;
+    allOrg;
+    filteredOrg;
 
     auditTestForm: FormGroup;
 
@@ -64,17 +67,24 @@ export class TestComponent implements OnInit, OnChanges {
     ) {}
 
     ngOnInit(): void {
+        debugger;
         let scr = this.scriptService.getScript(0);
         let dept = this.auditService.sendGetBannerRequest();
         let aRisk = this.libraryService.sendGetriskRequest();
         let aControl = this.libraryService.sendGetcontrolRequest();
-
-        forkJoin([scr, dept, aRisk, aControl]).subscribe((results: any) => {
-            this.script = results[0].data;
-            this.department = results[1].data;
-            this.risk = results[2].data;
-            this.control = results[3].data;
-        });
+        let organiz = this.libraryService.getAllOrganizations();
+        // this.libraryService.getAllOrganizations().subscribe((res) => {
+        //     this.allOrg = res.data;
+        // });
+        forkJoin([scr, dept, aRisk, aControl, organiz]).subscribe(
+            (results: any) => {
+                this.script = results[0].data;
+                this.department = results[1].data;
+                this.risk = results[2].data;
+                this.control = results[3].data;
+                this.allOrg = results[4].data;
+            }
+        );
     }
 
     openT(auditTest) {
@@ -88,6 +98,9 @@ export class TestComponent implements OnInit, OnChanges {
                 auditTest ? auditTest.audit_test_desc : null,
                 Validators.required,
             ],
+            organization_id: auditTest
+                ? this.getOrganization(auditTest?.organization_id)
+                : null,
             department_id: auditTest
                 ? this.getDepartment(auditTest?.department_id)
                 : null,
@@ -718,6 +731,7 @@ export class TestComponent implements OnInit, OnChanges {
     }
 
     getDepartment(id: number) {
+        debugger;
         let d = this.department.find((ele) => {
             return ele.department_id == id;
         });
@@ -788,6 +802,59 @@ export class TestComponent implements OnInit, OnChanges {
             return ele.risk_id == id;
         });
         return r.risk_uid + ' - ' + r.risk;
+    }
+
+    filterOrg(event) {
+        const filtered: any[] = [];
+        const query = event.query;
+        for (let i = 0; i < this.allOrg.length; i++) {
+            const ele = this.allOrg[i];
+            if (ele.organization_uid == null) {
+                filtered.push(ele.organization_uid);
+            } else if (
+                ele.organization_uid
+                    .toString()
+                    .toLowerCase()
+                    .indexOf(query.toLowerCase()) != -1 ||
+                ele.organization
+                    .toString()
+                    .toLowerCase()
+                    .indexOf(query.toLowerCase()) != -1
+            ) {
+                filtered.push(ele.organization_uid + ' - ' + ele.organization);
+            }
+            this.filteredOrg = filtered;
+        }
+    }
+
+    getOrganization(id: number) {
+        debugger;
+        let x = this.allOrg.filter((ele) => {
+            return ele.organization_id == id;
+        });
+
+        return x[0].organization_uid + ' - ' + x[0].organization;
+    }
+
+    getOrganizationtId(val: string) {
+        let x = this.allOrg.filter((ele) => {
+            return ele.organization_uid + ' - ' + ele.organization == val;
+        });
+        return x[0].organization_id;
+    }
+
+    getBanner(id: number) {
+        let x = this.department.filter((ele) => {
+            return ele.department_id == id;
+        });
+        return x[0].department_uid + ' - ' + x[0].department;
+    }
+
+    getBannerId(val: string) {
+        let x = this.department.filter((ele) => {
+            return ele.department_uid + ' - ' + ele.department == val;
+        });
+        return x[0].department_id;
     }
 
     getControlId(control: string): number {
