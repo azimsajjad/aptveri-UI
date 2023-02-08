@@ -610,6 +610,7 @@
                     ></p-button>
                     &nbsp;
                     <button
+                        [disabled]="!auditTestForm.valid"
                         type="submit"
                         pButton
                         pRipple

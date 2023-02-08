@@ -1712,6 +1712,10 @@
         [disabled]="selectedAuditTest == null || selectedAuditTest.length == 0"
         header="Audit Test History"
     >
-        <app-test-history [auditTest]="selectedAuditTest"></app-test-history>
+        <app-test-history
+            [auditTest]="selectedAuditTest"
+            [auditProgram]="selectedAuditProgram"
+            [audit]="audits"
+        ></app-test-history>
     </p-tabPanel>
 </p-tabView>

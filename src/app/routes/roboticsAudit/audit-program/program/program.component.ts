@@ -148,12 +148,54 @@ export class ProgramComponent implements OnInit {
             last_run: [auditProgram ? new Date(auditProgram?.last_run) : null],
         });
 
+        this.auditProgramForm
+            .get('frequency_id')
+            .valueChanges.subscribe((res) => {
+                if (res != null) {
+                    this.auditProgramForm
+                        .get('ap_schedule_date')
+                        .setValidators(Validators.required);
+                    this.auditProgramForm
+                        .get('ap_schedule_date')
+                        .updateValueAndValidity();
+                    this.auditProgramForm
+                        .get('ap_schedule_time')
+                        .setValidators(Validators.required);
+                    this.auditProgramForm
+                        .get('ap_schedule_time')
+                        .updateValueAndValidity();
+                    this.auditProgramForm
+                        .get('next_run')
+                        .setValidators(Validators.required);
+                    this.auditProgramForm
+                        .get('next_run')
+                        .updateValueAndValidity();
+                } else {
+                    this.auditProgramForm
+                        .get('ap_schedule_date')
+                        .clearValidators();
+                    this.auditProgramForm
+                        .get('ap_schedule_date')
+                        .updateValueAndValidity();
+                    this.auditProgramForm
+                        .get('ap_schedule_time')
+                        .clearValidators();
+                    this.auditProgramForm
+                        .get('ap_schedule_time')
+                        .updateValueAndValidity();
+                    this.auditProgramForm.get('next_run').clearValidators();
+                    this.auditProgramForm
+                        .get('next_run')
+                        .updateValueAndValidity();
+                }
+            });
+
         this.showTable = false;
     }
 
     saveAuditProgram() {
         this.auditProgramForm.value.frequency_id =
-            this.auditProgramForm.value.frequency_id.codeId || 0;
+            this.auditProgramForm.value.frequency_id?.codeId || 0;
         this.auditProgramForm.value.au_level_3_id =
             this.getAuditUniverseId(
                 this.auditProgramForm.value.au_level_3_id
