@@ -229,7 +229,10 @@
     </p-table>
 
     <div *ngIf="!showTable">
-        <form [formGroup]="auditProgramForm" (ngSubmit)="saveAuditProgram()">
+        <form
+            [formGroup]="auditProgramForm"
+            (ngSubmit)="auditProgramForm.valid && saveAuditProgram()"
+        >
             <div class="grid formgrid">
                 <div class="col-12 mb-2 p-dialog-content">
                     <div class="field">
@@ -372,6 +375,7 @@
                         ></p-button>
                         &nbsp;
                         <button
+                            [disabled]="!auditProgramForm.valid"
                             type="submit"
                             pButton
                             pRipple

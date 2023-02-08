@@ -166,6 +166,25 @@ export class TestComponent implements OnInit, OnChanges {
                 }
             });
 
+        this.auditTestForm.get('risk_id').valueChanges.subscribe((res) => {
+            if (res == '' || res == null) {
+                this.isControlEnable = true;
+                this.isScriptEnable = true;
+                this.auditTestForm.get('control_id').setValue(null);
+            } else {
+                this.isControlEnable = false;
+                this.isScriptEnable = false;
+            }
+        });
+
+        this.auditTestForm.get('control_id').valueChanges.subscribe((res) => {
+            if (res == '' || res == null) {
+                this.isScriptEnable = true;
+            } else {
+                this.isScriptEnable = false;
+            }
+        });
+
         this.showTable = false;
     }
 
