@@ -64,6 +64,10 @@ import { UtilsService } from './service/utils.service';
 import { ProgramComponent } from './routes/roboticsAudit/audit-program/program/program.component';
 import { TestComponent } from './routes/roboticsAudit/audit-program/test/test.component';
 import { TestHistoryComponent } from './routes/roboticsAudit/audit-program/test-history/test-history.component';
+import { AuditPageComponent } from './routes/roboticsAudit/audit/audit-page/audit-page.component';
+import { AuditTestComponent } from './routes/roboticsAudit/audit/audit-test/audit-test.component';
+import { AuditTestHistoryComponent } from './routes/roboticsAudit/audit/audit-test-history/audit-test-history.component';
+import { AuditProgramComponent1 } from './routes/roboticsAudit/audit/audit-program/audit-program.component';
 
 export function tokenGetter() {
     return localStorage.getItem('jwt');
@@ -133,6 +137,10 @@ export function tokenGetter() {
         ProgramComponent,
         TestComponent,
         TestHistoryComponent,
+        AuditPageComponent,
+        AuditTestComponent,
+        AuditTestHistoryComponent,
+        AuditProgramComponent1,
     ],
     providers: [
         { provide: LocationStrategy, useClass: HashLocationStrategy },

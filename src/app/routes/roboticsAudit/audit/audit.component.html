@@ -552,7 +552,7 @@
     </div>
 </div> -->
 
-<div id="table1">
+<!-- <div id="table1">
     <div class="card px-3 py-3">
         <p-table
             #dt
@@ -951,8 +951,6 @@
                         [style]="{ width: '100%' }"
                     />
                 </div>
-                <!-- </ng-template>
-        <ng-template pTemplate="footer"> -->
                 <div class="col-12 flex justify-content-between mt-4">
                     <div class="ml-auto">
                         <p-button
@@ -988,18 +986,24 @@
         (click)="openNew(null)"
     ></button>
 
-    <!-- <p-dialog
-        [(visible)]="auditDialog"
-        [style]="{ width: '80%' }"
-        header="Audit"
-        [modal]="true"
-        class="p-fluid"
-    >
-        <ng-template pTemplate="content"> -->
-    <!-- </ng-template>
-    </p-dialog> -->
-
     <p-confirmDialog> </p-confirmDialog>
-</div>
+</div> -->
 
 <p-toast></p-toast>
+
+<div id="table1">
+    <p-tabView>
+        <p-tabPanel header="Audit">
+            <app-audit-page></app-audit-page>
+        </p-tabPanel>
+        <p-tabPanel header="Audit Program">
+            <app-audit-program1></app-audit-program1>
+        </p-tabPanel>
+        <p-tabPanel header="Audit Test">
+            <app-audit-test></app-audit-test>
+        </p-tabPanel>
+        <p-tabPanel header="Audit Test History">
+            <app-audit-test-history></app-audit-test-history>
+        </p-tabPanel>
+    </p-tabView>
+</div>
