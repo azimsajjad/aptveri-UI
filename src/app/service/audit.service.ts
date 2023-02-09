@@ -499,7 +499,11 @@ export class AuditService {
     ): Observable<any> {
         return this.http.get(
             environment.api_prefix +
-                `audit/auditdashbord/${organization_id}/${department_id}/${ap_schedule_start_date}/${ap_schedule_end_date}/${results}`
+                `audit/auditdashbord/${organization_id}/${department_id}/${ap_schedule_start_date}/${ap_schedule_end_date}/${results}`,
+            {
+                observe: 'response',
+                responseType: 'blob',
+            }
         );
     }
 }
