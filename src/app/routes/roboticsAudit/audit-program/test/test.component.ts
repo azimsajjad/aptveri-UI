@@ -32,10 +32,12 @@ export class TestComponent implements OnInit, OnChanges {
     auditTSelection;
     scriptSelection;
 
+    fullScript;
     script;
     filteredScript;
     department;
     filteredDepartment;
+    fullRisk;
     risk;
     filteredRisk;
     control;
@@ -86,9 +88,9 @@ export class TestComponent implements OnInit, OnChanges {
         // });
         forkJoin([scr, dept, aRisk, aControl, organiz]).subscribe(
             (results: any) => {
-                this.script = results[0].data;
+                this.fullScript = results[0].data;
                 this.department = results[1].data;
-                this.risk = results[2].data;
+                this.fullRisk = results[2].data;
                 this.control = results[3].data;
                 this.allOrg = results[4].data;
             }
@@ -208,57 +210,31 @@ export class TestComponent implements OnInit, OnChanges {
     }
 
     getScriptSql(script: string) {
-        // console.log(script);
-
-        let x = this.script.filter((ele) => {
-            return (
-                ele.script_uid +
-                    ' - ' +
-                    ele.version +
-                    ' - ' +
-                    ele.script_defination ==
-                script
-            );
+        let x = this.fullScript.filter((ele) => {
+            return ele.script_id == script;
         });
 
         return x[0].script_sql;
     }
 
     getPrestoSql(script: string) {
-        let x = this.script.filter((ele) => {
-            return (
-                ele.script_uid +
-                    ' - ' +
-                    ele.version +
-                    ' - ' +
-                    ele.script_defination ==
-                script
-            );
+        let x = this.fullScript.filter((ele) => {
+            return ele.script_id == script;
         });
 
         return x[0].script_presto;
     }
 
     getScriptVersionId(script: string) {
-        //   console.log(script);
-        //  console.log(this.script);
-
-        let x = this.script.filter((ele) => {
-            return (
-                ele.script_uid +
-                    ' - ' +
-                    ele.version +
-                    ' - ' +
-                    ele.script_defination ==
-                script
-            );
+        let x = this.fullScript.filter((ele) => {
+            return ele.script_id == script;
         });
 
         return x[0].version_id;
     }
 
     getScriptVariable(script: string) {
-        let x = this.script.filter((ele) => {
+        let x = this.fullScript.filter((ele) => {
             return ele.script_defination == script;
         });
 
@@ -266,25 +242,6 @@ export class TestComponent implements OnInit, OnChanges {
     }
 
     auditTestFormSubmit() {
-        debugger;
-        this.auditTestForm.value['script_sql'] = this.getScriptSql(
-            this.auditTestForm.value.script_id
-        );
-        this.auditTestForm.value['version_id'] = this.getScriptVersionId(
-            this.auditTestForm.value.script_id
-        );
-        this.auditTestForm.value['script_presto'] = this.getPrestoSql(
-            this.auditTestForm.value.script_id
-        );
-        this.auditTestForm.value['target_table'] = this.script.filter((ele) => {
-            if (
-                ele.script_id ==
-                this.getScriptId(this.auditTestForm.value.script_id)
-            ) {
-                return ele;
-            }
-        })[0].target_table;
-
         this.auditTestForm
             .get('au_level_4_id')
             .setValue(
@@ -321,6 +278,8 @@ export class TestComponent implements OnInit, OnChanges {
             .setValue(
                 this.getScriptId(this.auditTestForm.get('script_id').value)
             );
+        this.auditTestForm.value.strore =
+            this.auditTestForm.get('strore').value == 'Yes' ? true : false;
 
         if (this.auditProgram[0].schedule_status) {
             this.auditTestForm.value.frequency =
@@ -338,11 +297,29 @@ export class TestComponent implements OnInit, OnChanges {
             this.auditTestForm.value.schedule_end_datetime = new Date();
             this.auditTestForm.value.schedule_status = false;
         }
-        console.log(this.auditTestForm.value);
+
+        this.auditTestForm.value['script_sql'] = this.getScriptSql(
+            this.auditTestForm.value.script_id
+        );
+        this.auditTestForm.value['version_id'] = this.getScriptVersionId(
+            this.auditTestForm.value.script_id
+        );
+        this.auditTestForm.value['script_presto'] = this.getPrestoSql(
+            this.auditTestForm.value.script_id
+        );
+        this.auditTestForm.value['target_table'] = this.fullScript.filter(
+            (ele) => {
+                if (
+                    ele.script_id ==
+                    this.getScriptId(this.auditTestForm.value.script_id)
+                ) {
+                    return ele;
+                }
+            }
+        )[0].target_table;
 
         if (this.auditTestForm.get('audit_test_id').value == null) {
             // add
-            debugger;
             if (this.auditProgram[0].schedule_status == false) {
                 this.auditService
                     .addAuditTest(this.auditTestForm.value)
@@ -363,6 +340,11 @@ export class TestComponent implements OnInit, OnChanges {
                             this.scriptService.getScript(0).subscribe((res) => {
                                 this.script = res.data;
                             });
+                            this.libraryService
+                                .sendGetcontrolRequest()
+                                .subscribe((res) => {
+                                    this.control = res.data;
+                                });
                         })
                     )
                     .subscribe((res) => {
@@ -410,6 +392,11 @@ export class TestComponent implements OnInit, OnChanges {
                             this.scriptService.getScript(0).subscribe((res) => {
                                 this.script = res.data;
                             });
+                            this.libraryService
+                                .sendGetcontrolRequest()
+                                .subscribe((res) => {
+                                    this.control = res.data;
+                                });
                         })
                     )
                     .subscribe((res) => {
@@ -458,6 +445,11 @@ export class TestComponent implements OnInit, OnChanges {
                         this.scriptService.getScript(0).subscribe((res) => {
                             this.script = res.data;
                         });
+                        this.libraryService
+                            .sendGetcontrolRequest()
+                            .subscribe((res) => {
+                                this.control = res.data;
+                            });
                     })
                 )
                 .subscribe((res: any) => {
@@ -874,7 +866,6 @@ export class TestComponent implements OnInit, OnChanges {
     }
 
     getDepartment(id: number) {
-        debugger;
         let d = this.department.find((ele) => {
             return ele.department_id == id;
         });
@@ -889,7 +880,7 @@ export class TestComponent implements OnInit, OnChanges {
     }
 
     getScript(id: number) {
-        let s = this.script.find((ele) => {
+        let s = this.fullScript.find((ele) => {
             return ele.script_id == id;
         });
 
@@ -898,17 +889,24 @@ export class TestComponent implements OnInit, OnChanges {
         );
     }
 
-    getScriptId(script: string) {
-        let x = this.script.filter((ele) => {
-            return (
-                ele.script_uid +
-                    ' - ' +
-                    ele.version +
-                    ' - ' +
-                    ele.script_defination ==
-                script
-            );
-        });
+    getScriptId(script) {
+        let x;
+        if (isNaN(script)) {
+            x = this.fullScript.filter((ele) => {
+                return (
+                    ele.script_uid +
+                        ' - ' +
+                        ele.version +
+                        ' - ' +
+                        ele.script_defination ==
+                    script
+                );
+            });
+        } else {
+            x = this.fullScript.filter((ele) => {
+                return ele.script_id == script;
+            });
+        }
 
         return x[0].script_id;
     }
@@ -930,7 +928,7 @@ export class TestComponent implements OnInit, OnChanges {
     }
 
     getRiskId(risk: string): number {
-        let x = this.risk.filter((ele) => {
+        let x = this.fullRisk.filter((ele) => {
             return (
                 ele.keyuid == risk.split(' - ')[0] ||
                 ele.risk_uid == risk.split(' - ')[0]
@@ -941,7 +939,7 @@ export class TestComponent implements OnInit, OnChanges {
     }
 
     getRisk(id: number) {
-        let r = this.risk.find((ele) => {
+        let r = this.fullRisk.find((ele) => {
             return ele.risk_id == id;
         });
         return r.risk_uid + ' - ' + r.risk;
@@ -971,7 +969,6 @@ export class TestComponent implements OnInit, OnChanges {
     }
 
     getOrganization(id: number) {
-        debugger;
         let x = this.allOrg.filter((ele) => {
             return ele.organization_id == id;
         });
