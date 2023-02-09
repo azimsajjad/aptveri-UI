@@ -14,7 +14,6 @@ import { RiskDetailComponent } from './routes/libraries/risk-detail/risk-detail.
 import { ControlDetailComponent } from './routes/libraries/control-detail/control-detail.component';
 import { AuthGuard } from './guards/auth.guard';
 import { ScriptDetailComponent } from './routes/libraries/script-detail/script-detail.component';
-import { AuditProgramComponent } from './routes/roboticsAudit/audit-program/audit-program.component';
 import { ResultsComponent } from './routes/roboticsAudit/results/results.component';
 
 import { AuditComponent } from './routes/roboticsAudit/audit/audit.component';
@@ -87,10 +86,6 @@ import { MasterComponent } from './routes/utilities/master/master.component';
                             path: 'pages/audit',
                             component: AuditComponent,
                             canActivate: [AuthGuard],
-                        },
-                        {
-                            path: 'pages/audit-program/:audit_id/:useraccessn/:acp_audit',
-                            component: AuditProgramComponent,
                         },
                         {
                             path: 'pages/results/:audit_id/:ap_id/:audit_test_id/:audit_history_id',

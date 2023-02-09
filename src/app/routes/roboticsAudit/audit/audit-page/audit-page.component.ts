@@ -1,4 +1,10 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import {
+    Component,
+    EventEmitter,
+    OnInit,
+    Output,
+    ViewChild,
+} from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import * as moment from 'moment';
 import { ConfirmationService, MessageService } from 'primeng/api';
@@ -38,6 +44,7 @@ export class AuditPageComponent implements OnInit {
     filteredOrg: Organisation[];
 
     @ViewChild('dt') table: Table;
+    @Output() auditSelection = new EventEmitter<any>();
 
     constructor(
         private auditService: AuditService,
@@ -342,11 +349,17 @@ export class AuditPageComponent implements OnInit {
 
     selectRow(ele: audit) {
         this.selectedAudit = [ele];
+        this.loading = true;
 
         this.auditService
             .sendNavigateAuditRequest(
                 ele.audit_id,
                 ele.user_access_id != '0' ? 'yes' : 'no'
+            )
+            .pipe(
+                finalize(() => {
+                    this.loading = false;
+                })
             )
             .subscribe((res) => {
                 if (res.data) {
@@ -358,7 +371,7 @@ export class AuditPageComponent implements OnInit {
                             life: 3000,
                         });
                     } else {
-                        console.log('go');
+                        this.auditSelection.emit(this.selectedAudit[0]);
                     }
                 } else {
                     this.messageService.add({

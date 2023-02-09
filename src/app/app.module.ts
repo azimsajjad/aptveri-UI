@@ -37,7 +37,6 @@ import { JwtModule } from '@auth0/angular-jwt';
 import { AuthGuard } from './guards/auth.guard';
 import { httpInterceptor } from './Interceptor/httpInterceptor';
 import { ErrorInterceptorService } from './Interceptor/errorInterceptor';
-import { AuditProgramComponent } from './routes/roboticsAudit/audit-program/audit-program.component';
 import { AuditService } from './service/audit.service';
 import { AuditComponent } from './routes/roboticsAudit/audit/audit.component';
 import { ResultsComponent } from './routes/roboticsAudit/results/results.component';
@@ -61,9 +60,6 @@ import { OrganisationComponent } from './routes/libraries/organisation/organisat
 import { AuditDashboardComponent } from './routes/roboticsAudit/audit-dashboard/audit-dashboard.component';
 import { MasterComponent } from './routes/utilities/master/master.component';
 import { UtilsService } from './service/utils.service';
-import { ProgramComponent } from './routes/roboticsAudit/audit-program/program/program.component';
-import { TestComponent } from './routes/roboticsAudit/audit-program/test/test.component';
-import { TestHistoryComponent } from './routes/roboticsAudit/audit-program/test-history/test-history.component';
 import { AuditPageComponent } from './routes/roboticsAudit/audit/audit-page/audit-page.component';
 import { AuditTestComponent } from './routes/roboticsAudit/audit/audit-test/audit-test.component';
 import { AuditTestHistoryComponent } from './routes/roboticsAudit/audit/audit-test-history/audit-test-history.component';
@@ -117,7 +113,6 @@ export function tokenGetter() {
         ControlDetailComponent,
         ScriptDetailComponent,
         AuditComponent,
-        AuditProgramComponent,
         ResultsComponent,
         ViewResultComponent,
         AuLevelAllComponent,
@@ -134,9 +129,6 @@ export function tokenGetter() {
         OrganisationComponent,
         AuditDashboardComponent,
         MasterComponent,
-        ProgramComponent,
-        TestComponent,
-        TestHistoryComponent,
         AuditPageComponent,
         AuditTestComponent,
         AuditTestHistoryComponent,
