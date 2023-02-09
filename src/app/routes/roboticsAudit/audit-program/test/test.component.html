@@ -38,7 +38,12 @@
             <div
                 class="table-header flex justify-content-between align-items-center"
             >
-                <span class="text-xl">List of Audit Test</span>
+                <span class="text-xl"
+                    >List of Audit Test [{{
+                        auditProgram[0].audit_program_uid
+                    }}
+                    - {{ auditProgram[0].ap_name }}]</span
+                >
                 <span class="flex justify-content-between align-items-center">
                     <span class="p-input-icon-left mb-2 md:mb-0">
                         <button

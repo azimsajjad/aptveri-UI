@@ -114,6 +114,7 @@ export class AuditService {
     }
 
     addAuditTest(auditTest: AuditTest): Observable<any> {
+        debugger;
         return this.http.post(environment.api_prefix + 'Audit/Test', {
             audit_test_desc: auditTest.audit_test_desc,
             ap_id: auditTest.ap_id,
@@ -132,7 +133,7 @@ export class AuditService {
             last_run_date: auditTest.last_run_date,
             scriptVariables: auditTest.scriptVariables,
             target_table: auditTest.target_table,
-            banner_id: auditTest.banner_id,
+            banner_id: auditTest.department_id,
             version_id: auditTest.version_id,
             frequency: 0,
             schedule_run_time: 0,

@@ -56,6 +56,8 @@ export class TestComponent implements OnInit, OnChanges {
     isRiskEnable: boolean = true;
     isControlEnable: boolean = true;
     isScriptEnable: boolean = true;
+    rolename;
+    givenname;
 
     constructor(
         private auditService: AuditService,
@@ -67,7 +69,13 @@ export class TestComponent implements OnInit, OnChanges {
     ) {}
 
     ngOnInit(): void {
-        debugger;
+        const token = localStorage.getItem('jwt');
+        this.rolename = JSON.parse(
+            window.atob(localStorage.getItem('jwt').split('.')[1])
+        )['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'];
+        this.givenname = JSON.parse(
+            window.atob(localStorage.getItem('jwt').split('.')[1])
+        )['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/givenname'];
         let scr = this.scriptService.getScript(0);
         let dept = this.auditService.sendGetBannerRequest();
         let aRisk = this.libraryService.sendGetriskRequest();
@@ -98,12 +106,23 @@ export class TestComponent implements OnInit, OnChanges {
                 auditTest ? auditTest.audit_test_desc : null,
                 Validators.required,
             ],
-            organization_id: auditTest
-                ? this.getOrganization(auditTest?.organization_id)
-                : null,
-            department_id: auditTest
-                ? this.getDepartment(auditTest?.department_id)
-                : null,
+            // organization_id: auditTest
+            //     ? this.getOrganization(auditTest?.organization_id)
+            //     : null,
+
+            organization_id: this.getOrganization(
+                auditTest
+                    ? auditTest.organization_id
+                    : this.auditProgram[0].organization_id
+            ),
+            department_id: this.getDepartment(
+                auditTest
+                    ? auditTest.department_id
+                    : this.auditProgram[0].department_id
+            ),
+            // department_id: auditTest
+            //     ? this.getDepartment(auditTest?.department_id)
+            //     : null,
             ap_id: this.auditProgram[0].audit_program_id,
             risk_id: [
                 auditTest ? this.getRisk(auditTest.risk_id) : null,
@@ -188,7 +207,84 @@ export class TestComponent implements OnInit, OnChanges {
         this.showTable = false;
     }
 
+    getScriptSql(script: string) {
+        // console.log(script);
+
+        let x = this.script.filter((ele) => {
+            return (
+                ele.script_uid +
+                    ' - ' +
+                    ele.version +
+                    ' - ' +
+                    ele.script_defination ==
+                script
+            );
+        });
+
+        return x[0].script_sql;
+    }
+
+    getPrestoSql(script: string) {
+        let x = this.script.filter((ele) => {
+            return (
+                ele.script_uid +
+                    ' - ' +
+                    ele.version +
+                    ' - ' +
+                    ele.script_defination ==
+                script
+            );
+        });
+
+        return x[0].script_presto;
+    }
+
+    getScriptVersionId(script: string) {
+        //   console.log(script);
+        //  console.log(this.script);
+
+        let x = this.script.filter((ele) => {
+            return (
+                ele.script_uid +
+                    ' - ' +
+                    ele.version +
+                    ' - ' +
+                    ele.script_defination ==
+                script
+            );
+        });
+
+        return x[0].version_id;
+    }
+
+    getScriptVariable(script: string) {
+        let x = this.script.filter((ele) => {
+            return ele.script_defination == script;
+        });
+
+        return x[0].scriptVaribales;
+    }
+
     auditTestFormSubmit() {
+        debugger;
+        this.auditTestForm.value['script_sql'] = this.getScriptSql(
+            this.auditTestForm.value.script_id
+        );
+        this.auditTestForm.value['version_id'] = this.getScriptVersionId(
+            this.auditTestForm.value.script_id
+        );
+        this.auditTestForm.value['script_presto'] = this.getPrestoSql(
+            this.auditTestForm.value.script_id
+        );
+        this.auditTestForm.value['target_table'] = this.script.filter((ele) => {
+            if (
+                ele.script_id ==
+                this.getScriptId(this.auditTestForm.value.script_id)
+            ) {
+                return ele;
+            }
+        })[0].target_table;
+
         this.auditTestForm
             .get('au_level_4_id')
             .setValue(
@@ -201,6 +297,15 @@ export class TestComponent implements OnInit, OnChanges {
             .setValue(
                 this.getControlId(this.auditTestForm.get('control_id').value)
             );
+
+        this.auditTestForm
+            .get('organization_id')
+            .setValue(
+                this.getOrganizationtId(
+                    this.auditTestForm.get('organization_id').value
+                )
+            );
+
         this.auditTestForm
             .get('department_id')
             .setValue(
@@ -217,8 +322,27 @@ export class TestComponent implements OnInit, OnChanges {
                 this.getScriptId(this.auditTestForm.get('script_id').value)
             );
 
+        if (this.auditProgram[0].schedule_status) {
+            this.auditTestForm.value.frequency =
+                this.auditProgram[0].frequency_id;
+            this.auditTestForm.value.schedule_start_datetime =
+                this.auditProgram[0].ap_schedule_date;
+            this.auditTestForm.value.schedule_end_datetime =
+                this.auditProgram[0].next_run;
+            this.auditTestForm.value.schedule_run_time =
+                this.auditProgram[0].ap_schedule_time;
+        } else {
+            this.auditTestForm.value.frequency =
+                this.auditProgram[0].frequency_id;
+            this.auditTestForm.value.schedule_start_datetime = new Date();
+            this.auditTestForm.value.schedule_end_datetime = new Date();
+            this.auditTestForm.value.schedule_status = false;
+        }
+        console.log(this.auditTestForm.value);
+
         if (this.auditTestForm.get('audit_test_id').value == null) {
             // add
+            debugger;
             if (this.auditProgram[0].schedule_status == false) {
                 this.auditService
                     .addAuditTest(this.auditTestForm.value)

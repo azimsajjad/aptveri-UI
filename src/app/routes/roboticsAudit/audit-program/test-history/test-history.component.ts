@@ -27,6 +27,8 @@ export class TestHistoryComponent implements OnInit, OnChanges {
     res_auditTHname;
 
     auditTestHistoryForm: FormGroup;
+    rolename;
+    givenname;
 
     constructor(
         private auditService: AuditService,
@@ -36,7 +38,15 @@ export class TestHistoryComponent implements OnInit, OnChanges {
         private confirmationService: ConfirmationService
     ) {}
 
-    ngOnInit(): void {}
+    ngOnInit(): void {
+        const token = localStorage.getItem('jwt');
+        this.rolename = JSON.parse(
+            window.atob(localStorage.getItem('jwt').split('.')[1])
+        )['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'];
+        this.givenname = JSON.parse(
+            window.atob(localStorage.getItem('jwt').split('.')[1])
+        )['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/givenname'];
+    }
 
     deleteAuditHistroy(ele) {
         if (ele.job_run_status == 5) {

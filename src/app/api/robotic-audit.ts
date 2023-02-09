@@ -38,6 +38,7 @@ export interface AuditTest {
     frequency: number;
     schedule_run_time: number;
     organization_id?: any;
+    department_id?: any;
 }
 
 export interface mastertable {

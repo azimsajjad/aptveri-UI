@@ -32,6 +32,8 @@ export class ProgramComponent implements OnInit {
     showGraph2: boolean = false;
     chartData1: any;
     chartData2: any;
+    rolename;
+    givenname;
 
     today: Date = new Date();
 
@@ -75,6 +77,13 @@ export class ProgramComponent implements OnInit {
     ) {}
 
     ngOnInit() {
+        const token = localStorage.getItem('jwt');
+        this.rolename = JSON.parse(
+            window.atob(localStorage.getItem('jwt').split('.')[1])
+        )['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'];
+        this.givenname = JSON.parse(
+            window.atob(localStorage.getItem('jwt').split('.')[1])
+        )['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/givenname'];
         let audit = this.auditService
             .sendGetAuditRequest(this.auditId.toString())
             .pipe(

@@ -19,11 +19,12 @@
         color: var(--surface-900);
         font-size: 1.5rem;
         font-weight: 500;
-        width: 300px;
+        width: 130px;
         border-radius: 12px;
 
         img {
-            height: 14rem !important;
+            z-index: -1;
+height: 13rem !important;
             margin-right: 0.5rem;
                 margin-left: -1.5rem !important;
         }

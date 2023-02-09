@@ -4,6 +4,7 @@ import { ConfirmationService, MessageService } from 'primeng/api';
 import { Banner, Organisation } from 'src/app/api/libraries';
 import { AuditService } from 'src/app/service/audit.service';
 import { BannerService } from 'src/app/service/librariesservice';
+import { saveAs } from 'file-saver';
 
 @Component({
     selector: 'app-audit-dashboard',
@@ -17,6 +18,7 @@ export class AuditDashboardComponent implements OnInit {
     loadingTable: boolean = true;
     filteredResult;
     result;
+    blob;
 
     filterForm: FormGroup;
 
@@ -94,6 +96,8 @@ export class AuditDashboardComponent implements OnInit {
     downloadcav() {
         this.auditService.downloadCSV().subscribe((res) => {
             console.log(res['blob']);
+            var data = new Blob([res], { type: 'text/plain;charset=utf-8' });
+            saveAs.saveAs(data, 'text.txt');
         });
     }
 

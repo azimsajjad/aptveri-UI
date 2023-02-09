@@ -4729,6 +4729,7 @@ p-treeselect.ng-invalid.ng-dirty>.p-treeselect {
     background: #ffffff;
     color: #6c757d;
     padding: 1.25rem;
+    font-size: 1rem !important;
     font-weight: 700;
     border-top-right-radius: 6px;
     border-top-left-radius: 6px;
@@ -11024,6 +11025,7 @@ p-treeselect.ng-invalid.ng-dirty>.p-treeselect {
     color: #6c757d;
     padding: 1.25rem;
     font-weight: 700;
+    font-size: 1rem;
     border-top-right-radius: 6px;
     border-top-left-radius: 6px;
     transition: box-shadow 0.2s;
