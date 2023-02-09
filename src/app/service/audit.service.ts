@@ -114,7 +114,6 @@ export class AuditService {
     }
 
     addAuditTest(auditTest: AuditTest): Observable<any> {
-        debugger;
         return this.http.post(environment.api_prefix + 'Audit/Test', {
             audit_test_desc: auditTest.audit_test_desc,
             ap_id: auditTest.ap_id,
