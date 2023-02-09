@@ -34,6 +34,7 @@ import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { SpeedDialModule } from 'primeng/speeddial';
 import { InputTextModule } from 'primeng/inputtext';
 import { CalendarModule } from 'primeng/calendar';
+import { DynamicDialogModule } from 'primeng/dynamicdialog';
 
 const PrimeNgComponet = [
     AutoCompleteModule,
@@ -71,6 +72,7 @@ const PrimeNgComponet = [
     VirtualScrollerModule,
     StyleClassModule,
     SpeedDialModule,
+    DynamicDialogModule,
 ];
 
 @NgModule({

@@ -1,25 +1,29 @@
+import { formatDate } from '@angular/common';
 import { Component, Input, OnChanges, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
-import { Workbook } from 'exceljs';
-import { ConfirmationService, MessageService } from 'primeng/api';
-import { catchError, throwError } from 'rxjs';
-import { AuditService } from 'src/app/service/audit.service';
 import * as fs from 'file-saver';
-import { formatDate } from '@angular/common';
+import { Workbook } from 'exceljs';
+import { ConfirmationService, MenuItem, MessageService } from 'primeng/api';
+import { catchError, throwError } from 'rxjs';
+import { AuditTest } from 'src/app/api/robotic-audit';
+import { AuditService } from 'src/app/service/audit.service';
+import { audit } from 'src/app/api/roboticsAudit/audit';
+import { AuditProgram } from 'src/app/api/roboticsAudit/audit-program';
+import { UtilsService } from 'src/app/service/utils.service';
 
 @Component({
-    selector: 'app-test-history',
-    templateUrl: './test-history.component.html',
-    styleUrls: ['./test-history.component.scss'],
-    providers: [MessageService, ConfirmationService],
+    selector: 'app-audit-test-history',
+    templateUrl: './audit-test-history.component.html',
+    styleUrls: ['./audit-test-history.component.scss'],
 })
-export class TestHistoryComponent implements OnInit, OnChanges {
-    @Input() audit;
-    @Input() auditProgram;
-    @Input() auditTest;
+export class AuditTestHistoryComponent implements OnInit, OnChanges {
+    @Input() audit: audit[];
+    @Input() auditProgram: AuditProgram[];
+    @Input() auditTest: AuditTest[];
 
     loading: boolean = true;
+
     auditTestHistory;
     auditTHSelection;
 
@@ -27,25 +31,76 @@ export class TestHistoryComponent implements OnInit, OnChanges {
     res_auditTHname;
 
     auditTestHistoryForm: FormGroup;
-    rolename;
-    givenname;
+
+    items: MenuItem[];
 
     constructor(
         private auditService: AuditService,
         private _formbuilder: FormBuilder,
         private router: Router,
         private messageService: MessageService,
-        private confirmationService: ConfirmationService
+        private confirmationService: ConfirmationService,
+        public utilService: UtilsService
     ) {}
 
     ngOnInit(): void {
-        const token = localStorage.getItem('jwt');
-        this.rolename = JSON.parse(
-            window.atob(localStorage.getItem('jwt').split('.')[1])
-        )['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'];
-        this.givenname = JSON.parse(
-            window.atob(localStorage.getItem('jwt').split('.')[1])
-        )['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/givenname'];
+        this.items = [
+            {
+                icon: 'pi pi-refresh',
+                command: () => {
+                    this.getTestHistory();
+                },
+            },
+            {
+                icon: 'pi pi-file-excel',
+                command: () => {
+                    this.downloadExcel();
+                },
+            },
+        ];
+    }
+
+    ngOnChanges(): void {
+        if (this.auditTest) {
+            this.getTestHistory();
+        }
+    }
+
+    getTestHistory() {
+        let ids = [];
+        let x = [];
+        this.auditTest.forEach((element) => {
+            ids.push(element.audit_test_id);
+        });
+
+        ids.forEach((ele, index) => {
+            this.auditService.getAuditTestHistory(0, ele).subscribe((res) => {
+                res.data.map((ele) => {
+                    Object.keys(ele).forEach((element) => {
+                        if (element.includes('date')) {
+                            if (
+                                new Date(ele[element]).getTime() ==
+                                -62135618008000
+                            ) {
+                                ele[element] = null;
+                            } else {
+                                ele[element] = new Date(ele[element]);
+                            }
+                        }
+                    });
+                    x.push(ele);
+                    return ele;
+                });
+
+                if (index == ids.length - 1) {
+                    this.auditTestHistory = x;
+                    this.auditTestHistory.sort(
+                        (a, b) => b.audit_history_id - a.audit_history_id
+                    );
+                    this.loading = false;
+                }
+            });
+        });
     }
 
     deleteAuditHistroy(ele) {
@@ -100,56 +155,6 @@ export class TestHistoryComponent implements OnInit, OnChanges {
                 life: 6000,
             });
         }
-    }
-
-    getTestHistory() {
-        if (this.auditTest) {
-            let ids = [];
-            let x = [];
-            this.auditTest.forEach((element) => {
-                ids.push(element.audit_test_id);
-            });
-
-            ids.forEach((ele, index) => {
-                this.auditService
-                    .getAuditTestHistory(0, ele)
-                    .subscribe((res) => {
-                        res.data.map((ele) => {
-                            Object.keys(ele).forEach((element) => {
-                                if (element.includes('date')) {
-                                    if (
-                                        new Date(ele[element]).getTime() ==
-                                        -62135618008000
-                                    ) {
-                                        ele[element] = null;
-                                    } else {
-                                        ele[element] = new Date(ele[element]);
-                                    }
-                                }
-                            });
-                            x.push(ele);
-                            return ele;
-                        });
-
-                        if (index == ids.length - 1) {
-                            this.auditTestHistory = x;
-                            this.auditTestHistory.sort(
-                                (a, b) =>
-                                    b.audit_history_id - a.audit_history_id
-                            );
-                            this.loading = false;
-                        }
-                    });
-            });
-        }
-    }
-
-    ngOnChanges(): void {
-        this.getTestHistory();
-    }
-
-    selecthistory() {
-        // console.log(this.auditTHSelection);
     }
 
     editHistroy(ele) {
@@ -265,17 +270,11 @@ export class TestHistoryComponent implements OnInit, OnChanges {
         });
     }
 
-    getTwoDigit(val) {
-        return ('0' + val).slice(-2);
-    }
-
     checktargettables;
     checktt: any[];
     arrData: any[];
     targettablesnew;
     datetime = new Date();
-
-    // debugger
 
     async exportResultToExcelnew() {
         this.loading = true;
@@ -311,7 +310,7 @@ export class TestHistoryComponent implements OnInit, OnChanges {
                 ];
 
                 /*Define your column keys because this is what you use to insert your data according to your columns, they're column A, B, C, D respectively being idClient, Name, Tel, and Adresse.
-    So, it's pretty straight forward */
+So, it's pretty straight forward */
                 worksheet_1.columns = [
                     { key: 'Audit_ID', width: 20 },
                     { key: 'AB_ID', width: 25 },
@@ -411,7 +410,7 @@ export class TestHistoryComponent implements OnInit, OnChanges {
                 ];
 
                 /*Define your column keys because this is what you use to insert your data1 according to your columns, they're column A, B, C, D respectively being idClient, Name, Tel, and Adresse.
-    So, it's pretty straight forward */
+So, it's pretty straight forward */
                 worksheet_2.columns = [
                     { key: 'AP_ID', width: 20 },
                     { key: 'AP_Name', width: 25 },
@@ -477,7 +476,7 @@ export class TestHistoryComponent implements OnInit, OnChanges {
                 ];
 
                 /*Define your column keys because this is what you use to insert your data2 according to your columns, they're column A, B, C, D respectively being idClient, Name, Tel, and Adresse.
-    So, it's pretty straight forward */
+So, it's pretty straight forward */
                 worksheet_3.columns = [
                     { key: 'AuditTest_ID', width: 20 },
                     { key: 'AuditTest_Desc', width: 25 },
@@ -679,16 +678,12 @@ export class TestHistoryComponent implements OnInit, OnChanges {
                 }
             }
         }
-        //   }, 5000);
-        //  }
-        // } else {
-        //     this.messageService.add({
-        //         severity: 'error',
-        //         summary: 'ERROR!!',
-        //         detail: 'Target Table Does not Exist !!',
-        //         life: 3000,
-        //     });
-        // }
         this.loading = false;
+    }
+
+    // filters ...
+
+    getTwoDigit(val) {
+        return ('0' + val).slice(-2);
     }
 }

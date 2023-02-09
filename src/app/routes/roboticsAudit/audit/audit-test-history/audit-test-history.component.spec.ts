@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ProgramComponent } from './program.component';
+import { AuditTestHistoryComponent } from './audit-test-history.component';
 
-describe('ProgramComponent', () => {
-  let component: ProgramComponent;
-  let fixture: ComponentFixture<ProgramComponent>;
+describe('AuditTestHistoryComponent', () => {
+  let component: AuditTestHistoryComponent;
+  let fixture: ComponentFixture<AuditTestHistoryComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ProgramComponent ]
+      declarations: [ AuditTestHistoryComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ProgramComponent);
+    fixture = TestBed.createComponent(AuditTestHistoryComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

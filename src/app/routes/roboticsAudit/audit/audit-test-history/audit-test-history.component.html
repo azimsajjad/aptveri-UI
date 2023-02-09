@@ -1,0 +1,465 @@
+<p-toast></p-toast>
+
+<p-table
+    #dt
+    [value]="auditTestHistory"
+    [rows]="5"
+    [loading]="loading"
+    [rowHover]="true"
+    [paginator]="true"
+    [rowsPerPageOptions]="[5, 10, 20]"
+    [showCurrentPageReport]="true"
+    [(selection)]="auditTHSelection"
+    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+    responsiveLayout="scroll"
+    [scrollable]="true"
+    [globalFilterFields]="[
+        'audit_history_uid',
+        'organization',
+        'department',
+        'audit_test_desc',
+        'au_level_4_desc',
+        'audit_risk',
+        'control',
+        'target_table',
+        'script_defination',
+        'script_presto',
+        'script_sql',
+        'results',
+        'notes',
+        'schedule_status',
+        'schedule_start_datetime',
+        'schedule_run_time',
+        'created_date',
+        'job_run_status_text',
+        'error_message',
+        'audit_run_status_text'
+    ]"
+>
+    <ng-template pTemplate="caption">
+        <div
+            class="table-header flex justify-content-between align-items-center"
+        >
+            <span class="text-xl">List of Audit Test History </span>
+            <span class="flex justify-content-between align-items-center">
+                <span class="p-input-icon-left mr-5">
+                    <i class="pi pi-search"></i>
+                    <input
+                        pInputText
+                        type="text"
+                        (input)="
+                            dt.filterGlobal($event.target.value, 'contains')
+                        "
+                        placeholder="Global Search"
+                    />
+                </span>
+            </span>
+        </div>
+    </ng-template>
+
+    <ng-template pTemplate="header">
+        <tr>
+            <th pFrozenColumn style="min-width: 4rem">
+                <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+            </th>
+
+            <th pSortableColumn="audit_history_uid" style="min-width: 14rem">
+                AUDIT TEST HISTORY UID
+                <p-sortIcon field="audit_history_uid"></p-sortIcon>
+            </th>
+            <th pSortableColumn="audit_test_desc" style="min-width: 14rem">
+                AUDIT TEST DESCRIPTION
+                <p-sortIcon field="audit_test_desc"></p-sortIcon>
+            </th>
+
+            <th pSortableColumn="organization" style="min-width: 14rem">
+                <div class="flex align-items-center">
+                    ORGANISATION
+                    <p-sortIcon field="organization"></p-sortIcon>
+                </div>
+            </th>
+
+            <th pSortableColumn="department" style="min-width: 14rem">
+                <div class="flex align-items-center">
+                    DEPARTMENT
+                    <p-sortIcon field="department"></p-sortIcon>
+                </div>
+            </th>
+            <th pSortableColumn="au_level_4_desc" style="min-width: 14rem">
+                AUDIT UNIVERESE LEVEL 4 DESCRIPTION
+                <p-sortIcon field="au_level_4_desc"></p-sortIcon>
+            </th>
+            <th pSortableColumn="audit_risk" style="min-width: 14rem">
+                RISK DESCRIPTION
+                <p-sortIcon field="audit_risk"></p-sortIcon>
+            </th>
+            <th pSortableColumn="control" style="min-width: 14rem">
+                CONTROL DESCRIPTION
+                <p-sortIcon field="control"></p-sortIcon>
+            </th>
+            <th pSortableColumn="script_defination" style="min-width: 14rem">
+                SCRIPT DEFINATION
+                <p-sortIcon field="script_defination"></p-sortIcon>
+            </th>
+            <th pSortableColumn="script_presto" style="min-width: 14rem">
+                FEDERATED SCRIPT
+                <p-sortIcon field="script_presto"></p-sortIcon>
+            </th>
+            <th pSortableColumn="script_sql" style="min-width: 14rem">
+                SQL SCRIPT
+                <p-sortIcon field="script_sql"></p-sortIcon>
+            </th>
+            <th pSortableColumn="target_table" style="min-width: 14rem">
+                TARGET TABLE<p-sortIcon field="target_table"></p-sortIcon>
+            </th>
+            <th pSortableColumn="result" style="min-width: 14rem">
+                RESULT
+                <p-sortIcon field="result"></p-sortIcon>
+            </th>
+            <th pSortableColumn="notes" style="min-width: 14rem">
+                NOTES
+                <p-sortIcon field="notes"></p-sortIcon>
+            </th>
+            <th pSortableColumn="schedule_status" style="min-width: 14rem">
+                SCHEDULE STATUS
+                <p-sortIcon field="schedule_status"></p-sortIcon>
+            </th>
+            <th
+                pSortableColumn="schedule_start_datetime"
+                style="min-width: 14rem"
+            >
+                SCHEDULE START DATE
+                <p-sortIcon field="schedule_start_datetime"></p-sortIcon>
+            </th>
+            <th pSortableColumn="schedule_run_time" style="min-width: 14rem">
+                SCHEDULE START TIME
+                <p-sortIcon field="schedule_run_time"></p-sortIcon>
+            </th>
+            <th pSortableColumn="created_date" style="min-width: 14rem">
+                CREATED DATE
+                <p-sortIcon field="created_date"></p-sortIcon>
+            </th>
+            <th pSortableColumn="job_run_status_text" style="min-width: 14rem">
+                JOB RUN STATUS
+                <p-sortIcon field="job_run_status_text"></p-sortIcon>
+            </th>
+            <th pSortableColumn="error_message" style="min-width: 14rem">
+                ERROR DESCRIPTION
+                <p-sortIcon field="error_message"></p-sortIcon>
+            </th>
+            <th
+                pSortableColumn="audit_run_status_text"
+                style="min-width: 14rem"
+            >
+                AUDIT RUN STATUS
+                <p-sortIcon field="audit_run_status_text"></p-sortIcon>
+            </th>
+
+            <th style="min-width: 120px" pFrozenColumn alignFrozen="right">
+                <div class="flex align-items-center">ACTIONS</div>
+            </th>
+        </tr>
+    </ng-template>
+
+    <ng-template pTemplate="body" let-item>
+        <tr class="p-selectable-row">
+            <td pFrozenColumn class="text-base" style="max-width: 4rem">
+                <p-tableCheckbox
+                    [value]="item"
+                    (click)="editHistroy(item)"
+                ></p-tableCheckbox>
+            </td>
+            <td class="text-base" style="min-width: 14rem">
+                {{ item.audit_history_uid }}
+            </td>
+            <td class="text-base" style="min-width: 14rem">
+                {{ item.audit_test_desc.substring(0, 30) }}
+            </td>
+            <td class="text-base" style="min-width: 14rem">
+                {{ item.organization || 'N/A' }}
+            </td>
+            <td class="text-base" style="min-width: 14rem">
+                {{ item.department || 'N/A' }}
+            </td>
+            <td class="text-base" style="min-width: 14rem">
+                {{ item.au_level_4_desc }}
+            </td>
+            <td
+                class="text-base"
+                style="min-width: 14rem"
+                (click)="utilService.getFullView('Control', item.audit_risk)"
+                pTooltip="click to view more"
+                tooltipPosition="bottom"
+            >
+                {{ item.audit_risk.substring(0, 30) }}
+            </td>
+            <td
+                class="text-base"
+                style="min-width: 14rem"
+                (click)="utilService.getFullView('Control', item.control)"
+                pTooltip="click to view more"
+                tooltipPosition="bottom"
+            >
+                {{ item.control.substring(0, 30) || 'N/A' }}
+            </td>
+            <td class="text-base" style="min-width: 14rem">
+                {{ item.script_defination }}
+            </td>
+            <td
+                class="text-base"
+                style="min-width: 14rem"
+                (click)="utilService.getFullView('Script', item.script_presto)"
+                pTooltip="click to view more"
+                tooltipPosition="bottom"
+            >
+                {{ item.script_presto.substring(0, 30) || 'N/A' }}
+            </td>
+            <td
+                class="text-base"
+                style="min-width: 14rem"
+                (click)="utilService.getFullView('Script', item.script_sql)"
+                pTooltip="click to view more"
+                tooltipPosition="bottom"
+            >
+                {{ item.script_sql.substring(0, 30) || 'N/A' }}
+            </td>
+            <td class="text-base" style="min-width: 14rem">
+                {{ item.target_table || 'N/A' }}
+            </td>
+            <td class="text-base" style="min-width: 14rem">
+                {{ item.results ? item.results : 'N/A' }}
+            </td>
+            <td class="text-base" style="min-width: 12rem">
+                {{ item.notes || 'N/A' }}
+            </td>
+            <td class="text-base" style="min-width: 12rem">
+                {{ item.schedule_status }}
+            </td>
+            <td class="text-base" style="min-width: 12rem">
+                {{ (item.schedule_start_datetime | date) || 'N/A' }}
+            </td>
+            <td class="text-base" style="min-width: 12rem">
+                {{ getTwoDigit(item.schedule_run_time) || 'N/A' }}
+            </td>
+            <td class="text-base" style="min-width: 12rem">
+                {{ (item.created_date | date : 'medium') || 'N/A' }}
+            </td>
+            <td class="text-base" style="min-width: 12rem">
+                {{ (item.job_run_status_text | titlecase) || 'N/A' }}
+            </td>
+            <td class="text-base" style="min-width: 12rem">
+                {{ (item.error_message | titlecase) || 'N/A' }}
+            </td>
+            <td class="text-base" style="min-width: 12rem">
+                {{ (item.audit_run_status_text | titlecase) || 'N/A' }}
+            </td>
+            <td
+                class="text-base"
+                style="max-width: 120px"
+                pFrozenColumn
+                class="font-bold"
+                alignFrozen="right"
+            >
+                <span
+                    ><button
+                        pButton
+                        pRipple
+                        title="Delete"
+                        type="button"
+                        icon="pi pi-trash"
+                        class="p-button-rounded p-button-info ml-2"
+                        (click)="deleteAuditHistroy(item)"
+                    ></button>
+                </span>
+            </td>
+        </tr>
+    </ng-template>
+
+    <ng-template pTemplate="emptymessage">
+        <tr>
+            <td colspan="18">No Audit Tests History found.</td>
+        </tr>
+    </ng-template>
+
+    <ng-template pTemplate="loadingbody">
+        <tr>
+            <td colspan="18">Loading Audit Tests History data. Please wait.</td>
+        </tr>
+    </ng-template>
+</p-table>
+
+<p-speedDial
+    className="add-details"
+    [model]="items"
+    direction="up"
+></p-speedDial>
+
+<div
+    *ngIf="
+        auditTHSelection?.length == 1 && auditTHSelection[0].job_run_status == 5
+    "
+    class="mt-2"
+>
+    <form
+        *ngIf="auditTestHistoryForm"
+        [formGroup]="auditTestHistoryForm"
+        (ngSubmit)="saveTestHistory()"
+    >
+        <div *ngIf="auditTestHistoryForm.value.results; else resultError">
+            <div class="grid">
+                <div class="col-8 align-self-center">
+                    <div class="grid">
+                        <div class="col align-self-center">
+                            <div
+                                class="border-1 border-round-lg p-3 text-center"
+                            >
+                                <strong>Audit Universe Level 4 : </strong>
+                                <span>{{
+                                    auditTHSelection[0].au_level_4_desc
+                                }}</span>
+                            </div>
+                            <div
+                                class="border-1 border-round-lg p-3 text-center mt-1"
+                            >
+                                <strong>Risk : </strong>
+                                <span
+                                    >{{ auditTHSelection[0].risk_uid }}
+                                    -
+                                    {{ auditTHSelection[0].audit_risk }}</span
+                                >
+                            </div>
+                            <div
+                                class="border-1 border-round-lg p-3 text-center mt-1"
+                            >
+                                <strong>Store : </strong>
+                                <span>{{ auditTHSelection[0].store }}</span>
+                            </div>
+                        </div>
+                        <div class="col align-self-center">
+                            <div class="field">
+                                <div class="hexagon-wrapper">
+                                    <button
+                                        class="hexagon"
+                                        type="button"
+                                        (click)="
+                                            changeHistoryStatus(
+                                                auditTestHistoryForm.value
+                                                    .results
+                                            )
+                                        "
+                                    >
+                                        <span>{{
+                                            auditTestHistoryForm.value
+                                                .results == null
+                                                ? ''
+                                                : auditTestHistoryForm.value
+                                                      .results
+                                        }}</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col align-self-center">
+                            <div
+                                class="border-1 border-round-lg p-3 text-center"
+                            >
+                                <strong>Control : </strong>
+                                <span
+                                    >{{ auditTHSelection[0].control_uid }}
+                                    -
+                                    {{ auditTHSelection[0].control }}
+                                </span>
+                            </div>
+                            <div
+                                class="border-1 border-round-lg p-3 text-center mt-1"
+                            >
+                                <strong>Script : </strong>
+                                <span
+                                    >{{ auditTHSelection[0].script_uid }}
+                                    -
+                                    {{ auditTHSelection[0].script_defination }}
+                                </span>
+                            </div>
+                            <div
+                                class="border-1 border-round-lg p-3 text-center mt-1"
+                            >
+                                <strong>Run Date : </strong>
+                                <span>{{
+                                    auditTHSelection[0].run_datetime | date
+                                }}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-4 align-self-center">
+                    <div class="field">
+                        <div class="mb-2">
+                            <label for="notes">Note</label>
+                        </div>
+                        <textarea
+                            rows="5"
+                            cols="40"
+                            id="notes"
+                            pInputText
+                            formControlName="notes"
+                        >
+                        </textarea>
+                    </div>
+                    <div>
+                        <button
+                            pButton
+                            pRipple
+                            label="Save"
+                            #submitButtonaudith
+                            icon="pi pi-check"
+                            class="p-button-primary"
+                            type="submit"
+                        ></button>
+                        &nbsp;
+                        <p-button
+                            label="Cancel"
+                            icon="pi pi-times"
+                            styleClass="p-button-secondary"
+                            (click)="auditTHSelection = []"
+                        ></p-button
+                        >&nbsp;
+                        <p-button
+                            type="button"
+                            styleClass="p-button-primary"
+                            (click)="viewResults()"
+                        >
+                            <span class="p-button-label">View Data Results</span
+                            ><span
+                                class="p-ink"
+                                style="
+                                    height: 64px;
+                                    width: 64px;
+                                    top: -9.25px;
+                                    left: -6.32812px;
+                                "
+                            ></span>
+                        </p-button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <ng-template #resultError>
+            <div class="flex align-items-center justify-content-center w-3">
+                <div>
+                    <strong class="text-4xl">Error: </strong>
+                    <br />
+                    <div>Error in executing Script</div>
+                </div>
+            </div>
+        </ng-template>
+    </form>
+</div>
+
+<div
+    *ngIf="
+        auditTHSelection?.length == 1 && auditTHSelection[0].job_run_status != 5
+    "
+    class="mt-2 text-center"
+>
+    Job is {{ auditTHSelection[0].job_run_status_text }}
+</div>

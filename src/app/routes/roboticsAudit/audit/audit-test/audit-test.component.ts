@@ -7,85 +7,88 @@ import {
     Output,
 } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ConfirmationService, MessageService } from 'primeng/api';
+import { ConfirmationService, MenuItem, MessageService } from 'primeng/api';
 import { catchError, finalize, forkJoin, throwError } from 'rxjs';
+import { Organisation } from 'src/app/api/libraries';
+import { AuditTest } from 'src/app/api/robotic-audit';
 import { AuditProgram } from 'src/app/api/roboticsAudit/audit-program';
 import { AuditService } from 'src/app/service/audit.service';
 import { BannerService } from 'src/app/service/librariesservice';
 import { ScriptService } from 'src/app/service/scriptservices';
-import { Banner, Organisation } from 'src/app/api/libraries';
+import { UtilsService } from 'src/app/service/utils.service';
 
 @Component({
-    selector: 'app-test',
-    templateUrl: './test.component.html',
-    styleUrls: ['./test.component.scss'],
-    providers: [MessageService, ConfirmationService],
+    selector: 'app-audit-test',
+    templateUrl: './audit-test.component.html',
+    styleUrls: ['./audit-test.component.scss'],
 })
-export class TestComponent implements OnInit, OnChanges {
+export class AuditTestComponent implements OnInit, OnChanges {
     @Input() auditProgram: AuditProgram[];
     @Output() auditTestSelection = new EventEmitter<any>();
 
     showTable: boolean = true;
     loading: boolean = true;
+    isRiskEnable: boolean = true;
+    isControlEnable: boolean = true;
+    isScriptEnable: boolean = true;
+    loadingRisk: boolean = false;
+    loadingControl: boolean = false;
+    loadingScript: boolean = false;
+    noScript: boolean = false;
 
-    auditTest;
+    auditTest: AuditTest[];
     auditTSelection;
     scriptSelection;
-
+    auditUniverse4;
+    filteredAuditUniverse4;
     fullScript;
     script;
     filteredScript;
     department;
-    filteredDepartment;
     fullRisk;
     risk;
     filteredRisk;
     control;
     filteredControl;
-    auditUniverse4;
-    filteredAuditUniverse4;
-    allOrg;
-    filteredOrg;
+    allOrg: Organisation[];
 
     auditTestForm: FormGroup;
 
-    loadingRisk: boolean = false;
-    loadingControl: boolean = false;
-    loadingScript: boolean = false;
-
-    noScript: boolean = false;
-
-    isRiskEnable: boolean = true;
-    isControlEnable: boolean = true;
-    isScriptEnable: boolean = true;
-    rolename;
-    givenname;
+    items: MenuItem[];
 
     constructor(
         private auditService: AuditService,
-        private _formbuilder: FormBuilder,
         private scriptService: ScriptService,
         private libraryService: BannerService,
+        private _formbuilder: FormBuilder,
         private messageService: MessageService,
-        private confirmationService: ConfirmationService
+        private confirmationService: ConfirmationService,
+        public utilService: UtilsService
     ) {}
 
     ngOnInit(): void {
-        const token = localStorage.getItem('jwt');
-        this.rolename = JSON.parse(
-            window.atob(localStorage.getItem('jwt').split('.')[1])
-        )['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'];
-        this.givenname = JSON.parse(
-            window.atob(localStorage.getItem('jwt').split('.')[1])
-        )['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/givenname'];
+        this.items = [
+            {
+                icon: 'pi pi-plus',
+                command: () => {
+                    this.openT(null);
+                },
+            },
+            {
+                icon: 'pi pi-play',
+                command: () => {
+                    this.runTest(this.auditTSelection);
+                },
+                disabled: true,
+            },
+        ];
+
         let scr = this.scriptService.getScript(0);
         let dept = this.auditService.sendGetBannerRequest();
         let aRisk = this.libraryService.sendGetriskRequest();
         let aControl = this.libraryService.sendGetcontrolRequest();
         let organiz = this.libraryService.getAllOrganizations();
-        // this.libraryService.getAllOrganizations().subscribe((res) => {
-        //     this.allOrg = res.data;
-        // });
+
         forkJoin([scr, dept, aRisk, aControl, organiz]).subscribe(
             (results: any) => {
                 this.fullScript = results[0].data;
@@ -95,6 +98,154 @@ export class TestComponent implements OnInit, OnChanges {
                 this.allOrg = results[4].data;
             }
         );
+    }
+
+    ngOnChanges(): void {
+        if (this.auditProgram) {
+            this.getTests();
+
+            this.auditService
+                .getScriptUniLevel4(this.auditProgram[0]?.au_level_3_id)
+                .subscribe((res) => {
+                    this.auditUniverse4 = res.data;
+                });
+        }
+
+        this.auditTSelection = null;
+        this.auditTestSelection.emit(null);
+    }
+
+    getTests() {
+        if (this.auditProgram?.length > 0) {
+            let programId = [];
+            let x = [];
+            this.loading = true;
+            this.auditProgram.forEach((ele) => {
+                return programId.push(ele.audit_program_id);
+            });
+
+            programId.forEach((ele, index) => {
+                this.auditService.getAuditTest(0, ele).subscribe((res: any) => {
+                    res.data.map((ele) => {
+                        Object.keys(ele).forEach((element) => {
+                            if (element.includes('date')) {
+                                if (
+                                    new Date(ele[element]).getTime() ==
+                                    -62135618008000
+                                ) {
+                                    ele[element] = null;
+                                } else {
+                                    ele[element] = new Date(ele[element]);
+                                }
+                            }
+                        });
+                        x.push(ele);
+                        return ele;
+                    });
+
+                    if (index == programId.length - 1) {
+                        this.auditTest = x;
+                        this.auditTest.sort((a, b) => {
+                            return b.audit_test_id - a.audit_test_id;
+                        });
+                        this.loading = false;
+                    }
+                });
+            });
+        }
+    }
+
+    runTest(test) {
+        let testFunction = () => {
+            let testId: Array<number> = [];
+            test.forEach((ele) => {
+                testId.push(ele.audit_test_id);
+            });
+            this.auditService
+                .runAuditTest(testId)
+                .pipe(
+                    catchError((err) => {
+                        this.messageService.add({
+                            severity: 'error',
+                            summary: 'ERROR!!',
+                            detail: 'Something Went Wrong !!',
+                            life: 3000,
+                        });
+                        // console.log(err);
+                        return throwError(err);
+                    }),
+                    finalize(() => {
+                        // this.auditTestSelection.emit(this.auditTSelection);
+                    })
+                )
+                .subscribe((res) => {
+                    if (res.data) {
+                        if (res.data[0].code == 1) {
+                            this.messageService.add({
+                                severity: 'info',
+                                summary: 'Info Message',
+                                detail: res.data[0].message,
+                                life: 6000,
+                            });
+                        } else {
+                            this.messageService.add({
+                                severity: 'success',
+                                summary: 'Successful',
+                                detail: 'Audit Test Scheduled !!',
+                                life: 3000,
+                            });
+                        }
+                    } else {
+                        this.messageService.add({
+                            severity: 'info',
+                            summary: 'Info Message',
+                            detail: res.message,
+                            life: 3000,
+                        });
+                    }
+                });
+        };
+
+        let checkSchedule: boolean = false;
+        this.auditTSelection.forEach((element) => {
+            if (element.schedule_status) {
+                checkSchedule = true;
+            }
+        });
+
+        if (checkSchedule) {
+            this.confirmationService.confirm({
+                header: 'Confirmation',
+                message: 'This is a Scheduled Test, Do you want to continue?',
+                accept: () => {
+                    testFunction();
+                },
+                reject: () => {
+                    //   console.log('rejected');
+                },
+            });
+        } else {
+            testFunction();
+        }
+    }
+
+    selectTest() {
+        this.auditTestSelection.emit(this.auditTSelection);
+        this.items = [
+            {
+                icon: 'pi pi-plus',
+                command: () => {
+                    this.openT(null);
+                },
+            },
+            {
+                icon: 'pi pi-play',
+                command: () => {
+                    this.runTest(this.auditTSelection);
+                },
+                disabled: this.auditTSelection?.length == 0,
+            },
+        ];
     }
 
     openT(auditTest) {
@@ -108,10 +259,6 @@ export class TestComponent implements OnInit, OnChanges {
                 auditTest ? auditTest.audit_test_desc : null,
                 Validators.required,
             ],
-            // organization_id: auditTest
-            //     ? this.getOrganization(auditTest?.organization_id)
-            //     : null,
-
             organization_id: this.getOrganization(
                 auditTest
                     ? auditTest.organization_id
@@ -122,9 +269,6 @@ export class TestComponent implements OnInit, OnChanges {
                     ? auditTest.department_id
                     : this.auditProgram[0].department_id
             ),
-            // department_id: auditTest
-            //     ? this.getDepartment(auditTest?.department_id)
-            //     : null,
             ap_id: this.auditProgram[0].audit_program_id,
             risk_id: [
                 auditTest ? this.getRisk(auditTest.risk_id) : null,
@@ -209,38 +353,6 @@ export class TestComponent implements OnInit, OnChanges {
         this.showTable = false;
     }
 
-    getScriptSql(script: string) {
-        let x = this.fullScript.filter((ele) => {
-            return ele.script_id == script;
-        });
-
-        return x[0].script_sql;
-    }
-
-    getPrestoSql(script: string) {
-        let x = this.fullScript.filter((ele) => {
-            return ele.script_id == script;
-        });
-
-        return x[0].script_presto;
-    }
-
-    getScriptVersionId(script: string) {
-        let x = this.fullScript.filter((ele) => {
-            return ele.script_id == script;
-        });
-
-        return x[0].version_id;
-    }
-
-    getScriptVariable(script: string) {
-        let x = this.fullScript.filter((ele) => {
-            return ele.script_defination == script;
-        });
-
-        return x[0].scriptVaribales;
-    }
-
     auditTestFormSubmit() {
         this.auditTestForm
             .get('au_level_4_id')
@@ -258,7 +370,7 @@ export class TestComponent implements OnInit, OnChanges {
         this.auditTestForm
             .get('organization_id')
             .setValue(
-                this.getOrganizationtId(
+                this.getOrganizationId(
                     this.auditTestForm.get('organization_id').value
                 )
             );
@@ -532,139 +644,6 @@ export class TestComponent implements OnInit, OnChanges {
         });
     }
 
-    runTest(test) {
-        let t = () => {
-            let testId: Array<number> = [];
-            test.forEach((ele) => {
-                testId.push(ele.audit_test_id);
-            });
-            this.auditService
-                .runAuditTest(testId)
-                .pipe(
-                    catchError((err) => {
-                        this.messageService.add({
-                            severity: 'error',
-                            summary: 'ERROR!!',
-                            detail: 'Something Went Wrong !!',
-                            life: 3000,
-                        });
-                        // console.log(err);
-                        return throwError(err);
-                    }),
-                    finalize(() => {
-                        this.auditTestSelection.emit(this.auditTest);
-                        setTimeout(() => {
-                            this.auditTestSelection.emit(this.auditTSelection);
-                        }, 100);
-                    })
-                )
-                .subscribe((res) => {
-                    if (res.data) {
-                        if (res.data[0].code == 1) {
-                            this.messageService.add({
-                                severity: 'info',
-                                summary: 'Info Message',
-                                detail: res.data[0].message,
-                                life: 6000,
-                            });
-                        } else {
-                            this.messageService.add({
-                                severity: 'success',
-                                summary: 'Successful',
-                                detail: 'Audit Test Scheduled !!',
-                                life: 3000,
-                            });
-                        }
-                    } else {
-                        this.messageService.add({
-                            severity: 'info',
-                            summary: 'Info Message',
-                            detail: res.message,
-                            life: 3000,
-                        });
-                    }
-                });
-        };
-
-        let checkSchedule: boolean = false;
-        this.auditTSelection.forEach((element) => {
-            if (element.schedule_status) {
-                checkSchedule = true;
-            }
-        });
-
-        if (checkSchedule) {
-            this.confirmationService.confirm({
-                header: 'Confirmation',
-                message: 'This is a Scheduled Test, Do you want to continue?',
-                accept: () => {
-                    t();
-                },
-                reject: () => {
-                    //   console.log('rejected');
-                },
-            });
-        } else {
-            t();
-        }
-    }
-
-    ngOnChanges(): void {
-        this.getTests();
-    }
-
-    getTests() {
-        if (this.auditProgram?.length > 0) {
-            let programId = [];
-            let x = [];
-            this.loading = true;
-            this.auditProgram.forEach((ele) => {
-                return programId.push(ele.audit_program_id);
-            });
-
-            programId.forEach((ele, index) => {
-                this.auditService.getAuditTest(0, ele).subscribe((res: any) => {
-                    res.data.map((ele) => {
-                        Object.keys(ele).forEach((element) => {
-                            if (element.includes('date')) {
-                                if (
-                                    new Date(ele[element]).getTime() ==
-                                    -62135618008000
-                                ) {
-                                    ele[element] = null;
-                                } else {
-                                    ele[element] = new Date(ele[element]);
-                                }
-                            }
-                        });
-                        // ele['banner_uid'] = this.banner?.filter((ele) => {
-                        //     return ele.department_id == ele.department_id;
-                        // })[0].banner_uid;
-                        x.push(ele);
-                        return ele;
-                    });
-
-                    if (index == programId.length - 1) {
-                        this.auditTest = x;
-                        this.auditTest.sort((a, b) => {
-                            b.audit_test_id - a.audit_test_id;
-                        });
-                        this.loading = false;
-                    }
-                });
-            });
-            this.auditUniverse4 = this.auditService
-                .getScriptUniLevel4(this.auditProgram[0]?.au_level_3_id)
-                .subscribe((res) => {
-                    this.auditUniverse4 = res.data;
-                });
-        }
-    }
-
-    selectTest() {
-        this.auditTestSelection.emit(this.auditTSelection);
-    }
-
     onAuditUniverse4Select(event) {
         this.loadingRisk = true;
         this.auditService
@@ -675,7 +654,6 @@ export class TestComponent implements OnInit, OnChanges {
                 this.auditTestForm.get('risk_id').setValue(null);
                 this.auditTestForm.get('control_id').setValue(null);
                 this.auditTestForm.get('script_id').setValue(null);
-                // this.scriptSelection = null;
             });
     }
 
@@ -693,7 +671,6 @@ export class TestComponent implements OnInit, OnChanges {
                 this.control = res.data;
                 this.auditTestForm.get('control_id').setValue(null);
                 this.auditTestForm.get('script_id').setValue(null);
-                // this.scriptSelection = null;
             });
     }
 
@@ -740,27 +717,55 @@ export class TestComponent implements OnInit, OnChanges {
         });
     }
 
-    // filter
-    filterDepartment(event) {
+    // filters ...
+
+    filterAuditUniverse4(event) {
         const filtered: any[] = [];
         const query = event.query;
-        for (let i = 0; i < this.department.length; i++) {
-            const ele = this.department[i];
-            if (ele.department_uid == null) {
-                filtered.push(ele.department_uid);
+        for (let i = 0; i < this.auditUniverse4.length; i++) {
+            const ele = this.auditUniverse4[i];
+            if (ele.keyvalue == null) {
+                filtered.push(ele.keyvalue);
             } else if (
-                ele.department_uid
-                    .toString()
-                    .toLowerCase()
-                    .indexOf(query.toLowerCase()) != -1 ||
-                ele.department
+                ele.keyvalue
                     .toString()
                     .toLowerCase()
                     .indexOf(query.toLowerCase()) != -1
             ) {
-                filtered.push(ele.department_uid + ' - ' + ele.department);
+                filtered.push(ele.keyvalue);
             }
-            this.filteredDepartment = filtered;
+
+            this.filteredAuditUniverse4 = filtered;
+        }
+    }
+
+    filterRisk(event) {
+        const filtered: any[] = [];
+        const query = event.query;
+        for (let i = 0; i < this.risk.length; i++) {
+            const ele = this.risk[i];
+            if (ele.keyvalue == null) {
+                filtered.push(ele.keyvalue);
+            } else if (
+                ele.keyvalue
+                    .toString()
+                    .toLowerCase()
+                    .indexOf(query.toLowerCase()) != -1 ||
+                ele.business_objective
+                    .toString()
+                    .toLowerCase()
+                    .indexOf(query.toLowerCase()) != -1
+            ) {
+                filtered.push(
+                    ele.keyuid +
+                        ' - ' +
+                        ele.keyvalue +
+                        ' - ' +
+                        ele.business_objective
+                );
+            }
+
+            this.filteredRisk = filtered;
         }
     }
 
@@ -818,54 +823,19 @@ export class TestComponent implements OnInit, OnChanges {
         }
     }
 
-    filterAuditUniverse4(event) {
-        const filtered: any[] = [];
-        const query = event.query;
-        for (let i = 0; i < this.auditUniverse4.length; i++) {
-            const ele = this.auditUniverse4[i];
-            if (ele.keyvalue == null) {
-                filtered.push(ele.keyvalue);
-            } else if (
-                ele.keyvalue
-                    .toString()
-                    .toLowerCase()
-                    .indexOf(query.toLowerCase()) != -1
-            ) {
-                filtered.push(ele.keyvalue);
-            }
+    getOrganization(id: number) {
+        let x = this.allOrg.filter((ele) => {
+            return ele.organization_id == id;
+        });
 
-            this.filteredAuditUniverse4 = filtered;
-        }
+        return x[0].organization_uid + ' - ' + x[0].organization;
     }
 
-    filterRisk(event) {
-        const filtered: any[] = [];
-        const query = event.query;
-        for (let i = 0; i < this.risk.length; i++) {
-            const ele = this.risk[i];
-            if (ele.keyvalue == null) {
-                filtered.push(ele.keyvalue);
-            } else if (
-                ele.keyvalue
-                    .toString()
-                    .toLowerCase()
-                    .indexOf(query.toLowerCase()) != -1 ||
-                ele.business_objective
-                    .toString()
-                    .toLowerCase()
-                    .indexOf(query.toLowerCase()) != -1
-            ) {
-                filtered.push(
-                    ele.keyuid +
-                        ' - ' +
-                        ele.keyvalue +
-                        ' - ' +
-                        ele.business_objective
-                );
-            }
-
-            this.filteredRisk = filtered;
-        }
+    getOrganizationId(val: string) {
+        let x = this.allOrg.filter((ele) => {
+            return ele.organization_uid + ' - ' + ele.organization == val;
+        });
+        return x[0].organization_id;
     }
 
     getDepartment(id: number) {
@@ -880,6 +850,59 @@ export class TestComponent implements OnInit, OnChanges {
             return ele.department_uid + ' - ' + ele.department == val;
         });
         return x[0].department_id;
+    }
+
+    getRisk(id: number) {
+        let r = this.fullRisk.find((ele) => {
+            return ele.risk_id == id;
+        });
+        return r.risk_uid + ' - ' + r.risk;
+    }
+
+    getRiskId(risk: string): number {
+        let x = this.fullRisk.filter((ele) => {
+            return (
+                ele.keyuid == risk.split(' - ')[0] ||
+                ele.risk_uid == risk.split(' - ')[0]
+            );
+        });
+
+        return x[0].keyid || x[0].risk_id;
+    }
+
+    getControl(id: number) {
+        let c = this.control.find((ele) => {
+            return ele.control_id == id;
+        });
+
+        return c.control_uid + ' - ' + c.control;
+    }
+
+    getControlId(control: string): number {
+        let x = this.control.filter((ele) => {
+            return (
+                ele.keyuid + ' - ' + ele.keyvalue == control ||
+                ele.control_uid + ' - ' + ele.control
+            );
+        });
+
+        return x[0].keyid || x[0].control_id;
+    }
+
+    getAuditUniverse4(id: number) {
+        let x = this.auditUniverse4.filter((ele) => {
+            return ele.keyid == id;
+        });
+
+        return x[0].keyvalue;
+    }
+
+    getAuditUniversel4Id(audit: string) {
+        let x = this.auditUniverse4.find((ele) => {
+            return ele.keyvalue == audit;
+        });
+
+        return x.keyid;
     }
 
     getScript(id: number) {
@@ -914,110 +937,49 @@ export class TestComponent implements OnInit, OnChanges {
         return x[0].script_id;
     }
 
-    getAuditUniversel4Id(audit: string) {
-        let x = this.auditUniverse4.find((ele) => {
-            return ele.keyvalue == audit;
+    getScriptSql(script: string) {
+        let x = this.fullScript.filter((ele) => {
+            return ele.script_id == script;
         });
 
-        return x.keyid;
+        return x[0].script_sql;
     }
 
-    getAuditUniverse4(id: number) {
-        let x = this.auditUniverse4.filter((ele) => {
-            return ele.keyid == id;
+    getPrestoSql(script: string) {
+        let x = this.fullScript.filter((ele) => {
+            return ele.script_id == script;
         });
 
-        return x[0].keyvalue;
+        return x[0].script_presto;
     }
 
-    getRiskId(risk: string): number {
-        let x = this.fullRisk.filter((ele) => {
-            return (
-                ele.keyuid == risk.split(' - ')[0] ||
-                ele.risk_uid == risk.split(' - ')[0]
-            );
+    getScriptVersionId(script: string) {
+        let x = this.fullScript.filter((ele) => {
+            return ele.script_id == script;
         });
 
-        return x[0].keyid || x[0].risk_id;
+        return x[0].version_id;
     }
 
-    getRisk(id: number) {
-        let r = this.fullRisk.find((ele) => {
-            return ele.risk_id == id;
-        });
-        return r.risk_uid + ' - ' + r.risk;
-    }
-
-    filterOrg(event) {
-        const filtered: any[] = [];
-        const query = event.query;
-        for (let i = 0; i < this.allOrg.length; i++) {
-            const ele = this.allOrg[i];
-            if (ele.organization_uid == null) {
-                filtered.push(ele.organization_uid);
-            } else if (
-                ele.organization_uid
-                    .toString()
-                    .toLowerCase()
-                    .indexOf(query.toLowerCase()) != -1 ||
-                ele.organization
-                    .toString()
-                    .toLowerCase()
-                    .indexOf(query.toLowerCase()) != -1
-            ) {
-                filtered.push(ele.organization_uid + ' - ' + ele.organization);
-            }
-            this.filteredOrg = filtered;
-        }
-    }
-
-    getOrganization(id: number) {
-        let x = this.allOrg.filter((ele) => {
-            return ele.organization_id == id;
+    getScriptVariable(script: string) {
+        let x = this.fullScript.filter((ele) => {
+            return ele.script_defination == script;
         });
 
-        return x[0].organization_uid + ' - ' + x[0].organization;
+        return x[0].scriptVaribales;
     }
 
-    getOrganizationtId(val: string) {
-        let x = this.allOrg.filter((ele) => {
-            return ele.organization_uid + ' - ' + ele.organization == val;
-        });
-        return x[0].organization_id;
-    }
+    // dialogs...
 
-    getBanner(id: number) {
-        let x = this.department.filter((ele) => {
-            return ele.department_id == id;
-        });
-        return x[0].department_uid + ' - ' + x[0].department;
-    }
-
-    getBannerId(val: string) {
-        let x = this.department.filter((ele) => {
-            return ele.department_uid + ' - ' + ele.department == val;
-        });
-        return x[0].department_id;
-    }
-
-    getControlId(control: string): number {
-        let x = this.control.filter((ele) => {
-            return (
-                ele.keyuid + ' - ' + ele.keyvalue == control ||
-                ele.control_uid + ' - ' + ele.control
-            );
-        });
-
-        return x[0].keyid || x[0].control_id;
-    }
-
-    getControl(id: number) {
-        let c = this.control.find((ele) => {
-            return ele.control_id == id;
-        });
-
-        return c.control_uid + ' - ' + c.control;
-    }
+    // getFullView(title: string, desc: string) {
+    //     this.dialogService.open(PopupComponent, {
+    //         header: title,
+    //         data: {
+    //             text: desc,
+    //         },
+    //         width: '50%',
+    //     });
+    // }
 
     storeOption = ['Yes', 'No'];
     scriptDefaultVariables = [

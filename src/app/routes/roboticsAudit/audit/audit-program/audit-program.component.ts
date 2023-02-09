@@ -1,43 +1,47 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { Location } from '@angular/common';
-import { catchError, finalize, forkJoin, map, throwError } from 'rxjs';
-import { Audit, AuditProgram } from 'src/app/api/roboticsAudit/audit-program';
-import { AuditService } from 'src/app/service/audit.service';
+import {
+    Component,
+    EventEmitter,
+    Input,
+    OnChanges,
+    OnInit,
+    Output,
+} from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { AuditUniverseService } from 'src/app/service/audituniverseservice';
-import { ConfirmationService, MessageService } from 'primeng/api';
 import * as moment from 'moment';
-import { ActivatedRoute } from '@angular/router';
+import { ConfirmationService, MenuItem, MessageService } from 'primeng/api';
+import { catchError, finalize, forkJoin, throwError } from 'rxjs';
+import { AuditProgram } from 'src/app/api/robotic-audit';
+import { audit } from 'src/app/api/roboticsAudit/audit';
+import { AuditService } from 'src/app/service/audit.service';
+import { AuditUniverseService } from 'src/app/service/audituniverseservice';
 
 @Component({
-    selector: 'app-program',
-    templateUrl: './program.component.html',
-    styleUrls: ['./program.component.scss'],
-    providers: [MessageService, ConfirmationService],
+    selector: 'app-audit-program1',
+    templateUrl: './audit-program.component.html',
+    styleUrls: ['./audit-program.component.scss'],
 })
-export class ProgramComponent implements OnInit {
-    @Input() auditId: number;
+export class AuditProgramComponent1 implements OnInit, OnChanges {
+    @Input() audit: audit;
     @Output() auditProgramSelection = new EventEmitter<any>();
 
     showTable: boolean = true;
+    graphDialog: boolean = false;
     loading: boolean = true;
-    auditProgram: AuditProgram[] = [];
+
+    auditProgram: AuditProgram[];
     auditPSelection: AuditProgram[];
-    frequency: Frequency[];
-    audit: Audit[];
+    frequency;
     auditUniverse3;
     filteredAuditUniverse3;
-    graphDialog: boolean = false;
+
+    auditProgramForm: FormGroup;
+
     showGraph1: boolean = false;
     showGraph2: boolean = false;
     chartData1: any;
     chartData2: any;
-    rolename;
-    givenname;
 
-    today: Date = new Date();
-
-    auditProgramForm: FormGroup;
+    items: MenuItem[];
 
     time = [
         { name: '0', code: 0 },
@@ -67,74 +71,96 @@ export class ProgramComponent implements OnInit {
     ];
 
     constructor(
-        private activatedRoute: ActivatedRoute,
         private auditService: AuditService,
         private auditUniverseService: AuditUniverseService,
-        private _location: Location,
         private _formbuilder: FormBuilder,
         private messageService: MessageService,
         private confirmationService: ConfirmationService
     ) {}
 
-    ngOnInit() {
-        const token = localStorage.getItem('jwt');
-        this.rolename = JSON.parse(
-            window.atob(localStorage.getItem('jwt').split('.')[1])
-        )['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'];
-        this.givenname = JSON.parse(
-            window.atob(localStorage.getItem('jwt').split('.')[1])
-        )['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/givenname'];
-        let audit = this.auditService
-            .sendGetAuditRequest(this.auditId.toString())
-            .pipe(
-                map((resp) => resp['data']),
-                catchError((err) => {
-                    this.messageService.add({
-                        severity: 'error',
-                        summary: 'ERROR!!',
-                        detail: 'Something Went Wrong !!',
-                        life: 3000,
-                    });
-                    return throwError(err);
-                }),
-                finalize(() => {
-                    this.loading = false;
-                })
-            );
-        let pro = this.auditService.getAuditProgram(0, this.auditId);
+    ngOnInit(): void {
+        this.items = [
+            {
+                icon: 'pi pi-plus',
+                command: () => {
+                    this.openP(null);
+                },
+            },
+            {
+                icon: 'pi pi-play',
+                command: () => {
+                    this.runProgram();
+                },
+                disabled: true,
+            },
+            {
+                icon: 'pi pi-chart-pie',
+                command: () => {
+                    this.getGraph();
+                },
+                disabled: true,
+            },
+        ];
+    }
 
-        forkJoin([audit, pro]).subscribe((resp) => {
-            resp[0].map((res) => {
-                res.record_status == 0
-                    ? (res.record_status = false)
-                    : (res.record_status = true);
-                return res;
-            });
-            this.audit = resp[0];
+    ngOnChanges(): void {
+        if (this.audit) {
+            this.getAuditProgram();
 
             let freq = this.auditService.getFrequency();
             let aul3 = this.auditUniverseService.getAuditUniverseLevel3(
-                this.audit[0].au_level_2_id
+                this.audit.au_level_2_id
             );
 
             forkJoin([freq, aul3]).subscribe((results) => {
                 this.frequency = results[0].data;
                 this.auditUniverse3 = results[1].data;
             });
-            this.loading = false;
-            this.auditProgram = resp[1].data;
-        });
+        }
+
+        this.auditPSelection = null;
+        this.auditProgramSelection.emit(null);
     }
 
     getAuditProgram() {
-        this.auditService.getAuditProgram(0, this.auditId).subscribe((res) => {
-            this.auditProgram = res.data;
-        });
+        this.auditService
+            .getAuditProgram(0, this.audit.audit_id)
+            .subscribe((res) => {
+                this.auditProgram = res.data;
+                this.loading = false;
+            });
+    }
+
+    selectProgram() {
+        this.auditProgramSelection.emit(this.auditPSelection);
+
+        this.items = [
+            {
+                icon: 'pi pi-plus',
+                command: () => {
+                    this.openP(null);
+                },
+            },
+            {
+                icon: 'pi pi-play',
+                command: () => {
+                    this.runProgram();
+                },
+                disabled: this.auditPSelection?.length == 0,
+            },
+            {
+                icon: 'pi pi-chart-pie',
+                command: () => {
+                    this.getGraph();
+                },
+                disabled: this.auditPSelection?.length == 0,
+            },
+        ];
     }
 
     openP(auditProgram: AuditProgram) {
         this.auditProgramForm = this._formbuilder.group({
-            audit_id: this.auditId,
+            audit_id: this.audit.audit_id,
             audit_program_id: auditProgram?.audit_program_id || null,
             ap_name: [auditProgram?.ap_name || null, Validators.required],
             ap_desc: [auditProgram?.ap_desc || null, Validators.required],
@@ -230,21 +256,23 @@ export class ProgramComponent implements OnInit {
                             detail: 'Something Went Wrong !!',
                             life: 3000,
                         });
-                        this.loading = false;
+
                         return throwError(err);
+                    }),
+                    finalize(() => {
+                        this.loading = false;
+                        this.showTable = true;
+                        this.getAuditProgram();
                     })
                 )
                 .subscribe((res) => {
                     if (res.data) {
-                        this.showTable = true;
-                        this.loading = false;
                         this.messageService.add({
                             severity: 'success',
                             summary: 'Successful',
                             detail: 'New Audit Program Created !!',
                             life: 3000,
                         });
-                        this.getAuditProgram();
                     } else {
                         this.messageService.add({
                             severity: 'info',
@@ -252,8 +280,6 @@ export class ProgramComponent implements OnInit {
                             detail: res.message,
                             life: 3000,
                         });
-                        this.showTable = true;
-                        this.getAuditProgram();
                     }
                 });
         } else {
@@ -269,6 +295,12 @@ export class ProgramComponent implements OnInit {
                             life: 3000,
                         });
                         return throwError(err);
+                    }),
+                    finalize(() => {
+                        this.loading = false;
+                        this.auditPSelection = null;
+                        this.showTable = true;
+                        this.getAuditProgram();
                     })
                 )
                 .subscribe((res) => {
@@ -281,8 +313,6 @@ export class ProgramComponent implements OnInit {
                             detail: 'New Audit Program Edited !!',
                             life: 3000,
                         });
-                        this.auditPSelection = null;
-                        this.getAuditProgram();
                     } else {
                         this.messageService.add({
                             severity: 'info',
@@ -290,19 +320,9 @@ export class ProgramComponent implements OnInit {
                             detail: res.message,
                             life: 3000,
                         });
-                        this.showTable = true;
-                        this.loading = false;
-                        this.auditPSelection = null;
-                        this.getAuditProgram();
                     }
                 });
         }
-    }
-
-    runProgram() {}
-
-    selectProgram() {
-        this.auditProgramSelection.emit(this.auditPSelection);
     }
 
     changeStatus(program, event) {
@@ -338,7 +358,7 @@ export class ProgramComponent implements OnInit {
     deleteProgram(ele) {
         this.confirmationService.confirm({
             header: 'Confirmation',
-            message: 'Are you sure to delte this Program?',
+            message: 'Are you sure to delete this Program?',
             accept: () => {
                 this.loading = true;
                 this.auditService
@@ -451,20 +471,9 @@ export class ProgramComponent implements OnInit {
             });
     }
 
-    // filters
+    runProgram() {}
 
-    getFrequency(id: number) {
-        if (id) return this.frequency?.find((res) => res.codeId == id);
-        else return null;
-    }
-
-    // getFrequencyCode(val: String) {
-    //     let f = this.frequency.find((res) => {
-    //         return res.codeName == val;
-    //     });
-
-    //     return f?.codeId;
-    // }
+    // filters...
 
     filterAuditUniverse3(event) {
         const filtered: any[] = [];
@@ -506,6 +515,11 @@ export class ProgramComponent implements OnInit {
         return a.au_level_3_id;
     }
 
+    getFrequency(id: number) {
+        if (id) return this.frequency?.find((res) => res.codeId == id);
+        else return null;
+    }
+
     getTwoDigit(val) {
         return ('0' + val).slice(-2);
     }
@@ -525,9 +539,4 @@ export class ProgramComponent implements OnInit {
               );
         return date;
     }
-}
-
-interface Frequency {
-    codeId: number;
-    codeName: string;
 }

@@ -30,7 +30,6 @@ export class OrganisationComponent implements OnInit {
     getAllOrg() {
         this.libraryService.getAllOrganizations().subscribe((res) => {
             this.allOrg = res.data;
-            console.log(this.allOrg[0]);
         });
     }
 
