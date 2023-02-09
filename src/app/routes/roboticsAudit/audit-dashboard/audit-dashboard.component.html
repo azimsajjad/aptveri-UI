@@ -39,7 +39,7 @@
                         <p-calendar
                             [minDate]="minDate"
                             [readonlyInput]="true"
-                            placeholder="from date..."
+                            placeholder="From Date..."
                             formControlName="from"
                             [style]="{ width: '100%' }"
                         ></p-calendar>
@@ -51,7 +51,7 @@
                             [disabled]="filterForm.get('from').value == null"
                             [minDate]="filterForm.get('from').value"
                             [readonlyInput]="true"
-                            placeholder="till date..."
+                            placeholder="To Date..."
                             formControlName="to"
                             [style]="{ width: '100%' }"
                         ></p-calendar>
