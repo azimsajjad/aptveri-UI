@@ -161,10 +161,31 @@
                         </div>
                     </th>
 
-                    <th pSortableColumn="department">
+                    <th pSortableColumn="audit_board_id">
                         <div class="flex align-items-center">
-                            <p-sortIcon field="department"></p-sortIcon>
-                            DEPARTMENT
+                            <p-sortIcon field="audit_board_id"></p-sortIcon>
+                            AUDIT BOARD ID
+                        </div>
+                    </th>
+
+                    <th pSortableColumn="audit_name">
+                        <div class="flex align-items-center">
+                            <p-sortIcon field="audit_name"></p-sortIcon>
+                            AUDIT NAME
+                        </div>
+                    </th>
+
+                    <th pSortableColumn="audit_test_uid">
+                        <div class="flex align-items-center">
+                            <p-sortIcon field="audit_test_uid"></p-sortIcon>
+                            AUDIT TEST UID
+                        </div>
+                    </th>
+
+                    <th pSortableColumn="audit_test_desc">
+                        <div class="flex align-items-center">
+                            <p-sortIcon field="audit_test_desc"></p-sortIcon>
+                            AUDIT TEST DESCRIPTION
                         </div>
                     </th>
 
@@ -172,6 +193,27 @@
                         <div class="flex align-items-center">
                             <p-sortIcon field="organization"></p-sortIcon>
                             ORGANIZATION
+                        </div>
+                    </th>
+
+                    <th pSortableColumn="department">
+                        <div class="flex align-items-center">
+                            <p-sortIcon field="department"></p-sortIcon>
+                            DEPARTMENT
+                        </div>
+                    </th>
+
+                    <th pSortableColumn="testcreated">
+                        <div class="flex align-items-center">
+                            <p-sortIcon field="testcreated"></p-sortIcon>
+                            CREATED DATE
+                        </div>
+                    </th>
+
+                    <th pSortableColumn="full_name">
+                        <div class="flex align-items-center">
+                            <p-sortIcon field="full_name"></p-sortIcon>
+                            CREATED BY
                         </div>
                     </th>
 
@@ -188,6 +230,13 @@
                             RESULT
                         </div>
                     </th>
+
+                    <th pSortableColumn="notes">
+                        <div class="flex align-items-center">
+                            <p-sortIcon field="notes"></p-sortIcon>
+                            NOTES
+                        </div>
+                    </th>
                 </tr>
             </ng-template>
 
@@ -198,11 +247,35 @@
                     </td>
 
                     <td class="text-base">
-                        {{ item.department }}
+                        {{ item.audit_board_id }}
+                    </td>
+
+                    <td class="text-base">
+                        {{ item.audit_name }}
+                    </td>
+
+                    <td class="text-base">
+                        {{ item.audit_test_uid }}
+                    </td>
+
+                    <td class="text-base">
+                        {{ item.audit_test_desc }}
                     </td>
 
                     <td class="text-base">
                         {{ item.organization }}
+                    </td>
+
+                    <td class="text-base">
+                        {{ item.department }}
+                    </td>
+
+                    <td class="text-base">
+                        {{ item.testcreated }}
+                    </td>
+
+                    <td class="text-base">
+                        {{ item.full_name }}
                     </td>
 
                     <td class="text-base">
@@ -211,6 +284,10 @@
 
                     <td class="text-base">
                         {{ item.results }}
+                    </td>
+
+                    <td class="text-base">
+                        {{ item.notes }}
                     </td>
                 </tr>
             </ng-template>

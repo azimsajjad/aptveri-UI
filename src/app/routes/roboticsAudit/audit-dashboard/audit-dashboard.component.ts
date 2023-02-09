@@ -35,8 +35,16 @@ export class AuditDashboardComponent implements OnInit {
 
         this.auditService.getAuditDashboard().subscribe((res) => {
             this.result = res.data;
-            this.filteredResult = this.result;
-
+            this.filteredResult = this.result.filter(
+                (item, i, arr) =>
+                    arr.findIndex((t) => t.audit_id === item.audit_id) === i
+            );
+            console.log(
+                this.filteredResult.filter(
+                    (item, i, arr) =>
+                        arr.findIndex((t) => t.audit_id === item.audit_id) === i
+                )
+            );
             this.auditUIDs = this.getUniqueValues(
                 res.data,
                 'audit_uid',
