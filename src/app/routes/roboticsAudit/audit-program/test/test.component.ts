@@ -552,7 +552,10 @@ export class TestComponent implements OnInit, OnChanges {
                         return throwError(err);
                     }),
                     finalize(() => {
-                        this.auditTestSelection.emit(this.auditTSelection);
+                        this.auditTestSelection.emit(this.auditTest);
+                        setTimeout(() => {
+                            this.auditTestSelection.emit(this.auditTSelection);
+                        }, 100);
                     })
                 )
                 .subscribe((res) => {
