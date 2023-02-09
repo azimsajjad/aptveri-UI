@@ -94,30 +94,41 @@ export class AuditDashboardComponent implements OnInit {
     }
 
     downloadcav() {
+        const link = document.createElement('a');
+        link.setAttribute('target', '_blank');
+        link.setAttribute(
+            'href',
+            'https://localhost:7204/api/Audit/auditdashbord/0/0/0/0/0'
+        );
+        link.setAttribute('download', `products.csv`);
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
         // this.auditService.downloadCSV().subscribe((res) => {
         //     console.log(res['blob']);
         //     var data = new Blob([res], { type: 'text/plain;charset=utf-8' });
         //     saveAs.saveAs(data, 'text.txt');
         // });
 
-        this.auditService.downloadCSV().subscribe((blob) => {
-            // // debugger;
-            // // const a = document.createElement('a');
-            // // const objectUrl = URL.createObjectURL(blob);
-            // // a.href = objectUrl;
-            // // a.download = 'ttt.csv';
-            // // a.click();
-            // // URL.revokeObjectURL(objectUrl);
+        // this.auditService.downloadCSV().subscribe((res) => {
+        //     // // debugger;
+        //     // // const a = document.createElement('a');
+        //     // // const objectUrl = URL.createObjectURL(blob);
+        //     // // a.href = objectUrl;
+        //     // // a.download = 'ttt.csv';
+        //     // // a.click();
+        //     // // URL.revokeObjectURL(objectUrl);
 
-            var binaryData = [];
-            binaryData.push(blob); //My blob
-            var foo = URL.createObjectURL(
-                new Blob(binaryData, { type: 'application/text' })
-            );
-            console.log(foo);
-
-            saveAs.saveAs(foo, 'application/text');
-        });
+        //     // var binaryData = [];
+        //     // binaryData.push(blob); //My blob
+        //     // var foo = URL.createObjectURL(
+        //     //     new Blob(binaryData, { type: 'application/text' })
+        //     // );
+        //     // console.log(foo);
+        //     var data = new Blob([res], { type: 'text/plain;charset=utf-8' });
+        //     saveAs.saveAs(data, 'text.txt');
+        //     // saveAs.saveAs(blob, 'text.csv');
+        // });
     }
 
     getUniqueValues(arr, element, element_code) {
