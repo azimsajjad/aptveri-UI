@@ -1,11 +1,16 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { DialogService } from 'primeng/dynamicdialog';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
+import { PopupComponent } from '../routes/utilities/popup/popup.component';
 
 @Injectable()
 export class UtilsService {
-    constructor(private http: HttpClient) {}
+    constructor(
+        private http: HttpClient,
+        private dialogService: DialogService
+    ) {}
 
     public getPageOption(page_id: number = 0): Observable<any> {
         return this.http.get(
@@ -24,6 +29,16 @@ export class UtilsService {
                 organization_id: data.organization_id,
             }
         );
+    }
+
+    public getFullView(title: string, desc: string) {
+        this.dialogService.open(PopupComponent, {
+            header: title,
+            data: {
+                text: desc,
+            },
+            width: '50%',
+        });
     }
 
     // public createLibDropdown(): Observable<any> {

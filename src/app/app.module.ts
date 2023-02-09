@@ -64,6 +64,8 @@ import { AuditPageComponent } from './routes/roboticsAudit/audit/audit-page/audi
 import { AuditTestComponent } from './routes/roboticsAudit/audit/audit-test/audit-test.component';
 import { AuditTestHistoryComponent } from './routes/roboticsAudit/audit/audit-test-history/audit-test-history.component';
 import { AuditProgramComponent1 } from './routes/roboticsAudit/audit/audit-program/audit-program.component';
+import { PopupComponent } from './routes/utilities/popup/popup.component';
+import { DialogService } from 'primeng/dynamicdialog';
 
 export function tokenGetter() {
     return localStorage.getItem('jwt');
@@ -133,6 +135,7 @@ export function tokenGetter() {
         AuditTestComponent,
         AuditTestHistoryComponent,
         AuditProgramComponent1,
+        PopupComponent,
     ],
     providers: [
         { provide: LocationStrategy, useClass: HashLocationStrategy },
@@ -149,6 +152,7 @@ export function tokenGetter() {
         AuditService,
         UploadService,
         UtilsService,
+        DialogService,
         { provide: HTTP_INTERCEPTORS, useClass: httpInterceptor, multi: true },
         {
             provide: HTTP_INTERCEPTORS,
@@ -157,5 +161,6 @@ export function tokenGetter() {
         },
     ],
     bootstrap: [AppComponent],
+    entryComponents: [PopupComponent],
 })
 export class AppModule {}

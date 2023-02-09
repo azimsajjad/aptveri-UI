@@ -15,6 +15,7 @@ import { AuditProgram } from 'src/app/api/roboticsAudit/audit-program';
 import { AuditService } from 'src/app/service/audit.service';
 import { BannerService } from 'src/app/service/librariesservice';
 import { ScriptService } from 'src/app/service/scriptservices';
+import { UtilsService } from 'src/app/service/utils.service';
 
 @Component({
     selector: 'app-audit-test',
@@ -61,7 +62,8 @@ export class AuditTestComponent implements OnInit, OnChanges {
         private libraryService: BannerService,
         private _formbuilder: FormBuilder,
         private messageService: MessageService,
-        private confirmationService: ConfirmationService
+        private confirmationService: ConfirmationService,
+        public utilService: UtilsService
     ) {}
 
     ngOnInit(): void {
@@ -966,6 +968,18 @@ export class AuditTestComponent implements OnInit, OnChanges {
 
         return x[0].scriptVaribales;
     }
+
+    // dialogs...
+
+    // getFullView(title: string, desc: string) {
+    //     this.dialogService.open(PopupComponent, {
+    //         header: title,
+    //         data: {
+    //             text: desc,
+    //         },
+    //         width: '50%',
+    //     });
+    // }
 
     storeOption = ['Yes', 'No'];
     scriptDefaultVariables = [

@@ -4,11 +4,17 @@
     #dt
     *ngIf="showTable"
     [value]="audits"
-    selectionMode="single"
     [rows]="10"
     [loading]="loading"
     [rowHover]="true"
     [paginator]="true"
+    [rowsPerPageOptions]="[10, 20, 30]"
+    [showCurrentPageReport]="true"
+    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+    [(selection)]="selectedAudit"
+    responsiveLayout="scroll"
+    [scrollable]="true"
+    scrollHeight="calc(100vh - 320px)"
     [globalFilterFields]="[
         'audit_uid',
         'audit_board_id',
@@ -25,13 +31,6 @@
         'results_url',
         'last_run_date'
     ]"
-    [rowsPerPageOptions]="[10, 20, 30]"
-    [showCurrentPageReport]="true"
-    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
-    [(selection)]="selectedAudit"
-    responsiveLayout="scroll"
-    [scrollable]="true"
-    scrollHeight="calc(100vh - 320px)"
 >
     <ng-template pTemplate="caption">
         <div

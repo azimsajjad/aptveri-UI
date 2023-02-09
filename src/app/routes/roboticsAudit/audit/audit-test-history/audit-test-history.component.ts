@@ -10,6 +10,7 @@ import { AuditTest } from 'src/app/api/robotic-audit';
 import { AuditService } from 'src/app/service/audit.service';
 import { audit } from 'src/app/api/roboticsAudit/audit';
 import { AuditProgram } from 'src/app/api/roboticsAudit/audit-program';
+import { UtilsService } from 'src/app/service/utils.service';
 
 @Component({
     selector: 'app-audit-test-history',
@@ -38,7 +39,8 @@ export class AuditTestHistoryComponent implements OnInit, OnChanges {
         private _formbuilder: FormBuilder,
         private router: Router,
         private messageService: MessageService,
-        private confirmationService: ConfirmationService
+        private confirmationService: ConfirmationService,
+        public utilService: UtilsService
     ) {}
 
     ngOnInit(): void {

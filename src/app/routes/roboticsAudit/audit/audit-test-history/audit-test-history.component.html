@@ -42,39 +42,6 @@
         >
             <span class="text-xl">List of Audit Test History </span>
             <span class="flex justify-content-between align-items-center">
-                <!-- <span class="p-input-icon-left mb-2 md:mb-0">
-                    <button
-                        title="Refresh"
-                        pButton
-                        pRipple
-                        type="button"
-                        icon="pi pi-refresh"
-                        class="p-button-rounded p-button-info ml-2"
-                        (click)="getTestHistory()"
-                    ></button>
-                    &nbsp;
-                    <button
-                        title="Download Excel"
-                        pButton
-                        pRipple
-                        icon="pi pi-file-excel"
-                        class="p-button-rounded p-button-info"
-                        [disabled]="auditTHSelection?.length < 1"
-                        (click)="downloadExcel()"
-                    ></button>
-
-                    <button
-                        [disabled]="auditTHSelection?.length != 1"
-                        title="Delete"
-                        pButton
-                        pRipple
-                        type="button"
-                        icon="pi pi-trash"
-                        class="p-button-rounded p-button-info ml-2"
-                        (click)="deleteAuditHistroy(auditTHSelection[0])"
-                    ></button
-                ></span>
-                &nbsp;&nbsp;&nbsp;&nbsp; -->
                 <span class="p-input-icon-left mr-5">
                     <i class="pi pi-search"></i>
                     <input
@@ -217,19 +184,43 @@
             <td class="text-base" style="min-width: 14rem">
                 {{ item.au_level_4_desc }}
             </td>
-            <td class="text-base" style="min-width: 14rem">
+            <td
+                class="text-base"
+                style="min-width: 14rem"
+                (click)="utilService.getFullView('Control', item.audit_risk)"
+                pTooltip="click to view more"
+                tooltipPosition="bottom"
+            >
                 {{ item.audit_risk.substring(0, 30) }}
             </td>
-            <td class="text-base" style="min-width: 14rem">
+            <td
+                class="text-base"
+                style="min-width: 14rem"
+                (click)="utilService.getFullView('Control', item.control)"
+                pTooltip="click to view more"
+                tooltipPosition="bottom"
+            >
                 {{ item.control.substring(0, 30) || 'N/A' }}
             </td>
             <td class="text-base" style="min-width: 14rem">
                 {{ item.script_defination }}
             </td>
-            <td class="text-base" style="min-width: 14rem">
+            <td
+                class="text-base"
+                style="min-width: 14rem"
+                (click)="utilService.getFullView('Script', item.script_presto)"
+                pTooltip="click to view more"
+                tooltipPosition="bottom"
+            >
                 {{ item.script_presto.substring(0, 30) || 'N/A' }}
             </td>
-            <td class="text-base" style="min-width: 14rem">
+            <td
+                class="text-base"
+                style="min-width: 14rem"
+                (click)="utilService.getFullView('Script', item.script_sql)"
+                pTooltip="click to view more"
+                tooltipPosition="bottom"
+            >
                 {{ item.script_sql.substring(0, 30) || 'N/A' }}
             </td>
             <td class="text-base" style="min-width: 14rem">
