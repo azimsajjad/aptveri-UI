@@ -27,6 +27,7 @@ import {
     AbstractControl,
 } from '@angular/forms';
 import { Dialog } from 'primeng/dialog';
+import { UtilsService } from 'src/app/service/utils.service';
 @Component({
     selector: 'app-risk-detail',
     templateUrl: './risk-detail.component.html',
@@ -97,7 +98,8 @@ export class RiskDetailComponent implements OnInit {
         private riskService: BannerService,
         private messageService: MessageService,
         private confirmationService: ConfirmationService,
-        public accountSvr: AuthService
+        public accountSvr: AuthService,
+        public utilService: UtilsService
     ) {}
 
     ngOnInit() {

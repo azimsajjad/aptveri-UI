@@ -175,7 +175,10 @@ export class AuditTestComponent implements OnInit, OnChanges {
                         return throwError(err);
                     }),
                     finalize(() => {
-                        // this.auditTestSelection.emit(this.auditTSelection);
+                        this.auditTestSelection.emit(null);
+                        setTimeout(() => {
+                            this.auditTestSelection.emit(this.auditTSelection);
+                        }, 100);
                     })
                 )
                 .subscribe((res) => {

@@ -19,7 +19,7 @@ export class UsersComponent implements OnInit {
     ) {}
 
     users: User;
-    allRole: Role;
+    allRole: Role[];
     userForm: FormGroup;
     userDialog: boolean;
 
@@ -31,7 +31,6 @@ export class UsersComponent implements OnInit {
     getAllUsers() {
         this.userService.getAllUsers().subscribe((res) => {
             this.users = res.data.map((ele: User) => {
-                //  console.log(this.users);
                 ele.acct_status == 1
                     ? (ele.acct_status = true)
                     : (ele.acct_status = false);
@@ -54,9 +53,13 @@ export class UsersComponent implements OnInit {
                 [Validators.required, Validators.email],
             ],
             fullName: [ele?.fullName || null, Validators.required],
-            roleName: [ele?.roleName || null, Validators.required],
+            roleName: [
+                this.getRole(ele?.roleName) || null,
+                Validators.required,
+            ],
             password: [null, ele ? null : Validators.required],
         });
+
         this.userDialog = true;
     }
 
@@ -168,5 +171,9 @@ export class UsersComponent implements OnInit {
                     });
                 }
             });
+    }
+
+    getRole(val: string) {
+        return this.allRole.find((ele) => ele.role === val);
     }
 }
