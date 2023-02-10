@@ -16,6 +16,7 @@ import { Organisation, Script } from 'src/app/api/libraries';
 import { AuditUniverseService } from 'src/app/service/audituniverseservice';
 import { BannerService } from 'src/app/service/librariesservice';
 import { ScriptService } from 'src/app/service/scriptservices';
+import { UtilsService } from 'src/app/service/utils.service';
 import { AuthService } from '../../../service/auth.service';
 @Component({
     selector: 'app-script-detail',
@@ -75,7 +76,8 @@ export class ScriptDetailComponent implements OnInit {
         private bannerService: BannerService,
         private auditUniverseService: AuditUniverseService,
         public accountSvr: AuthService,
-        private confirmationService: ConfirmationService
+        private confirmationService: ConfirmationService,
+        public utilService: UtilsService
     ) {}
 
     ngOnInit(): void {

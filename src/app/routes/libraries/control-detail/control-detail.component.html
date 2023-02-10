@@ -521,8 +521,16 @@
                     <td class="text-base" style="min-width: 14rem">
                         {{ item.organization }}
                     </td>
-                    <td class="text-base" style="min-width: 14rem">
-                        {{ item.control }}
+                    <td
+                        class="text-base"
+                        style="min-width: 14rem"
+                        (click)="
+                            utilService.getFullView('Control', item.control)
+                        "
+                        pTooltip="click to view more"
+                        tooltipPosition="bottom"
+                    >
+                        {{ item.control.slice(0, 30) }}
                     </td>
 
                     <td class="text-base" style="min-width: 14rem">

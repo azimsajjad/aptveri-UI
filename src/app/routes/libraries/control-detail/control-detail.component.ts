@@ -8,6 +8,7 @@ import { catchError, finalize, forkJoin, map, throwError } from 'rxjs';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { Dialog } from 'primeng/dialog';
 import { AuditUniverseService } from 'src/app/service/audituniverseservice';
+import { UtilsService } from 'src/app/service/utils.service';
 
 @Component({
     selector: 'app-control-detail',
@@ -50,7 +51,8 @@ export class ControlDetailComponent implements OnInit {
         private messageService: MessageService,
         private confirmationService: ConfirmationService,
         public accountSvr: AuthService,
-        private auditUniverseSerive: AuditUniverseService
+        private auditUniverseSerive: AuditUniverseService,
+        public utilService: UtilsService
     ) {}
 
     ngOnInit() {

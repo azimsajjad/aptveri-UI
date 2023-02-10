@@ -970,17 +970,44 @@
                         {{ item.organization }}
                     </td>
 
-                    <td class="text-base" style="min-width: 14rem">
+                    <td
+                        class="text-base"
+                        style="min-width: 14rem"
+                        (click)="
+                            utilService.getFullView('Process', item.process)
+                        "
+                        pTooltip="click to view more"
+                        tooltipPosition="bottom"
+                    >
                         <span class="p-column-title">Process</span>
                         {{ item.process.slice(0, 50) }}
                     </td>
 
-                    <td class="text-base" style="min-width: 14rem">
+                    <td
+                        class="text-base"
+                        style="min-width: 14rem"
+                        (click)="
+                            utilService.getFullView(
+                                'Business Objective',
+                                item.business_objective
+                            )
+                        "
+                        pTooltip="click to view more"
+                        tooltipPosition="bottom"
+                    >
                         <span class="p-column-title">Business Objective</span>
                         {{ item.business_objective.slice(0, 50) }}
                     </td>
 
-                    <td class="text-base" style="min-width: 14rem">
+                    <td
+                        class="text-base"
+                        style="min-width: 14rem"
+                        (click)="
+                            utilService.getFullView('Audit Risk', item.risk)
+                        "
+                        pTooltip="click to view more"
+                        tooltipPosition="bottom"
+                    >
                         <span class="p-column-title">Audit Risk</span>
                         {{ item.risk.slice(0, 50) }}
                     </td>
