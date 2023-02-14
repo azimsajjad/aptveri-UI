@@ -240,6 +240,8 @@ export class AuditTestHistoryComponent implements OnInit, OnChanges {
 
         if (checkTargetTable.data == 1) {
             this.confirmationService.confirm({
+                header: 'Confirmation',
+                icon: 'pi pi-exclamation-triangle',
                 message: 'Downloading will take time. Do you want to continue?',
                 accept: async () => {
                     this.loading = true;

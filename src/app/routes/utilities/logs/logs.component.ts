@@ -16,7 +16,7 @@ export class LogsComponent implements OnInit {
     users: User[];
 
     ngOnInit(): void {
-         let user = this.http.get(
+        let user = this.http.get(
             environment.api_prefix + 'profile/getallusers'
         );
         let logs = this.http.get(environment.api_prefix + 'audit/log/0');
@@ -29,9 +29,9 @@ export class LogsComponent implements OnInit {
                 const user = this.users.find(
                     (user) => user.userId === log.user_id
                 );
-                return { ...log, username: user.fullName };
+                return { ...log };
             });
             console.log(this.data);
-            });
+        });
     }
 }
