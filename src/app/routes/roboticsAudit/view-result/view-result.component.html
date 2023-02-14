@@ -53,7 +53,6 @@
 
                 <div class="p-datatable-wrapper">
                     <p-table
-                        styleClass="p-datatable-gridlines"
                         [value]="targettables"
                         [columns]="cols"
                         [loading]="loading"
@@ -66,7 +65,7 @@
                     >
                         <ng-template pTemplate="caption">
                             <div
-                                class="flex flex-column md:flex-row md:align-items-center md:justify-content-between"
+                                class="table-header flex justify-content-between align-items-center"
                             >
                                 <!-- <button
                                     type="button"
@@ -88,7 +87,9 @@
                                     pTooltip="XLS"
                                     tooltipPosition="bottom"
                                 ></button>-->
-                                <h6 class="m-0">{{ res_target_table }}</h6>
+                                <h6 class="m-0" style="color: white;">
+                                    {{ res_target_table }}
+                                </h6>
                                 <span class="p-input-icon-left mb-2 md:mb-0">
                                     <button
                                         type="button"
