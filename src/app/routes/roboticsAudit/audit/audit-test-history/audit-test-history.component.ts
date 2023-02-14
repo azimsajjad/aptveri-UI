@@ -61,6 +61,7 @@ export class AuditTestHistoryComponent implements OnInit, OnChanges {
     }
 
     ngOnChanges(): void {
+        this.auditTHSelection = null;
         if (this.auditTest) {
             this.getTestHistory();
         }
@@ -158,15 +159,16 @@ export class AuditTestHistoryComponent implements OnInit, OnChanges {
     }
 
     editHistroy(ele) {
-        let testId = [];
         this.res_target_table = ele.target_table;
         this.res_auditTHname = ele.audit_history_uid;
 
-        this.auditTestHistoryForm = this._formbuilder.group({
-            audit_history_id: ele.audit_history_id,
-            notes: ele.notes,
-            results: ele.results,
-        });
+        if (this.auditTestHistoryForm?.value == undefined) {
+            this.auditTestHistoryForm = this._formbuilder.group({
+                audit_history_id: ele.audit_history_id,
+                notes: ele.notes,
+                results: ele.results,
+            });
+        }
     }
 
     changeHistoryStatus(ele) {
@@ -194,6 +196,8 @@ export class AuditTestHistoryComponent implements OnInit, OnChanges {
                     });
                     // console.log(err);
                     this.auditTHSelection = null;
+                    this.auditTestHistoryForm.reset();
+                    this.getTestHistory();
                     return throwError(err);
                 })
             )
@@ -214,7 +218,6 @@ export class AuditTestHistoryComponent implements OnInit, OnChanges {
                         life: 3000,
                     });
                     this.auditTHSelection = null;
-                    let h = [];
                 }
             });
     }

@@ -45,12 +45,14 @@ export class AuditTestComponent implements OnInit, OnChanges {
     script;
     filteredScript;
     department;
+    filteredDepartment;
     fullRisk;
     risk;
     filteredRisk;
     control;
     filteredControl;
     allOrg: Organisation[];
+    filteredOrg;
 
     auditTestForm: FormGroup;
 
@@ -970,6 +972,38 @@ export class AuditTestComponent implements OnInit, OnChanges {
         });
 
         return x[0].scriptVaribales;
+    }
+
+    filterOrg(event) {
+        this.filteredOrg = [];
+        for (let i = 0; i < this.allOrg.length; i++) {
+            let org = this.allOrg[i];
+            if (
+                org.organization
+                    .toLowerCase()
+                    .indexOf(event.query.toLowerCase()) == 0
+            ) {
+                this.filteredOrg.push(
+                    org.organization_uid + ' - ' + org.organization
+                );
+            }
+        }
+    }
+
+    filterDepartment(event) {
+        this.filteredDepartment = [];
+        for (let i = 0; i < this.department.length; i++) {
+            let depart = this.department[i];
+            if (
+                depart.department
+                    .toLowerCase()
+                    .indexOf(event.query.toLowerCase()) == 0
+            ) {
+                this.filteredDepartment.push(
+                    depart.department_uid + ' - ' + depart.department
+                );
+            }
+        }
     }
 
     // dialogs...
