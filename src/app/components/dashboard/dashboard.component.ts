@@ -15,6 +15,9 @@ export class DashboardComponent implements OnInit {
     chartData: any;
     pieData: any;
     basicData: any;
+    doughnutData: any;
+    radarData: any;
+    polarAreaData: any;
 
     constructor(public configService: ConfigService) {}
 
@@ -82,6 +85,68 @@ export class DashboardComponent implements OnInit {
                     tension: 0.4,
                 },
             ],
+        };
+
+        this.doughnutData = {
+            labels: ['Script', 'Control', 'Risk'],
+            datasets: [
+                {
+                    data: [330, 473, 213],
+                    backgroundColor: ['#1c5b9c', '#86c143', '#FFA726'],
+                    hoverBackgroundColor: ['#1c5b9ccf', '#86c143d4', '#FFB74D'],
+                },
+            ],
+        };
+
+        this.radarData = {
+            labels: [
+                'Organisation',
+                'Department',
+                'Audit Universe',
+                'Risk',
+                'Control',
+                'Script',
+                'Running Script',
+            ],
+            datasets: [
+                {
+                    label: 'Total',
+                    backgroundColor: 'rgba(28,91,156,0.2)',
+                    borderColor: 'rgba(28,91,156,1)',
+                    pointBackgroundColor: 'rgba(28,91,156,1)',
+                    pointBorderColor: '#fff',
+                    pointHoverBackgroundColor: '#fff',
+                    pointHoverBorderColor: 'rgba(28,91,156,1)',
+                    data: [65, 59, 90, 81, 56, 55, 40],
+                },
+                {
+                    label: 'Success',
+                    backgroundColor: 'rgba(134,193,67,0.2)',
+                    borderColor: 'rgba(134,193,67,1)',
+                    pointBackgroundColor: 'rgba(134,193,67,1)',
+                    pointBorderColor: '#fff',
+                    pointHoverBackgroundColor: '#fff',
+                    pointHoverBorderColor: 'rgba(134,193,67,1)',
+                    data: [28, 48, 40, 19, 96, 27, 100],
+                },
+            ],
+        };
+
+        this.polarAreaData = {
+            datasets: [
+                {
+                    data: [11, 16, 7, 3, 14],
+                    backgroundColor: [
+                        '#1c5b9c',
+                        '#86c143',
+                        '#FFA726',
+                        '#1c5b9c',
+                        '#86c143',
+                    ],
+                    label: 'My dataset',
+                },
+            ],
+            labels: ['Organisation', 'Department', 'Risk', 'Control', 'Script'],
         };
     }
 }

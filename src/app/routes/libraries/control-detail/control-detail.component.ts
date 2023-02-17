@@ -1,12 +1,10 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
-import { control, Organisation, risk } from '../../../api/libraries';
+import { Component, OnInit } from '@angular/core';
+import { Organisation, risk } from '../../../api/libraries';
 import { BannerService } from '../../../service/librariesservice';
 import { ConfirmationService, MessageService } from 'primeng/api';
-import { Table } from 'primeng/table';
 import { AuthService } from 'src/app/service/auth.service';
 import { catchError, finalize, forkJoin, map, throwError } from 'rxjs';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
-import { Dialog } from 'primeng/dialog';
 import { AuditUniverseService } from 'src/app/service/audituniverseservice';
 import { UtilsService } from 'src/app/service/utils.service';
 
@@ -61,29 +59,28 @@ export class ControlDetailComponent implements OnInit {
         });
 
         this.getcontrol();
-        let ban = this.controlService.sendGetRequest();
-        let ri = this.controlService.sendGetriskRequest();
-        let cont = this.controlService.sendGetloadKeyControlRequest();
-        let aud = this.controlService.sendGetloadKeyassertionRequest();
-        let cat = this.controlService.sendGetloadKeyCategoryRequest();
-        let key = this.controlService.sendGetloadKeyTypeRequest();
-        let freq = this.controlService.sendGetloadKeyFrequencyRequest();
-        let ctype = this.controlService.sendGetloadKeyControltypeRequest();
-        let auni = this.controlService.sendGetloadAuditunivfourRequest();
 
-        forkJoin([ban, ri, cont, aud, cat, key, freq, ctype, auni]).subscribe(
-            (results) => {
-                this.allDepartment = results[0].data;
-                this.allRisk = results[1].data;
-                this.controlType = results[2].data;
-                this.allKeyAssertion = results[3].data;
-                this.allKeyCategory = results[4].data;
-                this.allKeyType = results[5].data;
-                this.allKeyFrequency = results[6].data;
-                this.allKeyControlType = results[7].data;
-                this.allAuditUnivFour = results[8].data;
-            }
-        );
+        forkJoin([
+            this.controlService.sendGetRequest(),
+            this.controlService.sendGetriskRequest(),
+            this.controlService.sendGetloadAuditunivfourRequest(),
+            this.controlService.sendGetloadKeyControlRequest(),
+            this.controlService.sendGetloadKeyassertionRequest(),
+            this.controlService.sendGetloadKeyCategoryRequest(),
+            this.controlService.sendGetloadKeyTypeRequest(),
+            this.controlService.sendGetloadKeyFrequencyRequest(),
+            this.controlService.sendGetloadKeyControltypeRequest(),
+        ]).subscribe((results) => {
+            this.allDepartment = results[0].data;
+            this.allRisk = results[1].data;
+            this.allAuditUnivFour = results[2].data;
+            this.controlType = results[3].data;
+            this.allKeyAssertion = results[4].data;
+            this.allKeyCategory = results[5].data;
+            this.allKeyType = results[6].data;
+            this.allKeyFrequency = results[7].data;
+            this.allKeyControlType = results[8].data;
+        });
     }
 
     getcontrol() {
@@ -116,8 +113,6 @@ export class ControlDetailComponent implements OnInit {
     }
 
     openNew(ele = null) {
-        console.log(ele);
-
         this.form = this.fb.group({
             control_uid: ele?.control_uid || null,
             organization: [
@@ -139,30 +134,71 @@ export class ControlDetailComponent implements OnInit {
             control: [ele?.control || null, Validators.required],
             comments: [ele?.comments || null, Validators.required],
             controldesc: [
-                this.getKeyControl(ele?.control_type) || null,
+                ele ? this.getKeyControl(ele.control_type) : null,
                 Validators.required,
             ],
             frequencydesc: [
-                this.getFrequency(ele?.frequency) || null,
+                ele ? this.getFrequency(ele.frequency) : null,
                 Validators.required,
             ],
             autodesc: [
-                this.getAuto(ele?.automation) || null,
+                ele ? this.getAuto(ele.automation) : null,
                 Validators.required,
             ],
             categorydesc: [
-                this.getCategory(ele?.category) || null,
+                ele ? this.getCategory(ele.category) : null,
                 Validators.required,
             ],
             assdesc: [
-                this.getAssertion(ele?.assertion) || null,
+                ele ? this.getAssertion(ele.assertion) : null,
                 Validators.required,
             ],
             keydesc: [
-                this.getKeyControlType(ele?.key_control) || null,
+                ele ? this.getKeyControlType(ele.key_control) : null,
                 Validators.required,
             ],
         });
+
+        if (ele) {
+            this.form
+                .get('organization')
+                .setValue(this.getOrg(ele?.organization_id));
+        }
+
+        this.form
+            .get('organization')
+            .valueChanges.subscribe((res: Organisation) => {
+                forkJoin([
+                    this.controlService.loadOptions(
+                        res.organization_id,
+                        'loadControltype'
+                    ),
+                    this.controlService.loadOptions(
+                        res.organization_id,
+                        'loadFrequencytype'
+                    ),
+                    this.controlService.loadOptions(
+                        res.organization_id,
+                        'loadCategorytype'
+                    ),
+                    this.controlService.loadOptions(
+                        res.organization_id,
+                        'loadAssertiontype'
+                    ),
+                    this.controlService.loadOptions(
+                        res.organization_id,
+                        'loadKeyControltype'
+                    ),
+                ]).subscribe((result) => {
+                    console.log(result);
+                    this.allKeyControlType = result[0].data;
+                    this.allKeyFrequency = result[1].data;
+                    this.allKeyCategory = result[2].data;
+                    this.allKeyAssertion = result[3].data;
+                    this.controlType = result[4].data;
+                });
+            });
+
         this.showTable = false;
         // console.log(this.);
     }

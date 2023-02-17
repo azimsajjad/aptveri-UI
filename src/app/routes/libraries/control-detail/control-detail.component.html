@@ -1,337 +1,3 @@
-<!-- <div class="grid">
-    <div class="col-12">
-        <div class="card">
-            <p-toast></p-toast>
-            <p-table
-            #dt
-            [value]="controls"
-            dataKey="control_uid"
-            [rows]="10"
-            [loading]="loading"
-            [rowHover]="true"
-            styleClass="p-datatable-gridlines"
-            [paginator]="true"
-            [globalFilterFields]="[
-                'control_id',
-                'control_uid',
-                'au_level_4_uid',
-                'banner_uid',
-                'risk_uid',
-                'control',
-                'comments',
-                'control_type',
-                'frequency',
-                'automation',
-                'category',
-                'assertion',
-                'key_control',
-                'created_by',
-                'created_date',
-                'updated_by',
-                'updated_date'
-            ]"
-            [rowsPerPageOptions]="[10, 20, 30]"
-            [showCurrentPageReport]="true"
-            currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
-            [(selection)]="selectedcontrols"
-            responsiveLayout="scroll"
-            [scrollable]="true"
-            scrollHeight="calc(100vh - 220px)"
-        >
-            <ng-template pTemplate="caption">
-                <div
-                    class="grid grid-nogutter flex-column md:flex-row justify-content-between"
-                >
-                    <h6 class="m-0">CONTROL</h6>
-
-                    <span class="p-input-icon-left mb-2 md:mb-0">
-                        <button
-                            title="New"
-                            pButton
-                            pRipple
-                            icon="pi pi-plus"
-                            class="p-button-rounded p-button-success"
-                            *ngIf="accountSvr.checkPermission(2, 8, 'A')"
-                            (click)="openNew()"
-                        ></button>
-
-                        &nbsp;
-
-                        <button
-                            title="Edit"
-                            pButton
-                            pRipple
-                            icon="pi pi-pencil"
-                            class="p-button-rounded p-button-warning"
-                            *ngIf="accountSvr.checkPermission(2, 8, 'C')"
-                            (click)="editcontrol()"
-                            [disabled]="selectedcontrols?.length != 1"
-                        ></button>
-                        &nbsp;
-                        <button
-                            title="Delete"
-                            pButton
-                            pRipple
-                            icon="pi pi-trash"
-                            class="p-button-rounded p-button-danger"
-                            *ngIf="accountSvr.checkPermission(2, 8, 'D')"
-                            (click)="deleteSelectedcontrols()"
-                            [disabled]="selectedcontrols?.length != 1"
-                        ></button>
-                        &nbsp;
-                        <button
-                            title="Clear"
-                            pButton
-                            pRipple
-                            class="p-button-rounded p-button-info"
-                            icon=" pi pi-filter-slash"
-                            (click)="clear(dt)"
-                        ></button>
-                    </span>
-                </div>
-            </ng-template>
-            <ng-template
-                pTemplate="header"
-                *ngIf="accountSvr.checkPermission(2, 8, 'V')"
-            >
-                <tr>
-                    <th pFrozenColumn style="max-width: 3rem">
-                    </th>
-                    <th pSortableColumn="control_uid">
-                        <div
-                            class="flex justify-content-between align-items-center"
-                        >
-                            <p-sortIcon field="Control UID"></p-sortIcon>
-                            CONTROL UID
-                            <p-columnFilter
-                                type="text"
-                                field="control_uid"
-                                display="menu"
-                            ></p-columnFilter>
-                        </div>
-                    </th>
-                    <th pSortableColumn="aulfdesc">
-                        <div
-                            class="flex justify-content-between align-items-center"
-                        >
-                            <p-sortIcon field="aulfdesc"></p-sortIcon>
-                            AU LEVEL4 DESCRIPTION
-                            <p-columnFilter
-                                type="text"
-                                field="aulfdesc"
-                                display="menu"
-                            ></p-columnFilter>
-                        </div>
-                    </th>
-                    <th pSortableColumn="bannerdesc">
-                        <div
-                            class="flex justify-content-between align-items-center"
-                        >
-                            <p-sortIcon field="bannerdesc"></p-sortIcon>
-                            BANNER DESCRIPTION
-                            <p-columnFilter
-                                type="text"
-                                field="bannerdesc"
-                                display="menu"
-                            ></p-columnFilter>
-                        </div>
-                    </th>
-                    <th pSortableColumn="riskdesc">
-                        <div
-                            class="flex justify-content-between align-items-center"
-                        >
-                            <p-sortIcon field="riskdesc"></p-sortIcon>
-                            RISK DESCRIPTION
-                            <p-columnFilter
-                                type="text"
-                                field="riskdesc"
-                                display="menu"
-                            ></p-columnFilter>
-                        </div>
-                    </th>
-                    <th pSortableColumn="control">
-                        <div
-                            class="flex justify-content-between align-items-center"
-                        >
-                            <p-sortIcon field="control"></p-sortIcon>
-                            CONTROL
-                            <p-columnFilter
-                                type="text"
-                                field="control"
-                                display="menu"
-                            ></p-columnFilter>
-                        </div>
-                    </th>
-                    <th pSortableColumn="comments">
-                        <div
-                            class="flex justify-content-between align-items-center"
-                        >
-                            <p-sortIcon field="comments"></p-sortIcon>
-                            COMMENTS
-                            <p-columnFilter
-                                type="text"
-                                field="comments"
-                                display="menu"
-                            ></p-columnFilter>
-                        </div>
-                    </th>
-                    <th pSortableColumn="controltxt">
-                        <div
-                            class="flex justify-content-between align-items-center"
-                        >
-                            <p-sortIcon field="controltxt"></p-sortIcon>
-                            CONTROL TYPE
-                            <p-columnFilter
-                                type="text"
-                                field="controltxt"
-                                display="menu"
-                            ></p-columnFilter>
-                        </div>
-                    </th>
-                    <th pSortableColumn="frequencytxt">
-                        <div
-                            class="flex justify-content-between align-items-center"
-                        >
-                            <p-sortIcon field="frequencytxt"></p-sortIcon>
-                            FREQUENCY
-                            <p-columnFilter
-                                type="text"
-                                field="frequencytxt"
-                                display="menu"
-                            ></p-columnFilter>
-                        </div>
-                    </th>
-                    <th pSortableColumn="autotxt">
-                        <div
-                            class="flex justify-content-between align-items-center"
-                        >
-                            <p-sortIcon field="autotxt"></p-sortIcon>
-                            AUTOMATION
-                            <p-columnFilter
-                                type="text"
-                                field="autotxt"
-                                display="menu"
-                            ></p-columnFilter>
-                        </div>
-                    </th>
-                    <th pSortableColumn="categorytxt">
-                        <div
-                            class="flex justify-content-between align-items-center"
-                        >
-                            <p-sortIcon field="categorytxt"></p-sortIcon>
-                            CATEGORY
-                            <p-columnFilter
-                                type="text"
-                                field="categorytxt"
-                                display="menu"
-                            ></p-columnFilter>
-                        </div>
-                    </th>
-                    <th pSortableColumn="asstxt">
-                        <div
-                            class="flex justify-content-between align-items-center"
-                        >
-                            <p-sortIcon field="asstxt"></p-sortIcon>
-                            ASSERTION
-                            <p-columnFilter
-                                type="text"
-                                field="asstxt"
-                                display="menu"
-                            ></p-columnFilter>
-                        </div>
-                    </th>
-                    <th pSortableColumn="keytxt">
-                        <div
-                            class="flex justify-content-between align-items-center"
-                        >
-                            <p-sortIcon field="keytxt"></p-sortIcon>
-                            KEY CONTROL
-                            <p-columnFilter
-                                type="text"
-                                field="keytxt"
-                                display="menu"
-                            ></p-columnFilter>
-                        </div>
-                    </th>
-                </tr>
-            </ng-template>
-            <ng-template pTemplate="body" let-control>
-                <tr>
-                    <td pFrozenColumn style="max-width: 3rem">
-                        <p-tableCheckbox
-                            [value]="control"
-                            (click)="selectControl(control)"
-                        ></p-tableCheckbox>
-                    </td>
-                    <td style="min-width: 12rem">
-                        {{ control.control_uid }}
-                    </td>
-                    <td style="min-width: 12rem">
-                        {{ control.aulfdesc }}
-                    </td>
-                    <td style="min-width: 12rem">
-                        {{ control.bannerdesc }}
-                    </td>
-                    <td
-                        style="min-width: 12rem"
-                        class="cursor-pointer"
-                        (click)="
-                            showInDetail(
-                                control.riskdesc,
-                                'RISK DESCRIPTION'
-                            )
-                        "
-                        title="Click to view full detail"
-                    >
-                        {{ control.riskdesc }}
-                    </td>
-                    <td
-                        style="min-width: 12rem"
-                        class="cursor-pointer"
-                        (click)="showInDetail(control.control, 'CONTROL')"
-                        title="Click to view full detail"
-                    >
-                        {{ control.control }}
-                    </td>
-                    <td style="min-width: 12rem">
-                        {{ control.comments }}
-                    </td>
-                    <td style="min-width: 12rem">
-                        {{ control.controltxt }}
-                    </td>
-                    <td style="min-width: 12rem">
-                        {{ control.frequencytxt }}
-                    </td>
-                    <td style="min-width: 12rem">
-                        {{ control.autotxt }}
-                    </td>
-                    <td style="min-width: 12rem">
-                        {{ control.categorytxt }}
-                    </td>
-                    <td style="min-width: 12rem">
-                        {{ control.asstxt }}
-                    </td>
-                    <td style="min-width: 12rem">
-                        {{ control.keytxt }}
-                    </td>
-                </tr>
-            </ng-template>
-            <ng-template pTemplate="emptymessage">
-                <tr>
-                    <td colspan="7">No controls found.</td>
-                </tr>
-            </ng-template>
-            <ng-template pTemplate="loadingbody">
-                <tr>
-                    <td colspan="7">Loading controls data. Please wait.</td>
-                </tr>
-            </ng-template>
-        </p-table>
-        </div>
-
-
-    </div>
-</div> -->
 <p-toast></p-toast>
 
 <p-confirmDialog> </p-confirmDialog>
@@ -691,6 +357,7 @@
                     <div class="field col-12 md:col-4">
                         <label>Control Type<sup>*</sup></label>
                         <p-autoComplete
+                            [disabled]="form.get('organization').value == null"
                             appendTo="body"
                             formControlName="controldesc"
                             [suggestions]="filteredControlType"
@@ -705,6 +372,7 @@
                     <div class="field col-12 md:col-4">
                         <label>Frequency<sup>*</sup></label>
                         <p-autoComplete
+                            [disabled]="form.get('organization').value == null"
                             appendTo="body"
                             formControlName="frequencydesc"
                             [suggestions]="filteredKeyFrequency"
@@ -733,6 +401,7 @@
                     <div class="field col-12 md:col-4">
                         <label>Category<sup>*</sup></label>
                         <p-autoComplete
+                            [disabled]="form.get('organization').value == null"
                             appendTo="body"
                             formControlName="categorydesc"
                             [suggestions]="filteredKeyCategory"
@@ -748,6 +417,7 @@
                     <div class="field col-12 md:col-4">
                         <label>Assertion<sup>*</sup></label>
                         <p-autoComplete
+                            [disabled]="form.get('organization').value == null"
                             appendTo="body"
                             formControlName="assdesc"
                             [suggestions]="filteredKeyAssertion"
@@ -763,6 +433,7 @@
                     <div class="field col-12 md:col-4">
                         <label>Key Control<sup>*</sup></label>
                         <p-autoComplete
+                            [disabled]="form.get('organization').value == null"
                             appendTo="body"
                             formControlName="keydesc"
                             [suggestions]="filteredKeyControlType"

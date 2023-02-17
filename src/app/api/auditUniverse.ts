@@ -1,3 +1,5 @@
+import { Organisation } from './libraries';
+
 export interface AULevel1 {
     code?: number;
     data?: DataAULevel1[];
@@ -13,6 +15,7 @@ export interface DataAULevel1 {
     section_no?: null | string;
     updated_by?: number;
     updated_date?: null | string;
+    organization_id?: number | null;
 }
 
 export interface AULevel2 {
@@ -75,11 +78,13 @@ export interface DataAULevel4 {
 }
 
 export interface AddAUL_1 {
+    organization_id: Organisation;
     au_level_1_desc?: string;
     section_no?: string;
 }
 
 export interface EditAUL_1 {
+    organization_id: Organisation;
     au_level_1_id?: number;
     au_level_1_desc?: string;
     section_no?: string;

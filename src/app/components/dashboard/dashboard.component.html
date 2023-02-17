@@ -70,20 +70,40 @@
         </div>
     </div>
 </div>
-<div class="grid">
-    <div class="col-12 lg:col-5">
-        <div class="card">
+<div class="card grid px-5 mx-5">
+    <div class="col-12 lg:col-6">
+        <div>
             <h5>Audit</h5>
             <p-chart type="bar" [data]="basicData"></p-chart><br />
             <p-chart type="line" [data]="chartData"></p-chart>
         </div>
     </div>
-    <div class="col-6 lg:col-3">
-        <div class="card">
+    <div class="col-12 lg:col-3">
+        <div>
             <h5>Library</h5>
             <p-chart
                 type="pie"
                 [data]="pieData"
+                [style]="{ width: '40%' }"
+            ></p-chart>
+            <p-chart
+                type="doughnut"
+                [data]="doughnutData"
+                [style]="{ width: '40%' }"
+            ></p-chart>
+        </div>
+    </div>
+    <div class="col-12 lg:col-3">
+        <div>
+            <h5>Library</h5>
+            <p-chart
+                type="radar"
+                [data]="radarData"
+                [style]="{ width: '40%' }"
+            ></p-chart>
+            <p-chart
+                type="polarArea"
+                [data]="polarAreaData"
                 [style]="{ width: '40%' }"
             ></p-chart>
         </div>

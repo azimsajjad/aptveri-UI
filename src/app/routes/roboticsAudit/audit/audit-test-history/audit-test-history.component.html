@@ -14,19 +14,16 @@
     responsiveLayout="scroll"
     [scrollable]="true"
     [globalFilterFields]="[
-        'audit_history_uid',
+        'audit_history_id',
         'organization',
         'department',
         'audit_test_desc',
         'au_level_4_desc',
         'audit_risk',
         'control',
-        'target_table',
         'script_defination',
         'script_presto',
         'script_sql',
-        'results',
-        'notes',
         'schedule_status',
         'schedule_start_datetime',
         'schedule_run_time',
@@ -59,103 +56,92 @@
 
     <ng-template pTemplate="header">
         <tr>
-            <th pFrozenColumn style="min-width: 4rem;">
+            <th pFrozenColumn style="min-width: 4rem">
                 <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
             </th>
 
-            <th pSortableColumn="audit_history_uid" style="min-width: 14rem;">
-                AUDIT TEST HISTORY UID
-                <p-sortIcon field="audit_history_uid"></p-sortIcon>
+            <th pSortableColumn="audit_history_id" style="min-width: 14rem">
+                AUDIT TEST HISTORY ID
+                <p-sortIcon field="audit_history_id"></p-sortIcon>
             </th>
-            <th pSortableColumn="audit_test_desc" style="min-width: 14rem;">
+            <th pSortableColumn="audit_test_desc" style="min-width: 14rem">
                 AUDIT TEST DESCRIPTION
                 <p-sortIcon field="audit_test_desc"></p-sortIcon>
             </th>
 
-            <th pSortableColumn="organization" style="min-width: 14rem;">
+            <th pSortableColumn="organization" style="min-width: 14rem">
                 <div class="flex align-items-center">
                     ORGANISATION
                     <p-sortIcon field="organization"></p-sortIcon>
                 </div>
             </th>
 
-            <th pSortableColumn="department" style="min-width: 14rem;">
+            <th pSortableColumn="department" style="min-width: 14rem">
                 <div class="flex align-items-center">
                     DEPARTMENT
                     <p-sortIcon field="department"></p-sortIcon>
                 </div>
             </th>
-            <th pSortableColumn="au_level_4_desc" style="min-width: 14rem;">
+            <th pSortableColumn="au_level_4_desc" style="min-width: 14rem">
                 AUDIT UNIVERESE LEVEL 4 DESCRIPTION
                 <p-sortIcon field="au_level_4_desc"></p-sortIcon>
             </th>
-            <th pSortableColumn="audit_risk" style="min-width: 14rem;">
+            <th pSortableColumn="audit_risk" style="min-width: 14rem">
                 RISK DESCRIPTION
                 <p-sortIcon field="audit_risk"></p-sortIcon>
             </th>
-            <th pSortableColumn="control" style="min-width: 14rem;">
+            <th pSortableColumn="control" style="min-width: 14rem">
                 CONTROL DESCRIPTION
                 <p-sortIcon field="control"></p-sortIcon>
             </th>
-            <th pSortableColumn="script_defination" style="min-width: 14rem;">
+            <th pSortableColumn="script_defination" style="min-width: 14rem">
                 SCRIPT DEFINATION
                 <p-sortIcon field="script_defination"></p-sortIcon>
             </th>
-            <th pSortableColumn="script_presto" style="min-width: 14rem;">
+            <th pSortableColumn="script_presto" style="min-width: 14rem">
                 FEDERATED SCRIPT
                 <p-sortIcon field="script_presto"></p-sortIcon>
             </th>
-            <th pSortableColumn="script_sql" style="min-width: 14rem;">
+            <th pSortableColumn="script_sql" style="min-width: 14rem">
                 SQL SCRIPT
                 <p-sortIcon field="script_sql"></p-sortIcon>
             </th>
-            <th pSortableColumn="target_table" style="min-width: 14rem;">
-                TARGET TABLE<p-sortIcon field="target_table"></p-sortIcon>
-            </th>
-            <th pSortableColumn="result" style="min-width: 14rem;">
-                RESULT
-                <p-sortIcon field="result"></p-sortIcon>
-            </th>
-            <th pSortableColumn="notes" style="min-width: 14rem;">
-                NOTES
-                <p-sortIcon field="notes"></p-sortIcon>
-            </th>
-            <th pSortableColumn="schedule_status" style="min-width: 14rem;">
+            <th pSortableColumn="schedule_status" style="min-width: 14rem">
                 SCHEDULE STATUS
                 <p-sortIcon field="schedule_status"></p-sortIcon>
             </th>
             <th
                 pSortableColumn="schedule_start_datetime"
-                style="min-width: 14rem;"
+                style="min-width: 14rem"
             >
                 SCHEDULE START DATE
                 <p-sortIcon field="schedule_start_datetime"></p-sortIcon>
             </th>
-            <th pSortableColumn="schedule_run_time" style="min-width: 14rem;">
+            <th pSortableColumn="schedule_run_time" style="min-width: 14rem">
                 SCHEDULE START TIME
                 <p-sortIcon field="schedule_run_time"></p-sortIcon>
             </th>
-            <th pSortableColumn="created_date" style="min-width: 14rem;">
+            <th pSortableColumn="created_date" style="min-width: 14rem">
                 CREATED DATE
                 <p-sortIcon field="created_date"></p-sortIcon>
             </th>
-            <th pSortableColumn="job_run_status_text" style="min-width: 14rem;">
+            <th pSortableColumn="job_run_status_text" style="min-width: 14rem">
                 JOB RUN STATUS
                 <p-sortIcon field="job_run_status_text"></p-sortIcon>
             </th>
-            <th pSortableColumn="error_message" style="min-width: 14rem;">
+            <th pSortableColumn="error_message" style="min-width: 14rem">
                 ERROR DESCRIPTION
                 <p-sortIcon field="error_message"></p-sortIcon>
             </th>
             <th
                 pSortableColumn="audit_run_status_text"
-                style="min-width: 14rem;"
+                style="min-width: 14rem"
             >
                 AUDIT RUN STATUS
                 <p-sortIcon field="audit_run_status_text"></p-sortIcon>
             </th>
 
-            <th style="min-width: 120px;" pFrozenColumn alignFrozen="right">
+            <th style="min-width: 120px" pFrozenColumn alignFrozen="right">
                 <div class="flex align-items-center">ACTIONS</div>
             </th>
         </tr>
@@ -163,30 +149,30 @@
 
     <ng-template pTemplate="body" let-item>
         <tr class="p-selectable-row">
-            <td pFrozenColumn class="text-base" style="max-width: 4rem;">
+            <td pFrozenColumn class="text-base" style="max-width: 4rem">
                 <p-tableCheckbox
                     [value]="item"
                     (click)="editHistroy(item)"
                 ></p-tableCheckbox>
             </td>
-            <td class="text-base" style="min-width: 14rem;">
-                {{ item.audit_history_uid }}
+            <td class="text-base" style="min-width: 14rem">
+                {{ item.audit_history_id }}
             </td>
-            <td class="text-base" style="min-width: 14rem;">
+            <td class="text-base" style="min-width: 14rem">
                 {{ item.audit_test_desc.substring(0, 30) }}
             </td>
-            <td class="text-base" style="min-width: 14rem;">
+            <td class="text-base" style="min-width: 14rem">
                 {{ item.organization || 'N/A' }}
             </td>
-            <td class="text-base" style="min-width: 14rem;">
+            <td class="text-base" style="min-width: 14rem">
                 {{ item.department || 'N/A' }}
             </td>
-            <td class="text-base" style="min-width: 14rem;">
+            <td class="text-base" style="min-width: 14rem">
                 {{ item.au_level_4_desc }}
             </td>
             <td
                 class="text-base"
-                style="min-width: 14rem;"
+                style="min-width: 14rem"
                 (click)="utilService.getFullView('Control', item.audit_risk)"
                 pTooltip="click to view more"
                 tooltipPosition="bottom"
@@ -195,19 +181,19 @@
             </td>
             <td
                 class="text-base"
-                style="min-width: 14rem;"
+                style="min-width: 14rem"
                 (click)="utilService.getFullView('Control', item.control)"
                 pTooltip="click to view more"
                 tooltipPosition="bottom"
             >
                 {{ item.control.substring(0, 30) || 'N/A' }}
             </td>
-            <td class="text-base" style="min-width: 14rem;">
+            <td class="text-base" style="min-width: 14rem">
                 {{ item.script_defination }}
             </td>
             <td
                 class="text-base"
-                style="min-width: 14rem;"
+                style="min-width: 14rem"
                 (click)="utilService.getFullView('Script', item.script_presto)"
                 pTooltip="click to view more"
                 tooltipPosition="bottom"
@@ -216,50 +202,52 @@
             </td>
             <td
                 class="text-base"
-                style="min-width: 14rem;"
+                style="min-width: 14rem"
                 (click)="utilService.getFullView('Script', item.script_sql)"
                 pTooltip="click to view more"
                 tooltipPosition="bottom"
             >
                 {{ item.script_sql.substring(0, 30) || 'N/A' }}
             </td>
-            <td class="text-base" style="min-width: 14rem;">
-                {{ item.target_table || 'N/A' }}
-            </td>
-            <td class="text-base" style="min-width: 14rem;">
-                {{ item.results ? item.results : 'N/A' }}
-            </td>
-            <td class="text-base" style="min-width: 12rem;">
-                {{ item.notes || 'N/A' }}
-            </td>
-            <td class="text-base" style="min-width: 12rem;">
+            <td class="text-base" style="min-width: 12rem">
                 {{ item.schedule_status }}
             </td>
-            <td class="text-base" style="min-width: 12rem;">
+            <td class="text-base" style="min-width: 12rem">
                 {{ (item.schedule_start_datetime | date) || 'N/A' }}
             </td>
-            <td class="text-base" style="min-width: 12rem;">
+            <td class="text-base" style="min-width: 12rem">
                 {{ getTwoDigit(item.schedule_run_time) || 'N/A' }}
             </td>
-            <td class="text-base" style="min-width: 12rem;">
-                {{ (item.created_date | date: 'medium') || 'N/A' }}
+            <td class="text-base" style="min-width: 12rem">
+                {{ (item.created_date | date : 'medium') || 'N/A' }}
             </td>
-            <td class="text-base" style="min-width: 12rem;">
+            <td class="text-base" style="min-width: 12rem">
                 {{ (item.job_run_status_text | titlecase) || 'N/A' }}
             </td>
-            <td class="text-base" style="min-width: 12rem;">
+            <td class="text-base" style="min-width: 12rem">
                 {{ (item.error_message | titlecase) || 'N/A' }}
             </td>
-            <td class="text-base" style="min-width: 12rem;">
+            <td class="text-base" style="min-width: 12rem">
                 {{ (item.audit_run_status_text | titlecase) || 'N/A' }}
             </td>
             <td
                 class="text-base"
-                style="max-width: 120px;"
+                style="max-width: 120px"
                 pFrozenColumn
                 class="font-bold"
                 alignFrozen="right"
             >
+                <span
+                    ><button
+                        pButton
+                        pRipple
+                        title="Delete"
+                        type="button"
+                        icon="pi pi-refresh"
+                        class="p-button-rounded p-button-info ml-2"
+                        (click)="getTestHistory(item)"
+                    ></button>
+                </span>
                 <span
                     ><button
                         pButton
@@ -288,11 +276,21 @@
     </ng-template>
 </p-table>
 
-<p-speedDial
+<button
+    pButton
+    pRipple
+    title="Add"
+    type="button"
+    icon="pi pi-file-excel"
+    class="p-button-rounded p-button-lg fixed add-details"
+    (click)="downloadExcel()"
+></button>
+
+<!-- <p-speedDial
     className="add-details"
     [model]="items"
     direction="up"
-></p-speedDial>
+></p-speedDial> -->
 
 <div
     *ngIf="
@@ -410,6 +408,16 @@
                     </div>
                 </div>
                 <div class="col-4 align-self-center">
+                    <div class="field">
+                        <div class="mb-2">
+                            <label for="">Status</label>
+                        </div>
+                        <p-dropdown
+                            [options]="['Pass', 'Fail']"
+                            formControlName="results"
+                            [style]="{ width: '80%' }"
+                        ></p-dropdown>
+                    </div>
                     <div class="field">
                         <div class="mb-2">
                             <label for="notes">Note</label>

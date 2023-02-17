@@ -57,6 +57,7 @@ export class AuditUniverseService {
         return this.http.post(
             environment.api_prefix + 'AuditUniverse/addAuditUniverseLevel1',
             {
+                organization_id: aul_1.organization_id.organization_id,
                 au_level_1_desc: aul_1.au_level_1_desc,
                 section_no: aul_1.section_no.toString(),
             }
@@ -67,6 +68,7 @@ export class AuditUniverseService {
         return this.http.put(
             environment.api_prefix + 'AuditUniverse/putaddAuditUniverseLevel1',
             {
+                organization_id: aul_1.organization_id.organization_id,
                 au_level_1_id: aul_1.au_level_1_id,
                 au_level_1_desc: aul_1.au_level_1_desc,
                 section_no: aul_1.section_no.toString(),
