@@ -1,12 +1,21 @@
 <div id="table1">
     <p-tabView>
-        <p-tabPanel header="Audit">
+        <p-tabPanel
+            header="Audit"
+            tooltip="Click Here For Audit"
+            leftIcon="pi pi-circle-fill"
+        >
             <app-audit-page
                 (auditSelection)="setAuditProgram($event)"
             ></app-audit-page>
         </p-tabPanel>
 
-        <p-tabPanel header="Audit Program" [disabled]="selectedAudit == null">
+        <p-tabPanel
+            header="Audit Program"
+            [disabled]="selectedAudit == null"
+            tooltip="Click Here For Audit Program"
+            leftIcon="pi pi-credit-card"
+        >
             <app-audit-program1
                 [audit]="selectedAudit"
                 (auditProgramSelection)="setAuditTest($event)"
@@ -18,6 +27,8 @@
             [disabled]="
                 selectedAuditProgram == null || selectedAuditProgram.length == 0
             "
+            tooltip="Click Here For Audit Test"
+            leftIcon="pi pi-clone"
         >
             <app-audit-test
                 [auditProgram]="selectedAuditProgram"
@@ -30,6 +41,8 @@
             [disabled]="
                 selectedAuditTest == null || selectedAuditTest.length == 0
             "
+            tooltip="Click Here For Audit Test History"
+            leftIcon="pi pi-history"
         >
             <app-audit-test-history
                 [audit]="selectedAudit"
