@@ -113,14 +113,23 @@
             scrollHeight="calc(100vh - 378px)"
             [filterDelay]="0"
             [globalFilterFields]="[
-                'audit_board_id',
-                'audit_name',
-                'audit_uid',
-                'department',
-                'full_name',
-                'notes',
+                'audit_history_id',
                 'organization',
-                'review_year'
+                'department',
+                'audit_test_desc',
+                'au_level_4_desc',
+                'audit_risk',
+                'control',
+                'script_defination',
+                'script_presto',
+                'script_sql',
+                'schedule_status',
+                'schedule_start_datetime',
+                'schedule_run_time',
+                'created_date',
+                'job_run_status_text',
+                'error_message',
+                'audit_run_status_text'
             ]"
         >
             <ng-template pTemplate="caption">
@@ -154,151 +163,205 @@
             </ng-template>
             <ng-template pTemplate="header">
                 <tr>
-                    <th pSortableColumn="audit_uid" style="min-width: 14rem;">
-                        <div class="flex align-items-center">
-                            AUDIT UID<p-sortIcon field="audit_uid"></p-sortIcon>
-                        </div>
-                    </th>
-
                     <th
-                        pSortableColumn="audit_board_id"
-                        style="min-width: 14rem;"
+                        pSortableColumn="audit_history_id"
+                        style="min-width: 14rem"
                     >
-                        <div class="flex align-items-center">
-                            AUDIT BOARD ID
-                            <p-sortIcon field="audit_board_id"></p-sortIcon>
-                        </div>
+                        AUDIT TEST HISTORY ID
+                        <p-sortIcon field="audit_history_id"></p-sortIcon>
                     </th>
-
-                    <th pSortableColumn="audit_name" style="min-width: 14rem;">
-                        <div class="flex align-items-center">
-                            AUDIT NAME
-                            <p-sortIcon field="audit_name"></p-sortIcon>
-                        </div>
-                    </th>
-
-                    <th
-                        pSortableColumn="audit_test_uid"
-                        style="min-width: 14rem;"
-                    >
-                        <div class="flex align-items-center">
-                            AUDIT TEST UID
-                            <p-sortIcon field="audit_test_uid"></p-sortIcon>
-                        </div>
-                    </th>
-
                     <th
                         pSortableColumn="audit_test_desc"
-                        style="min-width: 14rem;"
+                        style="min-width: 14rem"
                     >
-                        <div class="flex align-items-center">
-                            AUDIT TEST DESCRIPTION<p-sortIcon
-                                field="audit_test_desc"
-                            ></p-sortIcon>
-                        </div>
+                        AUDIT TEST DESCRIPTION
+                        <p-sortIcon field="audit_test_desc"></p-sortIcon>
                     </th>
 
-                    <th
-                        pSortableColumn="organization"
-                        style="min-width: 14rem;"
-                    >
+                    <th pSortableColumn="organization" style="min-width: 14rem">
                         <div class="flex align-items-center">
-                            ORGANIZATION
+                            ORGANISATION
                             <p-sortIcon field="organization"></p-sortIcon>
                         </div>
                     </th>
 
-                    <th pSortableColumn="department" style="min-width: 14rem;">
+                    <th pSortableColumn="department" style="min-width: 14rem">
                         <div class="flex align-items-center">
                             DEPARTMENT
                             <p-sortIcon field="department"></p-sortIcon>
                         </div>
                     </th>
-
-                    <th pSortableColumn="testcreated" style="min-width: 14rem;">
-                        <div class="flex align-items-center">
-                            CREATED DATE
-                            <p-sortIcon field="testcreated"></p-sortIcon>
-                        </div>
+                    <th
+                        pSortableColumn="au_level_4_desc"
+                        style="min-width: 14rem"
+                    >
+                        AUDIT UNIVERESE LEVEL 4 DESCRIPTION
+                        <p-sortIcon field="au_level_4_desc"></p-sortIcon>
                     </th>
-
-                    <th pSortableColumn="full_name" style="min-width: 14rem;">
-                        <div class="flex align-items-center">
-                            CREATED BY<p-sortIcon
-                                field="full_name"
-                            ></p-sortIcon>
-                        </div>
+                    <th pSortableColumn="audit_risk" style="min-width: 14rem">
+                        RISK DESCRIPTION
+                        <p-sortIcon field="audit_risk"></p-sortIcon>
                     </th>
-
-                    <th pSortableColumn="review_year" style="min-width: 14rem;">
-                        <div class="flex align-items-center">
-                            REVIEW YEAR
-                            <p-sortIcon field="review_year"></p-sortIcon>
-                        </div>
+                    <th pSortableColumn="control" style="min-width: 14rem">
+                        CONTROL DESCRIPTION
+                        <p-sortIcon field="control"></p-sortIcon>
                     </th>
-
-                    <th pSortableColumn="results" style="min-width: 14rem;">
-                        <div class="flex align-items-center">
-                            RESULT <p-sortIcon field="results"></p-sortIcon>
-                        </div>
+                    <th
+                        pSortableColumn="script_defination"
+                        style="min-width: 14rem"
+                    >
+                        SCRIPT DEFINATION
+                        <p-sortIcon field="script_defination"></p-sortIcon>
                     </th>
-
-                    <th pSortableColumn="notes" style="min-width: 14rem;">
-                        <div class="flex align-items-center">
-                            NOTES <p-sortIcon field="notes"></p-sortIcon>
-                        </div>
+                    <th
+                        pSortableColumn="script_presto"
+                        style="min-width: 14rem"
+                    >
+                        FEDERATED SCRIPT
+                        <p-sortIcon field="script_presto"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="script_sql" style="min-width: 14rem">
+                        SQL SCRIPT
+                        <p-sortIcon field="script_sql"></p-sortIcon>
+                    </th>
+                    <th
+                        pSortableColumn="schedule_status"
+                        style="min-width: 14rem"
+                    >
+                        SCHEDULE STATUS
+                        <p-sortIcon field="schedule_status"></p-sortIcon>
+                    </th>
+                    <th
+                        pSortableColumn="schedule_start_datetime"
+                        style="min-width: 14rem"
+                    >
+                        SCHEDULE START DATE
+                        <p-sortIcon
+                            field="schedule_start_datetime"
+                        ></p-sortIcon>
+                    </th>
+                    <th
+                        pSortableColumn="schedule_run_time"
+                        style="min-width: 14rem"
+                    >
+                        SCHEDULE START TIME
+                        <p-sortIcon field="schedule_run_time"></p-sortIcon>
+                    </th>
+                    <th pSortableColumn="created_date" style="min-width: 14rem">
+                        CREATED DATE
+                        <p-sortIcon field="created_date"></p-sortIcon>
+                    </th>
+                    <th
+                        pSortableColumn="job_run_status_text"
+                        style="min-width: 14rem"
+                    >
+                        JOB RUN STATUS
+                        <p-sortIcon field="job_run_status_text"></p-sortIcon>
+                    </th>
+                    <th
+                        pSortableColumn="error_message"
+                        style="min-width: 14rem"
+                    >
+                        ERROR DESCRIPTION
+                        <p-sortIcon field="error_message"></p-sortIcon>
+                    </th>
+                    <th
+                        pSortableColumn="audit_run_status_text"
+                        style="min-width: 14rem"
+                    >
+                        AUDIT RUN STATUS
+                        <p-sortIcon field="audit_run_status_text"></p-sortIcon>
                     </th>
                 </tr>
             </ng-template>
 
             <ng-template pTemplate="body" let-item>
-                <tr class="p-selectable-row">
-                    <td class="text-base" style="min-width: 14rem;">
-                        {{ item.audit_uid }}
+                <tr class="p-selectable-row" (click)="getDetail(item)">
+                    <td class="text-base" style="min-width: 14rem">
+                        {{ item.audit_history_id }}
                     </td>
-
-                    <td class="text-base" style="min-width: 14rem;">
-                        {{ item.audit_board_id }}
+                    <td class="text-base" style="min-width: 14rem">
+                        {{ item.audit_test_desc.substring(0, 30) }}
                     </td>
-
-                    <td class="text-base" style="min-width: 14rem;">
-                        {{ item.audit_name }}
+                    <td class="text-base" style="min-width: 14rem">
+                        {{ item.organization || 'N/A' }}
                     </td>
-
-                    <td class="text-base" style="min-width: 14rem;">
-                        {{ item.audit_test_uid }}
+                    <td class="text-base" style="min-width: 14rem">
+                        {{ item.department || 'N/A' }}
                     </td>
-
-                    <td class="text-base" style="min-width: 14rem;">
-                        {{ item.audit_test_desc }}
+                    <td class="text-base" style="min-width: 14rem">
+                        {{ item.au_level_4_desc }}
                     </td>
-
-                    <td class="text-base" style="min-width: 14rem;">
-                        {{ item.organization }}
+                    <td
+                        class="text-base"
+                        style="min-width: 14rem"
+                        (click)="
+                            utilService.getFullView('Control', item.audit_risk)
+                        "
+                        pTooltip="click to view more"
+                        tooltipPosition="bottom"
+                    >
+                        {{ item.audit_risk.substring(0, 30) }}
                     </td>
-
-                    <td class="text-base" style="min-width: 14rem;">
-                        {{ item.department }}
+                    <td
+                        class="text-base"
+                        style="min-width: 14rem"
+                        (click)="
+                            utilService.getFullView('Control', item.control)
+                        "
+                        pTooltip="click to view more"
+                        tooltipPosition="bottom"
+                    >
+                        {{ item.control.substring(0, 30) || 'N/A' }}
                     </td>
-
-                    <td class="text-base" style="min-width: 14rem;">
-                        {{ item.testcreated }}
+                    <td class="text-base" style="min-width: 14rem">
+                        {{ item.script_defination }}
                     </td>
-
-                    <td class="text-base" style="min-width: 14rem;">
-                        {{ item.full_name }}
+                    <td
+                        class="text-base"
+                        style="min-width: 14rem"
+                        (click)="
+                            utilService.getFullView(
+                                'Script',
+                                item.script_presto
+                            )
+                        "
+                        pTooltip="click to view more"
+                        tooltipPosition="bottom"
+                    >
+                        {{ item.script_presto.substring(0, 30) || 'N/A' }}
                     </td>
-
-                    <td class="text-base" style="min-width: 14rem;">
-                        {{ item.review_year }}
+                    <td
+                        class="text-base"
+                        style="min-width: 14rem"
+                        (click)="
+                            utilService.getFullView('Script', item.script_sql)
+                        "
+                        pTooltip="click to view more"
+                        tooltipPosition="bottom"
+                    >
+                        {{ item.script_sql.substring(0, 30) || 'N/A' }}
                     </td>
-
-                    <td class="text-base" style="min-width: 14rem;">
-                        {{ item.results }}
+                    <td class="text-base" style="min-width: 12rem">
+                        {{ item.schedule_status }}
                     </td>
-
-                    <td class="text-base" style="min-width: 14rem;">
-                        {{ item.notes }}
+                    <td class="text-base" style="min-width: 12rem">
+                        {{ (item.schedule_start_datetime | date) || 'N/A' }}
+                    </td>
+                    <td class="text-base" style="min-width: 12rem">
+                        {{ getTwoDigit(item.schedule_run_time) || 'N/A' }}
+                    </td>
+                    <td class="text-base" style="min-width: 12rem">
+                        {{ (item.created_date | date : 'medium') || 'N/A' }}
+                    </td>
+                    <td class="text-base" style="min-width: 12rem">
+                        {{ (item.job_run_status_text | titlecase) || 'N/A' }}
+                    </td>
+                    <td class="text-base" style="min-width: 12rem">
+                        {{ (item.error_message | titlecase) || 'N/A' }}
+                    </td>
+                    <td class="text-base" style="min-width: 12rem">
+                        {{ (item.audit_run_status_text | titlecase) || 'N/A' }}
                     </td>
                 </tr>
             </ng-template>

@@ -227,4 +227,21 @@ export class BannerService {
             environment.api_prefix + 'libraries/deleteorganization/' + id
         );
     }
+
+    public loadOptions(
+        org_id: number,
+        type:
+            | 'loadControltype'
+            | 'loadimpact'
+            | 'loadCategorytype'
+            | 'loadAssertiontype'
+            | 'loadFrequencytype'
+            | 'loadKeyControltype'
+            | 'loadRiskExposuretype'
+            | 'loadTypetype'
+    ): Observable<any> {
+        return this.httpClient.get(
+            environment.api_prefix + 'libraries/' + type + '/' + org_id
+        );
+    }
 }

@@ -1,31 +1,11 @@
-import {
-    Component,
-    OnInit,
-    ViewChild,
-    ChangeDetectorRef,
-    ElementRef,
-} from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { risk, auditunivthird, Organisation } from '../../../api/libraries';
 import { BannerService } from '../../../service/librariesservice';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { Table } from 'primeng/table';
 import { AuthService } from '../../../service/auth.service';
-import {
-    catchError,
-    debounceTime,
-    finalize,
-    forkJoin,
-    map,
-    throwError,
-} from 'rxjs';
-import {
-    FormControl,
-    FormGroup,
-    Validators,
-    FormBuilder,
-    ValidatorFn,
-    AbstractControl,
-} from '@angular/forms';
+import { catchError, finalize, forkJoin, map, throwError } from 'rxjs';
+import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { Dialog } from 'primeng/dialog';
 import { UtilsService } from 'src/app/service/utils.service';
 @Component({
@@ -185,20 +165,18 @@ export class RiskDetailComponent implements OnInit {
             organization: [null, [Validators.required]],
         });
         this.getrisk();
-        // this.getRisktaxoneControltype();
-        // this.getimpactControltype();
-        //debugger;
-        let ban = this.riskService.sendGetauditunivthirdRequest();
-        let ri = this.riskService.sendGetloadRiskExposuretypeRequest();
-        let cont = this.riskService.sendGetloadRisktaxoneRequest();
-        let aud = this.riskService.sendGetloadimpactRequest();
 
-        forkJoin([ban, ri, cont, aud]).subscribe((results) => {
+        forkJoin([
+            this.riskService.sendGetauditunivthirdRequest(),
+            // this.riskService.sendGetloadRiskExposuretypeRequest(),
+            this.riskService.sendGetloadRisktaxoneRequest(),
+            this.riskService.sendGetloadimpactRequest(),
+        ]).subscribe((results) => {
             this.AuThird = results[0].data;
-            this.RiskExposure = results[1].data;
-            this.Risktaxone = results[2].data;
-            this.impact = results[3].data;
-            this.likelihood = results[3].data;
+            // this.RiskExposure = results[1].data;
+            this.Risktaxone = results[1].data;
+            // this.impact = results[2].data;
+            // this.likelihood = results[2].data;
         });
 
         this.cols = [
@@ -212,6 +190,25 @@ export class RiskDetailComponent implements OnInit {
                 this.selectedrtax1 = null;
             }
         });
+
+        this.form
+            .get('organization')
+            .valueChanges.subscribe((res: Organisation) => {
+                forkJoin([
+                    this.riskService.loadOptions(
+                        res.organization_id,
+                        'loadRiskExposuretype'
+                    ),
+                    this.riskService.loadOptions(
+                        res.organization_id,
+                        'loadimpact'
+                    ),
+                ]).subscribe((res) => {
+                    this.RiskExposure = res[0].data;
+                    this.impact = res[1].data;
+                    this.likelihood = res[1].data;
+                });
+            });
     }
 
     getAuThirdtype() {
@@ -724,6 +721,8 @@ export class RiskDetailComponent implements OnInit {
         this.submitted = true;
         //alert(this.selectedau_level_3_uid);
         this.datarisks = {};
+        console.log(this.form.value);
+
         if (this.risk.process.trim()) {
             if (this.risk.risk_uid) {
                 // @ts-ignore

@@ -8,8 +8,10 @@ import {
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { catchError, finalize, throwError } from 'rxjs';
 import { AULevel1, DataAULevel1 } from 'src/app/api/auditUniverse';
+import { Organisation } from 'src/app/api/libraries';
 import { AuditUniverseService } from 'src/app/service/audituniverseservice';
 import { AuthService } from 'src/app/service/auth.service';
+import { BannerService } from 'src/app/service/librariesservice';
 
 @Component({
     selector: 'app-au-level1',
@@ -22,7 +24,8 @@ export class AuLevel1Component implements OnInit {
         private fb: FormBuilder,
         private messageService: MessageService,
         private confirmationService: ConfirmationService,
-        public accountSvr: AuthService
+        public accountSvr: AuthService,
+        private libraryService: BannerService
     ) {}
 
     loading: boolean = true;
@@ -31,13 +34,18 @@ export class AuLevel1Component implements OnInit {
 
     AULevel1: DataAULevel1[];
     selectedAULevel1: DataAULevel1[];
+    organisation: Organisation[];
+    filteredOrg: Organisation[];
 
     aul1Form: FormGroup;
 
     @Output() AULevel1Event = new EventEmitter<any>();
 
     ngOnInit(): void {
-        this.getAuditUniverse();
+        this.libraryService.getAllOrganizations().subscribe((res) => {
+            this.organisation = res.data;
+            this.getAuditUniverse();
+        });
     }
 
     getAuditUniverse() {
@@ -56,7 +64,12 @@ export class AuLevel1Component implements OnInit {
                 })
             )
             .subscribe((res: AULevel1) => {
-                this.AULevel1 = res.data;
+                this.AULevel1 = res.data.map((ele) => {
+                    ele['organisation'] = this.organisation.find(
+                        (org) => org.organization_id == ele.organization_id
+                    ).organization;
+                    return ele;
+                });
                 this.loading = false;
             });
     }
@@ -71,6 +84,10 @@ export class AuLevel1Component implements OnInit {
         this.selectedAULevel1 = [aul_1];
 
         this.aul1Form = this.fb.group({
+            organization_id: [
+                aul_1 ? this.getOrgnaisation(aul_1.organization_id) : null,
+                Validators.required,
+            ],
             au_level_1_desc: [
                 aul_1 ? aul_1.au_level_1_desc : null,
                 Validators.required,
@@ -183,6 +200,10 @@ export class AuLevel1Component implements OnInit {
                                 life: 3000,
                             });
                             return throwError(err);
+                        }),
+                        finalize(() => {
+                            this.selectedAULevel1 = null;
+                            this.AULevel1Event.emit([]);
                         })
                     )
                     .subscribe((res) => {
@@ -212,5 +233,25 @@ export class AuLevel1Component implements OnInit {
                 this.confirmationService.close();
             },
         });
+    }
+
+    // filters
+
+    filterOrg(event) {
+        this.filteredOrg = [];
+        for (let i = 0; i < this.organisation.length; i++) {
+            let org = this.organisation[i];
+            if (
+                org.organization
+                    .toLowerCase()
+                    .indexOf(event.query.toLowerCase()) == 0
+            ) {
+                this.filteredOrg.push(org);
+            }
+        }
+    }
+
+    getOrgnaisation(organization: any) {
+        return this.organisation.find((x) => x.organization_id == organization);
     }
 }

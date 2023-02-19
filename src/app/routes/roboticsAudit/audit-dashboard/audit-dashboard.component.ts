@@ -5,6 +5,8 @@ import { Banner, Organisation } from 'src/app/api/libraries';
 import { AuditService } from 'src/app/service/audit.service';
 import { BannerService } from 'src/app/service/librariesservice';
 import { saveAs } from 'file-saver';
+import { DialogService } from 'primeng/dynamicdialog';
+import { AuditDetailComponent } from './audit-detail/audit-detail.component';
 
 @Component({
     selector: 'app-audit-dashboard',
@@ -13,7 +15,11 @@ import { saveAs } from 'file-saver';
     providers: [MessageService, ConfirmationService],
 })
 export class AuditDashboardComponent implements OnInit {
-    constructor(private auditService: AuditService, private fb: FormBuilder) {}
+    constructor(
+        private auditService: AuditService,
+        private fb: FormBuilder,
+        private dialogService: DialogService
+    ) {}
 
     loadingTable: boolean = true;
     filteredResult;
@@ -33,17 +39,15 @@ export class AuditDashboardComponent implements OnInit {
     ngOnInit(): void {
         this.minDate.setFullYear(this.minDate.getFullYear() - 1);
 
-        this.auditService.getAuditDashboard().subscribe((res) => {
+        this.getDashboard();
+    }
+
+    getDashboard() {
+        this.auditService.getAuditTestHistory(0, 5).subscribe((res) => {
             this.result = res.data;
             this.filteredResult = this.result.filter(
                 (item, i, arr) =>
                     arr.findIndex((t) => t.audit_id === item.audit_id) === i
-            );
-            console.log(
-                this.filteredResult.filter(
-                    (item, i, arr) =>
-                        arr.findIndex((t) => t.audit_id === item.audit_id) === i
-                )
             );
             this.auditUIDs = this.getUniqueValues(
                 res.data,
@@ -139,6 +143,17 @@ export class AuditDashboardComponent implements OnInit {
         // });
     }
 
+    getDetail(ele) {
+        const dialogRef = this.dialogService.open(AuditDetailComponent, {
+            data: ele,
+            width: '80%',
+        });
+
+        dialogRef.onClose.subscribe(() => {
+            this.getDashboard();
+        });
+    }
+
     getUniqueValues(arr, element, element_code) {
         // create an empty object to store unique page names
         let unique = {};
@@ -163,5 +178,9 @@ export class AuditDashboardComponent implements OnInit {
         return arr.filter((obj) => {
             return obj[element] === value;
         });
+    }
+
+    getTwoDigit(val) {
+        return ('0' + val).slice(-2);
     }
 }

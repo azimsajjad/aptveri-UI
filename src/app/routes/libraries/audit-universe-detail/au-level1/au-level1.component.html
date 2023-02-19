@@ -17,6 +17,7 @@
         [filterDelay]="0"
         [globalFilterFields]="[
             'au_level_1_uid',
+            'organisation',
             'au_level_1_desc',
             'section_no'
         ]"
@@ -39,69 +40,23 @@
                 </span>
             </div>
         </ng-template>
-        <!-- <ng-template pTemplate="caption">
-                        <div
-                            class="grid grid-nogutter flex-column md:flex-row justify-content-between"
-                        >
-                            <h6 class="m-0">Audit Universe Level 1</h6>
-
-                            <span class="p-input-icon-left mb-2 md:mb-0">
-                                <button
-                                    *ngIf="
-                                        accountSvr.checkPermission(2, 7, 'A')
-                                    "
-                                    title="New"
-                                    pButton
-                                    pRipple
-                                    icon="pi pi-plus"
-                                    class="p-button-rounded p-button-success"
-                                    (click)="open()"
-                                ></button>
-                                <button
-                                    *ngIf="
-                                        accountSvr.checkPermission(2, 7, 'C')
-                                    "
-                                    title="Edit"
-                                    pButton
-                                    pRipple
-                                    icon="pi pi-pencil"
-                                    class="p-button-rounded p-button-warning ml-2"
-                                    (click)="open(selectedAULevel1[0])"
-                                    [disabled]="selectedAULevel1?.length != 1"
-                                ></button>
-                                <button
-                                    *ngIf="
-                                        accountSvr.checkPermission(2, 7, 'D')
-                                    "
-                                    title="Delete"
-                                    pButton
-                                    pRipple
-                                    icon="pi pi-trash"
-                                    class="p-button-rounded p-button-danger ml-2"
-                                    (click)="
-                                        deleteAuditUniverse(selectedAULevel1[0])
-                                    "
-                                    [disabled]="selectedAULevel1?.length != 1"
-                                ></button>
-                                <button
-                                    title="Clear"
-                                    pButton
-                                    pRipple
-                                    class="p-button-rounded p-button-info ml-2"
-                                    icon=" pi pi-filter-slash"
-                                ></button>
-                            </span>
-                        </div>
-                    </ng-template> -->
         <ng-template pTemplate="header">
             <tr>
-                <th style="max-width: 3rem;"></th>
+                <th style="max-width: 3rem"></th>
                 <th pSortableColumn="au_level_1_uid">
                     <div
                         class="flex justify-content-between align-items-center"
                     >
                         AU UID
                         <p-sortIcon field="au_level_1_uid"></p-sortIcon>
+                    </div>
+                </th>
+                <th pSortableColumn="organisation">
+                    <div
+                        class="flex justify-content-between align-items-center"
+                    >
+                        Organisation
+                        <p-sortIcon field="organisation"></p-sortIcon>
                     </div>
                 </th>
                 <th pSortableColumn="au_level_1_desc">
@@ -131,19 +86,22 @@
         </ng-template>
         <ng-template pTemplate="body" let-aulevel1>
             <tr>
-                <td class="text-base" style="max-width: 3rem;">
+                <td class="text-base" style="max-width: 3rem">
                     <p-tableCheckbox
                         (click)="getSelection(aulevel1)"
                         [value]="aulevel1"
                     ></p-tableCheckbox>
                 </td>
-                <td class="text-base" style="min-width: 12rem;">
+                <td class="text-base" style="min-width: 12rem">
                     {{ aulevel1.au_level_1_uid }}
                 </td>
-                <td class="text-base" style="min-width: 12rem;">
+                <td class="text-base" style="min-width: 12rem">
+                    {{ aulevel1.organisation }}
+                </td>
+                <td class="text-base" style="min-width: 12rem">
                     {{ aulevel1.au_level_1_desc }}
                 </td>
-                <td class="text-base" style="min-width: 12rem;">
+                <td class="text-base" style="min-width: 12rem">
                     {{ aulevel1.section_no }}
                 </td>
 
@@ -203,6 +161,23 @@
     >
         <ng-template pTemplate="content">
             <form *ngIf="aul_1_Dialog" [formGroup]="aul1Form">
+                <div class="field">
+                    <label for="organization_id"
+                        >Organisation<sup>*</sup></label
+                    >
+                    <div>
+                        <p-autoComplete
+                            appendTo="body"
+                            formControlName="organization_id"
+                            [suggestions]="filteredOrg"
+                            (completeMethod)="filterOrg($event)"
+                            field="organization"
+                            [dropdown]="true"
+                            placeholder="Select Organisation"
+                            [style]="{ width: '100%' }"
+                        ></p-autoComplete>
+                    </div>
+                </div>
                 <div class="field">
                     <label for="section_no">Section No. <sup>*</sup></label>
                     <input

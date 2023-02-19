@@ -9,7 +9,5 @@ import { DynamicDialogConfig } from 'primeng/dynamicdialog';
 export class PopupComponent implements OnInit {
     constructor(public config: DynamicDialogConfig) {}
 
-    ngOnInit(): void {
-        console.log(this.config);
-    }
+    ngOnInit(): void {}
 }
