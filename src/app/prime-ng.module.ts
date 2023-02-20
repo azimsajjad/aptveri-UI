@@ -35,6 +35,7 @@ import { SpeedDialModule } from 'primeng/speeddial';
 import { InputTextModule } from 'primeng/inputtext';
 import { CalendarModule } from 'primeng/calendar';
 import { DynamicDialogModule } from 'primeng/dynamicdialog';
+import { ToggleButtonModule } from 'primeng/togglebutton';
 
 const PrimeNgComponet = [
     AutoCompleteModule,
@@ -73,6 +74,7 @@ const PrimeNgComponet = [
     StyleClassModule,
     SpeedDialModule,
     DynamicDialogModule,
+    ToggleButtonModule,
 ];
 
 @NgModule({

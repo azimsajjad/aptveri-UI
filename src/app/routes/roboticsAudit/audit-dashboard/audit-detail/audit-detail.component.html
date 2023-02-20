@@ -115,13 +115,26 @@
                         <label for="notes">Note</label>
                     </div>
                     <textarea
-                        rows="5"
+                        rows="3"
                         cols="40"
                         id="notes"
                         pInputText
                         formControlName="notes"
                     >
                     </textarea>
+                </div>
+
+                <div class="field">
+                    <div class="mb-2">
+                        <p-toggleButton
+                            [(ngModel)]="checked"
+                            onLabel="Freeze Audit"
+                            offLabel="Unfreeze Audit"
+                            onIcon="pi pi-lock"
+                            offIcon="pi pi-lock-open"
+                            [style]="{ width: '13em' }"
+                        ></p-toggleButton>
+                    </div>
                 </div>
                 <div>
                     <button
@@ -141,14 +154,14 @@
                         (click)="ref.close()"
                     ></p-button
                     >&nbsp;
-                    <p-button
+                    <!-- <p-button
                         type="button"
                         label="View Result"
                         icon="pi pi-list"
                         styleClass="p-button-primary"
                         (click)="viewResults()"
-                    >
-                        <!-- <span class="p-button-label">View Result</span
+                    > </p-button> -->
+                    <!-- <span class="p-button-label">View Result</span
                             ><span
                                 class="p-ink"
                                 style="
@@ -158,7 +171,6 @@
                                     left: -6.32812px;
                                 "
                             ></span> -->
-                    </p-button>
                 </div>
             </div>
         </div>

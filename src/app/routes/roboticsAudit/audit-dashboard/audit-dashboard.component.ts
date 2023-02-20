@@ -43,12 +43,19 @@ export class AuditDashboardComponent implements OnInit {
     }
 
     getDashboard() {
-        this.auditService.getAuditTestHistory(0, 5).subscribe((res) => {
+        this.auditService.getAuditTestHistory(0, 0).subscribe((res) => {
             this.result = res.data;
+            console.log(this.result);
+            // this.filteredResult = this.result.filter(
+            //     (item, i, arr) =>
+            //         arr.findIndex((t) => t.audit_id === item.audit_id) === i
+            // );
+
             this.filteredResult = this.result.filter(
-                (item, i, arr) =>
-                    arr.findIndex((t) => t.audit_id === item.audit_id) === i
+                (ath) => ath.audit_run_status == 1
             );
+            // console.log(this.filteredResult);
+            //   this.filteredResult = this.result;
             this.auditUIDs = this.getUniqueValues(
                 res.data,
                 'audit_uid',

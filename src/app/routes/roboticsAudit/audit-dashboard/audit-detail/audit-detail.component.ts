@@ -18,6 +18,7 @@ import { AuditService } from 'src/app/service/audit.service';
 export class AuditDetailComponent implements OnInit {
     auditTestHistory;
     auditTestHistoryForm: FormGroup;
+    checked: boolean = false;
 
     constructor(
         public config: DynamicDialogConfig,
