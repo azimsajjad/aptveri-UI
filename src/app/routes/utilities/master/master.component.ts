@@ -26,13 +26,14 @@ export class MasterComponent implements OnInit {
         private messageService: MessageService
     ) {}
 
+    selectedOrg = new FormControl(null);
     selectedPage = new FormControl(null);
     selectedOption = new FormControl(null);
-    selectedOrg;
     allOrg: Organisation[];
     pageOption: PageOption[];
     optionsOptions: PageOption[];
     codeValues: CodeValue[];
+    filteredCodeValues: CodeValue[];
 
     addDialog: boolean = false;
     loading: boolean = true;
@@ -48,6 +49,14 @@ export class MasterComponent implements OnInit {
             this.getCodeValues();
         });
 
+        this.selectedOrg.valueChanges.subscribe((res: Organisation) => {
+            this.filteredCodeValues = this.codeValues.filter(
+                (ele: CodeValue) => {
+                    return ele.organization_id == res.organization_id;
+                }
+            );
+        });
+
         this.selectedPage.valueChanges.subscribe((res: PageOption) => {
             this.utilService.getPageOption(res.page_id).subscribe((resp) => {
                 this.optionsOptions = resp.data;
@@ -59,14 +68,14 @@ export class MasterComponent implements OnInit {
         this.loading = true;
         this.utilService.getAllCodeValue().subscribe((res) => {
             this.codeValues = res.data;
+            this.filteredCodeValues = this.codeValues;
             this.loading = false;
-            console.log(this.codeValues[0]);
         });
     }
 
     openDialog() {
         this.addForm = this.fb.group({
-            organization_id: this.selectedOrg.organization_id,
+            organization_id: this.selectedOrg.value.organization_id,
             option_id: this.selectedOption.value.option_id,
             option: this.selectedPage.value.option_name,
             name: [null, Validators.required],

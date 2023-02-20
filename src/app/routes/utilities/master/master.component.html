@@ -7,14 +7,14 @@
                 <label class="text-l font-bold">Organisation</label>
                 <p-dropdown
                     [options]="allOrg"
-                    [(ngModel)]="selectedOrg"
+                    [formControl]="selectedOrg"
                     optionLabel="organization"
                     dataKey="organization_id"
                     placeholder="Select Organisation"
                     [style]="{ width: '100%' }"
                 ></p-dropdown>
             </div>
-            <div class="col-12 md:col-3" *ngIf="selectedOrg">
+            <div class="col-12 md:col-3" *ngIf="selectedOrg.value">
                 <label class="text-l font-bold">Page</label>
                 <p-dropdown
                     [options]="pageOption"
@@ -59,7 +59,7 @@
     <div class="card p6">
         <p-table
             #dt
-            [value]="codeValues"
+            [value]="filteredCodeValues"
             [rowHover]="true"
             [rows]="20"
             [showCurrentPageReport]="true"
