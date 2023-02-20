@@ -588,8 +588,9 @@
                     </div>
 
                     <div class="col-12 md:col-4">
-                        <label for="risk">Risk Type <sup>*</sup></label>
+                        <label>Risk Type <sup>*</sup></label>
                         <p-autoComplete
+                            [disabled]="form.get('rtonedesc').value == null"
                             formControlName="rttwodesc"
                             [(ngModel)]="risk.rttwodesc"
                             [ngModelOptions]="{ standalone: true }"
@@ -697,7 +698,7 @@
                     <div class="col-12 md:col-4">
                         <label for="likelihood">Likelihood <sup>*</sup></label>
                         <p-autoComplete
-                            [disbaled]="!likelihood"
+                            [disabled]="form.get('organization').value == null"
                             formControlName="likelihood"
                             [(ngModel)]="risk.likelihood"
                             [ngModelOptions]="{ standalone: true }"

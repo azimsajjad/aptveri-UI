@@ -1,11 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { MessageService } from 'primeng/api';
-import {
-    DialogService,
-    DynamicDialogConfig,
-    DynamicDialogRef,
-} from 'primeng/dynamicdialog';
+import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { catchError, finalize, throwError } from 'rxjs';
 import { AuditService } from 'src/app/service/audit.service';
 
@@ -18,25 +14,35 @@ import { AuditService } from 'src/app/service/audit.service';
 export class AuditDetailComponent implements OnInit {
     auditTestHistory;
     auditTestHistoryForm: FormGroup;
-    checked: boolean = false;
 
     constructor(
         public config: DynamicDialogConfig,
         public ref: DynamicDialogRef,
         private auditService: AuditService,
         private _formbuilder: FormBuilder,
-        private messageService: MessageService,
-        private dialogService: DialogService
+        private messageService: MessageService
     ) {}
 
     ngOnInit(): void {
         this.auditTestHistory = this.config.data;
+        console.log(this.auditTestHistory);
 
         this.auditTestHistoryForm = this._formbuilder.group({
             audit_history_id: this.auditTestHistory.audit_history_id,
             notes: this.auditTestHistory.notes,
             results: this.auditTestHistory.results,
+            freeze: this.auditTestHistory.freeze == 0 ? false : true,
         });
+
+        this.auditTestHistoryForm
+            .get('freeze')
+            .valueChanges.subscribe((res) => {
+                this.auditService
+                    .changeHistoryStatus(this.auditTestHistory.audit_history_id)
+                    .subscribe((res) => {
+                        console.log(res);
+                    });
+            });
     }
 
     saveTestHistory() {

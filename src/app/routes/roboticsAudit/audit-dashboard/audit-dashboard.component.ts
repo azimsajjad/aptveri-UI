@@ -1,10 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ConfirmationService, MessageService } from 'primeng/api';
-import { Banner, Organisation } from 'src/app/api/libraries';
 import { AuditService } from 'src/app/service/audit.service';
-import { BannerService } from 'src/app/service/librariesservice';
-import { saveAs } from 'file-saver';
 import { DialogService } from 'primeng/dynamicdialog';
 import { AuditDetailComponent } from './audit-detail/audit-detail.component';
 
@@ -45,17 +42,10 @@ export class AuditDashboardComponent implements OnInit {
     getDashboard() {
         this.auditService.getAuditTestHistory(0, 0).subscribe((res) => {
             this.result = res.data;
-            console.log(this.result);
-            // this.filteredResult = this.result.filter(
-            //     (item, i, arr) =>
-            //         arr.findIndex((t) => t.audit_id === item.audit_id) === i
-            // );
 
             this.filteredResult = this.result.filter(
                 (ath) => ath.audit_run_status == 1
             );
-            // console.log(this.filteredResult);
-            //   this.filteredResult = this.result;
             this.auditUIDs = this.getUniqueValues(
                 res.data,
                 'audit_uid',
@@ -89,22 +79,19 @@ export class AuditDashboardComponent implements OnInit {
             });
 
             this.filterForm.valueChanges.subscribe((res) => {
-                // console.log(res.range[0]?.getFullYear());
-
                 this.filteredResult = this.result.filter((ele) => {
-                    return (
-                        (res.org?.name == null ||
-                            ele.organization == res.org?.name) &&
+                    return (res.org?.name == null ||
+                        ele.organization == res.org?.name) &&
                         (res.department?.name == null ||
                             ele.department == res.department?.name) &&
                         (res.result?.name == null ||
                             ele.results == res.result?.name) &&
                         (res.review_year?.name == null ||
-                            ele.review_year == res.review_year?.name)
-                        // && ((res.range[0] == null && res.range[1] == null) ||
-                        // (res.range[0] <= ele.ap_schedule_start_date &&
-                        //     res.range[0] >= ele.ap_schedule_start_date))
-                    );
+                            ele.review_year == res.review_year?.name) &&
+                        new Date(res.from) < new Date(ele.created_date) &&
+                        res.to
+                        ? new Date(res.to) > new Date(ele.created_date)
+                        : true;
                 });
             });
 

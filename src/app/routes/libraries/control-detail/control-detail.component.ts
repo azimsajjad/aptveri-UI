@@ -189,13 +189,19 @@ export class ControlDetailComponent implements OnInit {
                         res.organization_id,
                         'loadKeyControltype'
                     ),
+                    this.controlService.getDepartmentByOrg(res.organization_id),
+                    this.controlService.getRiskByOrg(res.organization_id),
                 ]).subscribe((result) => {
-                    console.log(result);
                     this.allKeyControlType = result[0].data;
                     this.allKeyFrequency = result[1].data;
                     this.allKeyCategory = result[2].data;
                     this.allKeyAssertion = result[3].data;
                     this.controlType = result[4].data;
+                    this.allDepartment = [result[5].data];
+                    this.allRisk = result[6].data.map((ele) => {
+                        ele['risk'] = ele['audit_risk'];
+                        return ele;
+                    });
                 });
             });
 

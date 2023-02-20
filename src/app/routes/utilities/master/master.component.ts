@@ -8,7 +8,7 @@ import {
 import { MessageService } from 'primeng/api';
 import { catchError, finalize, forkJoin } from 'rxjs';
 import { Organisation } from 'src/app/api/libraries';
-import { PageOption } from 'src/app/api/utils';
+import { CodeValue, PageOption } from 'src/app/api/utils';
 import { BannerService } from 'src/app/service/librariesservice';
 import { UtilsService } from 'src/app/service/utils.service';
 
@@ -32,23 +32,35 @@ export class MasterComponent implements OnInit {
     allOrg: Organisation[];
     pageOption: PageOption[];
     optionsOptions: PageOption[];
+    codeValues: CodeValue[];
 
     addDialog: boolean = false;
+    loading: boolean = true;
     addForm: FormGroup;
 
     ngOnInit(): void {
-        let org = this.libraryService.getAllOrganizations();
-        let page = this.utilService.getPageOption();
-
-        forkJoin([org, page]).subscribe((results) => {
+        forkJoin([
+            this.libraryService.getAllOrganizations(),
+            this.utilService.getPageOption(),
+        ]).subscribe((results) => {
             this.allOrg = results[0].data;
             this.pageOption = this.filterUnique(results[1].data, 'page_name');
+            this.getCodeValues();
         });
 
         this.selectedPage.valueChanges.subscribe((res: PageOption) => {
             this.utilService.getPageOption(res.page_id).subscribe((resp) => {
                 this.optionsOptions = resp.data;
             });
+        });
+    }
+
+    getCodeValues() {
+        this.loading = true;
+        this.utilService.getAllCodeValue().subscribe((res) => {
+            this.codeValues = res.data;
+            this.loading = false;
+            console.log(this.codeValues[0]);
         });
     }
 
@@ -82,6 +94,7 @@ export class MasterComponent implements OnInit {
                     this.selectedOption.reset();
                     this.selectedPage.reset();
                     this.addDialog = false;
+                    this.getCodeValues();
                 })
             )
             .subscribe((res) => {

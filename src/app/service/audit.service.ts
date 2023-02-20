@@ -505,4 +505,11 @@ export class AuditService {
             }
         );
     }
+
+    public changeHistoryStatus(id: number): Observable<any> {
+        return this.http.put(
+            environment.api_prefix + 'audit/historystatus/' + id,
+            {}
+        );
+    }
 }

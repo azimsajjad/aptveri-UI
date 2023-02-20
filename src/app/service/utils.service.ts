@@ -41,7 +41,7 @@ export class UtilsService {
         });
     }
 
-    // public createLibDropdown(): Observable<any> {
-    // return this.http.post(environment.api_prefix+)
-    // }
+    public getAllCodeValue(): Observable<any> {
+        return this.http.get(environment.api_prefix + 'audit/codevalue/0/0/0');
+    }
 }

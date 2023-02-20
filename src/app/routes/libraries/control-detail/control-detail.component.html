@@ -291,6 +291,7 @@
                     <div class="field col-12 md:col-4">
                         <label>Risk<sup>*</sup></label>
                         <p-autoComplete
+                            [disabled]="form.get('organization').value == null"
                             appendTo="body"
                             formControlName="riskdesc"
                             [suggestions]="filteredRisk"
@@ -319,6 +320,7 @@
                     <div class="field col-12 md:col-4">
                         <label>Department<sup>*</sup></label>
                         <p-autoComplete
+                            [disabled]="form.get('organization').value == null"
                             appendTo="body"
                             formControlName="bannerdesc"
                             [suggestions]="filteredDepartment"

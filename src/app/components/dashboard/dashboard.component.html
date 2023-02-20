@@ -70,42 +70,26 @@
         </div>
     </div>
 </div>
-<div class="card grid px-5 mx-5">
-    <div class="col-12 lg:col-6">
-        <div>
-            <h5>Audit</h5>
-            <p-chart type="bar" [data]="basicData"></p-chart><br />
-            <p-chart type="line" [data]="chartData"></p-chart>
-        </div>
+<div class="card grid">
+    <div class="col-12"><h5>Audit</h5></div>
+    <div class="col-12 md:col-6">
+        <p-chart type="bar" [data]="basicData"></p-chart>
     </div>
-    <div class="col-12 lg:col-3">
-        <div>
-            <h5>Library</h5>
-            <p-chart
-                type="pie"
-                [data]="pieData"
-                [style]="{ width: '40%' }"
-            ></p-chart>
-            <p-chart
-                type="doughnut"
-                [data]="doughnutData"
-                [style]="{ width: '40%' }"
-            ></p-chart>
-        </div>
+    <div class="col-12 md:col-6">
+        <p-chart type="line" [data]="chartData"></p-chart>
     </div>
-    <div class="col-12 lg:col-3">
-        <div>
-            <h5>Library</h5>
-            <p-chart
-                type="radar"
-                [data]="radarData"
-                [style]="{ width: '40%' }"
-            ></p-chart>
-            <p-chart
-                type="polarArea"
-                [data]="polarAreaData"
-                [style]="{ width: '40%' }"
-            ></p-chart>
-        </div>
+
+    <div class="col-12"><h5>Library</h5></div>
+    <div class="col-12 md:col-3">
+        <p-chart type="pie" [data]="pieData"></p-chart>
     </div>
+    <div class="col-12 md:col-3">
+        <p-chart type="doughnut" [data]="doughnutData"></p-chart>
+    </div>
+    <!-- <div class="col-12 md:col-3">
+        <p-chart type="radarData" [data]="pieData"></p-chart>
+    </div>
+    <div class="col-12 md:col-3">
+        <p-chart type="polarAreaData" [data]="doughnutData"></p-chart>
+    </div> -->
 </div>

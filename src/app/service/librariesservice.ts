@@ -244,4 +244,16 @@ export class BannerService {
             environment.api_prefix + 'libraries/' + type + '/' + org_id
         );
     }
+
+    public getDepartmentByOrg(id: number): Observable<any> {
+        return this.httpClient.get(
+            environment.api_prefix + 'libraries/loaddepart/' + id
+        );
+    }
+
+    public getRiskByOrg(id: number): Observable<any> {
+        return this.httpClient.get(
+            environment.api_prefix + 'libraries/Riskbyorg/' + id
+        );
+    }
 }

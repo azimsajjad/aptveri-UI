@@ -85,21 +85,19 @@ export class AuditTestComponent implements OnInit, OnChanges {
             },
         ];
 
-        let scr = this.scriptService.getScript(0);
-        let dept = this.auditService.sendGetBannerRequest();
-        let aRisk = this.libraryService.sendGetriskRequest();
-        let aControl = this.libraryService.sendGetcontrolRequest();
-        let organiz = this.libraryService.getAllOrganizations();
-
-        forkJoin([scr, dept, aRisk, aControl, organiz]).subscribe(
-            (results: any) => {
-                this.fullScript = results[0].data;
-                this.department = results[1].data;
-                this.fullRisk = results[2].data;
-                this.control = results[3].data;
-                this.allOrg = results[4].data;
-            }
-        );
+        forkJoin([
+            this.scriptService.getScript(0),
+            this.auditService.sendGetBannerRequest(),
+            this.libraryService.sendGetriskRequest(),
+            this.libraryService.sendGetcontrolRequest(),
+            this.libraryService.getAllOrganizations(),
+        ]).subscribe((results: any) => {
+            this.fullScript = results[0].data;
+            this.department = results[1].data;
+            this.fullRisk = results[2].data;
+            this.control = results[3].data;
+            this.allOrg = results[4].data;
+        });
     }
 
     ngOnChanges(): void {
@@ -354,6 +352,18 @@ export class AuditTestComponent implements OnInit, OnChanges {
                 this.isScriptEnable = false;
             }
         });
+
+        this.auditTestForm
+            .get('organization_id')
+            .valueChanges.subscribe((res) => {
+                this.libraryService
+                    .getDepartmentByOrg(this.getOrganizationId(res))
+                    .subscribe((resp) => {
+                        this.department = [resp.data];
+
+                        this.auditTestForm.get('department_id').setValue(null);
+                    });
+            });
 
         this.showTable = false;
     }
