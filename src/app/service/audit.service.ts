@@ -506,10 +506,22 @@ export class AuditService {
         );
     }
 
-    public changeHistoryStatus(id: number): Observable<any> {
+    public changeHistoryStatus(
+        audit_test_history_id: number,
+        notes: string,
+        results: string,
+        freeze: boolean
+    ): Observable<any> {
+        let status = freeze == false ? 0 : 1;
         return this.http.put(
-            environment.api_prefix + 'audit/historystatus/' + id,
-            {}
+            environment.api_prefix +
+                'audit/historystatus/' +
+                audit_test_history_id,
+            {
+                notes: notes,
+                results: results,
+                freeze: status,
+            }
         );
     }
 }

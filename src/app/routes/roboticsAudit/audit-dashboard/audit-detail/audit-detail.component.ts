@@ -34,23 +34,29 @@ export class AuditDetailComponent implements OnInit {
             freeze: this.auditTestHistory.freeze == 0 ? false : true,
         });
 
-        this.auditTestHistoryForm
-            .get('freeze')
-            .valueChanges.subscribe((res) => {
-                this.auditService
-                    .changeHistoryStatus(this.auditTestHistory.audit_history_id)
-                    .subscribe((res) => {
-                        console.log(res);
-                    });
-            });
+        // this.auditTestHistoryForm
+        //     .get('freeze')
+        //     .valueChanges.subscribe((res) => {
+        //         this.auditService
+        //             .changeHistoryStatus(
+        //                 this.auditTestHistory.audit_history_id,
+        //                 this.auditTestHistoryForm.get('notes').value,
+        //                 this.auditTestHistoryForm.get('results').value,
+        //                 this.auditTestHistoryForm.get('freeze').value
+        //             )
+        //             .subscribe((res) => {
+        //                 console.log(res);
+        //             });
+        //     });
     }
 
     saveTestHistory() {
         this.auditService
-            .editAuditTestHistory(
+            .changeHistoryStatus(
                 this.auditTestHistoryForm.get('audit_history_id').value,
                 this.auditTestHistoryForm.get('notes').value,
-                this.auditTestHistoryForm.get('results').value
+                this.auditTestHistoryForm.get('results').value,
+                this.auditTestHistoryForm.get('freeze').value
             )
             .pipe(
                 catchError((err) => {
