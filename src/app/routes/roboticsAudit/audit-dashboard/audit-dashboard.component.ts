@@ -15,7 +15,8 @@ export class AuditDashboardComponent implements OnInit {
     constructor(
         private auditService: AuditService,
         private fb: FormBuilder,
-        private dialogService: DialogService
+        private dialogService: DialogService,
+        private messageService: MessageService
     ) {}
 
     loadingTable: boolean = true;
@@ -35,6 +36,46 @@ export class AuditDashboardComponent implements OnInit {
 
     ngOnInit(): void {
         this.minDate.setFullYear(this.minDate.getFullYear() - 1);
+
+        this.filterForm = this.fb.group({
+            department: null,
+            org: null,
+            from: null,
+            to: null,
+            result: null,
+            review_year: null,
+        });
+
+        this.filterForm.valueChanges.subscribe((res) => {
+            let newDate = null;
+            if (res.to != null) {
+                newDate = new Date(
+                    res.to.getFullYear(),
+                    res.to.getMonth(),
+                    res.to.getDate() + 1,
+                    0,
+                    0,
+                    0
+                );
+            }
+
+            this.filteredResult = this.result.filter((ele) => {
+                return (
+                    (res.org?.name == null ||
+                        ele.organization == res.org?.name) &&
+                    (res.department?.name == null ||
+                        ele.department == res.department?.name) &&
+                    (res.result?.name == null ||
+                        ele.results == res.result?.name) &&
+                    (res.review_year?.name == null ||
+                        ele.review_year == res.review_year?.name) &&
+                    (res.from == null ||
+                        new Date(res.from) < new Date(ele.created_date)) &&
+                    (res.newDate == null ||
+                        newDate > new Date(ele.created_date))
+                );
+            });
+        });
 
         this.getDashboard();
     }
@@ -68,32 +109,6 @@ export class AuditDashboardComponent implements OnInit {
             );
 
             this.results = this.getUniqueValues(res.data, 'results', 'results');
-
-            this.filterForm = this.fb.group({
-                department: null,
-                org: null,
-                from: null,
-                to: null,
-                result: null,
-                review_year: null,
-            });
-
-            this.filterForm.valueChanges.subscribe((res) => {
-                this.filteredResult = this.result.filter((ele) => {
-                    return (res.org?.name == null ||
-                        ele.organization == res.org?.name) &&
-                        (res.department?.name == null ||
-                            ele.department == res.department?.name) &&
-                        (res.result?.name == null ||
-                            ele.results == res.result?.name) &&
-                        (res.review_year?.name == null ||
-                            ele.review_year == res.review_year?.name) &&
-                        new Date(res.from) < new Date(ele.created_date) &&
-                        res.to
-                        ? new Date(res.to) > new Date(ele.created_date)
-                        : true;
-                });
-            });
 
             this.loadingTable = false;
         });
@@ -143,7 +158,23 @@ export class AuditDashboardComponent implements OnInit {
             width: '80%',
         });
 
-        dialogRef.onClose.subscribe(() => {
+        dialogRef.onClose.subscribe((res) => {
+            if (res.data) {
+                this.messageService.add({
+                    severity: 'success',
+                    summary: 'Successful',
+                    detail: 'Audit Test History Edited !!',
+                    life: 3000,
+                });
+            } else {
+                this.messageService.add({
+                    severity: 'error',
+                    summary: 'ERROR!!',
+                    detail: 'Something Went Wrong !!',
+                    life: 3000,
+                });
+            }
+
             this.getDashboard();
         });
     }
