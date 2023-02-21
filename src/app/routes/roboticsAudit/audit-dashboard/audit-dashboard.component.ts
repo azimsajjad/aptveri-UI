@@ -4,6 +4,7 @@ import { ConfirmationService, MessageService } from 'primeng/api';
 import { AuditService } from 'src/app/service/audit.service';
 import { DialogService } from 'primeng/dynamicdialog';
 import { AuditDetailComponent } from './audit-detail/audit-detail.component';
+import { environment } from '../../../../environments/environment';
 
 @Component({
     selector: 'app-audit-dashboard',
@@ -18,7 +19,7 @@ export class AuditDashboardComponent implements OnInit {
         private dialogService: DialogService,
         private messageService: MessageService
     ) {}
-
+    private REST_API_SERVER = environment.api_prefix;
     loadingTable: boolean = true;
     filteredResult;
     result;
@@ -119,7 +120,7 @@ export class AuditDashboardComponent implements OnInit {
         link.setAttribute('target', '_blank');
         link.setAttribute(
             'href',
-            'https://localhost:7204/api/Audit/auditdashbord/0/0/0/0/0'
+            this.REST_API_SERVER + 'Audit/auditdashbord/0/0/0/0/0'
         );
         link.setAttribute('download', `products.csv`);
         document.body.appendChild(link);

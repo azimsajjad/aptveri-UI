@@ -128,7 +128,7 @@
                     <div class="mb-2">
                         <p-toggleButton
                             formControlName="freeze"
-                            onLabel="Freeze Audit"
+                            onLabel="Audit Freezed"
                             offLabel="Unfreeze Audit"
                             onIcon="pi pi-lock"
                             offIcon="pi pi-lock-open"
@@ -139,6 +139,7 @@
                 <div>
                     <button
                         pButton
+                        [disabled]="auditTestHistory.freeze == 1"
                         pRipple
                         label="Save"
                         #submitButtonaudith
