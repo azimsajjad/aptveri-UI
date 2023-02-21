@@ -36,6 +36,10 @@ import { InputTextModule } from 'primeng/inputtext';
 import { CalendarModule } from 'primeng/calendar';
 import { DynamicDialogModule } from 'primeng/dynamicdialog';
 import { ToggleButtonModule } from 'primeng/togglebutton';
+import { BadgeModule } from 'primeng/badge';
+import { SidebarModule } from 'primeng/sidebar';
+import { PanelModule } from 'primeng/panel';
+import { OverlayPanelModule } from 'primeng/overlaypanel';
 
 const PrimeNgComponet = [
     AutoCompleteModule,
@@ -75,6 +79,10 @@ const PrimeNgComponet = [
     SpeedDialModule,
     DynamicDialogModule,
     ToggleButtonModule,
+    BadgeModule,
+    SidebarModule,
+    PanelModule,
+    OverlayPanelModule,
 ];
 
 @NgModule({

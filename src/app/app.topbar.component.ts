@@ -24,6 +24,7 @@ export class AppTopBarComponent implements OnInit {
         private http: HttpClient
     ) {}
     ngOnInit(): void {}
+    visibleSidebar2;
 
     isUserAuthenticated = (): boolean => {
         // debugger;

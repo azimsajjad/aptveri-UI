@@ -34,6 +34,17 @@
             style="height: 2.9rem !important;"
             alt="aptusdatalabs"
         /> -->
+        <ul style="list-style-type: none; padding-left: 0.5rem !important;">
+            <li>
+                <i
+                    class="pi pi-bell mr-2 p-text-secondary"
+                    pBadge
+                    style="font-size: 1.3rem; cursor: pointer;"
+                    (click)="op.toggle($event)"
+                    value="3"
+                ></i>
+            </li>
+        </ul>
 
         <ul
             *ngIf="isUserAuthenticated()"
@@ -66,5 +77,926 @@
                 "
             ></i
         ></a>
+        <ul style="list-style-type: none; padding-left: 0.5rem !important;">
+            <li>
+                <a (click)="visibleSidebar2 = true"
+                    ><i
+                        class="pi pi-th-large"
+                        style="font-size: 1.3rem; cursor: pointer;"
+                    ></i
+                ></a>
+            </li>
+        </ul>
     </div>
 </div>
+<p-sidebar [(visible)]="visibleSidebar2" position="right" [baseZIndex]="10000">
+    <div
+        style="
+            text-align: center !important;
+            border-left-width: 4px !important;
+            border-left-color: #9da5b1 !important;
+            border-left-style: solid;
+            background-color: rgba(0, 0, 21, 0.125);
+            border-width: 0 0 1;
+            border: 1 solid black;
+            font-weight: 700 !important;
+            text-transform: uppercase !important;
+            color: #2c384aae !important;
+            height: 30px;
+        "
+    >
+        <span
+            style="
+                padding-top: 15px !important;
+                padding-bottom: 5px !important;
+            "
+            >TODAY</span
+        >
+    </div>
+    <div
+        style="
+            border-left-width: 5px !important;
+            border-left-color: #f9b115 !important;
+            border-left-style: solid;
+        "
+    >
+        <div
+            style="
+                position: relative;
+                display: block;
+                padding: 1rem !important;
+                color: black !important;
+                text-decoration: none;
+                background-color: white;
+                border: 0.1rem solid !important ;
+                border-color: #9da5b1 !important;
+            "
+        >
+            <div>Audit scheduled for <strong>Lucas</strong></div>
+            <small class="text-medium-emphasis me-3">
+                <svg
+                    style="width: 1rem; height: 1rem; font-size: 1rem;"
+                    _ngcontent-wil-c193=""
+                    cIcon=""
+                    name="cilCalendar"
+                    viewBox="0 0 512 512"
+                    xmlns="http://www.w3.org/2000/svg"
+                    pointer-events="none"
+                    role="img"
+                    class="icon"
+                >
+                    <path
+                        fill="var(--ci-primary-color, currentColor)"
+                        d="M472,96H384V40H352V96H160V40H128V96H40a24.028,24.028,0,0,0-24,24V456a24.028,24.028,0,0,0,24,24H472a24.028,24.028,0,0,0,24-24V120A24.028,24.028,0,0,0,472,96Zm-8,352H48V128h80v40h32V128H352v40h32V128h80Z"
+                        class="ci-primary"
+                    ></path>
+                    <rect
+                        width="32"
+                        height="32"
+                        x="112"
+                        y="224"
+                        fill="var(--ci-primary-color, currentColor)"
+                        class="ci-primary"
+                    ></rect>
+                    <rect
+                        width="32"
+                        height="32"
+                        x="200"
+                        y="224"
+                        fill="var(--ci-primary-color, currentColor)"
+                        class="ci-primary"
+                    ></rect>
+                    <rect
+                        width="32"
+                        height="32"
+                        x="280"
+                        y="224"
+                        fill="var(--ci-primary-color, currentColor)"
+                        class="ci-primary"
+                    ></rect>
+                    <rect
+                        width="32"
+                        height="32"
+                        x="368"
+                        y="224"
+                        fill="var(--ci-primary-color, currentColor)"
+                        class="ci-primary"
+                    ></rect>
+                    <rect
+                        width="32"
+                        height="32"
+                        x="112"
+                        y="296"
+                        fill="var(--ci-primary-color, currentColor)"
+                        class="ci-primary"
+                    ></rect>
+                    <rect
+                        width="32"
+                        height="32"
+                        x="200"
+                        y="296"
+                        fill="var(--ci-primary-color, currentColor)"
+                        class="ci-primary"
+                    ></rect>
+                    <rect
+                        width="32"
+                        height="32"
+                        x="280"
+                        y="296"
+                        fill="var(--ci-primary-color, currentColor)"
+                        class="ci-primary"
+                    ></rect>
+                    <rect
+                        width="32"
+                        height="32"
+                        x="368"
+                        y="296"
+                        fill="var(--ci-primary-color, currentColor)"
+                        class="ci-primary"
+                    ></rect>
+                    <rect
+                        width="32"
+                        height="32"
+                        x="112"
+                        y="368"
+                        fill="var(--ci-primary-color, currentColor)"
+                        class="ci-primary"
+                    ></rect>
+                    <rect
+                        width="32"
+                        height="32"
+                        x="200"
+                        y="368"
+                        fill="var(--ci-primary-color, currentColor)"
+                        class="ci-primary"
+                    ></rect>
+                    <rect
+                        width="32"
+                        height="32"
+                        x="280"
+                        y="368"
+                        fill="var(--ci-primary-color, currentColor)"
+                        class="ci-primary"
+                    ></rect>
+                    <rect
+                        width="32"
+                        height="32"
+                        x="368"
+                        y="368"
+                        fill="var(--ci-primary-color, currentColor)"
+                        class="ci-primary"
+                    ></rect>
+                </svg>
+                1 pm &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+                <svg
+                    style="width: 1rem; height: 1rem; font-size: 1rem;"
+                    cIcon=""
+                    name="cilHome"
+                    viewBox="0 0 512 512"
+                    xmlns="http://www.w3.org/2000/svg"
+                    pointer-events="none"
+                    role="img"
+                    class="icon"
+                >
+                    <path
+                        fill="var(--ci-primary-color, currentColor)"
+                        d="M469.666,216.45,271.078,33.749a34,34,0,0,0-47.062.98L41.373,217.373,32,226.745V496H208V328h96V496H480V225.958ZM248.038,56.771c.282,0,.108.061-.013.18C247.9,56.832,247.756,56.771,248.038,56.771ZM448,464H336V328a32,32,0,0,0-32-32H208a32,32,0,0,0-32,32V464H64V240L248.038,57.356c.013-.012.014-.023.024-.035L448,240Z"
+                        class="ci-primary"
+                    ></path>
+                </svg>
+                creativeLabs HQ
+            </small>
+        </div>
+    </div>
+    <div
+        style="
+            border-left-width: 5px !important;
+            border-left-color: #39f !important;
+            border-left-style: solid;
+        "
+    >
+        <div
+            style="
+                position: relative;
+                display: block;
+                padding: 1rem !important;
+                color: black !important;
+                text-decoration: none;
+                background-color: white;
+                border: 0.1rem solid !important ;
+                border-color: #9da5b1 !important;
+            "
+        >
+            <div>Audit scheduled for <strong>LMD</strong></div>
+            <small class="text-medium-emphasis me-3">
+                <svg
+                    style="width: 1rem; height: 1rem; font-size: 1rem;"
+                    _ngcontent-wil-c193=""
+                    cIcon=""
+                    name="cilCalendar"
+                    viewBox="0 0 512 512"
+                    xmlns="http://www.w3.org/2000/svg"
+                    pointer-events="none"
+                    role="img"
+                    class="icon"
+                >
+                    <path
+                        fill="var(--ci-primary-color, currentColor)"
+                        d="M472,96H384V40H352V96H160V40H128V96H40a24.028,24.028,0,0,0-24,24V456a24.028,24.028,0,0,0,24,24H472a24.028,24.028,0,0,0,24-24V120A24.028,24.028,0,0,0,472,96Zm-8,352H48V128h80v40h32V128H352v40h32V128h80Z"
+                        class="ci-primary"
+                    ></path>
+                    <rect
+                        width="32"
+                        height="32"
+                        x="112"
+                        y="224"
+                        fill="var(--ci-primary-color, currentColor)"
+                        class="ci-primary"
+                    ></rect>
+                    <rect
+                        width="32"
+                        height="32"
+                        x="200"
+                        y="224"
+                        fill="var(--ci-primary-color, currentColor)"
+                        class="ci-primary"
+                    ></rect>
+                    <rect
+                        width="32"
+                        height="32"
+                        x="280"
+                        y="224"
+                        fill="var(--ci-primary-color, currentColor)"
+                        class="ci-primary"
+                    ></rect>
+                    <rect
+                        width="32"
+                        height="32"
+                        x="368"
+                        y="224"
+                        fill="var(--ci-primary-color, currentColor)"
+                        class="ci-primary"
+                    ></rect>
+                    <rect
+                        width="32"
+                        height="32"
+                        x="112"
+                        y="296"
+                        fill="var(--ci-primary-color, currentColor)"
+                        class="ci-primary"
+                    ></rect>
+                    <rect
+                        width="32"
+                        height="32"
+                        x="200"
+                        y="296"
+                        fill="var(--ci-primary-color, currentColor)"
+                        class="ci-primary"
+                    ></rect>
+                    <rect
+                        width="32"
+                        height="32"
+                        x="280"
+                        y="296"
+                        fill="var(--ci-primary-color, currentColor)"
+                        class="ci-primary"
+                    ></rect>
+                    <rect
+                        width="32"
+                        height="32"
+                        x="368"
+                        y="296"
+                        fill="var(--ci-primary-color, currentColor)"
+                        class="ci-primary"
+                    ></rect>
+                    <rect
+                        width="32"
+                        height="32"
+                        x="112"
+                        y="368"
+                        fill="var(--ci-primary-color, currentColor)"
+                        class="ci-primary"
+                    ></rect>
+                    <rect
+                        width="32"
+                        height="32"
+                        x="200"
+                        y="368"
+                        fill="var(--ci-primary-color, currentColor)"
+                        class="ci-primary"
+                    ></rect>
+                    <rect
+                        width="32"
+                        height="32"
+                        x="280"
+                        y="368"
+                        fill="var(--ci-primary-color, currentColor)"
+                        class="ci-primary"
+                    ></rect>
+                    <rect
+                        width="32"
+                        height="32"
+                        x="368"
+                        y="368"
+                        fill="var(--ci-primary-color, currentColor)"
+                        class="ci-primary"
+                    ></rect>
+                </svg>
+                3 pm &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+                <svg
+                    style="width: 1rem; height: 1rem; font-size: 1rem;"
+                    cIcon=""
+                    name="cilHome"
+                    viewBox="0 0 512 512"
+                    xmlns="http://www.w3.org/2000/svg"
+                    pointer-events="none"
+                    role="img"
+                    class="icon"
+                >
+                    <path
+                        fill="var(--ci-primary-color, currentColor)"
+                        d="M469.666,216.45,271.078,33.749a34,34,0,0,0-47.062.98L41.373,217.373,32,226.745V496H208V328h96V496H480V225.958ZM248.038,56.771c.282,0,.108.061-.013.18C247.9,56.832,247.756,56.771,248.038,56.771ZM448,464H336V328a32,32,0,0,0-32-32H208a32,32,0,0,0-32,32V464H64V240L248.038,57.356c.013-.012.014-.023.024-.035L448,240Z"
+                        class="ci-primary"
+                    ></path>
+                </svg>
+                creativeLabs HQ
+            </small>
+        </div>
+    </div>
+
+    <div
+        style="
+            text-align: center !important;
+            border-left-width: 4px !important;
+            border-left-color: #9da5b1 !important;
+            background-color: rgba(0, 0, 21, 0.125);
+            border-width: 0 0 1;
+            border: 1 solid black;
+            border-left-style: solid;
+            font-weight: 700 !important;
+            text-transform: uppercase !important;
+            color: #2c384aae !important;
+            height: 30px;
+        "
+    >
+        <span
+            style="
+                padding-top: 15px !important;
+                padding-bottom: 5px !important;
+            "
+        >
+            Tomorrow
+        </span>
+    </div>
+    <div
+        style="
+            border-left-width: 5px !important;
+            border-left-color: #e55353 !important;
+            border-left-style: solid;
+        "
+    >
+        <div
+            style="
+                position: relative;
+                display: block;
+                padding: 1rem !important;
+                color: black !important;
+                text-decoration: none;
+                background-color: white;
+                border: 0.1rem solid !important ;
+                border-color: #9da5b1 !important;
+            "
+        >
+            <div>Audit scheduled for <strong>Lucas</strong></div>
+            <small class="text-medium-emphasis me-3">
+                <svg
+                    style="width: 1rem; height: 1rem; font-size: 1rem;"
+                    _ngcontent-wil-c193=""
+                    cIcon=""
+                    name="cilCalendar"
+                    viewBox="0 0 512 512"
+                    xmlns="http://www.w3.org/2000/svg"
+                    pointer-events="none"
+                    role="img"
+                    class="icon"
+                >
+                    <path
+                        fill="var(--ci-primary-color, currentColor)"
+                        d="M472,96H384V40H352V96H160V40H128V96H40a24.028,24.028,0,0,0-24,24V456a24.028,24.028,0,0,0,24,24H472a24.028,24.028,0,0,0,24-24V120A24.028,24.028,0,0,0,472,96Zm-8,352H48V128h80v40h32V128H352v40h32V128h80Z"
+                        class="ci-primary"
+                    ></path>
+                    <rect
+                        width="32"
+                        height="32"
+                        x="112"
+                        y="224"
+                        fill="var(--ci-primary-color, currentColor)"
+                        class="ci-primary"
+                    ></rect>
+                    <rect
+                        width="32"
+                        height="32"
+                        x="200"
+                        y="224"
+                        fill="var(--ci-primary-color, currentColor)"
+                        class="ci-primary"
+                    ></rect>
+                    <rect
+                        width="32"
+                        height="32"
+                        x="280"
+                        y="224"
+                        fill="var(--ci-primary-color, currentColor)"
+                        class="ci-primary"
+                    ></rect>
+                    <rect
+                        width="32"
+                        height="32"
+                        x="368"
+                        y="224"
+                        fill="var(--ci-primary-color, currentColor)"
+                        class="ci-primary"
+                    ></rect>
+                    <rect
+                        width="32"
+                        height="32"
+                        x="112"
+                        y="296"
+                        fill="var(--ci-primary-color, currentColor)"
+                        class="ci-primary"
+                    ></rect>
+                    <rect
+                        width="32"
+                        height="32"
+                        x="200"
+                        y="296"
+                        fill="var(--ci-primary-color, currentColor)"
+                        class="ci-primary"
+                    ></rect>
+                    <rect
+                        width="32"
+                        height="32"
+                        x="280"
+                        y="296"
+                        fill="var(--ci-primary-color, currentColor)"
+                        class="ci-primary"
+                    ></rect>
+                    <rect
+                        width="32"
+                        height="32"
+                        x="368"
+                        y="296"
+                        fill="var(--ci-primary-color, currentColor)"
+                        class="ci-primary"
+                    ></rect>
+                    <rect
+                        width="32"
+                        height="32"
+                        x="112"
+                        y="368"
+                        fill="var(--ci-primary-color, currentColor)"
+                        class="ci-primary"
+                    ></rect>
+                    <rect
+                        width="32"
+                        height="32"
+                        x="200"
+                        y="368"
+                        fill="var(--ci-primary-color, currentColor)"
+                        class="ci-primary"
+                    ></rect>
+                    <rect
+                        width="32"
+                        height="32"
+                        x="280"
+                        y="368"
+                        fill="var(--ci-primary-color, currentColor)"
+                        class="ci-primary"
+                    ></rect>
+                    <rect
+                        width="32"
+                        height="32"
+                        x="368"
+                        y="368"
+                        fill="var(--ci-primary-color, currentColor)"
+                        class="ci-primary"
+                    ></rect>
+                </svg>
+                1 pm &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+                <svg
+                    style="width: 1rem; height: 1rem; font-size: 1rem;"
+                    cIcon=""
+                    name="cilHome"
+                    viewBox="0 0 512 512"
+                    xmlns="http://www.w3.org/2000/svg"
+                    pointer-events="none"
+                    role="img"
+                    class="icon"
+                >
+                    <path
+                        fill="var(--ci-primary-color, currentColor)"
+                        d="M469.666,216.45,271.078,33.749a34,34,0,0,0-47.062.98L41.373,217.373,32,226.745V496H208V328h96V496H480V225.958ZM248.038,56.771c.282,0,.108.061-.013.18C247.9,56.832,247.756,56.771,248.038,56.771ZM448,464H336V328a32,32,0,0,0-32-32H208a32,32,0,0,0-32,32V464H64V240L248.038,57.356c.013-.012.014-.023.024-.035L448,240Z"
+                        class="ci-primary"
+                    ></path>
+                </svg>
+                creativeLabs HQ
+            </small>
+        </div>
+    </div>
+    <div
+        style="
+            border-left-width: 5px !important;
+            border-left-color: #321fdb !important;
+            border-left-style: solid;
+        "
+    >
+        <div
+            style="
+                position: relative;
+                display: block;
+                padding: 1rem !important;
+                color: black !important;
+                text-decoration: none;
+                background-color: white;
+                border: 0.1rem solid !important ;
+                border-color: #9da5b1 !important;
+            "
+        >
+            <div>Audit scheduled for <strong>Lucas</strong></div>
+            <small class="text-medium-emphasis me-3">
+                <svg
+                    style="width: 1rem; height: 1rem; font-size: 1rem;"
+                    _ngcontent-wil-c193=""
+                    cIcon=""
+                    name="cilCalendar"
+                    viewBox="0 0 512 512"
+                    xmlns="http://www.w3.org/2000/svg"
+                    pointer-events="none"
+                    role="img"
+                    class="icon"
+                >
+                    <path
+                        fill="var(--ci-primary-color, currentColor)"
+                        d="M472,96H384V40H352V96H160V40H128V96H40a24.028,24.028,0,0,0-24,24V456a24.028,24.028,0,0,0,24,24H472a24.028,24.028,0,0,0,24-24V120A24.028,24.028,0,0,0,472,96Zm-8,352H48V128h80v40h32V128H352v40h32V128h80Z"
+                        class="ci-primary"
+                    ></path>
+                    <rect
+                        width="32"
+                        height="32"
+                        x="112"
+                        y="224"
+                        fill="var(--ci-primary-color, currentColor)"
+                        class="ci-primary"
+                    ></rect>
+                    <rect
+                        width="32"
+                        height="32"
+                        x="200"
+                        y="224"
+                        fill="var(--ci-primary-color, currentColor)"
+                        class="ci-primary"
+                    ></rect>
+                    <rect
+                        width="32"
+                        height="32"
+                        x="280"
+                        y="224"
+                        fill="var(--ci-primary-color, currentColor)"
+                        class="ci-primary"
+                    ></rect>
+                    <rect
+                        width="32"
+                        height="32"
+                        x="368"
+                        y="224"
+                        fill="var(--ci-primary-color, currentColor)"
+                        class="ci-primary"
+                    ></rect>
+                    <rect
+                        width="32"
+                        height="32"
+                        x="112"
+                        y="296"
+                        fill="var(--ci-primary-color, currentColor)"
+                        class="ci-primary"
+                    ></rect>
+                    <rect
+                        width="32"
+                        height="32"
+                        x="200"
+                        y="296"
+                        fill="var(--ci-primary-color, currentColor)"
+                        class="ci-primary"
+                    ></rect>
+                    <rect
+                        width="32"
+                        height="32"
+                        x="280"
+                        y="296"
+                        fill="var(--ci-primary-color, currentColor)"
+                        class="ci-primary"
+                    ></rect>
+                    <rect
+                        width="32"
+                        height="32"
+                        x="368"
+                        y="296"
+                        fill="var(--ci-primary-color, currentColor)"
+                        class="ci-primary"
+                    ></rect>
+                    <rect
+                        width="32"
+                        height="32"
+                        x="112"
+                        y="368"
+                        fill="var(--ci-primary-color, currentColor)"
+                        class="ci-primary"
+                    ></rect>
+                    <rect
+                        width="32"
+                        height="32"
+                        x="200"
+                        y="368"
+                        fill="var(--ci-primary-color, currentColor)"
+                        class="ci-primary"
+                    ></rect>
+                    <rect
+                        width="32"
+                        height="32"
+                        x="280"
+                        y="368"
+                        fill="var(--ci-primary-color, currentColor)"
+                        class="ci-primary"
+                    ></rect>
+                    <rect
+                        width="32"
+                        height="32"
+                        x="368"
+                        y="368"
+                        fill="var(--ci-primary-color, currentColor)"
+                        class="ci-primary"
+                    ></rect>
+                </svg>
+                10 pm &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+                <svg
+                    style="width: 1rem; height: 1rem; font-size: 1rem;"
+                    cIcon=""
+                    name="cilHome"
+                    viewBox="0 0 512 512"
+                    xmlns="http://www.w3.org/2000/svg"
+                    pointer-events="none"
+                    role="img"
+                    class="icon"
+                >
+                    <path
+                        fill="var(--ci-primary-color, currentColor)"
+                        d="M469.666,216.45,271.078,33.749a34,34,0,0,0-47.062.98L41.373,217.373,32,226.745V496H208V328h96V496H480V225.958ZM248.038,56.771c.282,0,.108.061-.013.18C247.9,56.832,247.756,56.771,248.038,56.771ZM448,464H336V328a32,32,0,0,0-32-32H208a32,32,0,0,0-32,32V464H64V240L248.038,57.356c.013-.012.014-.023.024-.035L448,240Z"
+                        class="ci-primary"
+                    ></path>
+                </svg>
+                Mark HQ
+            </small>
+        </div>
+    </div>
+    <div
+        style="
+            border-left-width: 5px !important;
+            border-left-color: #2eb85c !important;
+            border-left-style: solid;
+        "
+    >
+        <div
+            style="
+                position: relative;
+                display: block;
+                padding: 1rem !important;
+                color: black !important;
+                text-decoration: none;
+                background-color: white;
+                border: 0.1rem solid !important ;
+                border-color: #9da5b1 !important;
+            "
+        >
+            <div>Audit scheduled for <strong>Titalpark</strong></div>
+            <small class="text-medium-emphasis me-3">
+                <svg
+                    style="width: 1rem; height: 1rem; font-size: 1rem;"
+                    _ngcontent-wil-c193=""
+                    cIcon=""
+                    name="cilCalendar"
+                    viewBox="0 0 512 512"
+                    xmlns="http://www.w3.org/2000/svg"
+                    pointer-events="none"
+                    role="img"
+                    class="icon"
+                >
+                    <path
+                        fill="var(--ci-primary-color, currentColor)"
+                        d="M472,96H384V40H352V96H160V40H128V96H40a24.028,24.028,0,0,0-24,24V456a24.028,24.028,0,0,0,24,24H472a24.028,24.028,0,0,0,24-24V120A24.028,24.028,0,0,0,472,96Zm-8,352H48V128h80v40h32V128H352v40h32V128h80Z"
+                        class="ci-primary"
+                    ></path>
+                    <rect
+                        width="32"
+                        height="32"
+                        x="112"
+                        y="224"
+                        fill="var(--ci-primary-color, currentColor)"
+                        class="ci-primary"
+                    ></rect>
+                    <rect
+                        width="32"
+                        height="32"
+                        x="200"
+                        y="224"
+                        fill="var(--ci-primary-color, currentColor)"
+                        class="ci-primary"
+                    ></rect>
+                    <rect
+                        width="32"
+                        height="32"
+                        x="280"
+                        y="224"
+                        fill="var(--ci-primary-color, currentColor)"
+                        class="ci-primary"
+                    ></rect>
+                    <rect
+                        width="32"
+                        height="32"
+                        x="368"
+                        y="224"
+                        fill="var(--ci-primary-color, currentColor)"
+                        class="ci-primary"
+                    ></rect>
+                    <rect
+                        width="32"
+                        height="32"
+                        x="112"
+                        y="296"
+                        fill="var(--ci-primary-color, currentColor)"
+                        class="ci-primary"
+                    ></rect>
+                    <rect
+                        width="32"
+                        height="32"
+                        x="200"
+                        y="296"
+                        fill="var(--ci-primary-color, currentColor)"
+                        class="ci-primary"
+                    ></rect>
+                    <rect
+                        width="32"
+                        height="32"
+                        x="280"
+                        y="296"
+                        fill="var(--ci-primary-color, currentColor)"
+                        class="ci-primary"
+                    ></rect>
+                    <rect
+                        width="32"
+                        height="32"
+                        x="368"
+                        y="296"
+                        fill="var(--ci-primary-color, currentColor)"
+                        class="ci-primary"
+                    ></rect>
+                    <rect
+                        width="32"
+                        height="32"
+                        x="112"
+                        y="368"
+                        fill="var(--ci-primary-color, currentColor)"
+                        class="ci-primary"
+                    ></rect>
+                    <rect
+                        width="32"
+                        height="32"
+                        x="200"
+                        y="368"
+                        fill="var(--ci-primary-color, currentColor)"
+                        class="ci-primary"
+                    ></rect>
+                    <rect
+                        width="32"
+                        height="32"
+                        x="280"
+                        y="368"
+                        fill="var(--ci-primary-color, currentColor)"
+                        class="ci-primary"
+                    ></rect>
+                    <rect
+                        width="32"
+                        height="32"
+                        x="368"
+                        y="368"
+                        fill="var(--ci-primary-color, currentColor)"
+                        class="ci-primary"
+                    ></rect>
+                </svg>
+                10 am &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+                <svg
+                    style="width: 1rem; height: 1rem; font-size: 1rem;"
+                    cIcon=""
+                    name="cilHome"
+                    viewBox="0 0 512 512"
+                    xmlns="http://www.w3.org/2000/svg"
+                    pointer-events="none"
+                    role="img"
+                    class="icon"
+                >
+                    <path
+                        fill="var(--ci-primary-color, currentColor)"
+                        d="M469.666,216.45,271.078,33.749a34,34,0,0,0-47.062.98L41.373,217.373,32,226.745V496H208V328h96V496H480V225.958ZM248.038,56.771c.282,0,.108.061-.013.18C247.9,56.832,247.756,56.771,248.038,56.771ZM448,464H336V328a32,32,0,0,0-32-32H208a32,32,0,0,0-32,32V464H64V240L248.038,57.356c.013-.012.014-.023.024-.035L448,240Z"
+                        class="ci-primary"
+                    ></path>
+                </svg>
+                Timeless HQ
+            </small>
+        </div>
+    </div>
+</p-sidebar>
+
+<p-overlayPanel
+    [showTransitionOptions]="'0ms'"
+    [hideTransitionOptions]="'0ms'"
+    #op
+    [dismissable]="true"
+>
+    <ng-template pTemplate>
+        <div>
+            <h6
+                style="
+                    display: block;
+                    padding: 1rem;
+                    margin-bottom: 0;
+                    font-size: 0.875rem;
+                    color: #8a93a2;
+                    white-space: nowrap;
+                "
+            >
+                <strong>You have 3 notifications</strong>
+            </h6>
+            <div
+                style="
+                    display: block;
+                    padding: 0.5rem !important;
+                    margin-bottom: 0;
+                    font-size: 0.875rem;
+                    white-space: nowrap;
+                    color: black;
+                "
+            >
+                <a style="color: black;">
+                    <i
+                        class="pi pi-info-circle"
+                        style="font-size: 1.3rem; color: #321fdb;"
+                    >
+                    </i>
+                    &nbsp; New audit executed</a
+                >
+            </div>
+            <div
+                style="
+                    display: block;
+                    padding: 0.5rem !important;
+                    margin-bottom: 0;
+                    font-size: 0.875rem;
+                    white-space: nowrap;
+                    color: black;
+                "
+            >
+                <a style="color: black;">
+                    <i
+                        class="pi pi-user-plus"
+                        style="font-size: 1.3rem; color: #2eb85c;"
+                    >
+                    </i>
+                    &nbsp; New user registered</a
+                >
+            </div>
+            <div
+                style="
+                    display: block;
+                    padding: 0.5rem !important;
+                    margin-bottom: 0;
+                    font-size: 0.875rem;
+                    white-space: nowrap;
+                    color: black;
+                "
+            >
+                <a style="color: black;">
+                    <i
+                        class="pi pi-user-plus"
+                        style="font-size: 1.3rem; color: #f9b115;"
+                    >
+                    </i>
+                    &nbsp; New Company registered</a
+                >
+            </div>
+        </div>
+    </ng-template>
+</p-overlayPanel>

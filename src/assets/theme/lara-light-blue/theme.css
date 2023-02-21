@@ -4988,7 +4988,7 @@ p-treeselect.ng-invalid.ng-dirty>.p-treeselect {
 }
 
 .p-sidebar .p-sidebar-header {
-    padding: 1.25rem;
+    /* padding: 1.25rem; */
 }
 
 .p-sidebar .p-sidebar-header .p-sidebar-close,
@@ -5021,7 +5021,7 @@ p-treeselect.ng-invalid.ng-dirty>.p-treeselect {
 }
 
 .p-sidebar .p-sidebar-content {
-    padding: 1.25rem;
+    /* padding: 1.25rem; */
 }
 
 .p-tooltip .p-tooltip-text {
