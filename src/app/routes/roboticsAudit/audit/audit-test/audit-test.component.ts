@@ -232,7 +232,8 @@ export class AuditTestComponent implements OnInit, OnChanges {
         }
     }
 
-    selectTest() {
+    selectTest(ele) {
+        this.auditTSelection = [ele];
         this.auditTestSelection.emit(this.auditTSelection);
         this.items = [
             {

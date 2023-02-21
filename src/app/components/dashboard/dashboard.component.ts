@@ -15,6 +15,7 @@ export class DashboardComponent implements OnInit {
     chartData: any;
     pieData: any;
     basicData: any;
+    successData: any;
     doughnutData: any;
     radarData: any;
     polarAreaData: any;
@@ -53,6 +54,30 @@ export class DashboardComponent implements OnInit {
                     label: 'Audit Test',
                     backgroundColor: '#86c143',
                     data: [28, 48, 40, 19, 86, 27, 90],
+                },
+            ],
+        };
+
+        this.successData = {
+            labels: [
+                'January',
+                'February',
+                'March',
+                'April',
+                'May',
+                'June',
+                'July',
+            ],
+            datasets: [
+                {
+                    label: 'Test Exicuted',
+                    backgroundColor: '#1c5b9c',
+                    data: [65, 59, 80, 81, 56, 55, 40],
+                },
+                {
+                    label: 'Success',
+                    backgroundColor: '#86c143',
+                    data: [28, 48, 40, 19, 20, 27, 9],
                 },
             ],
         };

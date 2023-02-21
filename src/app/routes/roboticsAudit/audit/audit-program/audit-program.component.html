@@ -53,10 +53,7 @@
     </ng-template>
     <ng-template pTemplate="header">
         <tr>
-            <th pFrozenColumn style="min-width: 14rem">
-                <p-tableHeaderCheckbox
-                    (click)="selectProgram()"
-                ></p-tableHeaderCheckbox>
+            <th pFrozenColumn style="min-width: 18rem">
                 <div class="flex align-items-center ml-6">SCHEDULE STATUS</div>
             </th>
 
@@ -148,7 +145,7 @@
             <td pFrozenColumn class="text-base" style="max-width: 14rem">
                 <p-tableCheckbox
                     [value]="item"
-                    (click)="selectProgram()"
+                    (click)="selectProgram(item)"
                 ></p-tableCheckbox
                 ><span class="ml-6"
                     ><p-inputSwitch
@@ -226,13 +223,24 @@
 ></p-speedDial>
 
 <div *ngIf="!showTable">
-    <h2>{{ audit?.audit_name }}</h2>
     <form
         [formGroup]="auditProgramForm"
         (ngSubmit)="auditProgramForm.valid && saveAuditProgram()"
     >
         <div class="grid formgrid">
-            <div class="col-12 mb-2 p-dialog-content">
+            <div class="col-6 mb-2 p-dialog-content">
+                <div class="field">
+                    <label for="audit">AUDIT <sup>*</sup></label>
+                    <input
+                        id="audit"
+                        pInputText
+                        [style]="{ width: '100%' }"
+                        [value]="audit?.audit_name"
+                        disabled
+                    />
+                </div>
+            </div>
+            <div class="col-6 mb-2 p-dialog-content">
                 <div class="field">
                     <label for="ap_name">AP NAME <sup>*</sup></label>
                     <input

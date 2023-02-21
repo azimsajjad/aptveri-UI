@@ -37,7 +37,12 @@
         <div
             class="table-header flex justify-content-between align-items-center"
         >
-            <span class="text-xl">List of Audit Test History </span>
+            <span class="text-xl"
+                >List of Audit Test History
+                <span *ngIf="auditTest"
+                    >({{ auditTest[0].audit_test_desc }})</span
+                >
+            </span>
             <span class="flex justify-content-between align-items-center">
                 <span class="p-input-icon-left mr-5">
                     <i class="pi pi-search"></i>

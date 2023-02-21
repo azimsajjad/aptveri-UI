@@ -33,7 +33,6 @@ export class MasterComponent implements OnInit {
     pageOption: PageOption[];
     optionsOptions: PageOption[];
     codeValues: CodeValue[];
-    filteredCodeValues: CodeValue[];
 
     addDialog: boolean = false;
     loading: boolean = true;
@@ -50,10 +49,21 @@ export class MasterComponent implements OnInit {
         });
 
         this.selectedOrg.valueChanges.subscribe((res: Organisation) => {
-            this.filteredCodeValues = this.codeValues.filter(
-                (ele: CodeValue) => {
-                    return ele.organization_id == res.organization_id;
-                }
+            this.getCodeValues(res.organization_id);
+        });
+
+        this.selectedPage.valueChanges.subscribe((res: PageOption) => {
+            this.getCodeValues(
+                this.selectedOrg.value.organization_id,
+                res.option_id
+            );
+        });
+
+        this.selectedOption.valueChanges.subscribe((res: PageOption) => {
+            this.getCodeValues(
+                this.selectedOrg.value.organization_id,
+                this.selectedPage.value.option_id,
+                res.option_id
             );
         });
 
@@ -64,13 +74,18 @@ export class MasterComponent implements OnInit {
         });
     }
 
-    getCodeValues() {
+    getCodeValues(
+        organization_id?: number,
+        code_id?: number,
+        code_value_key?: number
+    ) {
         this.loading = true;
-        this.utilService.getAllCodeValue().subscribe((res) => {
-            this.codeValues = res.data;
-            this.filteredCodeValues = this.codeValues;
-            this.loading = false;
-        });
+        this.utilService
+            .getAllCodeValue(organization_id, code_id, code_value_key)
+            .subscribe((res) => {
+                this.codeValues = res.data;
+                this.loading = false;
+            });
     }
 
     openDialog() {
