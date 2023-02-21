@@ -52,32 +52,50 @@
                     <div
                         class="flex justify-content-between align-items-center"
                     >
-                        AU UID
                         <p-sortIcon field="au_level_4_uid"></p-sortIcon>
+                        AU UID
                     </div>
                 </th>
                 <th pSortableColumn="au_level_4_desc">
                     <div
                         class="flex justify-content-between align-items-center"
                     >
-                        DESCRIPTION
                         <p-sortIcon field="au_level_4_desc"></p-sortIcon>
+                        DESCRIPTION
+                        <p-columnFilter
+                            type="text"
+                            field="au_level_4_desc"
+                            display="menu"
+                            class="ml-auto"
+                        ></p-columnFilter>
                     </div>
                 </th>
                 <th pSortableColumn="au_level_4_definiton">
                     <div
                         class="flex justify-content-between align-items-center"
                     >
-                        DEFINITION
                         <p-sortIcon field="au_level_4_definiton"></p-sortIcon>
+                        DEFINITION
+                        <p-columnFilter
+                            type="text"
+                            field="au_level_4_definiton"
+                            display="menu"
+                            class="ml-auto"
+                        ></p-columnFilter>
                     </div>
                 </th>
                 <th pSortableColumn="au_level_4_comments">
                     <div
                         class="flex justify-content-between align-items-center"
                     >
-                        COMMENTS
                         <p-sortIcon field="au_level_4_comments"></p-sortIcon>
+                        COMMENTS
+                        <p-columnFilter
+                            type="text"
+                            field="au_level_4_comments"
+                            display="menu"
+                            class="ml-auto"
+                        ></p-columnFilter>
                     </div>
                 </th>
                 <th pSortableColumn="Actions">
@@ -91,16 +109,16 @@
         </ng-template>
         <ng-template pTemplate="body" let-aulevel4>
             <tr>
-                <td class="text-base" style="min-width: 12rem;">
+                <td class="text-base" style="min-width: 12rem">
                     {{ aulevel4.au_level_4_uid }}
                 </td>
-                <td class="text-base" style="min-width: 12rem;">
+                <td class="text-base" style="min-width: 12rem">
                     {{ aulevel4.au_level_4_desc }}
                 </td>
-                <td class="text-base" style="min-width: 12rem;">
+                <td class="text-base" style="min-width: 12rem">
                     {{ aulevel4.au_level_4_definiton }}
                 </td>
-                <td class="text-base" style="min-width: 12rem;">
+                <td class="text-base" style="min-width: 12rem">
                     {{ aulevel4.au_level_4_comments }}
                 </td>
                 <td>

@@ -47,21 +47,27 @@
         </ng-template>
         <ng-template pTemplate="header">
             <tr>
-                <th style="max-width: 3rem;"></th>
+                <th style="max-width: 3rem"></th>
                 <th pSortableColumn="uid">
                     <div
                         class="flex justify-content-between align-items-center"
                     >
-                        AU UID
                         <p-sortIcon field="au_level_2_uid"></p-sortIcon>
+                        AU UID
                     </div>
                 </th>
                 <th pSortableColumn="desc">
                     <div
                         class="flex justify-content-between align-items-center"
                     >
-                        DESCRIPTION
                         <p-sortIcon field="au_level_2_desc"></p-sortIcon>
+                        DESCRIPTION
+                        <p-columnFilter
+                            type="text"
+                            field="au_level_2_desc"
+                            display="menu"
+                            class="ml-auto"
+                        ></p-columnFilter>
                     </div>
                 </th>
                 <th pSortableColumn="Actions">
@@ -75,16 +81,16 @@
         </ng-template>
         <ng-template pTemplate="body" let-aulevel2>
             <tr>
-                <td class="text-base" style="max-width: 3rem;">
+                <td class="text-base" style="max-width: 3rem">
                     <p-tableCheckbox
                         (click)="getSelection(aulevel2)"
                         [value]="aulevel2"
                     ></p-tableCheckbox>
                 </td>
-                <td class="text-base" style="min-width: 12rem;">
+                <td class="text-base" style="min-width: 12rem">
                     {{ aulevel2.au_level_2_uid }}
                 </td>
-                <td class="text-base" style="min-width: 12rem;">
+                <td class="text-base" style="min-width: 12rem">
                     {{ aulevel2.au_level_2_desc }}
                 </td>
                 <td>
