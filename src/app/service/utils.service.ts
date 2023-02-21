@@ -41,7 +41,14 @@ export class UtilsService {
         });
     }
 
-    public getAllCodeValue(): Observable<any> {
-        return this.http.get(environment.api_prefix + 'audit/codevalue/0/0/0');
+    public getAllCodeValue(
+        organization_id: number = 0,
+        code_id: number = 0,
+        code_value_key: number = 0
+    ): Observable<any> {
+        return this.http.get(
+            environment.api_prefix +
+                `audit/codevalue/${organization_id}/${code_id}/${code_value_key}`
+        );
     }
 }

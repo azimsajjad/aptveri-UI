@@ -26,9 +26,9 @@ export class MasterComponent implements OnInit {
         private messageService: MessageService
     ) {}
 
+    selectedOrg = new FormControl(null);
     selectedPage = new FormControl(null);
     selectedOption = new FormControl(null);
-    selectedOrg;
     allOrg: Organisation[];
     pageOption: PageOption[];
     optionsOptions: PageOption[];
@@ -48,6 +48,25 @@ export class MasterComponent implements OnInit {
             this.getCodeValues();
         });
 
+        this.selectedOrg.valueChanges.subscribe((res: Organisation) => {
+            this.getCodeValues(res.organization_id);
+        });
+
+        this.selectedPage.valueChanges.subscribe((res: PageOption) => {
+            this.getCodeValues(
+                this.selectedOrg.value.organization_id,
+                res.option_id
+            );
+        });
+
+        this.selectedOption.valueChanges.subscribe((res: PageOption) => {
+            this.getCodeValues(
+                this.selectedOrg.value.organization_id,
+                this.selectedPage.value.option_id,
+                res.option_id
+            );
+        });
+
         this.selectedPage.valueChanges.subscribe((res: PageOption) => {
             this.utilService.getPageOption(res.page_id).subscribe((resp) => {
                 this.optionsOptions = resp.data;
@@ -55,18 +74,23 @@ export class MasterComponent implements OnInit {
         });
     }
 
-    getCodeValues() {
+    getCodeValues(
+        organization_id?: number,
+        code_id?: number,
+        code_value_key?: number
+    ) {
         this.loading = true;
-        this.utilService.getAllCodeValue().subscribe((res) => {
-            this.codeValues = res.data;
-            this.loading = false;
-            console.log(this.codeValues[0]);
-        });
+        this.utilService
+            .getAllCodeValue(organization_id, code_id, code_value_key)
+            .subscribe((res) => {
+                this.codeValues = res.data;
+                this.loading = false;
+            });
     }
 
     openDialog() {
         this.addForm = this.fb.group({
-            organization_id: this.selectedOrg.organization_id,
+            organization_id: this.selectedOrg.value.organization_id,
             option_id: this.selectedOption.value.option_id,
             option: this.selectedPage.value.option_name,
             name: [null, Validators.required],

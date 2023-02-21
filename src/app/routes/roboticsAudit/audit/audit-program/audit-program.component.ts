@@ -131,7 +131,9 @@ export class AuditProgramComponent1 implements OnInit, OnChanges {
             });
     }
 
-    selectProgram() {
+    selectProgram(ele) {
+        this.auditPSelection = [ele];
+
         this.auditProgramSelection.emit(this.auditPSelection);
 
         this.items = [

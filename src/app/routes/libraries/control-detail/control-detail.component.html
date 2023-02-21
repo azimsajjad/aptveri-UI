@@ -61,8 +61,8 @@
                         style="min-width: 14rem"
                     >
                         <div class="flex align-items-center">
-                            CONTROL UID
                             <p-sortIcon field="control_uid"></p-sortIcon>
+                            CONTROL UID
                         </div>
                     </th>
 
@@ -71,84 +71,138 @@
                         style="min-width: 14rem"
                     >
                         <div class="flex align-items-center">
-                            AU LEVEL 4 UID
                             <p-sortIcon field="au_level_4_uid"></p-sortIcon>
+                            AU LEVEL 4 UID
                         </div>
                     </th>
 
                     <th pSortableColumn="banner_uid" style="min-width: 14rem">
                         <div class="flex align-items-center">
-                            DEPARTMENT UID
                             <p-sortIcon field="banner_uid"></p-sortIcon>
+                            DEPARTMENT UID
                         </div>
                     </th>
 
                     <th pSortableColumn="risk_uid" style="min-width: 14rem">
                         <div class="flex align-items-center">
-                            RISK UID
                             <p-sortIcon field="risk_uid"></p-sortIcon>
+                            RISK UID
                         </div>
                     </th>
                     <th pSortableColumn="organization" style="min-width: 14rem">
                         <div class="flex align-items-center">
-                            ORGANIZATION
                             <p-sortIcon field="organization"></p-sortIcon>
+                            ORGANIZATION
+                            <p-columnFilter
+                                type="text"
+                                field="risk_exposure"
+                                display="menu"
+                                class="ml-auto"
+                            ></p-columnFilter>
                         </div>
                     </th>
 
                     <th pSortableColumn="control" style="min-width: 14rem">
                         <div class="flex align-items-center">
-                            CONTROL
                             <p-sortIcon field="control"></p-sortIcon>
+                            CONTROL
+                            <p-columnFilter
+                                type="text"
+                                field="risk_exposure"
+                                display="menu"
+                                class="ml-auto"
+                            ></p-columnFilter>
                         </div>
                     </th>
 
                     <th pSortableColumn="comments" style="min-width: 14rem">
                         <div class="flex align-items-center">
-                            COMMENT
                             <p-sortIcon field="comments"></p-sortIcon>
+                            COMMENT
+                            <p-columnFilter
+                                type="text"
+                                field="risk_exposure"
+                                display="menu"
+                                class="ml-auto"
+                            ></p-columnFilter>
                         </div>
                     </th>
 
                     <th pSortableColumn="control_type" style="min-width: 14rem">
                         <div class="flex align-items-center">
-                            CONTROL TYPE
                             <p-sortIcon field="control_type"></p-sortIcon>
+                            CONTROL TYPE
+                            <p-columnFilter
+                                type="text"
+                                field="risk_exposure"
+                                display="menu"
+                                class="ml-auto"
+                            ></p-columnFilter>
                         </div>
                     </th>
 
                     <th pSortableColumn="frequency" style="min-width: 14rem">
                         <div class="flex align-items-center">
-                            FREQUENCY
                             <p-sortIcon field="frequency"></p-sortIcon>
+                            FREQUENCY
+                            <p-columnFilter
+                                type="text"
+                                field="risk_exposure"
+                                display="menu"
+                                class="ml-auto"
+                            ></p-columnFilter>
                         </div>
                     </th>
 
                     <th pSortableColumn="automation" style="min-width: 14rem">
                         <div class="flex align-items-center">
-                            AUTOMATION
                             <p-sortIcon field="automation"></p-sortIcon>
+                            AUTOMATION
+                            <p-columnFilter
+                                type="text"
+                                field="risk_exposure"
+                                display="menu"
+                                class="ml-auto"
+                            ></p-columnFilter>
                         </div>
                     </th>
 
                     <th pSortableColumn="category" style="min-width: 14rem">
                         <div class="flex align-items-center">
-                            CATEGORY
                             <p-sortIcon field="category"></p-sortIcon>
+                            CATEGORY
+                            <p-columnFilter
+                                type="text"
+                                field="risk_exposure"
+                                display="menu"
+                                class="ml-auto"
+                            ></p-columnFilter>
                         </div>
                     </th>
 
                     <th pSortableColumn="assertion" style="min-width: 14rem">
                         <div class="flex align-items-center">
-                            ASSERTION
                             <p-sortIcon field="assertion"></p-sortIcon>
+                            ASSERTION
+                            <p-columnFilter
+                                type="text"
+                                field="risk_exposure"
+                                display="menu"
+                                class="ml-auto"
+                            ></p-columnFilter>
                         </div>
                     </th>
 
                     <th pSortableColumn="key_control" style="min-width: 14rem">
                         <div class="flex align-items-center">
-                            KEY CONTROL
                             <p-sortIcon field="key_control"></p-sortIcon>
+                            KEY CONTROL
+                            <p-columnFilter
+                                type="text"
+                                field="risk_exposure"
+                                display="menu"
+                                class="ml-auto"
+                            ></p-columnFilter>
                         </div>
                     </th>
 
@@ -301,6 +355,11 @@
                             placeholder="Select Risk"
                             [style]="{ width: '100%' }"
                         ></p-autoComplete>
+                        <span *ngIf="filteredRisk?.length == 0"
+                            ><small class="p-error"
+                                >No Records Found</small
+                            ></span
+                        >
                     </div>
 
                     <div class="field col-12 md:col-4">
@@ -330,6 +389,11 @@
                             placeholder="Select Department"
                             [style]="{ width: '100%' }"
                         ></p-autoComplete>
+                        <span *ngIf="filteredDepartment?.length == 0"
+                            ><small class="p-error"
+                                >No Records Found</small
+                            ></span
+                        >
                     </div>
 
                     <div class="field col-12 md:col-4">
@@ -369,6 +433,11 @@
                             placeholder="Select Control Type"
                             [style]="{ width: '100%' }"
                         ></p-autoComplete>
+                        <span *ngIf="filteredControlType?.length == 0"
+                            ><small class="p-error"
+                                >No Records Found</small
+                            ></span
+                        >
                     </div>
 
                     <div class="field col-12 md:col-4">
@@ -384,6 +453,11 @@
                             placeholder="Select Frequency"
                             [style]="{ width: '100%' }"
                         ></p-autoComplete>
+                        <span *ngIf="filteredKeyFrequency?.length == 0"
+                            ><small class="p-error"
+                                >No Records Found</small
+                            ></span
+                        >
                     </div>
 
                     <div class="field col-12 md:col-4">
@@ -398,6 +472,11 @@
                             placeholder="Select Automation"
                             [style]="{ width: '100%' }"
                         ></p-autoComplete>
+                        <span *ngIf="filteredKeyType?.length == 0"
+                            ><small class="p-error"
+                                >No Records Found</small
+                            ></span
+                        >
                     </div>
 
                     <div class="field col-12 md:col-4">
@@ -414,6 +493,11 @@
                             placeholder="Select Category"
                             [style]="{ width: '100%' }"
                         ></p-autoComplete>
+                        <span *ngIf="filteredKeyCategory?.length == 0"
+                            ><small class="p-error"
+                                >No Records Found</small
+                            ></span
+                        >
                     </div>
 
                     <div class="field col-12 md:col-4">
@@ -430,6 +514,11 @@
                             placeholder="Select Assertion"
                             [style]="{ width: '100%' }"
                         ></p-autoComplete>
+                        <span *ngIf="filteredKeyAssertion?.length == 0"
+                            ><small class="p-error"
+                                >No Records Found</small
+                            ></span
+                        >
                     </div>
 
                     <div class="field col-12 md:col-4">
@@ -445,6 +534,11 @@
                             placeholder="Select Key Control"
                             [style]="{ width: '100%' }"
                         ></p-autoComplete>
+                        <span *ngIf="filteredKeyControlType?.length == 0"
+                            ><small class="p-error"
+                                >No Records Found</small
+                            ></span
+                        >
                     </div>
                 </div>
 
