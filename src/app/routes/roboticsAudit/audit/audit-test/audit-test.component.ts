@@ -8,6 +8,7 @@ import {
 } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ConfirmationService, MenuItem, MessageService } from 'primeng/api';
+import { Table } from 'primeng/table';
 import { catchError, finalize, forkJoin, throwError } from 'rxjs';
 import { Organisation } from 'src/app/api/libraries';
 import { AuditTest } from 'src/app/api/robotic-audit';
@@ -1015,6 +1016,10 @@ export class AuditTestComponent implements OnInit, OnChanges {
                 );
             }
         }
+    }
+
+    clear(table: Table) {
+        table.clear();
     }
 
     // dialogs...

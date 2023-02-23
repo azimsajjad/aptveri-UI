@@ -185,7 +185,7 @@ export class AuditService {
             last_run_date: auditTest.last_run_date,
             scriptVariables: auditTest.scriptVariables,
             target_table: auditTest.target_table,
-            banner_id: auditTest.banner_id,
+            banner_id: auditTest.department_id,
             version_id: auditTest.version_id,
             frequency: auditTest.frequency || null,
             schedule_run_time: auditTest.schedule_run_time,

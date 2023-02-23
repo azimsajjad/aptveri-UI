@@ -9,6 +9,7 @@ import {
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import * as moment from 'moment';
 import { ConfirmationService, MenuItem, MessageService } from 'primeng/api';
+import { Table } from 'primeng/table';
 import { catchError, finalize, forkJoin, throwError } from 'rxjs';
 import { AuditProgram } from 'src/app/api/robotic-audit';
 import { audit } from 'src/app/api/roboticsAudit/audit';
@@ -524,6 +525,10 @@ export class AuditProgramComponent1 implements OnInit, OnChanges {
 
     getTwoDigit(val) {
         return ('0' + val).slice(-2);
+    }
+
+    clear(table: Table) {
+        table.clear();
     }
 
     getLocalDateTime(time = null) {

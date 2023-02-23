@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ConfirmationService, MessageService } from 'primeng/api';
+import { Table } from 'primeng/table';
 import { catchError, finalize } from 'rxjs';
 import { Role, User } from 'src/app/api/users';
 import { UserService } from 'src/app/service/user.service';
@@ -37,6 +38,10 @@ export class UsersComponent implements OnInit {
                 return ele;
             });
         });
+    }
+
+    clear(table: Table) {
+        table.clear();
     }
 
     getAllRoles() {

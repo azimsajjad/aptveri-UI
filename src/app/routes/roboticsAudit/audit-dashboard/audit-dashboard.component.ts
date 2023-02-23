@@ -5,6 +5,7 @@ import { AuditService } from 'src/app/service/audit.service';
 import { DialogService } from 'primeng/dynamicdialog';
 import { AuditDetailComponent } from './audit-detail/audit-detail.component';
 import { environment } from '../../../../environments/environment';
+import { Table } from 'primeng/table';
 
 @Component({
     selector: 'app-audit-dashboard',
@@ -208,5 +209,9 @@ export class AuditDashboardComponent implements OnInit {
 
     getTwoDigit(val) {
         return ('0' + val).slice(-2);
+    }
+
+    clear(table: Table) {
+        table.clear();
     }
 }

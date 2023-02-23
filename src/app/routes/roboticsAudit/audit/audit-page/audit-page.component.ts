@@ -535,6 +535,10 @@ export class AuditPageComponent implements OnInit {
         }
     }
 
+    clear(table: Table) {
+        table.clear();
+    }
+
     quarterList = [
         { quarter: 1, code: 1 },
         { quarter: 2, code: 2 },

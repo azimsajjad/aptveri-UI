@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ConfirmationService, MessageService } from 'primeng/api';
+import { Table } from 'primeng/table';
 import { catchError, finalize } from 'rxjs';
 import { Organisation } from 'src/app/api/libraries';
 import { BannerService } from 'src/app/service/librariesservice';
@@ -169,5 +170,9 @@ export class OrganisationComponent implements OnInit {
             },
         });
         console.log(ele);
+    }
+
+    clear(table: Table) {
+        table.clear();
     }
 }

@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ConfirmationService, MessageService } from 'primeng/api';
+import { Table } from 'primeng/table';
 import { catchError, finalize, throwError } from 'rxjs';
 import {
     AULevel3,
@@ -212,5 +213,9 @@ export class AuLevel3Component implements OnInit {
                 this.confirmationService.close();
             },
         });
+    }
+
+    clear(table: Table) {
+        table.clear();
     }
 }

@@ -6,6 +6,7 @@ import {
     Validators,
 } from '@angular/forms';
 import { ConfirmationService, MessageService } from 'primeng/api';
+import { Table } from 'primeng/table';
 import { catchError, finalize, throwError } from 'rxjs';
 import { AULevel1, DataAULevel1 } from 'src/app/api/auditUniverse';
 import { Organisation } from 'src/app/api/libraries';
@@ -253,5 +254,9 @@ export class AuLevel1Component implements OnInit {
 
     getOrgnaisation(organization: any) {
         return this.organisation.find((x) => x.organization_id == organization);
+    }
+
+    clear(table: Table) {
+        table.clear();
     }
 }

@@ -6,6 +6,7 @@ import {
     Validators,
 } from '@angular/forms';
 import { MessageService } from 'primeng/api';
+import { Table } from 'primeng/table';
 import { catchError, finalize, forkJoin } from 'rxjs';
 import { Organisation } from 'src/app/api/libraries';
 import { CodeValue, PageOption } from 'src/app/api/utils';
@@ -149,6 +150,9 @@ export class MasterComponent implements OnInit {
             }
             return false;
         });
+    }
+    clear(table: Table) {
+        table.clear();
     }
 
     masterCategory: DropdownItem[] = [

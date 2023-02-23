@@ -80,7 +80,18 @@
                 <div
                     class="table-header flex justify-content-between align-items-center"
                 >
-                    <span class="text-xl">List of Code Values</span>
+                    <span class="text-xl"
+                        >List of Code Values &nbsp;
+
+                        <button
+                            pButton
+                            class="p-button-outlined"
+                            style="height: 1.4rem !important;"
+                            icon="pi pi-filter-slash"
+                            title="Clear Filter"
+                            (click)="clear(dt)"
+                        ></button
+                    ></span>
                     <span class="p-input-icon-left">
                         <i class="pi pi-search"></i>
                         <input

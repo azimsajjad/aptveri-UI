@@ -48,7 +48,7 @@
         </ng-template>
         <ng-template pTemplate="header">
             <tr>
-                <th style="max-width: 3rem"></th>
+                <th style="max-width: 3rem;"></th>
                 <th pSortableColumn="au_level_3_uid">
                     <div
                         class="flex justify-content-between align-items-center"
@@ -103,33 +103,42 @@
                     <div
                         class="flex justify-content-between align-items-center"
                     >
-                        ACTIONS
+                        ACTIONS&nbsp;
+
+                        <button
+                            pButton
+                            class="p-button-outlined"
+                            style="height: 1.4rem !important;"
+                            icon="pi pi-filter-slash"
+                            title="Clear Filter"
+                            (click)="clear(dt)"
+                        ></button>
                     </div>
                 </th>
             </tr>
         </ng-template>
         <ng-template pTemplate="body" let-aulevel3>
             <tr>
-                <td class="text-base" style="max-width: 3rem">
+                <td class="text-base" style="max-width: 3rem;">
                     <p-tableCheckbox
                         (click)="getSelection(aulevel3)"
                         [value]="aulevel3"
                     ></p-tableCheckbox>
                 </td>
-                <td class="text-base" style="min-width: 12rem">
+                <td class="text-base" style="min-width: 12rem;">
                     {{ aulevel3.au_level_3_uid }}
                 </td>
-                <td class="text-base" style="min-width: 12rem">
+                <td class="text-base" style="min-width: 12rem;">
                     {{ aulevel3.au_level_3_desc }}
                 </td>
-                <td class="text-base" style="min-width: 12rem">
+                <td class="text-base" style="min-width: 12rem;">
                     {{ aulevel3.au_level_3_definiton }}
                 </td>
-                <td class="text-base" style="min-width: 12rem">
+                <td class="text-base" style="min-width: 12rem;">
                     {{ aulevel3.au_level_3_comments }}
                 </td>
                 <td>
-                    <span class="p-column-title">Actions</span>
+                    <span class="p-column-title">Actions </span>
                     <span
                         ><button
                             pButton

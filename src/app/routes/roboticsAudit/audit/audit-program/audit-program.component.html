@@ -35,7 +35,9 @@
         >
             <span class="text-xl">
                 List Of Audit Program
-                <span>({{ audit?.audit_name }})</span></span
+                <span style="color: #1e5b9c;"
+                    >[{{ audit?.audit_name }}]</span
+                ></span
             >
             <span class="flex justify-content-between align-items-center">
                 <span class="p-input-icon-left mr-5">
@@ -53,18 +55,18 @@
     </ng-template>
     <ng-template pTemplate="header">
         <tr>
-            <th pFrozenColumn style="min-width: 18rem">
+            <th pFrozenColumn style="min-width: 18rem;">
                 <div class="flex align-items-center ml-6">SCHEDULE STATUS</div>
             </th>
 
-            <th pSortableColumn="audit_program_id" style="min-width: 14rem">
+            <th pSortableColumn="audit_program_id" style="min-width: 14rem;">
                 <div class="flex align-items-center">
                     <p-sortIcon field="audit_program_id"></p-sortIcon>
                     AUDIT PROGRAM ID
                 </div>
             </th>
 
-            <th pSortableColumn="ap_name" style="min-width: 14rem">
+            <th pSortableColumn="ap_name" style="min-width: 14rem;">
                 <div class="flex align-items-center">
                     <p-sortIcon field="ap_name"></p-sortIcon>
                     AUDIT PROGRAM NAME
@@ -77,7 +79,7 @@
                 </div>
             </th>
 
-            <th pSortableColumn="ap_desc" style="min-width: 14rem">
+            <th pSortableColumn="ap_desc" style="min-width: 14rem;">
                 <div class="flex align-items-center">
                     <p-sortIcon field="ap_desc"></p-sortIcon>
                     AUDIT DESCRIPTION
@@ -90,7 +92,7 @@
                 </div>
             </th>
 
-            <th pSortableColumn="organization" style="min-width: 14rem">
+            <th pSortableColumn="organization" style="min-width: 14rem;">
                 <div class="flex align-items-center">
                     <p-sortIcon field="organization"></p-sortIcon>
                     ORGANISATION
@@ -103,7 +105,7 @@
                 </div>
             </th>
 
-            <th pSortableColumn="department" style="min-width: 14rem">
+            <th pSortableColumn="department" style="min-width: 14rem;">
                 <div class="flex align-items-center">
                     <p-sortIcon field="department"></p-sortIcon>
                     DEPARTMENT
@@ -116,7 +118,7 @@
                 </div>
             </th>
 
-            <th pSortableColumn="au_level_3_desc" style="min-width: 14rem">
+            <th pSortableColumn="au_level_3_desc" style="min-width: 14rem;">
                 <div class="flex align-items-center">
                     <p-sortIcon field="au_level_3_desc"></p-sortIcon>
                     AUDIT UNIVERSE DESCRIPTION (LEVEL 3)
@@ -129,7 +131,7 @@
                 </div>
             </th>
 
-            <th pSortableColumn="ap_schedule_date" style="min-width: 14rem">
+            <th pSortableColumn="ap_schedule_date" style="min-width: 14rem;">
                 <div class="flex align-items-center">
                     <p-sortIcon field="ap_schedule_date"></p-sortIcon>
                     SCHEDULE START DATE
@@ -142,7 +144,7 @@
                 </div>
             </th>
 
-            <th pSortableColumn="next_run" style="min-width: 14rem">
+            <th pSortableColumn="next_run" style="min-width: 14rem;">
                 <div class="flex align-items-center">
                     <p-sortIcon field="next_run"></p-sortIcon>
                     SCHEDULE END DATE
@@ -155,7 +157,7 @@
                 </div>
             </th>
 
-            <th pSortableColumn="frequency_id" style="min-width: 14rem">
+            <th pSortableColumn="frequency_id" style="min-width: 14rem;">
                 <div class="flex align-items-center">
                     <p-sortIcon field="frequency_id"></p-sortIcon>
                     FREQUENCY
@@ -168,14 +170,14 @@
                 </div>
             </th>
 
-            <th pSortableColumn="ap_schedule_time" style="min-width: 14rem">
+            <th pSortableColumn="ap_schedule_time" style="min-width: 14rem;">
                 <div class="flex align-items-center">
                     <p-sortIcon field="ap_schedule_time"></p-sortIcon>
-                    AP SCHEDULE TIME (HH24)
+                    AUDIT PROGRAM SCHEDULE TIME (HH24)
                 </div>
             </th>
 
-            <th pSortableColumn="full_name" style="min-width: 14rem">
+            <th pSortableColumn="full_name" style="min-width: 14rem;">
                 <div class="flex align-items-center">
                     <p-sortIcon field="ap_schedule_time"></p-sortIcon>
                     CREATED BY
@@ -188,15 +190,26 @@
                 </div>
             </th>
 
-            <th style="min-width: 120px" pFrozenColumn alignFrozen="right">
-                <div class="flex align-items-center">ACTIONS</div>
+            <th style="min-width: 120px;" pFrozenColumn alignFrozen="right">
+                <div class="flex align-items-center">
+                    ACTIONS &nbsp;
+
+                    <button
+                        pButton
+                        class="p-button-outlined"
+                        style="height: 1.4rem !important;"
+                        icon="pi pi-filter-slash"
+                        title="Clear Filter"
+                        (click)="clear(dt)"
+                    ></button>
+                </div>
             </th>
         </tr>
     </ng-template>
 
     <ng-template pTemplate="body" let-item>
         <tr class="p-selectable-row">
-            <td pFrozenColumn class="text-base" style="min-width: 18rem">
+            <td pFrozenColumn class="text-base" style="min-width: 18rem;">
                 <p-tableCheckbox
                     [value]="item"
                     (click)="selectProgram(item)"
@@ -231,7 +244,7 @@
             <td class="text-base">{{ item.full_name || 'N/A' }}</td>
             <td
                 class="text-base"
-                style="max-width: 120px"
+                style="max-width: 120px;"
                 pFrozenColumn
                 class="font-bold"
                 alignFrozen="right"
@@ -284,7 +297,7 @@
         <div class="grid formgrid">
             <div class="col-6 mb-2 p-dialog-content">
                 <div class="field">
-                    <label for="audit">AUDIT <sup>*</sup></label>
+                    <label for="audit">Audit Name <sup>*</sup></label>
                     <input
                         id="audit"
                         pInputText
@@ -296,7 +309,7 @@
             </div>
             <div class="col-6 mb-2 p-dialog-content">
                 <div class="field">
-                    <label for="ap_name">AP NAME <sup>*</sup></label>
+                    <label for="ap_name">Audit Program Name <sup>*</sup></label>
                     <input
                         id="ap_name"
                         pInputText
@@ -307,7 +320,7 @@
             </div>
             <div class="col-12 mb-2 lg:col-6 lg:mb-0 p-dialog-content">
                 <div class="field">
-                    <label for="ap_desc">AP Description <sup>*</sup></label>
+                    <label for="ap_desc">Description <sup>*</sup></label>
                     <input
                         id="ap_desc"
                         pInputText
@@ -333,7 +346,7 @@
                 </div>
                 <div class="field">
                     <label for="ap_schedule_date"
-                        >AP Schedule Start Date
+                        >Schedule Start Date
                         <sup
                             [class.opacity-0]="
                                 auditProgramForm.get('frequency_id').value ==
@@ -381,7 +394,7 @@
                 </div>
                 <div class="field">
                     <label for="ap_schedule_time"
-                        >AP Schedule Time
+                        >Schedule Time
                         <sup
                             [class.opacity-0]="
                                 auditProgramForm.get('frequency_id').value ==
@@ -402,7 +415,7 @@
                 </div>
                 <div class="field">
                     <label for="next_run"
-                        >AP Schedule End Date
+                        >Schedule End Date
                         <sup
                             [class.opacity-0]="
                                 auditProgramForm.get('frequency_id').value ==

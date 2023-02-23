@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ConfirmationService, MessageService } from 'primeng/api';
+import { Table } from 'primeng/table';
 import {
     DataAULevel1,
     DataAULevel2,
@@ -37,5 +38,9 @@ export class AuditUniverseDetailComponent implements OnInit {
 
     addItemLevel4(newItem: DataAULevel4[]) {
         this.AULevel4 = newItem;
+    }
+
+    clear(table: Table) {
+        table.clear();
     }
 }

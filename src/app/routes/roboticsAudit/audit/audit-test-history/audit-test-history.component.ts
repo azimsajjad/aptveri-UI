@@ -11,6 +11,7 @@ import { AuditService } from 'src/app/service/audit.service';
 import { audit } from 'src/app/api/roboticsAudit/audit';
 import { AuditProgram } from 'src/app/api/roboticsAudit/audit-program';
 import { UtilsService } from 'src/app/service/utils.service';
+import { Table } from 'primeng/table';
 
 @Component({
     selector: 'app-audit-test-history',
@@ -687,6 +688,10 @@ So, it's pretty straight forward */
     }
 
     // filters ...
+
+    clear(table: Table) {
+        table.clear();
+    }
 
     getTwoDigit(val) {
         return ('0' + val).slice(-2);

@@ -7,6 +7,7 @@ import { catchError, finalize, forkJoin, map, throwError } from 'rxjs';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { AuditUniverseService } from 'src/app/service/audituniverseservice';
 import { UtilsService } from 'src/app/service/utils.service';
+import { Table } from 'primeng/table';
 
 @Component({
     selector: 'app-control-detail',
@@ -537,5 +538,9 @@ export class ControlDetailComponent implements OnInit {
             return object.code_value_key;
         });
         return ids.join(',');
+    }
+
+    clear(table: Table) {
+        table.clear();
     }
 }

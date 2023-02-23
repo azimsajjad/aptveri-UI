@@ -102,27 +102,36 @@
                     <div
                         class="flex justify-content-between align-items-center"
                     >
-                        ACTIONS
+                        ACTIONS &nbsp;
+
+                        <button
+                            pButton
+                            class="p-button-outlined"
+                            style="height: 1.4rem !important;"
+                            icon="pi pi-filter-slash"
+                            title="Clear Filter"
+                            (click)="clear(dt)"
+                        ></button>
                     </div>
                 </th>
             </tr>
         </ng-template>
         <ng-template pTemplate="body" let-aulevel4>
             <tr>
-                <td class="text-base" style="min-width: 12rem">
+                <td class="text-base" style="min-width: 12rem;">
                     {{ aulevel4.au_level_4_uid }}
                 </td>
-                <td class="text-base" style="min-width: 12rem">
+                <td class="text-base" style="min-width: 12rem;">
                     {{ aulevel4.au_level_4_desc }}
                 </td>
-                <td class="text-base" style="min-width: 12rem">
+                <td class="text-base" style="min-width: 12rem;">
                     {{ aulevel4.au_level_4_definiton }}
                 </td>
-                <td class="text-base" style="min-width: 12rem">
+                <td class="text-base" style="min-width: 12rem;">
                     {{ aulevel4.au_level_4_comments }}
                 </td>
                 <td>
-                    <span class="p-column-title">Actions</span>
+                    <span class="p-column-title">Actions </span>
                     <span
                         ><button
                             pButton

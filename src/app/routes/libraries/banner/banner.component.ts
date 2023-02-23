@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ConfirmationService, MessageService } from 'primeng/api';
+import { Table } from 'primeng/table';
 import { catchError, finalize, map, throwError } from 'rxjs';
 import { Banner, Organisation } from 'src/app/api/libraries';
 import { AuthService } from 'src/app/service/auth.service';
@@ -239,5 +240,9 @@ export class BannerComponent implements OnInit {
                 this.filteredOrg.push(org);
             }
         }
+    }
+
+    clear(table: Table) {
+        table.clear();
     }
 }
