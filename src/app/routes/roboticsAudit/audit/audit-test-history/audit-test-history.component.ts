@@ -69,6 +69,7 @@ export class AuditTestHistoryComponent implements OnInit, OnChanges {
     }
 
     getTestHistory() {
+        this.auditTHSelection = null;
         let ids = [];
         let x = [];
         this.auditTest.forEach((element) => {
