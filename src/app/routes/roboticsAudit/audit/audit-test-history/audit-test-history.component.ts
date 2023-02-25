@@ -5,7 +5,7 @@ import { Router } from '@angular/router';
 import * as fs from 'file-saver';
 import { Workbook } from 'exceljs';
 import { ConfirmationService, MenuItem, MessageService } from 'primeng/api';
-import { catchError, throwError } from 'rxjs';
+import { catchError, finalize, throwError } from 'rxjs';
 import { AuditTest } from 'src/app/api/robotic-audit';
 import { AuditService } from 'src/app/service/audit.service';
 import { audit } from 'src/app/api/roboticsAudit/audit';
@@ -69,15 +69,11 @@ export class AuditTestHistoryComponent implements OnInit, OnChanges {
     }
 
     getTestHistory() {
-        this.auditTHSelection = null;
-        let ids = [];
-        let x = [];
-        this.auditTest.forEach((element) => {
-            ids.push(element.audit_test_id);
-        });
+        this.auditTestHistory = [];
 
-        ids.forEach((ele, index) => {
-            this.auditService.getAuditTestHistory(0, ele).subscribe((res) => {
+        this.auditService
+            .getAuditTestHistory(0, this.auditTest[0].audit_test_id)
+            .subscribe((res) => {
                 res.data.map((ele) => {
                     Object.keys(ele).forEach((element) => {
                         if (element.includes('date')) {
@@ -91,19 +87,22 @@ export class AuditTestHistoryComponent implements OnInit, OnChanges {
                             }
                         }
                     });
-                    x.push(ele);
+                    this.auditTestHistory.push(ele);
                     return ele;
                 });
 
-                if (index == ids.length - 1) {
-                    this.auditTestHistory = x;
-                    this.auditTestHistory.sort(
-                        (a, b) => b.audit_history_id - a.audit_history_id
+                if (this.auditTHSelection && this.auditTHSelection.length > 0) {
+                    this.auditTHSelection = this.auditTestHistory.find(
+                        (ele) =>
+                            ele.audit_history_id ===
+                            this.auditTHSelection[0].audit_history_id
                     );
-                    this.loading = false;
+
+                    this.editHistroy(this.auditTHSelection);
                 }
+
+                this.loading = false;
             });
-        });
     }
 
     deleteAuditHistroy(ele) {
@@ -124,6 +123,9 @@ export class AuditTestHistoryComponent implements OnInit, OnChanges {
                                 });
                                 // console.log(err);
                                 return throwError(err);
+                            }),
+                            finalize(() => {
+                                this.auditTHSelection = null;
                             })
                         )
                         .subscribe((res) => {
@@ -161,6 +163,7 @@ export class AuditTestHistoryComponent implements OnInit, OnChanges {
     }
 
     editHistroy(ele) {
+        this.auditTHSelection = [ele];
         this.res_target_table = ele.target_table;
         this.res_auditTHname = ele.audit_history_uid;
 
