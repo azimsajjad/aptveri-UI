@@ -167,13 +167,11 @@ export class AuditTestHistoryComponent implements OnInit, OnChanges {
         this.res_target_table = ele.target_table;
         this.res_auditTHname = ele.audit_history_uid;
 
-        if (this.auditTestHistoryForm?.value == undefined) {
-            this.auditTestHistoryForm = this._formbuilder.group({
-                audit_history_id: ele.audit_history_id,
-                notes: ele.notes,
-                results: ele.results,
-            });
-        }
+        this.auditTestHistoryForm = this._formbuilder.group({
+            audit_history_id: ele.audit_history_id,
+            notes: ele.notes,
+            results: ele.results,
+        });
     }
 
     changeHistoryStatus(ele) {
