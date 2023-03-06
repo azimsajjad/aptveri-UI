@@ -1,0 +1,188 @@
+<form
+    *ngIf="auditTestHistoryForm"
+    [formGroup]="auditTestHistoryForm"
+    (ngSubmit)="saveTestHistory()"
+>
+    <div *ngIf="auditTestHistoryForm.value.results; else resultError">
+        <div class="grid">
+            <div class="col-8 align-self-center">
+                <div class="grid">
+                    <div class="col align-self-center">
+                        <div class="border-1 border-round-lg p-3 text-center">
+                            <strong>Audit Universe Level 4 : </strong>
+                            <span>{{ auditTestHistory.au_level_4_desc }}</span>
+                        </div>
+                        <div
+                            class="border-1 border-round-lg p-3 text-center mt-1"
+                        >
+                            <strong>Risk : </strong>
+                            <span
+                                >{{ auditTestHistory.risk_uid }}
+                                -
+                                {{ auditTestHistory.audit_risk }}</span
+                            >
+                        </div>
+                        <div
+                            class="border-1 border-round-lg p-3 text-center mt-1"
+                        >
+                            <strong>Store : </strong>
+                            <span>{{ auditTestHistory.store }}</span>
+                        </div>
+                    </div>
+                    <div class="col align-self-center">
+                        <div class="field">
+                            <div class="hexagon-wrapper">
+                                <button
+                                    class="hexagon"
+                                    type="button"
+                                    (click)="
+                                        changeHistoryStatus(
+                                            auditTestHistoryForm.value.results
+                                        )
+                                    "
+                                    [ngStyle]="{
+                                        'background-color':
+                                            auditTestHistoryForm.value
+                                                .results == 'Fail'
+                                                ? '#FFCDD2'
+                                                : auditTestHistoryForm.value
+                                                      .results == 'Pass'
+                                                ? '#C8E6C9'
+                                                : '',
+                                        color:
+                                            auditTestHistoryForm.value
+                                                .results == 'Fail'
+                                                ? '#c63737'
+                                                : auditTestHistoryForm.value
+                                                      .results == 'Pass'
+                                                ? '#256029'
+                                                : ''
+                                    }"
+                                >
+                                    <span>{{
+                                        auditTestHistoryForm.value.results ==
+                                        null
+                                            ? ''
+                                            : auditTestHistoryForm.value.results
+                                    }}</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col align-self-center">
+                        <div class="border-1 border-round-lg p-3 text-center">
+                            <strong>Control : </strong>
+                            <span
+                                >{{ auditTestHistory.control_uid }}
+                                -
+                                {{ auditTestHistory.control }}
+                            </span>
+                        </div>
+                        <div
+                            class="border-1 border-round-lg p-3 text-center mt-1"
+                        >
+                            <strong>Script : </strong>
+                            <span
+                                >{{ auditTestHistory.script_uid }}
+                                -
+                                {{ auditTestHistory.script_defination }}
+                            </span>
+                        </div>
+                        <div
+                            class="border-1 border-round-lg p-3 text-center mt-1"
+                        >
+                            <strong>Run Date : </strong>
+                            <span>{{
+                                auditTestHistory.run_datetime | date
+                            }}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-4 align-self-center">
+                <div class="field">
+                    <div class="mb-2">
+                        <label for="">Status</label>
+                    </div>
+                    <p-dropdown
+                        [options]="['Pass', 'Fail']"
+                        formControlName="results"
+                        [style]="{ width: '80%' }"
+                    ></p-dropdown>
+                </div>
+                <div class="field">
+                    <div class="mb-2">
+                        <label for="notes">Note</label>
+                    </div>
+                    <textarea
+                        rows="3"
+                        cols="40"
+                        id="notes"
+                        pInputText
+                        formControlName="notes"
+                    >
+                    </textarea>
+                </div>
+
+                <div class="field">
+                    <div class="mb-2">
+                        <p-toggleButton
+                            formControlName="freeze"
+                            onLabel="Audit Freezed"
+                            offLabel="Unfreeze Audit"
+                            onIcon="pi pi-lock"
+                            offIcon="pi pi-lock-open"
+                            [style]="{ width: '13em' }"
+                        ></p-toggleButton>
+                    </div>
+                </div>
+                <div>
+                    <button
+                        pButton
+                        [disabled]="auditTestHistory.freeze == 1"
+                        pRipple
+                        label="Save"
+                        #submitButtonaudith
+                        icon="pi pi-check"
+                        class="p-button-primary"
+                        type="submit"
+                    ></button>
+                    &nbsp;
+                    <p-button
+                        label="Cancel"
+                        icon="pi pi-times"
+                        styleClass="p-button-secondary"
+                        (click)="ref.close()"
+                    ></p-button
+                    >&nbsp;
+                    <!-- <p-button
+                        type="button"
+                        label="View Result"
+                        icon="pi pi-list"
+                        styleClass="p-button-primary"
+                        (click)="viewResults()"
+                    > </p-button> -->
+                    <!-- <span class="p-button-label">View Result</span
+                            ><span
+                                class="p-ink"
+                                style="
+                                    height: 64px;
+                                    width: 64px;
+                                    top: -9.25px;
+                                    left: -6.32812px;
+                                "
+                            ></span> -->
+                </div>
+            </div>
+        </div>
+    </div>
+    <ng-template #resultError>
+        <div class="flex align-items-center justify-content-center w-3">
+            <div>
+                <strong class="text-4xl">Error: </strong>
+                <br />
+                <div>Error in executing Script</div>
+            </div>
+        </div>
+    </ng-template>
+</form>

@@ -292,7 +292,7 @@ export const retryWaitMilliSeconds = 1000;
 })
 export class LoginComponent implements OnInit {
     invalidLogin: boolean;
-    button = 'Submit';
+    button = 'SUBMIT';
     isLoading = false;
     credentials: LoginModel = { username: '', password: '' };
     private REST_API_SERVER = environment.api_prefix;
@@ -337,7 +337,7 @@ export class LoginComponent implements OnInit {
     }
 
     login = (form: NgForm) => {
-        this.submitButton.nativeElement.disabled = true;
+        // this.submitButton.nativeElement.disabled = true;
 
         this.isLoading = true;
         this.button = 'Processing';
@@ -484,7 +484,7 @@ export class LoginComponent implements OnInit {
                     },
                 });
         }
-        this.submitButton.nativeElement.disabled = false;
+        // this.submitButton.nativeElement.disabled = false;
     };
 
     loadUserRoles() {

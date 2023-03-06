@@ -57,4 +57,10 @@ export class ScriptService {
     getProfiles() {
         return this.http.get(environment.api_prefix + 'Profile/Getallroles');
     }
+
+    getScriptControls(organization_id: number): Observable<any> {
+        return this.http.get(
+            environment.api_prefix + 'script/getcontrol/' + organization_id
+        );
+    }
 }

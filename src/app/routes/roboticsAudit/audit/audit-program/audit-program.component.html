@@ -1,0 +1,501 @@
+<p-toast></p-toast>
+<p-table
+    *ngIf="showTable"
+    #dt
+    [value]="auditProgram"
+    selectionMode="single"
+    [rows]="20"
+    [loading]="loading"
+    [rowHover]="true"
+    [paginator]="true"
+    [rowsPerPageOptions]="[20, 50, 100]"
+    [showCurrentPageReport]="true"
+    [(selection)]="auditPSelection"
+    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+    responsiveLayout="scroll"
+    [scrollable]="true"
+    scrollHeight="calc(100vh - 320px)"
+    [globalFilterFields]="[
+        'audit_program_id',
+        'ap_name',
+        'ap_desc',
+        'organization',
+        'department',
+        'au_level_3_desc',
+        'ap_schedule_date',
+        'next_run',
+        'frequency_id',
+        'ap_schedule_time',
+        'full_name'
+    ]"
+>
+    <ng-template pTemplate="caption">
+        <div
+            class="table-header flex justify-content-between align-items-center"
+        >
+            <span class="text-xl">
+                List Of Audit Program
+                <span style="color: #1e5b9c;"
+                    >[{{ audit?.audit_name }}]</span
+                ></span
+            >
+            <span class="flex justify-content-between align-items-center">
+                <span class="p-input-icon-left mr-5">
+                    <i class="pi pi-search"></i>
+                    <input
+                        pInputText
+                        type="text"
+                        (input)="
+                            dt.filterGlobal($event.target.value, 'contains')
+                        "
+                        placeholder="Global Search"
+                    /> </span
+            ></span>
+        </div>
+    </ng-template>
+    <ng-template pTemplate="header">
+        <tr>
+            <th pFrozenColumn style="min-width: 18rem;">
+                <div class="flex align-items-center ml-6">SCHEDULE STATUS</div>
+            </th>
+
+            <th pSortableColumn="audit_program_id" style="min-width: 14rem;">
+                <div class="flex align-items-center">
+                    <p-sortIcon field="audit_program_id"></p-sortIcon>
+                    AUDIT PROGRAM ID
+                </div>
+            </th>
+
+            <th pSortableColumn="ap_name" style="min-width: 14rem;">
+                <div class="flex align-items-center">
+                    <p-sortIcon field="ap_name"></p-sortIcon>
+                    AUDIT PROGRAM NAME
+                    <p-columnFilter
+                        type="text"
+                        field="ap_name"
+                        display="menu"
+                        class="ml-auto"
+                    ></p-columnFilter>
+                </div>
+            </th>
+
+            <th pSortableColumn="ap_desc" style="min-width: 14rem;">
+                <div class="flex align-items-center">
+                    <p-sortIcon field="ap_desc"></p-sortIcon>
+                    AUDIT DESCRIPTION
+                    <p-columnFilter
+                        type="text"
+                        field="ap_desc"
+                        display="menu"
+                        class="ml-auto"
+                    ></p-columnFilter>
+                </div>
+            </th>
+
+            <th pSortableColumn="organization" style="min-width: 14rem;">
+                <div class="flex align-items-center">
+                    <p-sortIcon field="organization"></p-sortIcon>
+                    ORGANISATION
+                    <p-columnFilter
+                        type="text"
+                        field="organization"
+                        display="menu"
+                        class="ml-auto"
+                    ></p-columnFilter>
+                </div>
+            </th>
+
+            <th pSortableColumn="department" style="min-width: 14rem;">
+                <div class="flex align-items-center">
+                    <p-sortIcon field="department"></p-sortIcon>
+                    DEPARTMENT
+                    <p-columnFilter
+                        type="text"
+                        field="department"
+                        display="menu"
+                        class="ml-auto"
+                    ></p-columnFilter>
+                </div>
+            </th>
+
+            <th pSortableColumn="au_level_3_desc" style="min-width: 14rem;">
+                <div class="flex align-items-center">
+                    <p-sortIcon field="au_level_3_desc"></p-sortIcon>
+                    AUDIT UNIVERSE DESCRIPTION (LEVEL 3)
+                    <p-columnFilter
+                        type="text"
+                        field="au_level_3_desc"
+                        display="menu"
+                        class="ml-auto"
+                    ></p-columnFilter>
+                </div>
+            </th>
+
+            <th pSortableColumn="ap_schedule_date" style="min-width: 14rem;">
+                <div class="flex align-items-center">
+                    <p-sortIcon field="ap_schedule_date"></p-sortIcon>
+                    SCHEDULE START DATE
+                    <p-columnFilter
+                        type="date"
+                        field="ap_schedule_date"
+                        display="menu"
+                        class="ml-auto"
+                    ></p-columnFilter>
+                </div>
+            </th>
+
+            <th pSortableColumn="next_run" style="min-width: 14rem;">
+                <div class="flex align-items-center">
+                    <p-sortIcon field="next_run"></p-sortIcon>
+                    SCHEDULE END DATE
+                    <p-columnFilter
+                        type="date"
+                        field="next_run"
+                        display="menu"
+                        class="ml-auto"
+                    ></p-columnFilter>
+                </div>
+            </th>
+
+            <th pSortableColumn="frequency_id" style="min-width: 14rem;">
+                <div class="flex align-items-center">
+                    <p-sortIcon field="frequency_id"></p-sortIcon>
+                    FREQUENCY
+                    <p-columnFilter
+                        type="frequency_id"
+                        field="record_status"
+                        display="menu"
+                        class="ml-auto"
+                    ></p-columnFilter>
+                </div>
+            </th>
+
+            <th pSortableColumn="ap_schedule_time" style="min-width: 14rem;">
+                <div class="flex align-items-center">
+                    <p-sortIcon field="ap_schedule_time"></p-sortIcon>
+                    AUDIT PROGRAM SCHEDULE TIME (HH24)
+                </div>
+            </th>
+
+            <th pSortableColumn="full_name" style="min-width: 14rem;">
+                <div class="flex align-items-center">
+                    <p-sortIcon field="ap_schedule_time"></p-sortIcon>
+                    CREATED BY
+                    <p-columnFilter
+                        type="text"
+                        field="ap_schedule_time"
+                        display="menu"
+                        class="ml-auto"
+                    ></p-columnFilter>
+                </div>
+            </th>
+
+            <th style="min-width: 120px;" pFrozenColumn alignFrozen="right">
+                <div class="flex align-items-center">
+                    ACTIONS &nbsp;
+
+                    <button
+                        pButton
+                        class="p-button-outlined"
+                        style="height: 1.4rem !important;"
+                        icon="pi pi-filter-slash"
+                        title="Clear Filter"
+                        (click)="clear(dt)"
+                    ></button>
+                </div>
+            </th>
+        </tr>
+    </ng-template>
+
+    <ng-template pTemplate="body" let-item>
+        <tr class="p-selectable-row">
+            <td pFrozenColumn class="text-base" style="min-width: 18rem;">
+                <p-tableCheckbox
+                    [value]="item"
+                    (click)="selectProgram(item)"
+                ></p-tableCheckbox
+                ><span class="ml-6"
+                    ><p-inputSwitch
+                        *ngIf="item.frequency_id > 0"
+                        (onChange)="changeStatus(item, $event)"
+                        [(ngModel)]="item.schedule_enable"
+                    ></p-inputSwitch>
+                    <span class="text-base" *ngIf="item.frequency_id == 0">
+                        N/A</span
+                    ></span
+                >
+            </td>
+            <td class="text-base">{{ item.audit_program_id || 'N/A' }}</td>
+            <td class="text-base">{{ item.ap_name || 'N/A' }}</td>
+            <td class="text-base">{{ item.ap_desc || 'N/A' }}</td>
+            <td class="text-base">{{ item.organization || 'N/A' }}</td>
+            <td class="text-base">{{ item.department || 'N/A' }}</td>
+            <td class="text-base">{{ item.au_level_3_desc || 'N/A' }}</td>
+            <td class="text-base">
+                {{ item.ap_schedule_date | date }}
+            </td>
+            <td class="text-base">{{ item.next_run | date }}</td>
+            <td class="text-base">
+                {{ getFrequency(item.frequency_id)?.codeName || 'N/A' }}
+            </td>
+            <td class="text-base">
+                {{ getTwoDigit(item.ap_schedule_time) || 'N/A' }}
+            </td>
+            <td class="text-base">{{ item.full_name || 'N/A' }}</td>
+            <td
+                class="text-base"
+                style="max-width: 120px;"
+                pFrozenColumn
+                class="font-bold"
+                alignFrozen="right"
+            >
+                <span
+                    ><button
+                        pButton
+                        pRipple
+                        title="Edit"
+                        type="button"
+                        icon="pi pi-pencil"
+                        class="p-button-rounded p-button-info"
+                        (click)="openP(item)"
+                        *ngIf="showTable"
+                    ></button>
+
+                    <button
+                        pButton
+                        pRipple
+                        title="Delete"
+                        type="button"
+                        icon="pi pi-trash"
+                        class="p-button-rounded p-button-info ml-2"
+                        (click)="deleteProgram(item)"
+                    ></button>
+                </span>
+            </td>
+        </tr>
+    </ng-template>
+
+    <ng-template pTemplate="emptymessage">
+        <tr>
+            <td colspan="11">No Audit found.</td>
+        </tr>
+    </ng-template>
+</p-table>
+
+<p-speedDial
+    *ngIf="showTable"
+    className="add-details"
+    [model]="items"
+    direction="up"
+></p-speedDial>
+
+<div *ngIf="!showTable">
+    <form
+        [formGroup]="auditProgramForm"
+        (ngSubmit)="auditProgramForm.valid && saveAuditProgram()"
+    >
+        <div class="grid formgrid">
+            <div class="col-6 mb-2 p-dialog-content">
+                <div class="field">
+                    <label for="audit">Audit Name <sup>*</sup></label>
+                    <input
+                        id="audit"
+                        pInputText
+                        [style]="{ width: '100%' }"
+                        [value]="audit?.audit_name"
+                        disabled
+                    />
+                </div>
+            </div>
+            <div class="col-6 mb-2 p-dialog-content">
+                <div class="field">
+                    <label for="ap_name">Audit Program Name <sup>*</sup></label>
+                    <input
+                        id="ap_name"
+                        pInputText
+                        formControlName="ap_name"
+                        [style]="{ width: '100%' }"
+                    />
+                </div>
+            </div>
+            <div class="col-12 mb-2 lg:col-6 lg:mb-0 p-dialog-content">
+                <div class="field">
+                    <label for="ap_desc">Description <sup>*</sup></label>
+                    <input
+                        id="ap_desc"
+                        pInputText
+                        formControlName="ap_desc"
+                        [style]="{ width: '100%' }"
+                    />
+                </div>
+                <div class="field">
+                    <label for="frequency"
+                        >Frequency <sup class="opacity-0">*</sup></label
+                    >
+                    <p-dropdown
+                        appendTo="body"
+                        id="frequency"
+                        class="p-inputwrapper"
+                        [options]="frequency"
+                        optionLabel="codeName"
+                        formControlName="frequency_id"
+                        placeholder="Select a frequency"
+                        [showClear]="true"
+                        [style]="{ width: '100%' }"
+                    ></p-dropdown>
+                </div>
+                <div class="field">
+                    <label for="ap_schedule_date"
+                        >Schedule Start Date
+                        <sup
+                            [class.opacity-0]="
+                                auditProgramForm.get('frequency_id').value ==
+                                null
+                            "
+                            >*</sup
+                        ></label
+                    >
+                    <p-calendar
+                        appendTo="body"
+                        id="ap_schedule_date"
+                        [showIcon]="true"
+                        [showButtonBar]="true"
+                        formControlName="ap_schedule_date"
+                        [minDate]="today"
+                        [style]="{ width: '100%' }"
+                    ></p-calendar>
+                </div>
+            </div>
+            <div class="col-12 mb-2 lg:col-6 lg:mb-0 p-dialog-content">
+                <div class="field">
+                    <label for="au_level_3_id"
+                        >Audit Universe ID (Level 3) <sup>*</sup></label
+                    >
+                    <p-autoComplete
+                        appendTo="body"
+                        placeholder="Search"
+                        [dropdown]="true"
+                        [autoHighlight]="true"
+                        [forceSelection]="true"
+                        [completeOnFocus]="true"
+                        [minLength]="1"
+                        [multiple]="false"
+                        [suggestions]="filteredAuditUniverse3"
+                        (completeMethod)="filterAuditUniverse3($event)"
+                        formControlName="au_level_3_id"
+                        [disabled]="auditT?.length > 0 && isAUEdit"
+                        [style]="{ width: '100%' }"
+                    ></p-autoComplete>
+                    <small
+                        *ngIf="filteredAuditUniverse3?.length == 0"
+                        class="p-error"
+                        >No Records Found</small
+                    >
+                </div>
+                <div class="field">
+                    <label for="ap_schedule_time"
+                        >Schedule Time
+                        <sup
+                            [class.opacity-0]="
+                                auditProgramForm.get('frequency_id').value ==
+                                null
+                            "
+                            >*</sup
+                        >
+                    </label>
+                    <p-dropdown
+                        appendTo="body"
+                        id="ap_schedule_time"
+                        [options]="time"
+                        optionLabel="name"
+                        optionValue="code"
+                        formControlName="ap_schedule_time"
+                        [style]="{ width: '100%' }"
+                    ></p-dropdown>
+                </div>
+                <div class="field">
+                    <label for="next_run"
+                        >Schedule End Date
+                        <sup
+                            [class.opacity-0]="
+                                auditProgramForm.get('frequency_id').value ==
+                                null
+                            "
+                            >*</sup
+                        ></label
+                    >
+                    <p-calendar
+                        appendTo="body"
+                        id="next_run"
+                        [showIcon]="true"
+                        [showButtonBar]="true"
+                        formControlName="next_run"
+                        [minDate]="
+                            auditProgramForm.get('ap_schedule_date').value
+                        "
+                        [style]="{ width: '100%' }"
+                    ></p-calendar>
+                </div>
+            </div>
+            <div class="col-12 flex justify-content-between mt-4">
+                <div class="ml-auto">
+                    <p-button
+                        type="reset"
+                        label="Back"
+                        icon="pi pi-arrow-left"
+                        styleClass="p-button-secondary"
+                        (click)="showTable = true"
+                    ></p-button>
+                    &nbsp;
+                    <button
+                        [disabled]="!auditProgramForm.valid"
+                        type="submit"
+                        pButton
+                        pRipple
+                        #submitButton
+                        label="Save"
+                        icon="pi pi-check"
+                        styleClass="p-button-primary"
+                    ></button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<p-dialog
+    [(visible)]="graphDialog"
+    [style]="{ width: '800px' }"
+    header="Graph"
+    [modal]="true"
+    class="p-fluid"
+>
+    <ng-template pTemplate="content">
+        <div class="grid">
+            <div class="col">
+                <p-chart
+                    *ngIf="showGraph1; else noGraph1"
+                    type="pie"
+                    [data]="chartData1"
+                    [options]="basicOptions"
+                ></p-chart>
+                <ng-template #noGraph1>
+                    <div class="text-center text-4xl">No Graph</div>
+                </ng-template>
+                <div class="text-center m-2 text-2xl font-bold">AP Level</div>
+            </div>
+            <div class="col">
+                <p-chart
+                    *ngIf="showGraph1; else noGraph2"
+                    type="pie"
+                    [data]="chartData2"
+                    [options]="basicOptions"
+                ></p-chart>
+                <ng-template #noGraph2>
+                    <div class="text-center text-4xl">No Graph</div>
+                </ng-template>
+                <div class="text-center m-2 text-2xl font-bold">AT Level</div>
+            </div>
+        </div>
+    </ng-template>
+</p-dialog>

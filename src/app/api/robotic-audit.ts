@@ -37,9 +37,17 @@ export interface AuditTest {
     scriptVariables?: ScriptVariable[];
     frequency: number;
     schedule_run_time: number;
+    organization_id?: any;
+    department_id?: any;
 }
 
 export interface mastertable {
     tableschema?: string;
     tablename?: string;
+}
+
+export interface TableList {
+    filename: null;
+    path: null | string;
+    tablename: string;
 }

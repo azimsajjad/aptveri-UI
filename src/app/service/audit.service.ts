@@ -132,10 +132,11 @@ export class AuditService {
             last_run_date: auditTest.last_run_date,
             scriptVariables: auditTest.scriptVariables,
             target_table: auditTest.target_table,
-            banner_id: auditTest.banner_id,
+            banner_id: auditTest.department_id,
             version_id: auditTest.version_id,
             frequency: 0,
             schedule_run_time: 0,
+            organization_id: auditTest.organization_id,
         });
     }
 
@@ -160,6 +161,7 @@ export class AuditService {
                 version_id: auditTest.version_id,
                 frequency: auditTest.frequency || 0,
                 schedule_run_time: auditTest.schedule_run_time,
+                organization_id: auditTest.organization_id,
             }
         );
     }
@@ -183,10 +185,11 @@ export class AuditService {
             last_run_date: auditTest.last_run_date,
             scriptVariables: auditTest.scriptVariables,
             target_table: auditTest.target_table,
-            banner_id: auditTest.banner_id,
+            banner_id: auditTest.department_id,
             version_id: auditTest.version_id,
             frequency: auditTest.frequency || null,
             schedule_run_time: auditTest.schedule_run_time,
+            organization_id: auditTest.organization_id,
         });
     }
 
@@ -329,7 +332,9 @@ export class AuditService {
 
     //Get the banner data
     public sendGetBannerRequest() {
-        return this.http.get(`${environment.api_prefix}libraries/loadbanners`);
+        return this.http.get(
+            `${environment.api_prefix}libraries/loaddepartments`
+        );
     }
 
     //Get the AuditUniverse data
@@ -468,6 +473,55 @@ export class AuditService {
     ): Observable<any> {
         return this.http.get(
             `${environment.api_prefix + 'Audit/Navigate/'}${id}/${isuser}`
+        );
+    }
+
+    public getAuditDashboard(
+        organization_id: number = 0,
+        department_id: number = 0,
+        ap_schedule_start_date: any = 0,
+        ap_schedule_end_date: any = 0,
+        results: 'pass' | 'fail' | 0 = 0
+    ): Observable<any> {
+        return this.http.get(
+            environment.api_prefix +
+                `audit/auditreport/${organization_id}/${department_id}/${ap_schedule_start_date}/${ap_schedule_end_date}/${results}`
+        );
+    }
+
+    public downloadCSV(
+        organization_id: number = 0,
+        department_id: number = 0,
+        ap_schedule_start_date: any = 0,
+        ap_schedule_end_date: any = 0,
+        results: 'pass' | 'fail' | 0 = 0
+    ): Observable<any> {
+        return this.http.get(
+            environment.api_prefix +
+                `audit/auditdashbord/${organization_id}/${department_id}/${ap_schedule_start_date}/${ap_schedule_end_date}/${results}`,
+            {
+                observe: 'response',
+                responseType: 'blob',
+            }
+        );
+    }
+
+    public changeHistoryStatus(
+        audit_test_history_id: number,
+        notes: string,
+        results: string,
+        freeze: boolean
+    ): Observable<any> {
+        let status = freeze == false ? 0 : 1;
+        return this.http.put(
+            environment.api_prefix +
+                'audit/historystatus/' +
+                audit_test_history_id,
+            {
+                notes: notes,
+                results: results,
+                freeze: status,
+            }
         );
     }
 }

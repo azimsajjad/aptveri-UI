@@ -7,8 +7,8 @@ export const environment = {
     apiKey: 'devKey',
     api_prefix: 'http://192.168.1.38:5100/api/',
     app_url: 'http://192.168.1.38:5100/',
-    //   api_prefix: 'https://localhost:7204/api/',
-    //  app_url: 'https://localhost:7204/',
+    // api_prefix: 'https://localhost:7204/api/',
+    // app_url: 'https://localhost:7204/',
 };
 
 /*

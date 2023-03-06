@@ -1,0 +1,393 @@
+<p-toast></p-toast>
+<div id="table1">
+    <div class="card px-6 py-6">
+        <p-toolbar styleClass="mb-4 gap-2" [style]="{ width: '100%' }">
+            <ng-template pTemplate="left">
+                <form
+                    *ngIf="result?.length > 0"
+                    [formGroup]="filterForm"
+                    class="grid"
+                >
+                    <div class="col-12 md:col-2">
+                        <label class="text-l font-bold">Organisation</label>
+                        <p-dropdown
+                            class="ml-2"
+                            [options]="organisations"
+                            optionLabel="name"
+                            dataKey="code"
+                            placeholder="Select Organisation"
+                            formControlName="org"
+                            [style]="{ width: '100%' }"
+                        ></p-dropdown>
+                    </div>
+
+                    <div class="col-12 md:col-2">
+                        <label class="text-l font-bold">Department</label>
+                        <p-dropdown
+                            class="ml-2"
+                            [options]="departments"
+                            optionLabel="name"
+                            dataKey="code"
+                            placeholder="Select Department"
+                            formControlName="department"
+                            [style]="{ width: '100%' }"
+                        ></p-dropdown>
+                    </div>
+
+                    <div class="col-12 md:col-2">
+                        <label class="text-l font-bold">From</label>
+                        <p-calendar
+                            [minDate]="minDate"
+                            [readonlyInput]="true"
+                            placeholder="From Date..."
+                            formControlName="from"
+                            [style]="{ width: '100%' }"
+                        ></p-calendar>
+                    </div>
+
+                    <div class="col-12 md:col-2">
+                        <label class="text-l font-bold">To</label>
+                        <p-calendar
+                            [disabled]="filterForm.get('from').value == null"
+                            [minDate]="filterForm.get('from').value"
+                            [readonlyInput]="true"
+                            placeholder="To Date..."
+                            formControlName="to"
+                            [style]="{ width: '100%' }"
+                        ></p-calendar>
+                    </div>
+
+                    <div class="col-12 md:col-2">
+                        <label class="text-l font-bold">Review Year</label>
+                        <p-dropdown
+                            class="ml-2"
+                            [options]="reviewYears"
+                            optionLabel="name"
+                            dataKey="code"
+                            placeholder="Select Year"
+                            formControlName="review_year"
+                            [style]="{ width: '100%' }"
+                        ></p-dropdown>
+                    </div>
+
+                    <div class="col-12 md:col-2">
+                        <label class="text-l font-bold">Result</label>
+                        <p-dropdown
+                            class="ml-2"
+                            [options]="results"
+                            optionLabel="name"
+                            dataKey="code"
+                            placeholder="Select Result"
+                            formControlName="result"
+                            [style]="{ width: '100%' }"
+                        ></p-dropdown>
+                    </div>
+
+                    <!-- <div class="col-12 md:col-2">
+                        <p-button
+                            icon="pi pi-filter"
+                            class="ml-10"
+                            iconPos="left"
+                            label="Clear"
+                            tooltipPosition="top"
+                            styleClass="p-button-secondary"
+                            (click)="filterForm.reset()"
+                        ></p-button>
+                    </div> -->
+                </form>
+            </ng-template>
+        </p-toolbar>
+
+        <p-table
+            #dt
+            [value]="filteredResult"
+            [rowHover]="true"
+            [rows]="10"
+            [showCurrentPageReport]="true"
+            [rowsPerPageOptions]="[10, 25, 50]"
+            [loading]="loadingTable"
+            [paginator]="true"
+            currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+            responsiveLayout="scroll"
+            [scrollable]="true"
+            scrollHeight="calc(100vh - 448px)"
+            [filterDelay]="0"
+            [globalFilterFields]="[
+                'audit_id',
+                'audit_name',
+                'audit_program_id',
+                'ap_name',
+                'audit_test_id',
+                'audit_test_desc',
+                'audit_history_id',
+                'organization',
+                'department',
+                'schedule_start_datetime',
+                'review_year',
+                'aucreated',
+                'results',
+                'notes'
+            ]"
+        >
+            <ng-template pTemplate="caption">
+                <div
+                    class="table-header flex justify-content-between align-items-center"
+                >
+                    <span class="text-xl"
+                        >Audit Dashboard &nbsp;
+
+                        <button
+                            pButton
+                            class="p-button-outlined"
+                            style="height: 1.4rem !important;"
+                            icon="pi pi-filter-slash"
+                            title="Clear Filter"
+                            (click)="clear(dt)"
+                        ></button
+                    ></span>
+                    <span class="p-input-icon-left">
+                        <!-- <i class="pi pi-search"></i>
+                        <input
+                            pInputText
+                            type="text"
+                            (input)="
+                                dt.filterGlobal($event.target.value, 'contains')
+                            "
+                            placeholder="Global Search"
+                        /> -->
+
+                        <p-button
+                            icon="pi pi-download"
+                            class="ml-10"
+                            iconPos="left"
+                            label="Export"
+                            pTooltip="Export to csv"
+                            tooltipPosition="top"
+                            styleClass="p-button-secondary"
+                            (click)="downloadcav()"
+                        ></p-button>
+                    </span>
+                </div>
+            </ng-template>
+            <ng-template pTemplate="header">
+                <tr>
+                    <th pSortableColumn="audit_id" style="min-width: 14rem;">
+                        <p-sortIcon field="audit_id"></p-sortIcon>
+                        AUDIT ID
+                    </th>
+                    <th pSortableColumn="audit_name" style="min-width: 14rem;">
+                        <p-sortIcon field="audit_name"></p-sortIcon>
+                        AUDIT DESCRIPTION
+                        <p-columnFilter
+                            type="text"
+                            field="audit_name"
+                            display="menu"
+                            class="ml-auto"
+                        ></p-columnFilter>
+                    </th>
+
+                    <th
+                        pSortableColumn="audit_program_id"
+                        style="min-width: 14rem;"
+                    >
+                        <p-sortIcon field="audit_program_id"></p-sortIcon>
+                        AUDIT PROGRAM ID
+                    </th>
+
+                    <th pSortableColumn="ap_name" style="min-width: 14rem;">
+                        <p-sortIcon field="ap_name"></p-sortIcon>
+                        AUDIT PROGRAM DESCRIPTION
+                        <p-columnFilter
+                            type="text"
+                            field="ap_name"
+                            display="menu"
+                            class="ml-auto"
+                        ></p-columnFilter>
+                    </th>
+
+                    <th
+                        pSortableColumn="audit_test_id"
+                        style="min-width: 14rem;"
+                    >
+                        <p-sortIcon field="audit_test_id"></p-sortIcon>
+                        AUDIT TEST ID
+                    </th>
+                    <th
+                        pSortableColumn="audit_test_desc"
+                        style="min-width: 14rem;"
+                    >
+                        <p-sortIcon field="audit_test_desc"></p-sortIcon>
+                        AUDIT TEST DESCRIPTION
+                        <p-columnFilter
+                            type="text"
+                            field="audit_test_desc"
+                            display="menu"
+                            class="ml-auto"
+                        ></p-columnFilter>
+                    </th>
+                    <th
+                        pSortableColumn="audit_history_id"
+                        style="min-width: 14rem;"
+                    >
+                        <p-sortIcon field="audit_history_id"></p-sortIcon>
+                        AUDIT HISTORY TEST ID
+                    </th>
+
+                    <th
+                        pSortableColumn="organization"
+                        style="min-width: 14rem;"
+                    >
+                        <div class="flex align-items-center">
+                            <p-sortIcon field="organization"></p-sortIcon>
+                            ORGANISATION
+                            <p-columnFilter
+                                type="text"
+                                field="organization"
+                                display="menu"
+                                class="ml-auto"
+                            ></p-columnFilter>
+                        </div>
+                    </th>
+
+                    <th pSortableColumn="department" style="min-width: 14rem;">
+                        <div class="flex align-items-center">
+                            <p-sortIcon field="department"></p-sortIcon>
+                            DEPARTMENT
+                            <p-columnFilter
+                                type="text"
+                                field="department"
+                                display="menu"
+                                class="ml-auto"
+                            ></p-columnFilter>
+                        </div>
+                    </th>
+                    <th
+                        pSortableColumn="schedule_start_datetime"
+                        style="min-width: 14rem;"
+                    >
+                        <p-sortIcon field="schedule_start_datetime"></p-sortIcon
+                        >SCHEDULE START DATE
+                        <p-columnFilter
+                            type="text"
+                            field="schedule_start_datetime"
+                            display="menu"
+                            class="ml-auto"
+                        ></p-columnFilter>
+                    </th>
+                    <th pSortableColumn="review_year" style="min-width: 14rem;">
+                        <p-sortIcon field="review_year"></p-sortIcon>
+                        REVIEW YEAR
+                    </th>
+                    <th pSortableColumn="aucreated" style="min-width: 14rem;">
+                        <p-sortIcon field="aucreated"></p-sortIcon>
+                        CREATED DATE
+                        <p-columnFilter
+                            type="date"
+                            field="aucreated"
+                            display="menu"
+                            class="ml-auto"
+                        ></p-columnFilter>
+                    </th>
+
+                    <th pSortableColumn="results" style="min-width: 14rem;">
+                        <p-sortIcon field="results"></p-sortIcon>
+                        RESULT
+                        <p-columnFilter
+                            type="text"
+                            field="results"
+                            display="menu"
+                            class="ml-auto"
+                        ></p-columnFilter>
+                    </th>
+                    <th pSortableColumn="notes" style="min-width: 14rem;">
+                        <p-sortIcon field="notes"></p-sortIcon>
+                        NOTES
+                        <p-columnFilter
+                            type="text"
+                            field="notes"
+                            display="menu"
+                            class="ml-auto"
+                        ></p-columnFilter>
+                    </th>
+                </tr>
+            </ng-template>
+
+            <ng-template pTemplate="body" let-item>
+                <tr class="p-selectable-row" (click)="getDetail(item)">
+                    <td class="text-base" style="min-width: 14rem;">
+                        {{ item.audit_id }}
+                    </td>
+                    <td class="text-base" style="min-width: 14rem;">
+                        {{ item.audit_name.substring(0, 30) }}
+                    </td>
+
+                    <td class="text-base" style="min-width: 14rem;">
+                        {{ item.audit_program_id.substring(0, 30) }}
+                    </td>
+                    <td class="text-base" style="min-width: 14rem;">
+                        {{ item.ap_name.substring(0, 30) }}
+                    </td>
+                    <td class="text-base" style="min-width: 14rem;">
+                        {{ item.audit_test_id }}
+                    </td>
+                    <td class="text-base" style="min-width: 14rem;">
+                        {{ item.audit_test_desc.substring(0, 30) }}
+                    </td>
+                    <td class="text-base" style="min-width: 14rem;">
+                        {{ item.audit_history_id }}
+                    </td>
+
+                    <td class="text-base" style="min-width: 14rem;">
+                        {{ item.organization || 'N/A' }}
+                    </td>
+                    <td class="text-base" style="min-width: 14rem;">
+                        {{ item.department || 'N/A' }}
+                    </td>
+
+                    <td class="text-base" style="min-width: 12rem;">
+                        {{ (item.schedule_start_datetime | date) || 'N/A' }}
+                    </td>
+
+                    <td class="text-base" style="min-width: 14rem;">
+                        {{ item.review_year || 'N/A' }}
+                    </td>
+                    <td class="text-base" style="min-width: 12rem;">
+                        {{ (item.aucreated | date) || 'N/A' }}
+                    </td>
+                    <td class="text-base" style="min-width: 12rem;">
+                        {{ (item.results | titlecase) || 'N/A' }}
+                    </td>
+                    <td class="text-base" style="min-width: 12rem;">
+                        {{ item.notes || 'N/A' }}
+                    </td>
+                </tr>
+            </ng-template>
+        </p-table>
+    </div>
+</div>
+
+<!-- <div class="col-12 md:col-2">
+                        <label class="text-l font-bold">Audit UID</label>
+                        <p-dropdown
+                            class="ml-2"
+                            [options]="auditUIDs"
+                            optionLabel="name"
+                            dataKey="code"
+                            placeholder="audit.."
+                            formControlName="selectedAuditUID"
+                            [style]="{ width: '100%' }"
+                        ></p-dropdown>
+                    </div> -->
+
+<!-- <div class="col-12 md:col-2"
+                        ><label class="text-l font-bold">Review Year</label>
+                        <p-dropdown
+                            class="ml-2"
+                            [options]="reviewYears"
+                            optionLabel="name"
+                            dataKey="code"
+                            placeholder="year.."
+                            formControlName="selectedReviewYear"
+                            [style]="{ width: '100%' }"
+                        ></p-dropdown
+                    ></div> -->

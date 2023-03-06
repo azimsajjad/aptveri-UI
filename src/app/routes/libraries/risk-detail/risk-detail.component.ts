@@ -1,32 +1,13 @@
-import {
-    Component,
-    OnInit,
-    ViewChild,
-    ChangeDetectorRef,
-    ElementRef,
-} from '@angular/core';
-import { risk, auditunivthird } from '../../../api/libraries';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { risk, auditunivthird, Organisation } from '../../../api/libraries';
 import { BannerService } from '../../../service/librariesservice';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { Table } from 'primeng/table';
 import { AuthService } from '../../../service/auth.service';
-import {
-    catchError,
-    debounceTime,
-    finalize,
-    forkJoin,
-    map,
-    throwError,
-} from 'rxjs';
-import {
-    FormControl,
-    FormGroup,
-    Validators,
-    FormBuilder,
-    ValidatorFn,
-    AbstractControl,
-} from '@angular/forms';
+import { catchError, finalize, forkJoin, map, throwError } from 'rxjs';
+import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { Dialog } from 'primeng/dialog';
+import { UtilsService } from 'src/app/service/utils.service';
 @Component({
     selector: 'app-risk-detail',
     templateUrl: './risk-detail.component.html',
@@ -69,6 +50,7 @@ export class RiskDetailComponent implements OnInit {
     selectedimpact: any = 0;
     selectedlikelihood: any = 0;
     selectedtotal: any = 0;
+    showTable: boolean = true;
 
     submitted: boolean;
     showPopupText: boolean = false;
@@ -77,6 +59,7 @@ export class RiskDetailComponent implements OnInit {
     showPop;
     showPopTitle;
     showContent;
+    allOrg: Organisation[];
 
     @ViewChild('textDialog') textDialog: Dialog;
 
@@ -95,12 +78,17 @@ export class RiskDetailComponent implements OnInit {
         private riskService: BannerService,
         private messageService: MessageService,
         private confirmationService: ConfirmationService,
-        public accountSvr: AuthService
+        public accountSvr: AuthService,
+        public utilService: UtilsService
     ) {}
 
     ngOnInit() {
         //   this.getRiskExposuretype();
         //   this.getAuThirdtype();
+        this.riskService.getAllOrganizations().subscribe((res) => {
+            this.allOrg = res.data;
+        });
+
         this.form = this.fb.group({
             auldesc: [
                 '',
@@ -174,22 +162,21 @@ export class RiskDetailComponent implements OnInit {
                     Validators.minLength(1),
                 ]),
             ],
+            organization: [null, [Validators.required]],
         });
         this.getrisk();
-        // this.getRisktaxoneControltype();
-        // this.getimpactControltype();
-        //debugger;
-        let ban = this.riskService.sendGetauditunivthirdRequest();
-        let ri = this.riskService.sendGetloadRiskExposuretypeRequest();
-        let cont = this.riskService.sendGetloadRisktaxoneRequest();
-        let aud = this.riskService.sendGetloadimpactRequest();
 
-        forkJoin([ban, ri, cont, aud]).subscribe((results) => {
+        forkJoin([
+            this.riskService.sendGetauditunivthirdRequest(),
+            // this.riskService.sendGetloadRiskExposuretypeRequest(),
+            this.riskService.sendGetloadRisktaxoneRequest(),
+            this.riskService.sendGetloadimpactRequest(),
+        ]).subscribe((results) => {
             this.AuThird = results[0].data;
-            this.RiskExposure = results[1].data;
-            this.Risktaxone = results[2].data;
-            this.impact = results[3].data;
-            this.likelihood = results[3].data;
+            // this.RiskExposure = results[1].data;
+            this.Risktaxone = results[1].data;
+            // this.impact = results[2].data;
+            // this.likelihood = results[2].data;
         });
 
         this.cols = [
@@ -203,6 +190,25 @@ export class RiskDetailComponent implements OnInit {
                 this.selectedrtax1 = null;
             }
         });
+
+        this.form
+            .get('organization')
+            .valueChanges.subscribe((res: Organisation) => {
+                forkJoin([
+                    this.riskService.loadOptions(
+                        res.organization_id,
+                        'loadRiskExposuretype'
+                    ),
+                    this.riskService.loadOptions(
+                        res.organization_id,
+                        'loadimpact'
+                    ),
+                ]).subscribe((res) => {
+                    this.RiskExposure = res[0].data;
+                    this.impact = res[1].data;
+                    this.likelihood = res[1].data;
+                });
+            });
     }
 
     getAuThirdtype() {
@@ -361,9 +367,7 @@ export class RiskDetailComponent implements OnInit {
                         : (res.record_status = true);
                     return res;
                 });
-                //console.log(res);
                 this.risks = res;
-                //console.log(res)
             });
     }
 
@@ -542,17 +546,18 @@ export class RiskDetailComponent implements OnInit {
         this.selectedlikelihood = '';
         this.selectedtotal = '';
         this.submitted = false;
-        this.riskDialog = true;
+        // this.riskDialog = true;
+        this.showTable = false;
     }
 
-    deleteSelectedrisks() {
+    deleteSelectedrisks(risk) {
         // this.deleterisksDialog = true;
         this.confirmationService.confirm({
             header: 'Confirmation!',
             message: 'Are you sure you want to delete selected Risk?',
             icon: 'pi pi-exclamation-triangle',
             accept: () => {
-                this.confirmDeleteSelected();
+                this.confirmDeleteSelected(risk);
             },
             reject: () => {
                 //  console.log('rejected');
@@ -563,8 +568,9 @@ export class RiskDetailComponent implements OnInit {
     editrisk(risk: risk) {
         //   debugger;
         //  this.risk = {...risk};
-        this.riskDialog = true;
-        const arrayToObject = Object.assign({}, ...this.selectedrisks);
+        //  this.riskDialog = true;
+        this.showTable = false;
+        const arrayToObject = Object.assign({}, ...[risk]);
         this.risk = { ...arrayToObject };
         //  this.selectedtotal=parseInt(this.risk.impact) * parseInt(this.risk.likelihood);
 
@@ -587,13 +593,13 @@ export class RiskDetailComponent implements OnInit {
         this.risk = { ...risk };
     }
 
-    confirmDeleteSelected() {
+    confirmDeleteSelected(risk) {
         this.deleterisksDialog = false;
         // this.risks = this.risks.filter(val => !this.selectedrisks.includes(val));
         // this.messageService.add({severity: 'success', summary: 'Successful', detail: 'risks Deleted', life: 3000});
         // // this.selectedrisks = null;
 
-        const arrayToObject = Object.assign({}, ...this.selectedrisks);
+        const arrayToObject = Object.assign({}, ...[risk]);
         this.risk = { ...arrayToObject };
 
         this.riskService
@@ -704,16 +710,19 @@ export class RiskDetailComponent implements OnInit {
 
     hideDialog() {
         this.riskDialog = false;
+        this.showTable = true;
         this.submitted = false;
     }
 
     saverisk() {
         //  debugger;
-        this.submitButton.nativeElement.disabled = true;
+        // this.submitButton.nativeElement.disabled = true;
 
         this.submitted = true;
         //alert(this.selectedau_level_3_uid);
         this.datarisks = {};
+        console.log(this.form.value);
+
         if (this.risk.process.trim()) {
             if (this.risk.risk_uid) {
                 // @ts-ignore
@@ -735,17 +744,8 @@ export class RiskDetailComponent implements OnInit {
                 this.datarisks.likelihood = this.selectedlikelihood;
                 this.datarisks.risk_score = this.selectedtotal;
                 this.datarisks.risk_uid = this.risk.risk_uid;
-                //     this.riskService.sendPutRiskRequest(this.datarisks).subscribe(
-                //         res => {
-                //       //    console.log(res);
-                //           if(res > 0)
-                //           {
-                //             this.getrisk();
-                //             this.messageService.add({severity: 'success', summary: 'Successful', detail: 'risk Updated', life: 3000});
-                //             this.selectedrisks=null
-                //           }
-                //         }
-                //   );
+                this.datarisks.organization_id =
+                    this.form.get('organization').value.organization_id;
 
                 this.riskService
                     .sendPutRiskRequest(this.datarisks)
@@ -811,6 +811,10 @@ export class RiskDetailComponent implements OnInit {
                 this.datarisks.impact = this.selectedimpact;
                 this.datarisks.likelihood = this.selectedlikelihood;
                 this.datarisks.risk_score = this.selectedtotal;
+                // console.log(this.form.value);
+
+                this.datarisks.organization_id =
+                    this.form.get('organization').value.organization_id;
 
                 this.riskService
                     .sendPostRiskRequest(this.datarisks)
@@ -829,9 +833,6 @@ export class RiskDetailComponent implements OnInit {
                     .subscribe((res) => {
                         if (res.data) {
                             this.getrisk();
-                            // this.selectedrisks = null;
-
-                            //this.scriptDialog = false;
                             this.loading = false;
                             this.messageService.add({
                                 severity: 'success',
@@ -841,9 +842,6 @@ export class RiskDetailComponent implements OnInit {
                             });
                         } else {
                             this.getrisk();
-                            // this.selectedrisks = null;
-
-                            //this.scriptDialog = false;
                             this.loading = false;
                             this.messageService.add({
                                 severity: 'error',
@@ -853,24 +851,14 @@ export class RiskDetailComponent implements OnInit {
                             });
                         }
                     });
-
-                //     this.riskService.sendPostRiskRequest(this.datarisks).subscribe(
-                //         res => {
-                //        //   console.log(res);
-                //           if(res > 0)
-                //           {
-                //             this.getrisk();
-                //             this.messageService.add({severity: 'success', summary: 'Successful', detail: 'risk Created', life: 3000});
-                //           }
-                //         }
-                //   );
             }
 
             this.risks = [...this.risks];
-            this.riskDialog = false;
+            //   this.riskDialog = false;
+            this.showTable = true;
             this.risk = {};
         }
-        this.submitButton.nativeElement.disabled = false;
+        // this.submitButton.nativeElement.disabled = false;
     }
     selectEngineeringDisplayName(event: any) {
         //  debugger;
@@ -975,5 +963,20 @@ export class RiskDetailComponent implements OnInit {
         this.showPop = true;
         this.showPopTitle = title;
         this.showContent = detail;
+    }
+
+    filteredOrg: Organisation[];
+    filterOrg(event) {
+        this.filteredOrg = [];
+        for (let i = 0; i < this.allOrg.length; i++) {
+            let org = this.allOrg[i];
+            if (
+                org.organization
+                    .toLowerCase()
+                    .indexOf(event.query.toLowerCase()) == 0
+            ) {
+                this.filteredOrg.push(org);
+            }
+        }
     }
 }

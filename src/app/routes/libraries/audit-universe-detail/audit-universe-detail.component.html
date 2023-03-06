@@ -1,0 +1,41 @@
+<div class="card">
+    <h5>AUDIT UNIVERSE</h5>
+    <p-tabView orientation="left">
+        <p-tabPanel header="Level 1" class="line-height-3">
+            <app-au-level1
+                (AULevel1Event)="addItemLevel1($event)"
+            ></app-au-level1>
+        </p-tabPanel>
+        <p-tabPanel
+            header="Level 2"
+            class="line-height-3 m-0"
+            [disabled]="AULevel1?.length == 0"
+        >
+            <app-au-level2
+                [AULevel1Selection]="AULevel1"
+                (AULevel2Event)="addItemLevel2($event)"
+            ></app-au-level2>
+        </p-tabPanel>
+        <p-tabPanel
+            header="Level 3"
+            class="line-height-3 m-0"
+            [disabled]="AULevel2?.length == 0 || AULevel1?.length == 0"
+        >
+            <app-au-level3
+                [AULevel2Selection]="AULevel2"
+                (AULevel3Event)="addItemLevel3($event)"
+            ></app-au-level3>
+        </p-tabPanel>
+        <p-tabPanel
+            header="Level 4"
+            class="line-height-3 m-0"
+            [disabled]="
+                AULevel3?.length == 0 ||
+                AULevel2?.length == 0 ||
+                AULevel1?.length == 0
+            "
+        >
+            <app-au-level4 [AULevel3Selection]="AULevel3"></app-au-level4>
+        </p-tabPanel>
+    </p-tabView>
+</div>

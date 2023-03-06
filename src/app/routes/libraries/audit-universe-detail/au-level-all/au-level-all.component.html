@@ -1,301 +1,381 @@
-<div class="grid">
-    <div class="col-12">
-        <div class="card">
-            <p-toast></p-toast>
-
-            <p-table
-                #dt
-                [value]="auditDetails"
-                dataKey="risk_uid"
-                [rows]="10"
-                [loading]="loading"
-                [rowHover]="true"
-                styleClass="p-datatable-gridlines"
-                [paginator]="true"
-                [globalFilterFields]="[
-                    'risk_uid',
-                    'au_level_3_uid',
-                    'process',
-                    'business_objective',
-                    'risk',
-                    'comment',
-                    'impact',
-                    'likelihood',
-                    'risk_score',
-                    'risk_exposure'
-                ]"
-                [rowsPerPageOptions]="[10, 20, 30]"
-                [showCurrentPageReport]="true"
-                currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
-                [(selection)]="selectedauditDetails"
-                responsiveLayout="scroll"
-                [scrollable]="true"
-                scrollHeight="calc(100vh - 220px)"
-            >
-                <ng-template pTemplate="caption">
-                    <div
-                        class="flex flex-column md:flex-row md:justify-content-between md:align-items-center"
-                    >
-                        <h6 class="m-0">AUDIT UNIVERSE</h6>
-                        <div class="my-2"></div>
-                        <div class="my-2">
-                            <button
-                                title="Clear"
-                                pButton
-                                pRipple
-                                class="p-button-rounded p-button-info"
-                                icon=" pi pi-filter-slash"
-                                (click)="clear(dt)"
-                            ></button>
-                        </div>
-                    </div>
-                </ng-template>
-                <ng-template
-                    *ngIf="accountSvr.checkPermission(2, 3, 'V')"
-                    pTemplate="header"
+<div id="table1">
+    <div class="card px-3 py-3">
+        <p-table
+            #dt
+            [value]="auditDetails"
+            dataKey="id"
+            [rowHover]="true"
+            [rows]="10"
+            [showCurrentPageReport]="true"
+            [rowsPerPageOptions]="[10, 25, 50]"
+            [loading]="loading"
+            [paginator]="true"
+            currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+            [filterDelay]="0"
+            [scrollable]="true"
+            scrollHeight="calc(100vh - 305px)"
+            [tableStyle]="{ 'min-width': '50rem' }"
+            [globalFilterFields]="[
+                'organization',
+                'au_level_1_uid',
+                'au_level_1_desc',
+                'au_level_2_uid',
+                'au_level_2_desc',
+                'au_level_3_uid',
+                'au_level_3_desc',
+                'au_level_3_definition',
+                'au_level_3_comments',
+                'au_level_4_uid',
+                'au_level_4_desc',
+                'au_level_4_definition',
+                'au_level_4_comments'
+            ]"
+        >
+            <ng-template pTemplate="caption">
+                <div
+                    class="table-header flex justify-content-between align-items-center"
                 >
-                    <tr>
-                        <th pSortableColumn="au_level_1_uid">
-                            <div
-                                class="flex justify-content-between align-items-center"
-                            >
-                                <p-sortIcon field="au_level_1_uid"></p-sortIcon>
-                                AU LEVEL1 UID
+                    <span class="text-xl"
+                        >List of Audit Universe &nbsp;
+                        <button
+                            pButton
+                            class="p-button-outlined"
+                            style="height: 1.4rem !important;"
+                            icon="pi pi-filter-slash"
+                            title="Clear Filter"
+                            (click)="clear(dt)"
+                        ></button
+                    ></span>
 
-                                <p-columnFilter
-                                    type="text"
-                                    field="au_level_1_uid"
-                                    display="menu"
-                                ></p-columnFilter>
-                            </div>
-                        </th>
-                        <th pSortableColumn="au_level_1_desc">
-                            <div
-                                class="flex justify-content-between align-items-center"
-                            >
-                                <p-sortIcon
-                                    field="au_level_1_desc"
-                                ></p-sortIcon>
-                                AU LEVEL1 DESCRIPTION
+                    <span class="p-input-icon-left">
+                        <i class="pi pi-search"></i>
+                        <input
+                            pInputText
+                            type="text"
+                            (input)="
+                                dt.filterGlobal($event.target.value, 'contains')
+                            "
+                            placeholder="Global Search"
+                        />
+                    </span>
+                </div>
+                <!-- <span class="p-input-icon-right mb-2 md:mb-0">
+                    <button
+                        pButton
+                        class="p-button-outlined"
+                        style="height: 1.4rem !important;"
+                        icon="pi pi-filter-slash"
+                        title="Clear Filter"
+                        (click)="clear(dt)"
+                    ></button>
+                </span> -->
+            </ng-template>
 
-                                <p-columnFilter
-                                    type="text"
-                                    field="au_level_1_desc"
-                                    display="menu"
-                                ></p-columnFilter>
-                            </div>
-                        </th>
+            <ng-template pTemplate="header">
+                <tr>
+                    <th
+                        pSortableColumn="organization"
+                        style="min-width: 14rem;"
+                    >
+                        <div class="flex align-items-center">
+                            <p-sortIcon field="organization"></p-sortIcon>
+                            ORGANIZATION
+                            <p-columnFilter
+                                type="text"
+                                field="organization"
+                                display="menu"
+                                class="ml-auto"
+                            ></p-columnFilter>
+                        </div>
+                    </th>
+                    <th
+                        pSortableColumn="au_level_1_uid"
+                        style="min-width: 14rem;"
+                    >
+                        <div class="flex align-items-center">
+                            <p-sortIcon field="au_level_1_uid"></p-sortIcon>
+                            AU LEVEL 1 UID
+                            <p-columnFilter
+                                type="text"
+                                field="au_level_1_uid"
+                                display="menu"
+                                class="ml-auto"
+                            ></p-columnFilter>
+                        </div>
+                    </th>
 
-                        <th pSortableColumn="au_level_2_uid">
-                            <div
-                                class="flex justify-content-between align-items-center"
-                            >
-                                <p-sortIcon field="au_level_2_uid"></p-sortIcon>
-                                AU LEVEL2 UID
+                    <th
+                        pSortableColumn="au_level_1_desc"
+                        style="min-width: 14rem;"
+                    >
+                        <div class="flex align-items-center">
+                            <p-sortIcon field="au_level_1_desc"></p-sortIcon>
+                            AU LEVEL 1 DESCRIPTION
+                            <p-columnFilter
+                                type="text"
+                                field="au_level_1_desc"
+                                display="menu"
+                                class="ml-auto"
+                            ></p-columnFilter>
+                        </div>
+                    </th>
 
-                                <p-columnFilter
-                                    type="text"
-                                    field="au_level_2_uid"
-                                    display="menu"
-                                ></p-columnFilter>
-                            </div>
-                        </th>
-                        <th pSortableColumn="au_level_2_desc">
-                            <div
-                                class="flex justify-content-between align-items-center"
-                            >
-                                <p-sortIcon
-                                    field="au_level_2_desc"
-                                ></p-sortIcon>
-                                AU LEVEL2 DESCRIPTION
+                    <th
+                        pSortableColumn="au_level_2_uid"
+                        style="min-width: 14rem;"
+                    >
+                        <div class="flex align-items-center">
+                            <p-sortIcon field="au_level_2_uid"></p-sortIcon>
+                            AU LEVEL 2 UID
+                            <p-columnFilter
+                                type="text"
+                                field="au_level_2_uid"
+                                display="menu"
+                                class="ml-auto"
+                            ></p-columnFilter>
+                        </div>
+                    </th>
 
-                                <p-columnFilter
-                                    type="text"
-                                    field="au_level_2_desc"
-                                    display="menu"
-                                ></p-columnFilter>
-                            </div>
-                        </th>
-                        <th pSortableColumn="au_level_3_uid">
-                            <div
-                                class="flex justify-content-between align-items-center"
-                            >
-                                <p-sortIcon field="au_level_3_uid"></p-sortIcon>
-                                AU LEVEL3 UID
+                    <th
+                        pSortableColumn="au_level_2_desc"
+                        style="min-width: 14rem;"
+                    >
+                        <div class="flex align-items-center">
+                            <p-sortIcon field="au_level_2_desc"></p-sortIcon>
+                            AU LEVEL 2 DESCRIPTION
+                            <p-columnFilter
+                                type="text"
+                                field="au_level_2_desc"
+                                display="menu"
+                                class="ml-auto"
+                            ></p-columnFilter>
+                        </div>
+                    </th>
 
-                                <p-columnFilter
-                                    type="text"
-                                    field="au_level_3_uid"
-                                    display="menu"
-                                ></p-columnFilter>
-                            </div>
-                        </th>
-                        <th pSortableColumn="au_level_3_desc">
-                            <div
-                                class="flex justify-content-between align-items-center"
-                            >
-                                <p-sortIcon
-                                    field="au_level_3_desc"
-                                ></p-sortIcon>
-                                AU LEVEL3 DESCRIPTION
+                    <th
+                        pSortableColumn="au_level_3_uid"
+                        style="min-width: 14rem;"
+                    >
+                        <div class="flex align-items-center">
+                            <p-sortIcon field="au_level_3_uid"></p-sortIcon>
+                            AU LEVEL 3 UID
+                            <p-columnFilter
+                                type="text"
+                                field="au_level_3_uid"
+                                display="menu"
+                                class="ml-auto"
+                            ></p-columnFilter>
+                        </div>
+                    </th>
 
-                                <p-columnFilter
-                                    type="text"
-                                    field="au_level_3_desc"
-                                    display="menu"
-                                ></p-columnFilter>
-                            </div>
-                        </th>
-                        <th pSortableColumn="au_level_3_definition">
-                            <div
-                                class="flex justify-content-between align-items-center"
-                            >
-                                <p-sortIcon
-                                    field="au_level_3_definition"
-                                ></p-sortIcon>
-                                AU LEVEL3 DEFINITION
+                    <th
+                        pSortableColumn="au_level_3_desc"
+                        style="min-width: 14rem;"
+                    >
+                        <div class="flex align-items-center">
+                            <p-sortIcon field="au_level_3_desc"></p-sortIcon>
+                            AU LEVEL 3 DESCRIPTION
+                            <p-columnFilter
+                                type="text"
+                                field="au_level_3_desc"
+                                display="menu"
+                                class="ml-auto"
+                            ></p-columnFilter>
+                        </div>
+                    </th>
 
-                                <p-columnFilter
-                                    type="text"
-                                    field="au_level_3_definition"
-                                    display="menu"
-                                ></p-columnFilter>
-                            </div>
-                        </th>
-                        <th pSortableColumn="au_level_3_comments">
-                            <div
-                                class="flex justify-content-between align-items-center"
-                            >
-                                <p-sortIcon
-                                    field="au_level_3_comments"
-                                ></p-sortIcon>
-                                AU LEVEL3 COMMENTS
+                    <th
+                        pSortableColumn="au_level_3_definition"
+                        style="min-width: 25rem;"
+                    >
+                        <div class="flex align-items-center">
+                            <p-sortIcon
+                                field="au_level_3_definition"
+                            ></p-sortIcon>
+                            AU LEVEL 3 DEFINITION
+                            <p-columnFilter
+                                type="text"
+                                field="au_level_3_definition"
+                                display="menu"
+                                class="ml-auto"
+                            ></p-columnFilter>
+                        </div>
+                    </th>
 
-                                <p-columnFilter
-                                    type="text"
-                                    field="au_level_3_comments"
-                                    display="menu"
-                                ></p-columnFilter>
-                            </div>
-                        </th>
-                        <th pSortableColumn="au_level_4_uid">
-                            <div
-                                class="flex justify-content-between align-items-center"
-                            >
-                                <p-sortIcon field="au_level_4_uid"></p-sortIcon>
-                                AU LEVEL4 UID
+                    <th
+                        pSortableColumn="au_level_3_comments"
+                        style="min-width: 14rem;"
+                    >
+                        <div class="flex align-items-center">
+                            <p-sortIcon
+                                field="au_level_3_comments"
+                            ></p-sortIcon>
+                            AU LEVEL 3 COMMENTS
+                            <p-columnFilter
+                                type="text"
+                                field="au_level_3_comments"
+                                display="menu"
+                                class="ml-auto"
+                            ></p-columnFilter>
+                        </div>
+                    </th>
 
-                                <p-columnFilter
-                                    type="text"
-                                    field="au_level_4_uid"
-                                    display="menu"
-                                ></p-columnFilter>
-                            </div>
-                        </th>
-                        <th pSortableColumn="au_level_4_desc">
-                            <div
-                                class="flex justify-content-between align-items-center"
-                            >
-                                <p-sortIcon
-                                    field="au_level_4_desc"
-                                ></p-sortIcon>
-                                AU LEVEL4 DESCRIPTION
+                    <th
+                        pSortableColumn="au_level_4_uid"
+                        style="min-width: 14rem;"
+                    >
+                        <div class="flex align-items-center">
+                            <p-sortIcon field="au_level_4_uid"></p-sortIcon>
+                            AU LEVEL 4 UID
+                            <p-columnFilter
+                                type="text"
+                                field="au_level_4_uid"
+                                display="menu"
+                                class="ml-auto"
+                            ></p-columnFilter>
+                        </div>
+                    </th>
 
-                                <p-columnFilter
-                                    type="text"
-                                    field="au_level_4_desc"
-                                    display="menu"
-                                ></p-columnFilter>
-                            </div>
-                        </th>
+                    <th
+                        pSortableColumn="au_level_4_desc"
+                        style="min-width: 14rem;"
+                    >
+                        <div class="flex align-items-center">
+                            <p-sortIcon field="au_level_4_desc"></p-sortIcon>
+                            AU LEVEL 4 DESCRIPTION
+                            <p-columnFilter
+                                type="text"
+                                field="au_level_4_desc"
+                                display="menu"
+                                class="ml-auto"
+                            ></p-columnFilter>
+                        </div>
+                    </th>
 
-                        <th pSortableColumn="au_level_4_definition">
-                            <div
-                                class="flex justify-content-between align-items-center"
-                            >
-                                <p-sortIcon
-                                    field="au_level_4_definition"
-                                ></p-sortIcon>
-                                AU LEVEL4 DEFINITION
+                    <th
+                        pSortableColumn="au_level_4_definition"
+                        style="min-width: 25rem;"
+                    >
+                        <div class="flex align-items-center">
+                            <p-sortIcon
+                                field="au_level_4_definition"
+                            ></p-sortIcon>
+                            AU LEVEL 4 DEFINITION
+                            <p-columnFilter
+                                type="text"
+                                field="au_level_4_definition"
+                                display="menu"
+                                class="ml-auto"
+                            ></p-columnFilter>
+                        </div>
+                    </th>
 
-                                <p-columnFilter
-                                    type="text"
-                                    field="au_level_4_definition"
-                                    display="menu"
-                                ></p-columnFilter>
-                            </div>
-                        </th>
-                        <th pSortableColumn="au_level_4_comments">
-                            <div
-                                class="flex justify-content-between align-items-center"
-                            >
-                                <p-sortIcon
-                                    field="au_level_4_comments"
-                                ></p-sortIcon>
-                                AU LEVEL4 COMMENTS
+                    <th
+                        pSortableColumn="au_level_4_comments"
+                        style="min-width: 14rem;"
+                    >
+                        <div class="flex align-items-center">
+                            <p-sortIcon
+                                field="au_level_4_comments"
+                            ></p-sortIcon>
+                            AU LEVEL 4 COMMENTS
+                            <p-columnFilter
+                                type="text"
+                                field="au_level_4_comments"
+                                display="menu"
+                                class="ml-auto"
+                            ></p-columnFilter>
+                        </div>
+                    </th>
+                </tr>
+            </ng-template>
 
-                                <p-columnFilter
-                                    type="text"
-                                    field="au_level_4_comments"
-                                    display="menu"
-                                ></p-columnFilter>
-                            </div>
-                        </th>
-                    </tr>
-                </ng-template>
+            <ng-template pTemplate="body" let-item>
+                <tr class="p-selectable-row">
+                    <td class="text-base">
+                        <span class="p-column-title">organization</span>
+                        {{ item.organization }}
+                    </td>
 
-                <ng-template pTemplate="body" let-auditDetail>
-                    <tr>
-                        <td style="min-width: 12rem">
-                            {{ auditDetail.au_level_1_uid }}
-                        </td>
-                        <td style="min-width: 12rem">
-                            {{ auditDetail.au_level_1_desc }}
-                        </td>
+                    <td class="text-base">
+                        <span class="p-column-title">AU Level 1 UID</span>
+                        {{ item.au_level_1_uid }}
+                    </td>
 
-                        <td style="min-width: 12rem">
-                            {{ auditDetail.au_level_2_uid }}
-                        </td>
-                        <td style="min-width: 12rem">
-                            {{ auditDetail.au_level_2_desc }}
-                        </td>
-                        <td style="min-width: 12rem">
-                            {{ auditDetail.au_level_3_uid }}
-                        </td>
-                        <td style="min-width: 12rem">
-                            {{ auditDetail.au_level_3_desc }}
-                        </td>
-                        <td style="min-width: 12rem">
-                            {{ auditDetail.au_level_3_definition }}
-                        </td>
-                        <td style="min-width: 12rem">
-                            {{ auditDetail.au_level_3_comments }}
-                        </td>
-                        <td style="min-width: 12rem">
-                            {{ auditDetail.au_level_4_uid }}
-                        </td>
-                        <td style="min-width: 12rem">
-                            {{ auditDetail.au_level_4_desc }}
-                        </td>
-                        <td style="min-width: 12rem">
-                            {{ auditDetail.au_level_4_definition }}
-                        </td>
-                        <td style="min-width: 12rem">
-                            {{ auditDetail.au_level_4_comments }}
-                        </td>
-                    </tr>
-                </ng-template>
-                <ng-template pTemplate="emptymessage">
-                    <tr>
-                        <td colspan="7">No Audit found.</td>
-                    </tr>
-                </ng-template>
-                <ng-template pTemplate="loadingbody">
-                    <tr>
-                        <td colspan="7">Loading Audit Data. Please wait.</td>
-                    </tr>
-                </ng-template>
-            </p-table>
-        </div>
+                    <td class="text-base">
+                        <span class="p-column-title"
+                            >AU Level 1 Description</span
+                        >
+                        {{ item.au_level_1_desc }}
+                    </td>
+
+                    <td class="text-base">
+                        <span class="p-column-title">AU Level 2 UID</span>
+                        {{ item.au_level_2_uid }}
+                    </td>
+
+                    <td class="text-base">
+                        <span class="p-column-title"
+                            >AU Level 2 Description</span
+                        >
+                        {{ item.au_level_2_desc }}
+                    </td>
+
+                    <td class="text-base">
+                        <span class="p-column-title">AU Level 3 UID</span>
+                        {{ item.au_level_3_uid }}
+                    </td>
+
+                    <td class="text-base">
+                        <span class="p-column-title"
+                            >AU Level 3 Description</span
+                        >
+                        {{ item.au_level_3_desc }}
+                    </td>
+
+                    <td style="min-width: 25rem;" class="text-justify">
+                        <span class="p-column-title"
+                            >AU Level 3 Definition</span
+                        >
+                        {{ item.au_level_3_definition }}
+                    </td>
+
+                    <td class="text-base">
+                        <span class="p-column-title">AU Level 3 Comments</span>
+                        {{ item.au_level_3_comments }}
+                    </td>
+
+                    <td class="text-base">
+                        <span class="p-column-title">AU Level 4 UID</span>
+                        {{ item.au_level_4_uid }}
+                    </td>
+
+                    <td class="text-base">
+                        <span class="p-column-title"
+                            >AU Level 4 Description</span
+                        >
+                        {{ item.au_level_4_desc }}
+                    </td>
+
+                    <td style="min-width: 25rem;" class="text-justify">
+                        <span class="p-column-title"
+                            >AU Level 4 Definition</span
+                        >
+                        {{ item.au_level_4_definition }}
+                    </td>
+
+                    <td class="text-base">
+                        <span class="p-column-title">AU Level 4 Comments</span>
+                        {{ item.au_level_4_comments }}
+                    </td>
+                </tr>
+            </ng-template>
+
+            <ng-template pTemplate="emptymessage">
+                <tr>
+                    <td colspan="12">No Audit Universe found.</td>
+                </tr>
+            </ng-template>
+        </p-table>
     </div>
 </div>

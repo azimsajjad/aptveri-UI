@@ -3,7 +3,6 @@ import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { Dialog } from 'primeng/dialog';
 import { Table } from 'primeng/table';
-import { title } from 'process';
 import {
     catchError,
     combineLatest,
@@ -13,10 +12,11 @@ import {
     map,
     throwError,
 } from 'rxjs';
-import { Script } from 'src/app/api/libraries';
+import { Organisation, Script } from 'src/app/api/libraries';
 import { AuditUniverseService } from 'src/app/service/audituniverseservice';
 import { BannerService } from 'src/app/service/librariesservice';
 import { ScriptService } from 'src/app/service/scriptservices';
+import { UtilsService } from 'src/app/service/utils.service';
 import { AuthService } from '../../../service/auth.service';
 @Component({
     selector: 'app-script-detail',
@@ -41,6 +41,7 @@ export class ScriptDetailComponent implements OnInit {
     textDialogForm: FormGroup;
     popupText;
     profiles;
+    showTable: boolean = true;
 
     @ViewChild('textDialog') textDialog: Dialog;
 
@@ -53,6 +54,7 @@ export class ScriptDetailComponent implements OnInit {
     audit: any;
     filteredAudit: any;
     showScriptContent;
+    allOrg: Organisation[];
 
     script: Script;
 
@@ -74,7 +76,8 @@ export class ScriptDetailComponent implements OnInit {
         private bannerService: BannerService,
         private auditUniverseService: AuditUniverseService,
         public accountSvr: AuthService,
-        private confirmationService: ConfirmationService
+        private confirmationService: ConfirmationService,
+        public utilService: UtilsService
     ) {}
 
     ngOnInit(): void {
@@ -86,13 +89,15 @@ export class ScriptDetailComponent implements OnInit {
         let cont = this.bannerService.sendGetcontrolRequest();
         let aud = this.auditUniverseService.getAuditUniverseLevel4Script(0);
         let pro = this.scriptService.getProfiles();
+        let org = this.bannerService.getAllOrganizations();
 
-        forkJoin([ban, ri, cont, aud, pro]).subscribe((results: any) => {
+        forkJoin([ban, ri, cont, aud, pro, org]).subscribe((results: any) => {
             this.banner = results[0].data;
             this.risk = results[1].data;
             this.control = results[2].data;
             this.audit = results[3].data.data;
             this.profiles = results[4].data;
+            this.allOrg = results[5].data;
             this.loading = false;
         });
     }
@@ -128,12 +133,17 @@ export class ScriptDetailComponent implements OnInit {
     }
 
     openNew(script: Script, type: string) {
+        this.showTable = false;
         this.scriptEditMode = type;
 
         if (this.scriptEditMode == 'edit') {
             this.storeScriptVariables = script.scriptVaribales;
 
             this.scriptForm = this._formbuilder.group({
+                organization: [
+                    this.getOrg(script.organization_id) || null,
+                    Validators.required,
+                ],
                 record_id: script.record_id,
                 script_id: script.script_id,
                 version_id: script.version_id,
@@ -152,7 +162,7 @@ export class ScriptDetailComponent implements OnInit {
                     Validators.required,
                 ],
                 banner_id: [
-                    this.getBannerDesc(script.banner_id),
+                    this.getBannerDesc(script.department_id),
                     Validators.required,
                 ],
                 sql_script: script.script_sql,
@@ -196,6 +206,7 @@ export class ScriptDetailComponent implements OnInit {
         } else if (this.scriptEditMode == 'new') {
             this.storeScriptVariables = [];
             this.scriptForm = this._formbuilder.group({
+                organization: [null, Validators.required],
                 au_id: [null, Validators.required],
                 risk_id: [null, Validators.required],
                 banner_id: [null, Validators.required],
@@ -227,6 +238,10 @@ export class ScriptDetailComponent implements OnInit {
         } else {
             this.storeScriptVariables = script.scriptVaribales;
             this.scriptForm = this._formbuilder.group({
+                organization: [
+                    this.getOrg(script.organization_id) || null,
+                    Validators.required,
+                ],
                 script_id: script.script_id,
                 version_id: script.version_id,
                 control_id: [
@@ -242,7 +257,7 @@ export class ScriptDetailComponent implements OnInit {
                     Validators.required,
                 ],
                 banner_id: [
-                    this.getBannerDesc(script.banner_id),
+                    this.getBannerDesc(script.department_id),
                     Validators.required,
                 ],
                 sql_script: script.script_sql,
@@ -358,7 +373,7 @@ export class ScriptDetailComponent implements OnInit {
             }
         });
 
-        this.scriptForm.get('variable').valueChanges.subscribe((res) => {
+        this.scriptForm.get('variable')?.valueChanges.subscribe((res) => {
             res.forEach((ele) => {
                 if (ele.var_datatype != '') {
                     if (
@@ -372,6 +387,16 @@ export class ScriptDetailComponent implements OnInit {
                 }
             });
         });
+
+        this.scriptForm
+            .get('organization')
+            .valueChanges.subscribe((res: Organisation) => {
+                this.scriptService
+                    .getScriptControls(res.organization_id)
+                    .subscribe((res) => {
+                        this.control = res.data;
+                    });
+            });
 
         this.scriptDialog = true;
     }
@@ -428,6 +453,8 @@ export class ScriptDetailComponent implements OnInit {
                     ) || '',
                 scriptVaribales: this.scriptForm.value.variable,
                 record_status: 1,
+                organization_id:
+                    this.scriptForm.get('organization').value.organization_id,
             };
 
             if (
@@ -438,12 +465,12 @@ export class ScriptDetailComponent implements OnInit {
                     this.scriptDefaultVariables.every((x) => {
                         return this.scriptForm
                             .get('script_presto')
-                            .value.includes(x);
+                            .value?.includes(x);
                     }) ||
                     this.scriptDefaultVariables.every((x) => {
                         return this.scriptForm
                             .get('sql_script')
-                            .value.includes(x);
+                            .value?.includes(x);
                     })
                 ) {
                     this.scriptService
@@ -465,6 +492,7 @@ export class ScriptDetailComponent implements OnInit {
                                 this.getScript();
 
                                 this.scriptDialog = false;
+                                this.showTable = true;
                                 this.loading = false;
                                 this.messageService.add({
                                     severity: 'success',
@@ -539,6 +567,8 @@ export class ScriptDetailComponent implements OnInit {
                 scriptVaribales: this.scriptForm.value.variable,
                 record_status:
                     this.scriptForm.value.record_status == true ? 1 : 0,
+                organization_id:
+                    this.scriptForm.get('organization').value.organization_id,
             };
 
             if (
@@ -580,6 +610,7 @@ export class ScriptDetailComponent implements OnInit {
                                 this.getScript();
 
                                 this.scriptDialog = false;
+                                this.showTable = true;
                                 this.loading = false;
                                 this.messageService.add({
                                     severity: 'success',
@@ -592,6 +623,7 @@ export class ScriptDetailComponent implements OnInit {
                                 this.getScript();
 
                                 this.scriptDialog = false;
+                                this.showTable = true;
                                 this.loading = false;
                                 this.messageService.add({
                                     severity: 'info',
@@ -663,6 +695,8 @@ export class ScriptDetailComponent implements OnInit {
                     ) || '',
                 scriptVaribales: this.scriptForm.value.variable,
                 record_status: 1,
+                organization_id:
+                    this.scriptForm.get('organization').value.organization_id,
             };
 
             if (
@@ -700,6 +734,7 @@ export class ScriptDetailComponent implements OnInit {
                                 this.getScript();
 
                                 this.scriptDialog = false;
+                                this.showTable = true;
                                 this.loading = false;
                                 this.messageService.add({
                                     severity: 'success',
@@ -854,7 +889,7 @@ export class ScriptDetailComponent implements OnInit {
                     .setValue(this.getAuditDesc(res.data[0].au_level_4_id));
                 this.scriptForm
                     .get('banner_id')
-                    .setValue(this.getBannerDesc(res.data[0].banner_id));
+                    .setValue(this.getBannerDesc(res.data[0].department_id));
                 this.scriptForm
                     .get('risk_id')
                     .setValue(this.getRiskDesc(res.data[0].risk_id));
@@ -895,18 +930,18 @@ export class ScriptDetailComponent implements OnInit {
 
     getBannerId(banner: string): number {
         let x: Script = this.banner.filter((ele) => {
-            return ele.banner_uid == banner;
+            return ele.department_uid == banner;
         });
 
-        return x[0].banner_id;
+        return x[0].department_id;
     }
 
     getBannerDesc(banner_id: number) {
         let x: Script = this.banner.filter((ele) => {
-            return ele.banner_id == banner_id;
+            return ele.department_id == banner_id;
         });
 
-        return x[0].banner_uid + ' - ' + x[0].division;
+        return x[0].department_uid + ' - ' + x[0].organization;
     }
 
     getAuditId(audit: string): number {
@@ -1086,6 +1121,25 @@ export class ScriptDetailComponent implements OnInit {
         }
 
         this.filteredDatatypes = filtered;
+    }
+
+    filteredOrg: Organisation[];
+    filterOrg(event) {
+        this.filteredOrg = [];
+        for (let i = 0; i < this.allOrg.length; i++) {
+            let org = this.allOrg[i];
+            if (
+                org.organization
+                    .toLowerCase()
+                    .indexOf(event.query.toLowerCase()) == 0
+            ) {
+                this.filteredOrg.push(org);
+            }
+        }
+    }
+
+    getOrg(id) {
+        return this.allOrg.find((x) => x.organization_id === id);
     }
 
     day = [

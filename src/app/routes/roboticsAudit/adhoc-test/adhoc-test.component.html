@@ -1,0 +1,562 @@
+<div id="table1">
+    <p-table
+        #dt2
+        [value]="adhocTest"
+        [rows]="10"
+        [loading]="loading"
+        [rowHover]="true"
+        styleClass="p-datatable-gridlines"
+        [paginator]="true"
+        [rowsPerPageOptions]="[10, 20, 30]"
+        [showCurrentPageReport]="true"
+        [(selection)]="selectedAdhoc"
+        (onRowSelect)="getSelection()"
+        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+        responsiveLayout="scroll"
+    >
+        <ng-template pTemplate="caption">
+            <div
+                class="flex flex-column md:flex-row md:align-items-center md:justify-content-between"
+            >
+                <h6 class="m-0">ADHOC TESTS</h6>
+                <div>
+                    <button
+                        title="Run Test"
+                        pButton
+                        pRipple
+                        icon="pi pi-play"
+                        class="p-button-rounded p-button-info"
+                        (click)="runAdhoc(selectedAdhoc)"
+                        [disabled]="
+                            selectedAdhoc?.length == 0 ||
+                            selectedAdhoc?.length == null
+                        "
+                    ></button>
+                    <button
+                        title="New"
+                        pButton
+                        pRipple
+                        icon="pi pi-plus"
+                        class="p-button-rounded p-button-info ml-2"
+                        (click)="open()"
+                    ></button>
+                    <button
+                        title="Delete"
+                        pButton
+                        pRipple
+                        type="button"
+                        icon="pi pi-trash"
+                        class="p-button-rounded p-button-info ml-2"
+                        (click)="deleteAdhoc(selectedAdhoc[0])"
+                        [disabled]="selectedAdhoc?.length != 1"
+                    ></button>
+                    <button
+                        title="Clear"
+                        pButton
+                        pRipple
+                        icon="pi pi-filter-slash"
+                        class="p-button-rounded p-button-info ml-2"
+                    ></button>
+                </div>
+            </div>
+        </ng-template>
+        <ng-template pTemplate="header">
+            <tr>
+                <th style="width: 3rem">
+                    <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+                </th>
+                <th pSortableColumn="audit_test_uid">
+                    <div
+                        class="flex justify-content-between align-items-center"
+                    >
+                        <p-sortIcon field="audit_test_uid"></p-sortIcon>
+                        Adhoc Test UID
+                        <p-columnFilter
+                            type="text"
+                            field="audit_test_uid"
+                            display="menu"
+                            placeholder="Search by at Adhoc Test UID"
+                        ></p-columnFilter>
+                    </div>
+                </th>
+                <th pSortableColumn="adhoctest_desc">
+                    <div
+                        class="flex justify-content-between align-items-center"
+                    >
+                        <p-sortIcon field="adhoctest_desc"></p-sortIcon>
+                        Adhoc Test DESCRIPTION
+                        <p-columnFilter
+                            type="text"
+                            field="adhoctest_desc"
+                            display="menu"
+                            placeholder="Search by at Adhoc Test DESCRIPTION"
+                        ></p-columnFilter>
+                    </div>
+                </th>
+                <th pSortableColumn="au_level_4_uid">
+                    <div
+                        class="flex justify-content-between align-items-center"
+                    >
+                        <p-sortIcon field="au_level_4_uid"></p-sortIcon>
+                        AU UID (Level 4)
+                        <p-columnFilter
+                            type="text"
+                            field="au_level_4_uid"
+                            display="menu"
+                            placeholder="Search by at AU UID (Level 4)"
+                        ></p-columnFilter>
+                    </div>
+                </th>
+                <th pSortableColumn="script_uid">
+                    <div
+                        class="flex justify-content-between align-items-center"
+                    >
+                        <p-sortIcon field="script_uid"></p-sortIcon>
+                        SCRIPT UID
+                        <p-columnFilter
+                            type="text"
+                            field="script_uid"
+                            display="menu"
+                            placeholder="Search by au SCRIPT UID"
+                        ></p-columnFilter>
+                    </div>
+                </th>
+                <th pSortableColumn="target_table">
+                    <div
+                        class="flex justify-content-between align-items-center"
+                    >
+                        <p-sortIcon field="target_table"></p-sortIcon>
+                        TARGET TABLE
+                        <p-columnFilter
+                            type="text"
+                            field="target_table"
+                            display="menu"
+                            placeholder="Search by Target Table"
+                        ></p-columnFilter>
+                    </div>
+                </th>
+                <th pSortableColumn="script_defination">
+                    <div
+                        class="flex justify-content-between align-items-center"
+                    >
+                        <p-sortIcon field="script_defination"></p-sortIcon>
+                        SCRIPT DESCRIPTION
+                        <p-columnFilter
+                            type="text"
+                            field="script_defination"
+                            display="menu"
+                            placeholder="Search by au SCRIPT DESCRIPTION"
+                        ></p-columnFilter>
+                    </div>
+                </th>
+                <th pSortableColumn="presto">
+                    <div
+                        class="flex justify-content-between align-items-center"
+                    >
+                        <p-sortIcon field="presto"></p-sortIcon>
+                        Presto SCRIPT
+                        <p-columnFilter
+                            type="text"
+                            field="presto"
+                            display="menu"
+                            placeholder="Search by au Presto SCRIPT"
+                        ></p-columnFilter>
+                    </div>
+                </th>
+                <th pSortableColumn="sql">
+                    <div
+                        class="flex justify-content-between align-items-center"
+                    >
+                        <p-sortIcon field="sql"></p-sortIcon>
+                        SQL SCRIPT
+                        <p-columnFilter
+                            type="text"
+                            field="sql"
+                            display="menu"
+                            placeholder="Search by au SQL SCRIPT"
+                        ></p-columnFilter>
+                    </div>
+                </th>
+                <th pSortableColumn="schedule_start_datetime">
+                    <div
+                        class="flex justify-content-between align-items-center"
+                    >
+                        <p-sortIcon
+                            field="schedule_start_datetime"
+                        ></p-sortIcon>
+                        RUN DATETIME
+                        <p-columnFilter
+                            type="text"
+                            field="schedule_start_datetime"
+                            display="menu"
+                            placeholder="Search by RUN DATETIME"
+                        ></p-columnFilter>
+                    </div>
+                </th>
+                <th pSortableColumn="notes">
+                    <div
+                        class="flex justify-content-between align-items-center"
+                    >
+                        <p-sortIcon field="notes"></p-sortIcon>
+                        NOTES
+                        <p-columnFilter
+                            type="text"
+                            field="notes"
+                            display="menu"
+                            placeholder="Search by NOTES"
+                        ></p-columnFilter>
+                    </div>
+                </th>
+                <th pSortableColumn="adhoc_run_status">
+                    <div
+                        class="flex justify-content-between align-items-center"
+                    >
+                        <p-sortIcon field="adhoc_run_status"></p-sortIcon>
+                        Status
+                        <p-columnFilter
+                            type="text"
+                            field="adhoc_run_status"
+                            display="menu"
+                            placeholder="Search by Status"
+                        ></p-columnFilter>
+                    </div>
+                </th>
+                <th pSortableColumn="adhoc_test_results">
+                    <div
+                        class="flex justify-content-between align-items-center"
+                    >
+                        <p-sortIcon field="adhoc_test_results"></p-sortIcon>
+                        RESULTS
+                        <p-columnFilter
+                            type="text"
+                            field="adhoc_test_results"
+                            display="menu"
+                            placeholder="Search by RESULTS"
+                        ></p-columnFilter>
+                    </div>
+                </th>
+                <th pSortableColumn="job_run_status">
+                    <div
+                        class="flex justify-content-between align-items-center"
+                    >
+                        <p-sortIcon field="job_run_status"></p-sortIcon>
+                        JOB RUN STATUS
+                        <p-columnFilter
+                            type="text"
+                            field="job_run_status"
+                            display="menu"
+                            placeholder="Search by JOB RUN STATUS"
+                        ></p-columnFilter>
+                    </div>
+                </th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-adhocTest>
+            <tr>
+                <td>
+                    <p-tableCheckbox [value]="adhocTest"></p-tableCheckbox>
+                </td>
+                <td style="min-width: 12rem">
+                    {{ adhocTest.adhoctest_uid }}
+                </td>
+                <td style="min-width: 12rem">
+                    {{ adhocTest.adhoctest_desc }}
+                </td>
+                <td style="min-width: 12rem">
+                    {{ adhocTest.au_level_4_uid }}
+                </td>
+                <td style="min-width: 12rem">
+                    {{ adhocTest.script_uid }}
+                </td>
+                <td style="min-width: 12rem">
+                    {{ adhocTest.target_table_name }}
+                </td>
+                <td style="min-width: 12rem">
+                    {{ adhocTest.script_defination }}
+                </td>
+                <td
+                    class="truncate cursor-pointer"
+                    style="max-width: 12rem"
+                    (click)="showScript(adhocTest.presto)"
+                >
+                    {{ adhocTest.presto }}
+                </td>
+                <td
+                    class="truncate cursor-pointer"
+                    style="max-width: 12rem"
+                    (click)="showScript(adhocTest.sql)"
+                >
+                    {{ adhocTest.sql }}
+                </td>
+                <td style="min-width: 12rem">
+                    {{ adhocTest.run_datetime }}
+                </td>
+                <td style="min-width: 12rem">
+                    {{ adhocTest.notes }}
+                </td>
+                <td style="min-width: 12rem">
+                    {{ adhocTest.adhoc_test_results }}
+                </td>
+                <td style="min-width: 12rem">
+                    {{ adhocTest.adhoc_run_status }}
+                </td>
+                <td style="min-width: 12rem">
+                    {{ adhocTest.job_run_status }}
+                </td>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="emptymessage">
+            <tr>
+                <td colspan="8">No Audit Tests found.</td>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="loadingbody">
+            <tr>
+                <td colspan="8">Loading Audit Tests data. Please wait.</td>
+            </tr>
+        </ng-template>
+    </p-table>
+
+    <div *ngIf="selectedAdhoc?.length == 1" class="mt-4">
+        <form [formGroup]="editAdhocForm" (ngSubmit)="editAdhoc()">
+            <div class="grid align-items-center gap-4">
+                <div class="col">
+                    <div class="border-1 border-round-lg p-3 text-center">
+                        <strong>Banner : </strong>
+                        {{ selectedAdhoc[0]?.banner_uid }} -
+                        {{ selectedAdhoc[0]?.banner }}
+                    </div>
+
+                    <div class="border-1 border-round-lg p-3 text-center">
+                        <strong>Audit Universe Level 4 : </strong>
+                        {{ selectedAdhoc[0]?.au_level_4_uid }} -
+                        {{ selectedAdhoc[0]?.au_level_4_desc }}
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="col align-self-center">
+                        <div class="hexagon-wrapper">
+                            <button class="hexagon">
+                                <span>{{ selectedAdhoc[0]?.results }}</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="border-1 border-round-lg p-3 text-center">
+                        <strong>Script : </strong
+                        >{{ selectedAdhoc[0]?.script_uid }} -
+                        {{ selectedAdhoc[0]?.script_defination }}
+                    </div>
+
+                    <div class="border-1 border-round-lg p-3 text-center">
+                        <strong>Store : </strong
+                        >{{ selectedAdhoc[0]?.store ? 'Yes' : 'No' }}
+                    </div>
+                </div>
+                <div class="col align-self-center">
+                    <div class="field">
+                        <div class="mb-2">
+                            <label for="notes">Note</label>
+                        </div>
+                        <textarea
+                            rows="5"
+                            cols="40"
+                            id="notes"
+                            pInputText
+                            formControlName="notes"
+                        >
+                        </textarea>
+                    </div>
+                    <div>
+                        <button
+                            pButton
+                            pRipple
+                            label="Save"
+                            icon="pi pi-check"
+                            class="p-button-text"
+                            type="submit"
+                        ></button>
+                        <button
+                            type="button"
+                            label="Results"
+                            class="p-element p-ripple p-button-rounded p-button-info p-button p-component"
+                        >
+                            <span class="p-button-label">View Data Results</span
+                            ><span
+                                class="p-ink"
+                                style="
+                                    height: 64px;
+                                    width: 64px;
+                                    top: -9.25px;
+                                    left: -6.32812px;
+                                "
+                            ></span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <p-dialog
+        [(visible)]="adhocTestDialog"
+        [style]="{ width: '600px' }"
+        header="Adhoc Test Details"
+        [modal]="true"
+        class="p-fluid"
+    >
+        <ng-template pTemplate="content">
+            <form [formGroup]="adhocForm" (ngSubmit)="saveAdhoc()">
+                <div class="grid">
+                    <div class="col field">
+                        <label for="adhoctest_desc"
+                            >Adhoc Test Description</label
+                        >
+                        <input
+                            id="adhoctest_desc"
+                            pInputText
+                            formControlName="adhoctest_desc"
+                        />
+                    </div>
+                </div>
+
+                <div class="grid align-items-center">
+                    <div class="col grid gap-6">
+                        <div>
+                            <label for="banner_id">Banner <sup>*</sup></label>
+                            <p-autoComplete
+                                appendTo="body"
+                                placeholder="Search"
+                                [dropdown]="true"
+                                [multiple]="false"
+                                [suggestions]="filteredBanner"
+                                (completeMethod)="filterBanner($event)"
+                                formControlName="banner_id"
+                            ></p-autoComplete>
+                        </div>
+
+                        <div>
+                            <label for="au_level_4_id"
+                                >Audit Universe L4 <sup>*</sup></label
+                            >
+                            <p-autoComplete
+                                appendTo="body"
+                                placeholder="Search"
+                                [dropdown]="true"
+                                [multiple]="false"
+                                [suggestions]="filteredAuditUniverseL4"
+                                (completeMethod)="filterAuditUniverse4($event)"
+                                formControlName="au_level_4_id"
+                            ></p-autoComplete>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="col align-self-center">
+                            <div class="hexagon-wrapper">
+                                <button class="hexagon" type="submit">
+                                    <span>Save Adhoc Test</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col grid gap-6">
+                        <div>
+                            <label for="script_id">Script <sup>*</sup></label>
+                            <p-autoComplete
+                                appendTo="body"
+                                placeholder="Search"
+                                [dropdown]="true"
+                                [multiple]="false"
+                                [suggestions]="filteredScript"
+                                (completeMethod)="filterScript($event)"
+                                formControlName="script_id"
+                                (onSelect)="onSelectScript($event)"
+                            ></p-autoComplete>
+                        </div>
+                        <div class="w-full">
+                            <label for="store">Store Results</label>
+                            <p-dropdown
+                                appendTo="body"
+                                id="store"
+                                [options]="storeList"
+                                formControlName="store"
+                                optionLabel="viewValue"
+                                optionValue="code"
+                            ></p-dropdown>
+                        </div>
+                    </div>
+                </div>
+
+                <div
+                    formArrayName="scriptVariables"
+                    *ngFor="
+                        let item of adhocForm.get('scriptVariables').controls;
+                        let i = index
+                    "
+                >
+                    <div
+                        class="grid align-items-center border-2 border-200 border-round-xl p-0 mb-4"
+                        *ngIf="
+                            !scriptDefaultVariables.includes(
+                                adhocForm.get('scriptVariables').value[i]
+                                    .var_name
+                            )
+                        "
+                    >
+                        <div class="col text-xl text-center">
+                            {{
+                                adhocForm.get('scriptVariables').value[i]
+                                    .var_name
+                            }}
+                        </div>
+                        <div class="col text-xl text-center">
+                            {{
+                                adhocForm.get('scriptVariables').value[i]
+                                    .var_datatype
+                            }}
+                        </div>
+                        <div class="col" [formGroupName]="i">
+                            <div class="field">
+                                <input
+                                    id="var_value"
+                                    pInputText
+                                    formControlName="var_value"
+                                    placeholder="Variable Value"
+                                />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </ng-template>
+
+        <ng-template pTemplate="footer">
+            <button
+                pButton
+                pRipple
+                label="Cancel"
+                icon="pi pi-times"
+                class="p-button-text"
+                (click)="adhocTestDialog = false"
+            ></button>
+        </ng-template>
+    </p-dialog>
+
+    <p-confirmDialog></p-confirmDialog>
+
+    <p-dialog
+        [(visible)]="showScriptPop"
+        [style]="{ width: '600px' }"
+        header="Script"
+    >
+        <ng-template pTemplate="content">
+            <div>
+                <textarea name="" id="" cols="65" rows="40">{{
+                    showScriptContent
+                }}</textarea>
+            </div>
+        </ng-template>
+    </p-dialog>
+</div>
+<p-toast></p-toast>

@@ -220,46 +220,46 @@ export class BannersDetailComponent implements OnInit {
         //     message: 'Do you want to delete this Banner?',
         //     icon: 'pi pi-exclamation-triangle',
         //     accept: () => {
-        this.bannerService
-            .sendDeleteRequest(this.banner.banner_uid)
-            .pipe(
-                catchError((err) => {
-                    this.messageService.add({
-                        severity: 'error',
-                        summary: 'ERROR!!',
-                        detail: 'Something Went Wrong !!',
-                        life: 3000,
-                    });
-                    //  this.selectedBanners = null;
-                    this.banner = {};
-                    //    console.log(err);
-                    return throwError(err);
-                })
-            )
-            .subscribe((res) => {
-                //  alert(res.message);
-                if (res.message == 'Success') {
-                    this.getbanner();
-                    this.messageService.add({
-                        severity: 'success',
-                        summary: 'Success!!',
-                        detail: 'Banner Deleted !!',
-                        life: 3000,
-                    });
-                    //  this.selectedBanners = null;
-                    this.banner = {};
-                } else {
-                    this.getbanner();
-                    //   this.selectedBanners = null;
-                    this.banner = {};
-                    this.messageService.add({
-                        severity: 'warn',
-                        summary: 'Warn Message!!',
-                        detail: res.message,
-                        life: 3000,
-                    });
-                }
-            });
+        // this.bannerService
+        //     .sendDeleteRequest(this.banner.banner_uid)
+        //     .pipe(
+        //         catchError((err) => {
+        //             this.messageService.add({
+        //                 severity: 'error',
+        //                 summary: 'ERROR!!',
+        //                 detail: 'Something Went Wrong !!',
+        //                 life: 3000,
+        //             });
+        //             //  this.selectedBanners = null;
+        //             this.banner = {};
+        //             //    console.log(err);
+        //             return throwError(err);
+        //         })
+        //     )
+        //     .subscribe((res) => {
+        //         //  alert(res.message);
+        //         if (res.message == 'Success') {
+        //             this.getbanner();
+        //             this.messageService.add({
+        //                 severity: 'success',
+        //                 summary: 'Success!!',
+        //                 detail: 'Banner Deleted !!',
+        //                 life: 3000,
+        //             });
+        //             //  this.selectedBanners = null;
+        //             this.banner = {};
+        //         } else {
+        //             this.getbanner();
+        //             //   this.selectedBanners = null;
+        //             this.banner = {};
+        //             this.messageService.add({
+        //                 severity: 'warn',
+        //                 summary: 'Warn Message!!',
+        //                 detail: res.message,
+        //                 life: 3000,
+        //             });
+        //         }
+        //     });
         // // },
         // // reject: () => {
         // //     console.log(false);
@@ -301,21 +301,21 @@ export class BannersDetailComponent implements OnInit {
     confirmDelete() {
         this.deleteBannerDialog = false;
         //  this.banners = this.banners.filter(val => val.id !== this.banner.id);
-        this.bannerService
-            .sendDeleteRequest(this.banner.banner_uid)
-            .subscribe((res) => {
-                //    console.log(res);
-                if (res > 0) {
-                    this.getbanner();
-                    this.messageService.add({
-                        severity: 'success',
-                        summary: 'Successful',
-                        detail: 'Banner Deleted',
-                        life: 3000,
-                    });
-                    this.banner = {};
-                }
-            });
+        // this.bannerService
+        //     .sendDeleteRequest(this.banner.banner_uid)
+        //     .subscribe((res) => {
+        //         //    console.log(res);
+        //         if (res > 0) {
+        //             this.getbanner();
+        //             this.messageService.add({
+        //                 severity: 'success',
+        //                 summary: 'Successful',
+        //                 detail: 'Banner Deleted',
+        //                 life: 3000,
+        //             });
+        //             this.banner = {};
+        //         }
+        //     });
     }
 
     hideDialog() {
@@ -328,210 +328,210 @@ export class BannersDetailComponent implements OnInit {
         this.submitted = true;
         //debugger;
         this.databanners = {};
-        if (this.banner.division.trim()) {
-            if (this.banner.banner_uid) {
-                // @ts-ignore
-                //   this.banner.inventoryStatus = this.banner.inventoryStatus.value ? this.banner.inventoryStatus.value: this.banner.inventoryStatus;
-                // this.banners[this.findIndexById(this.banner.banner_uid)] = this.banner;
-                this.banner.division = this.banner.division;
-                this.banner.banner = this.banner.banner;
-                // this.banners.push(this.banner);
-                this.banner.banner_uid = this.banner.banner_uid;
-                this.databanners.division = this.banner.division;
-                this.databanners.banner = this.banner.banner;
+        // if (this.banner.division.trim()) {
+        //     if (this.banner.banner_uid) {
+        //         // @ts-ignore
+        //         //   this.banner.inventoryStatus = this.banner.inventoryStatus.value ? this.banner.inventoryStatus.value: this.banner.inventoryStatus;
+        //         // this.banners[this.findIndexById(this.banner.banner_uid)] = this.banner;
+        //         this.banner.division = this.banner.division;
+        //         this.banner.banner = this.banner.banner;
+        //         // this.banners.push(this.banner);
+        //         this.banner.banner_uid = this.banner.banner_uid;
+        //         this.databanners.division = this.banner.division;
+        //         this.databanners.banner = this.banner.banner;
 
-                this.databanners.banner_uid = this.banner.banner_uid;
-                //     this.bannerService.sendPutRequest(this.databanners).subscribe(
-                //         res => {
-                //      //     console.log(res);
-                //           if(res > 0)
-                //           {
-                //             this.getbanner();
-                //             this.selectedBanners = null;
-                //             this.messageService.add({severity: 'success', summary: 'Successful', detail: 'Banner Updated', life: 3000});
-                //           }
-                //         }
-                //   );
-                //comment on aug 1
-                // this.bannerService
-                //     .sendPutRequest(this.databanners)
-                //     .pipe(
-                //         catchError((err) => {
-                //             this.messageService.add({
-                //                 severity: 'error',
-                //                 summary: 'ERROR!!',
-                //                 detail: 'Something Went Wrong !!',
-                //                 life: 3000,
-                //             });
-                //             //   console.log(err);
-                //             return throwError(err);
-                //         }),
-                //         finalize(() => {
-                //             this.getbanner();
-                //             //   this.selectedBanners = null;
+        //         this.databanners.banner_uid = this.banner.banner_uid;
+        //         //     this.bannerService.sendPutRequest(this.databanners).subscribe(
+        //         //         res => {
+        //         //      //     console.log(res);
+        //         //           if(res > 0)
+        //         //           {
+        //         //             this.getbanner();
+        //         //             this.selectedBanners = null;
+        //         //             this.messageService.add({severity: 'success', summary: 'Successful', detail: 'Banner Updated', life: 3000});
+        //         //           }
+        //         //         }
+        //         //   );
+        //         //comment on aug 1
+        //         // this.bannerService
+        //         //     .sendPutRequest(this.databanners)
+        //         //     .pipe(
+        //         //         catchError((err) => {
+        //         //             this.messageService.add({
+        //         //                 severity: 'error',
+        //         //                 summary: 'ERROR!!',
+        //         //                 detail: 'Something Went Wrong !!',
+        //         //                 life: 3000,
+        //         //             });
+        //         //             //   console.log(err);
+        //         //             return throwError(err);
+        //         //         }),
+        //         //         finalize(() => {
+        //         //             this.getbanner();
+        //         //             //   this.selectedBanners = null;
 
-                //             //this.scriptDialog = false;
-                //             this.loading = false;
-                //             this.messageService.add({
-                //                 severity: 'success',
-                //                 summary: 'Successful',
-                //                 detail: 'Banner Updated !!',
-                //                 life: 3000,
-                //             });
-                //         })
-                //     )
-                //     .subscribe();
+        //         //             //this.scriptDialog = false;
+        //         //             this.loading = false;
+        //         //             this.messageService.add({
+        //         //                 severity: 'success',
+        //         //                 summary: 'Successful',
+        //         //                 detail: 'Banner Updated !!',
+        //         //                 life: 3000,
+        //         //             });
+        //         //         })
+        //         //     )
+        //         //     .subscribe();
 
-                this.bannerService
-                    .sendPutRequest(this.databanners)
-                    .pipe(
-                        catchError((err) => {
-                            this.messageService.add({
-                                severity: 'error',
-                                summary: 'ERROR!!',
-                                detail: 'Something Went Wrong !!',
-                                life: 3000,
-                            });
-                            //  this.selectedBanners = null;
-                            this.banner = {};
-                            //    console.log(err);
-                            return throwError(err);
-                        }),
-                        finalize(() => {
-                            this.selectedBanners = null;
-                        })
-                    )
-                    .subscribe((res) => {
-                        //  alert(res.message);
-                        if (res.message == 'Success') {
-                            this.getbanner();
-                            this.messageService.add({
-                                severity: 'success',
-                                summary: 'Success!!',
-                                detail: 'Banner Updated !!',
-                                life: 3000,
-                            });
-                            //  this.selectedBanners = null;
-                            this.banner = {};
-                        } else {
-                            this.getbanner();
-                            //   this.selectedBanners = null;
-                            this.banner = {};
-                            this.messageService.add({
-                                severity: 'warn',
-                                summary: 'Warn Message!!',
-                                detail: res.message,
-                                life: 3000,
-                            });
-                        }
-                    });
-            } else {
-                //  this.banner.banner_uid = this.createId();
-                // this.banner.code = this.createId();
-                // this.banner.image = 'banner-placeholder.svg';
-                // @ts-ignore
-                //edit
-                this.banner.division = this.banner.division;
-                this.banner.banner = this.banner.banner;
-                // this.banners.push(this.banner);
-                this.databanners.division = this.banner.division;
-                this.databanners.banner = this.banner.banner;
+        //         this.bannerService
+        //             .sendPutRequest(this.databanners)
+        //             .pipe(
+        //                 catchError((err) => {
+        //                     this.messageService.add({
+        //                         severity: 'error',
+        //                         summary: 'ERROR!!',
+        //                         detail: 'Something Went Wrong !!',
+        //                         life: 3000,
+        //                     });
+        //                     //  this.selectedBanners = null;
+        //                     this.banner = {};
+        //                     //    console.log(err);
+        //                     return throwError(err);
+        //                 }),
+        //                 finalize(() => {
+        //                     this.selectedBanners = null;
+        //                 })
+        //             )
+        //             .subscribe((res) => {
+        //                 //  alert(res.message);
+        //                 if (res.message == 'Success') {
+        //                     this.getbanner();
+        //                     this.messageService.add({
+        //                         severity: 'success',
+        //                         summary: 'Success!!',
+        //                         detail: 'Banner Updated !!',
+        //                         life: 3000,
+        //                     });
+        //                     //  this.selectedBanners = null;
+        //                     this.banner = {};
+        //                 } else {
+        //                     this.getbanner();
+        //                     //   this.selectedBanners = null;
+        //                     this.banner = {};
+        //                     this.messageService.add({
+        //                         severity: 'warn',
+        //                         summary: 'Warn Message!!',
+        //                         detail: res.message,
+        //                         life: 3000,
+        //                     });
+        //                 }
+        //             });
+        //     } else {
+        //         //  this.banner.banner_uid = this.createId();
+        //         // this.banner.code = this.createId();
+        //         // this.banner.image = 'banner-placeholder.svg';
+        //         // @ts-ignore
+        //         //edit
+        //         this.banner.division = this.banner.division;
+        //         this.banner.banner = this.banner.banner;
+        //         // this.banners.push(this.banner);
+        //         this.databanners.division = this.banner.division;
+        //         this.databanners.banner = this.banner.banner;
 
-                //     this.bannerService.sendPostRequest(this.databanners).subscribe(
-                //         res => {
-                //       //    console.log(res);
-                //           if(res > 0)
-                //           {
-                //             this.getbanner();
-                //             this.messageService.add({severity: 'success', summary: 'Successful', detail: 'Banner Created', life: 3000});
-                //           }
-                //         }
-                //   );
+        //         //     this.bannerService.sendPostRequest(this.databanners).subscribe(
+        //         //         res => {
+        //         //       //    console.log(res);
+        //         //           if(res > 0)
+        //         //           {
+        //         //             this.getbanner();
+        //         //             this.messageService.add({severity: 'success', summary: 'Successful', detail: 'Banner Created', life: 3000});
+        //         //           }
+        //         //         }
+        //         //   );
 
-                //comment on 1 aug
-                //     this.bannerService
-                //         .sendPostRequest(this.databanners)
-                //         .pipe(
-                //             catchError((err) => {
-                //                 this.messageService.add({
-                //                     severity: 'error',
-                //                     summary: 'ERROR!!',
-                //                     detail: 'Something Went Wrong !!',
-                //                     life: 3000,
-                //                 });
-                //                 //   console.log(err);
-                //                 return throwError(err);
-                //             }),
-                //             finalize(() => {
-                //                 this.getbanner();
+        //         //comment on 1 aug
+        //         //     this.bannerService
+        //         //         .sendPostRequest(this.databanners)
+        //         //         .pipe(
+        //         //             catchError((err) => {
+        //         //                 this.messageService.add({
+        //         //                     severity: 'error',
+        //         //                     summary: 'ERROR!!',
+        //         //                     detail: 'Something Went Wrong !!',
+        //         //                     life: 3000,
+        //         //                 });
+        //         //                 //   console.log(err);
+        //         //                 return throwError(err);
+        //         //             }),
+        //         //             finalize(() => {
+        //         //                 this.getbanner();
 
-                //                 //this.scriptDialog = false;
-                //                 this.loading = false;
-                //                 this.messageService.add({
-                //                     severity: 'success',
-                //                     summary: 'Successful',
-                //                     detail: 'New Banner Created !!',
-                //                     life: 3000,
-                //                 });
-                //             })
-                //         )
-                //         .subscribe();
-                this.bannerService
-                    .sendPostRequest(this.databanners)
-                    .pipe(
-                        catchError((err) => {
-                            this.messageService.add({
-                                severity: 'error',
-                                summary: 'ERROR!!',
-                                detail: 'Something Went Wrong !!',
-                                life: 3000,
-                            });
-                            //  this.selectedBanners = null;
-                            this.banner = {};
-                            //    console.log(err);
-                            return throwError(err);
-                        })
-                    )
-                    .subscribe((res) => {
-                        //  alert(res.message);
-                        if (res.message == 'Success') {
-                            this.getbanner();
-                            this.messageService.add({
-                                severity: 'success',
-                                summary: 'Success!!',
-                                detail: 'New Banner Created !!',
-                                life: 3000,
-                            });
-                            //  this.selectedBanners = null;
-                            this.banner = {};
-                        } else {
-                            this.getbanner();
-                            //   this.selectedBanners = null;
-                            this.banner = {};
-                            this.messageService.add({
-                                severity: 'warn',
-                                summary: 'Warn Message!!',
-                                detail: res.message,
-                                life: 3000,
-                            });
-                        }
-                    });
-            }
-            this.banners = [...this.banners];
-            this.bannerDialog = false;
-            this.banner = {};
-        }
+        //         //                 //this.scriptDialog = false;
+        //         //                 this.loading = false;
+        //         //                 this.messageService.add({
+        //         //                     severity: 'success',
+        //         //                     summary: 'Successful',
+        //         //                     detail: 'New Banner Created !!',
+        //         //                     life: 3000,
+        //         //                 });
+        //         //             })
+        //         //         )
+        //         //         .subscribe();
+        //         this.bannerService
+        //             .sendPostRequest(this.databanners)
+        //             .pipe(
+        //                 catchError((err) => {
+        //                     this.messageService.add({
+        //                         severity: 'error',
+        //                         summary: 'ERROR!!',
+        //                         detail: 'Something Went Wrong !!',
+        //                         life: 3000,
+        //                     });
+        //                     //  this.selectedBanners = null;
+        //                     this.banner = {};
+        //                     //    console.log(err);
+        //                     return throwError(err);
+        //                 })
+        //             )
+        //             .subscribe((res) => {
+        //                 //  alert(res.message);
+        //                 if (res.message == 'Success') {
+        //                     this.getbanner();
+        //                     this.messageService.add({
+        //                         severity: 'success',
+        //                         summary: 'Success!!',
+        //                         detail: 'New Banner Created !!',
+        //                         life: 3000,
+        //                     });
+        //                     //  this.selectedBanners = null;
+        //                     this.banner = {};
+        //                 } else {
+        //                     this.getbanner();
+        //                     //   this.selectedBanners = null;
+        //                     this.banner = {};
+        //                     this.messageService.add({
+        //                         severity: 'warn',
+        //                         summary: 'Warn Message!!',
+        //                         detail: res.message,
+        //                         life: 3000,
+        //                     });
+        //                 }
+        //             });
+        //     }
+        //     this.banners = [...this.banners];
+        //     this.bannerDialog = false;
+        //     this.banner = {};
+        // }
         this.submitButton.nativeElement.disabled = false;
     }
 
     findIndexById(id: string): number {
         let index = -1;
-        for (let i = 0; i < this.banners.length; i++) {
-            if (this.banners[i].banner_uid === id) {
-                index = i;
-                break;
-            }
-        }
+        // for (let i = 0; i < this.banners.length; i++) {
+        //     if (this.banners[i].banner_uid === id) {
+        //         index = i;
+        //         break;
+        //     }
+        // }
 
         return index;
     }

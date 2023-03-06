@@ -8,7 +8,7 @@ import { AppMainComponent } from './app.main.component';
             <ul class="layout-menu" role="menu" (keydown)="onKeydown($event)">
                 <li
                     app-menu
-                    class="layout-menuitem-category"
+                    class="layout-menuitem-category text-l font-bold mb-3"
                     *ngFor="let item of model; let i = index"
                     [item]="item"
                     [index]="i"
@@ -23,6 +23,7 @@ import { AppMainComponent } from './app.main.component';
                     </div>
                     <ul role="menu">
                         <li
+                            class="font-normal mt-1"
                             app-menuitem
                             *ngFor="let child of item.items"
                             [item]="child"
@@ -56,19 +57,31 @@ export class AppMenuComponent implements OnInit {
                 label: 'Libraries',
                 items: [
                     {
-                        label: 'Banner',
-                        icon: 'pi pi-fw pi-globe',
-                        routerLink: ['/pages/banners-detail'],
+                        label: 'Organisation',
+                        icon: 'pi pi-fw pi-building',
+                        routerLink: ['/pages/organisation'],
                     },
-                    // {
-                    //     label: 'Audit Universe',
-                    //     icon: 'pi pi-fw pi-user-edit',
-                    //     routerLink: ['/pages/audit-universe-all'],
-                    // },
+                    {
+                        label: 'Department',
+                        icon: 'pi pi-fw pi-globe',
+                        routerLink: ['/pages/banner'],
+                    },
                     {
                         label: 'Audit Universe',
                         icon: 'pi pi-fw pi-user-edit',
-                        routerLink: ['/pages/audit-universe-all'],
+                        // routerLink: ['/test'],
+                        items: [
+                            {
+                                label: 'List',
+                                icon: 'pi pi-fw pi-book',
+                                routerLink: ['/pages/audit-universe-all'],
+                            },
+                            {
+                                label: 'Create',
+                                icon: 'pi pi-fw pi-pencil',
+                                routerLink: ['/pages/audit-universe'],
+                            },
+                        ],
                     },
                     {
                         label: 'Risk',
@@ -94,6 +107,42 @@ export class AppMenuComponent implements OnInit {
                         label: 'Audit',
                         icon: 'pi pi-fw pi-id-card',
                         routerLink: ['/pages/audit'],
+                    },
+                    // {
+                    //     label: 'Ad-Hoc Test',
+                    //     icon: 'pi pi-fw pi-exclamation-circle',
+                    //     routerLink: ['/pages/adhoc-test'],
+                    // },
+                    {
+                        label: 'Audit Dashboard',
+                        icon: 'pi pi-fw pi-chart-pie',
+                        routerLink: ['/pages/audit-dashboard'],
+                    },
+                ],
+            },
+            {
+                label: 'Utilites',
+                items: [
+                    {
+                        label: 'Library Master',
+                        icon: 'pi pi-box',
+                        routerLink: ['/pages/master'],
+                    },
+
+                    {
+                        label: 'Users',
+                        icon: 'pi pi-users',
+                        routerLink: ['/pages/users'],
+                    },
+                    {
+                        label: 'Upload',
+                        icon: 'pi pi-upload',
+                        routerLink: ['/pages/upload'],
+                    },
+                    {
+                        label: 'Logs',
+                        icon: 'pi pi-code',
+                        routerLink: ['/pages/logs'],
                     },
                 ],
             },

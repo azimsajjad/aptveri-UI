@@ -1,8 +1,8 @@
 export interface Banner {
-    banner_id?: number;
-    banner_uid?: string;
-    division?: string;
-    banner?: string;
+    department_id?: number;
+    department_uid?: string;
+    organization?: string;
+    department?: string;
 }
 
 export interface auditDetails {
@@ -39,7 +39,8 @@ export interface risk {
     coddesc?: string;
     rtonedesc?: string;
     rttwodesc?: string;
-
+    organization?: string;
+    organization_id?: number;
     auluid?: string;
     codetext?: string;
     rtax1?: string;
@@ -59,6 +60,7 @@ export interface auditunivthird {
 }
 
 export interface control {
+    department_uid?: any;
     control_id?: number;
     control_uid?: string;
     au_level_4_uid?: string;
@@ -85,7 +87,8 @@ export interface control {
     created_date?: string;
     updated_by?: number;
     updated_date?: string;
-
+    organization_id?: number;
+    organization?: string;
     categorytxt?: string;
     controltxt?: string;
     frequencytxt?: string;
@@ -107,12 +110,14 @@ export interface code_values {
 }
 
 export interface Script {
+    organization_id?: number;
     au_level_u_uid?: string;
     au_level_4_id?: any;
     risk_id?: any;
     banner_id?: any;
     control_id?: any;
     banner_uid?: string;
+    department_id?: any;
     control_uid?: string;
     original_version_id?: string;
     output_only?: boolean;
@@ -146,4 +151,25 @@ export interface AuditStatusCount {
     pass: string;
     pending: string;
     total: number;
+}
+
+export interface Organisation {
+    organization_id: number;
+    organization_uid: string;
+    organization: string;
+    organization_description: string;
+    created_by: number;
+    created_date: string;
+    updated_by: number;
+    updated_date: string;
+}
+
+export interface AddOrgBody {
+    organization: string;
+    organization_description: string;
+}
+export interface EditOrgBody {
+    organization_uid: string;
+    organization: string;
+    organization_description: string;
 }
