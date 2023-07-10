@@ -1,6 +1,0 @@
-<div *ngIf="config" class="text-lg">
-    <pre
-        *ngIf="config.header == 'Script'; else other"
-    ><code [innerHTML]="config.data.text"></code></pre>
-    <ng-template #other><p [innerHTML]="config.data.text"></p></ng-template>
-</div>

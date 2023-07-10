@@ -27,18 +27,8 @@ export class AuthGuard implements CanActivate {
         state: RouterStateSnapshot
     ) {
         const token = localStorage.getItem('jwt');
-        //  debugger;
-        // if (token && !this.jwtHelper.isTokenExpired(token)) {
-        //     //  console.log(this.jwtHelper.decodeToken(token))
-        //     // console.log('authugard true');
-        //     return true;
-        // }
-        // //   console.log('authguard false');
-        // this.router.navigate(['pages/login']);
-        // return true;
 
         if (token && !this.jwtHelper.isTokenExpired(token)) {
-            //   console.log(this.jwtHelper.decodeToken(token));
             return true;
         }
 
@@ -51,8 +41,6 @@ export class AuthGuard implements CanActivate {
     }
 
     private async tryRefreshingTokens(token: string): Promise<boolean> {
-        // Try refreshing tokens using refresh token
-        //  debugger;
         const refreshToken: string = localStorage.getItem('refreshToken');
         if (!token || !refreshToken) {
             return false;

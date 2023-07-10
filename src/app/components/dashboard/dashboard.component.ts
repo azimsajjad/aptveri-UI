@@ -1,12 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { MenuItem } from 'primeng/api';
-import { Product } from '../../api/product';
-import { Subscription } from 'rxjs';
 import { ConfigService } from '../../service/app.config.service';
-import { AppConfig } from '../../api/appconfig';
-import { AuditService } from 'src/app/service/audit.service';
-import { AuditStatusCount } from 'src/app/api/libraries';
-import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
     templateUrl: './dashboard.component.html',

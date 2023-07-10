@@ -21,7 +21,6 @@ export class AppComponent {
     ) {
         this.bnIdle.startWatching(1800).subscribe((res) => {
             if (res) {
-                //  console.log('session expired');
                 this.router.navigate(['pages/login']);
             }
         });

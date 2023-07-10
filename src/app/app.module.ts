@@ -18,55 +18,23 @@ import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { MessagesComponent } from './components/messages/messages.component';
 import { EmptyComponent } from './components/empty/empty.component';
 
-import { EventService } from './service/eventservice';
-import { NodeService } from './service/nodeservice';
 import { MenuService } from './service/app.menu.service';
 import { ConfigService } from './service/app.config.service';
 import { LoginComponent } from './components/login/login.component';
 import { ErrorComponent } from './components/error/error.component';
 import { NotfoundComponent } from './components/notfound/notfound.component';
 import { AccessComponent } from './components/access/access.component';
-import { BannersDetailComponent } from './routes/libraries/banners-detail/banners-detail.component';
-import { BannerService } from './service/librariesservice';
-import { RiskDetailComponent } from './routes/libraries/risk-detail/risk-detail.component';
-import { ControlDetailComponent } from './routes/libraries/control-detail/control-detail.component';
-import { ScriptDetailComponent } from './routes/libraries/script-detail/script-detail.component';
-import { ScriptService } from './service/scriptservices';
-import { AuditUniverseService } from './service/audituniverseservice';
 import { JwtModule } from '@auth0/angular-jwt';
 import { AuthGuard } from './guards/auth.guard';
 import { httpInterceptor } from './Interceptor/httpInterceptor';
 import { ErrorInterceptorService } from './Interceptor/errorInterceptor';
-import { AuditService } from './service/audit.service';
-import { AuditComponent } from './routes/roboticsAudit/audit/audit.component';
-import { ResultsComponent } from './routes/roboticsAudit/results/results.component';
-import { ViewResultComponent } from './routes/roboticsAudit/view-result/view-result.component';
 import { BnNgIdleService } from 'bn-ng-idle';
-import { AuLevelAllComponent } from './routes/libraries/audit-universe-detail/au-level-all/au-level-all.component';
-import { BannerComponent } from './routes/libraries/banner/banner.component';
 import { PrimeNgModule } from './prime-ng.module';
-import { AuditUniverseDetailComponent } from './routes/libraries/audit-universe-detail/audit-universe-detail.component';
-import { AuLevel1Component } from './routes/libraries/audit-universe-detail/au-level1/au-level1.component';
-import { AuLevel2Component } from './routes/libraries/audit-universe-detail/au-level2/au-level2.component';
-import { AuLevel3Component } from './routes/libraries/audit-universe-detail/au-level3/au-level3.component';
-import { AuLevel4Component } from './routes/libraries/audit-universe-detail/au-level4/au-level4.component';
-import { AdhocService } from './service/adhoc.service';
-import { AdhocTestComponent } from './routes/roboticsAudit/adhoc-test/adhoc-test.component';
-import { LogsComponent } from './routes/utilities/logs/logs.component';
-import { UploadComponent } from './routes/utilities/upload/upload.component';
-import { UploadService } from './service/upload.service';
-import { UsersComponent } from './routes/utilities/users/users.component';
-import { OrganisationComponent } from './routes/libraries/organisation/organisation.component';
-import { AuditDashboardComponent } from './routes/roboticsAudit/audit-dashboard/audit-dashboard.component';
-import { MasterComponent } from './routes/utilities/master/master.component';
-import { UtilsService } from './service/utils.service';
-import { AuditPageComponent } from './routes/roboticsAudit/audit/audit-page/audit-page.component';
-import { AuditTestComponent } from './routes/roboticsAudit/audit/audit-test/audit-test.component';
-import { AuditTestHistoryComponent } from './routes/roboticsAudit/audit/audit-test-history/audit-test-history.component';
-import { AuditProgramComponent1 } from './routes/roboticsAudit/audit/audit-program/audit-program.component';
-import { PopupComponent } from './routes/utilities/popup/popup.component';
 import { DialogService } from 'primeng/dynamicdialog';
-import { AuditDetailComponent } from './routes/roboticsAudit/audit-dashboard/audit-detail/audit-detail.component';
+import { OrganizationComponent } from './routes/utilities/organization/organization.component';
+import { LicenseComponent } from './routes/utilities/license/license.component';
+import { UtilityService } from './service/utility.service';
+import { ConfirmationService, MessageService } from 'primeng/api';
 
 export function tokenGetter() {
     return localStorage.getItem('jwt');
@@ -111,49 +79,15 @@ export function tokenGetter() {
         ErrorComponent,
         NotfoundComponent,
         AccessComponent,
-        BannersDetailComponent,
-        RiskDetailComponent,
-        ControlDetailComponent,
-        ScriptDetailComponent,
-        AuditComponent,
-        ResultsComponent,
-        ViewResultComponent,
-        AuLevelAllComponent,
-        AuditUniverseDetailComponent,
-        AuLevel1Component,
-        AuLevel2Component,
-        AuLevel3Component,
-        AuLevel4Component,
-        AdhocTestComponent,
-        BannerComponent,
-        LogsComponent,
-        UploadComponent,
-        UsersComponent,
-        OrganisationComponent,
-        AuditDashboardComponent,
-        MasterComponent,
-        AuditPageComponent,
-        AuditTestComponent,
-        AuditTestHistoryComponent,
-        AuditProgramComponent1,
-        PopupComponent,
-        AuditDetailComponent,
+        OrganizationComponent,
+        LicenseComponent,
     ],
     providers: [
         { provide: LocationStrategy, useClass: HashLocationStrategy },
-        EventService,
         BnNgIdleService,
-        NodeService,
         MenuService,
         ConfigService,
-        BannerService,
         AuthGuard,
-        ScriptService,
-        AuditUniverseService,
-        AdhocService,
-        AuditService,
-        UploadService,
-        UtilsService,
         DialogService,
         { provide: HTTP_INTERCEPTORS, useClass: httpInterceptor, multi: true },
         {
@@ -161,8 +95,11 @@ export function tokenGetter() {
             useClass: ErrorInterceptorService,
             multi: true,
         },
+        MessageService,
+        ConfirmationService,
+        UtilityService,
     ],
     bootstrap: [AppComponent],
-    entryComponents: [PopupComponent, AuditDetailComponent],
+    entryComponents: [],
 })
 export class AppModule {}
