@@ -39,6 +39,12 @@
 
         <ng-template pTemplate="header">
             <tr>
+                <th pSortableColumn="is_active">
+                    <div class="flex align-items-center">Status</div>
+                </th>
+                <th pSortableColumn="organization">
+                    <div class="flex align-items-center">Organization</div>
+                </th>
                 <th pSortableColumn="licensor">
                     <div class="flex align-items-center">LICENSOR</div>
                 </th>
@@ -74,6 +80,17 @@
 
         <ng-template pTemplate="body" let-item>
             <tr class="p-selectable-row">
+                <td class="text-base">
+                    <p-inputSwitch
+                        (onChange)="changeStatus(item, $event)"
+                        [(ngModel)]="item.is_active"
+                    ></p-inputSwitch>
+                </td>
+
+                <td class="text-base">
+                    {{ item.organization }}
+                </td>
+
                 <td class="text-base">
                     {{ item.licensor }}
                 </td>
@@ -113,19 +130,11 @@
                         <button
                             pButton
                             pRipple
-                            title="Delete"
-                            type="button"
-                            icon="pi pi-trash"
-                            class="p-button-rounded p-button-info ml-2 h-2rem"
-                            (click)="deleteLicense(item)"
-                        ></button>
-                        <button
-                            pButton
-                            pRipple
                             title="Download"
                             type="button"
                             icon="pi pi-download"
                             class="p-button-rounded p-button-info ml-2 h-2rem"
+                            (click)="downloadLicense(item)"
                         ></button>
                         <button
                             pButton
@@ -134,6 +143,7 @@
                             type="button"
                             icon="pi pi-send"
                             class="p-button-rounded p-button-info ml-2 h-2rem"
+                            (click)="emailLicense(item)"
                         ></button>
                     </span>
                 </td>
@@ -330,6 +340,68 @@
                 label="Save"
                 styleClass="p-button-primary"
                 [disabled]="licenseForm.invalid"
+            ></p-button>
+        </ng-template>
+    </p-dialog>
+</form>
+
+<form
+    *ngIf="emailDialog"
+    [formGroup]="emailForm"
+    (ngSubmit)="emailForm.valid && emailFormSubmit()"
+>
+    <p-dialog
+        header="Email License"
+        [(visible)]="emailDialog"
+        [style]="{ width: '40vw' }"
+    >
+        <div class="field">
+            <label for="to">To<sup>*</sup></label>
+            <div>
+                <input
+                    formControlName="to"
+                    pInputText
+                    [style]="{ width: '100%' }"
+                />
+            </div>
+        </div>
+
+        <div class="field">
+            <label for="cc">CC</label>
+            <div>
+                <input
+                    formControlName="cc"
+                    pInputText
+                    [style]="{ width: '100%' }"
+                />
+            </div>
+        </div>
+
+        <div class="field">
+            <label for="message">Message</label>
+            <div>
+                <input
+                    formControlName="message"
+                    pInputText
+                    [style]="{ width: '100%' }"
+                />
+            </div>
+        </div>
+
+        <ng-template pTemplate="footer">
+            <p-button
+                type="reset"
+                icon="pi pi-times"
+                (click)="emailDialog = false"
+                label="Cancel"
+                styleClass="p-button-secondary"
+            ></p-button>
+            <p-button
+                type="submit"
+                icon="pi pi-send"
+                label="Send"
+                styleClass="p-button-primary"
+                [disabled]="emailForm.invalid"
             ></p-button>
         </ng-template>
     </p-dialog>

@@ -1,5 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import {
+    FormBuilder,
+    FormControl,
+    FormGroup,
+    Validators,
+} from '@angular/forms';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { catchError, finalize, throwError } from 'rxjs';
 import { License, Organization } from 'src/app/api/utilities.model';
@@ -16,9 +21,11 @@ export class LicenseComponent implements OnInit {
     filteredOrg: Organization[];
 
     licenseDialog: boolean = false;
+    emailDialog: boolean = false;
     loading: boolean = true;
 
     licenseForm: FormGroup;
+    emailForm: FormGroup;
 
     constructor(
         private utilityService: UtilityService,
@@ -154,50 +161,118 @@ export class LicenseComponent implements OnInit {
         }
     }
 
-    deleteLicense(license: License) {
-        this.confirmService.confirm({
-            header: 'Confirmation!',
-            message: 'Are you sure you want to delete this License?',
-            icon: 'pi pi-exclamation-triangle',
-            accept: () => {
-                this.utilityService
-                    .deleteLicense(license.licenceid)
-                    .pipe(
-                        catchError((err) => {
-                            this.messageService.add({
-                                severity: 'error',
-                                summary: 'Error!!',
-                                detail: 'Something went wrong!',
-                                life: 3000,
-                            });
-                            throw new Error(err);
-                        }),
-                        finalize(() => {
-                            this.getAllLicense();
-                        })
-                    )
-                    .subscribe((res: any) => {
-                        if (res.data) {
-                            this.messageService.add({
-                                severity: 'success',
-                                summary: 'Success!!',
-                                detail: `License has been deleted`,
-                                life: 3000,
-                            });
-                        } else {
-                            this.messageService.add({
-                                severity: 'info',
-                                summary: 'Info!!',
-                                detail: res.message,
-                                life: 3000,
-                            });
-                        }
+    changeStatus(license: License, event) {
+        this.utilityService
+            .deleteLicense(license.licenceid, event.checked)
+            .pipe(
+                catchError((err) => {
+                    this.messageService.add({
+                        severity: 'error',
+                        summary: 'Error!!',
+                        detail: 'Something went wrong!',
+                        life: 3000,
                     });
-            },
-            reject: () => {
-                console.log('Rejected');
-            },
+                    throw new Error(err);
+                })
+            )
+            .subscribe((res: any) => {
+                if (res.data) {
+                    this.messageService.add({
+                        severity: 'success',
+                        summary: 'Success!!',
+                        detail: `License has been deleted`,
+                        life: 3000,
+                    });
+                } else {
+                    this.messageService.add({
+                        severity: 'info',
+                        summary: 'Info!!',
+                        detail: res.message,
+                        life: 3000,
+                    });
+                }
+            });
+    }
+
+    downloadLicense(license: License) {
+        this.utilityService
+            .downloadLicense(license.licenceid)
+            .pipe(
+                catchError((err) => {
+                    this.messageService.add({
+                        severity: 'error',
+                        summary: 'Error!!',
+                        detail: 'Something went wrong!',
+                        life: 3000,
+                    });
+                    throw new Error(err);
+                })
+            )
+            .subscribe((res: any) => {
+                if (res.data) {
+                    this.messageService.add({
+                        severity: 'success',
+                        summary: 'Success!!',
+                        detail: `License Downloaded!!`,
+                        life: 3000,
+                    });
+                } else {
+                    this.messageService.add({
+                        severity: 'info',
+                        summary: 'Info!!',
+                        detail: res.message,
+                        life: 3000,
+                    });
+                }
+            });
+    }
+
+    emailLicense(license: License) {
+        this.emailForm = this.fb.group({
+            licenceid: license.licenceid,
+            to: [null, Validators.required],
+            cc: null,
+            message: null,
         });
+
+        this.emailDialog = true;
+    }
+
+    emailFormSubmit() {
+        console.log(this.emailForm.value);
+        this.utilityService
+            .emailLicense(this.emailForm.value)
+            .pipe(
+                catchError((err) => {
+                    this.messageService.add({
+                        severity: 'error',
+                        summary: 'Error!!',
+                        detail: 'Something went wrong!',
+                        life: 3000,
+                    });
+                    throw new Error(err);
+                }),
+                finalize(() => {
+                    this.emailDialog = false;
+                })
+            )
+            .subscribe((res: any) => {
+                if (res.data) {
+                    this.messageService.add({
+                        severity: 'success',
+                        summary: 'Success!!',
+                        detail: `Email Send!!`,
+                        life: 3000,
+                    });
+                } else {
+                    this.messageService.add({
+                        severity: 'info',
+                        summary: 'Info!!',
+                        detail: res.message,
+                        life: 3000,
+                    });
+                }
+            });
     }
 
     // filters

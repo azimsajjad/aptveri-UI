@@ -6,6 +6,7 @@ import {
     AddEditLicense,
     AddOrgBody,
     EditOrgBody,
+    LicensePushEmail,
 } from '../api/utilities.model';
 
 @Injectable()
@@ -87,12 +88,28 @@ export class UtilityService {
         });
     }
 
-    public deleteLicense(licenseId: number) {
+    public deleteLicense(licenseId: number, status: boolean) {
         return this.http.delete(
             environment.api_prefix +
                 'lisence/updatelicencestatus/' +
                 licenseId +
-                '/0'
+                '/' +
+                (status ? '1' : '0')
         );
+    }
+
+    public downloadLicense(licenseeId: number): Observable<any> {
+        return this.http.get(
+            environment.api_prefix + 'lisence/download/' + licenseeId
+        );
+    }
+
+    public emailLicense(data: LicensePushEmail): Observable<any> {
+        return this.http.post(environment.api_prefix + 'lisence/pushemail', {
+            to: data.to,
+            cc: data.cc,
+            message: data.message,
+            licenceid: data.licenceid,
+        });
     }
 }

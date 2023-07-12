@@ -59,3 +59,10 @@ export interface AddEditLicense {
     ondemand_exc: number;
     schedule_exc: number;
 }
+
+export interface LicensePushEmail {
+    to: string;
+    cc: string;
+    message: string;
+    licenceid: string;
+}
