@@ -68,7 +68,7 @@
                     <div class="flex align-items-center">EXPIRATION DATE</div>
                 </th>
 
-                <th pSortableColumn="action" style="min-width: 13rem">
+                <th pSortableColumn="action" style="min-width: 13rem;">
                     <div
                         class="flex justify-content-between align-items-center"
                     >
@@ -108,17 +108,17 @@
                 </td>
 
                 <td class="text-base">
-                    {{ item.issuedate | date : 'longDate' }}
+                    {{ item.issuedate | date: 'longDate' }}
                 </td>
 
                 <td class="text-base">
-                    {{ item.expiration | date : 'longDate' }}
+                    {{ item.expiration | date: 'longDate' }}
                 </td>
 
-                <td class="text-base" style="min-width: 13rem">
+                <td class="text-base" style="min-width: 13rem;">
                     <span class="p-column-title">Actions</span>
                     <span>
-                        <button
+                        <!-- <button
                             pButton
                             pRipple
                             title="Edit"
@@ -126,7 +126,7 @@
                             icon="pi pi-pencil"
                             class="p-button-rounded p-button-info h-2rem"
                             (click)="openNew(item)"
-                        ></button>
+                        ></button> -->
                         <button
                             pButton
                             pRipple
@@ -134,9 +134,9 @@
                             type="button"
                             icon="pi pi-download"
                             class="p-button-rounded p-button-info ml-2 h-2rem"
-                            (click)="downloadLicense(item)"
+                            (click)="download(item)"
                         ></button>
-                        <button
+                        <!-- <button
                             pButton
                             pRipple
                             title="Email"
@@ -144,7 +144,7 @@
                             icon="pi pi-send"
                             class="p-button-rounded p-button-info ml-2 h-2rem"
                             (click)="emailLicense(item)"
-                        ></button>
+                        ></button> -->
                     </span>
                 </td>
             </tr>

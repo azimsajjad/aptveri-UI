@@ -35,6 +35,7 @@ import { OrganizationComponent } from './routes/utilities/organization/organizat
 import { LicenseComponent } from './routes/utilities/license/license.component';
 import { UtilityService } from './service/utility.service';
 import { ConfirmationService, MessageService } from 'primeng/api';
+import { saveAs } from 'file-saver';
 
 export function tokenGetter() {
     return localStorage.getItem('jwt');

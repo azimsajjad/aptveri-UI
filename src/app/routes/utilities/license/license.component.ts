@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import {
     FormBuilder,
     FormControl,
@@ -9,6 +9,9 @@ import { ConfirmationService, MessageService } from 'primeng/api';
 import { catchError, finalize, throwError } from 'rxjs';
 import { License, Organization } from 'src/app/api/utilities.model';
 import { UtilityService } from 'src/app/service/utility.service';
+import { HttpEventType, HttpResponse } from '@angular/common/http';
+import { FileService } from 'src/app/service/file.service';
+import { saveAs } from 'file-saver';
 
 @Component({
     selector: 'app-license',
@@ -19,7 +22,9 @@ export class LicenseComponent implements OnInit {
     allLicense: License[];
     allOrg: Organization[];
     filteredOrg: Organization[];
-
+    message: string;
+    progress: number;
+    @Input() fileUrl: string;
     licenseDialog: boolean = false;
     emailDialog: boolean = false;
     loading: boolean = true;
@@ -29,6 +34,7 @@ export class LicenseComponent implements OnInit {
 
     constructor(
         private utilityService: UtilityService,
+        private fileService: FileService,
         private fb: FormBuilder,
         private confirmService: ConfirmationService,
         private messageService: MessageService
@@ -226,6 +232,36 @@ export class LicenseComponent implements OnInit {
                 }
             });
     }
+
+    download = (license: License) => {
+        this.fileService.download(license.licenceid).subscribe((event) => {
+            if (event.type === HttpEventType.UploadProgress)
+                this.progress = Math.round((100 * event.loaded) / event.total);
+            else if (event.type === HttpEventType.Response) {
+                this.message = 'Download success.';
+                this.downloadFile(event, license.licensee);
+            }
+        });
+    };
+
+    private downloadFile = (data: HttpResponse<Blob>, licensee: string) => {
+        // debugger;
+        // const downloadedFile = new Blob([data.body], { type: 'text/lic' });
+        // const a = document.createElement('a');
+        // a.setAttribute('style', 'display:none;');
+        // document.body.appendChild(a);
+        // a.download = this.fileUrl;
+        // a.href = URL.createObjectURL(downloadedFile);
+        // a.target = '_blank';
+        // a.click();
+        // document.body.removeChild(a);
+        let currentDate = new Date();
+        let unique = currentDate.getTime();
+        var blob = new Blob([data.body], {
+            type: 'text/plain;charset=utf-8',
+        });
+        saveAs(blob, licensee + '-' + unique + '.lic');
+    };
 
     emailLicense(license: License) {
         this.emailForm = this.fb.group({

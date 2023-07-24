@@ -24,7 +24,7 @@ import { OrganizationComponent } from './routes/utilities/organization/organizat
                     children: [
                         {
                             path: '',
-                            component: DashboardComponent,
+                            component: OrganizationComponent,
                             canActivate: [AuthGuard],
                         },
                         { path: 'uikit/message', component: MessagesComponent },
