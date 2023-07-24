@@ -6,7 +6,7 @@
     "version": 1,
     "newProjectRoot": "projects",
     "projects": {
-        "iRAA": {
+        "aptiveri5": {
             "projectType": "application",
             "schematics": {
                 "@schematics/angular:component": {
@@ -20,7 +20,7 @@
                 "build": {
                     "builder": "@angular-devkit/build-angular:browser",
                     "options": {
-                        "outputPath": "dist/iRAA",
+                        "outputPath": "dist/aptiveri5",
                         "index": "src/index.html",
                         "main": "src/main.ts",
                         "polyfills": "src/polyfills.ts",
@@ -109,19 +109,19 @@
                     "builder": "@angular-devkit/build-angular:dev-server",
                     "configurations": {
                         "production": {
-                            "browserTarget": "iRAA:build:production"
+                            "browserTarget": "aptiveri5:build:production"
                         },
                         "development": {
-                            "browserTarget": "iRAA:build:development"
+                            "browserTarget": "aptiveri5:build:development"
                         },
                         "staging": {
-                            "browserTarget": "iRAA:build:staging"
+                            "browserTarget": "aptiveri5:build:staging"
                           },
                         "addev": {
-                            "browserTarget": "iRAA:build:addev"
+                            "browserTarget": "aptiveri5:build:addev"
                           },
                          "mmdev": {
-                            "browserTarget": "iRAA:build:mmdev"
+                            "browserTarget": "aptiveri5:build:mmdev"
                           }
 
                     },
@@ -130,7 +130,7 @@
                 "extract-i18n": {
                     "builder": "@angular-devkit/build-angular:extract-i18n",
                     "options": {
-                        "browserTarget": "iRAA:build"
+                        "browserTarget": "aptiveri5:build"
                     }
                 },
                 "test": {
@@ -154,5 +154,5 @@
             }
         }
     },
-    "defaultProject": "iRAA"
+    "defaultProject": "aptiveri5"
 }

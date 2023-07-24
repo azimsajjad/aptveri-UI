@@ -17,10 +17,10 @@ describe('AppComponent', () => {
         TestBed.compileComponents();
     });
 
-    it(`should have as title 'iRAA'`, () => {
+    it(`should have as title 'aptiveri5'`, () => {
         const fixture = TestBed.createComponent(AppComponent);
         const app = fixture.componentInstance;
-        expect(app).toEqual('iRAA');
+        expect(app).toEqual('aptiveri5');
     });
 
     it('should create the app', async(() => {

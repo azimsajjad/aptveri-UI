@@ -1,5 +1,5 @@
 {
-    "name": "iRAA-ui",
+    "name": "aptiveri5-ui",
     "version": "13.1.1",
     "scripts": {
         "ng": "ng",
@@ -12,11 +12,11 @@
         "test": "ng test",
         "lint": "ng lint",
         "e2e": "ng e2e",
-        "watch:dev": "ng build --watch --deploy-url /iRAA/ --base-href /iRAA/ --configuration=development",
-        "watch:stage": "ng build --watch --deploy-url https://iRAAqa.iRAA.net/ --base-href ./ --configuration=staging",
-        "watch:prod": "ng build --watch --deploy-url https://iRAA.net/ --base-href ./ --configuration=production",
-        "watch:addev": "ng build --watch --deploy-url /iRAA/ --base-href /iRAA/ --configuration=addev",
-        "watch:mmdev": "ng build --watch --deploy-url https://iRAAdev.iRAA.net/ --base-href ./ --configuration=mmdev"
+        "watch:dev": "ng build --watch --deploy-url /aptiveri5/ --base-href /aptiveri5/ --configuration=development",
+        "watch:stage": "ng build --watch --deploy-url https://aptiveri5qa.aptiveri5.net/ --base-href ./ --configuration=staging",
+        "watch:prod": "ng build --watch --deploy-url https://aptiveri5.net/ --base-href ./ --configuration=production",
+        "watch:addev": "ng build --watch --deploy-url /aptiveri5/ --base-href /aptiveri5/ --configuration=addev",
+        "watch:mmdev": "ng build --watch --deploy-url https://aptiveri5dev.aptiveri5.net/ --base-href ./ --configuration=mmdev"
     },
     "private": true,
     "dependencies": {
